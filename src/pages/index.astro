@@ -1,4 +1,5 @@
 ---
+import { Icon } from 'astro-icon/components';
 ---
 
 <!DOCTYPE html>
@@ -35,13 +36,16 @@
       line-height: 1.6;
     }
 
+    /* HERO AREA (nav + hero share one gradient) */
+    .hero-area {
+      background: linear-gradient(135deg, #e5f7bf 0%, #edf4ff 55%, #d2e8ff 100%);
+      overflow: hidden;
+    }
+
     /* NAV */
     .nav {
       position: sticky; top: 0; z-index: 100;
-      background: rgba(255,253,245,0.88);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border-bottom: 1px solid rgba(150,210,27,0.18);
+      background: transparent;
     }
     .nav-inner {
       max-width: 1100px; margin: 0 auto;
@@ -73,8 +77,7 @@
     /* HERO */
     .hero {
       position: relative;
-      background: linear-gradient(135deg, #e5f7bf 0%, #edf4ff 55%, #d2e8ff 100%);
-      overflow: hidden;
+      background: transparent;
     }
     .blob {
       position: absolute; border-radius: 50%;
@@ -99,7 +102,7 @@
       position: relative; z-index: 1;
       max-width: 1100px; margin: 0 auto;
       padding: 5rem 1.5rem 3.5rem;
-      display: grid; grid-template-columns: 1fr 400px; align-items: center; gap: 3rem;
+      display: grid; grid-template-columns: 1fr 480px; align-items: center; gap: 3rem;
     }
     .hero-badge {
       display: inline-block;
@@ -132,36 +135,16 @@
     .dl-ios { background: #1a1a2e; color: white; }
     .dl-and { background: var(--green); color: white; }
 
-    /* PHONE MOCKUP */
+    /* HERO VIDEO */
     .hero-phone { display: flex; justify-content: center; }
     .phone-wrap { position: relative; animation: float 4s ease-in-out infinite; }
     @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
-    .phone {
-      width: 220px; height: 450px;
-      background: #0f0f1c;
-      border-radius: 38px; padding: 14px;
+    .hero-video {
+      width: 260px;
+      border-radius: 38px;
       box-shadow: 0 30px 80px rgba(52,134,243,0.25), 0 0 0 1px rgba(255,255,255,0.08);
+      display: block;
       position: relative; z-index: 1;
-    }
-    .phone-notch { width: 70px; height: 6px; background: #252535; border-radius: 3px; margin: 4px auto 10px; }
-    .phone-screen {
-      background: #F8FAFF; border-radius: 26px;
-      height: calc(100% - 28px); overflow: hidden; padding: 14px;
-    }
-    .app-header {
-      font-size: 0.72rem; font-weight: 900; color: var(--text);
-      margin-bottom: 10px; padding-bottom: 7px;
-      border-bottom: 2px solid #E8F7C5;
-    }
-    .app-task { font-size: 0.68rem; font-weight: 700; padding: 6px 8px; border-radius: 9px; margin-bottom: 5px; }
-    .t-done { background: #EAF8C7; color: #3d7000; text-decoration: line-through; opacity: 0.7; }
-    .t-todo { background: #EBF3FF; color: #1a4fa0; }
-    .t-ai { background: linear-gradient(90deg, #EBF3FF, #E8F7C5); color: #333; }
-    .app-gacha {
-      margin-top: 10px; text-align: center;
-      font-size: 0.72rem; font-weight: 800; color: white;
-      background: linear-gradient(135deg, var(--green), var(--blue));
-      border-radius: 10px; padding: 8px;
     }
     .phone-glow {
       position: absolute; width: 180px; height: 180px;
@@ -174,33 +157,64 @@
     .hero-wave { margin-top: -1px; display: block; width: 100%; }
 
     /* FEATURES */
-    .features { padding: 4rem 1.5rem 5rem; }
+    .features { padding: 4rem 0 5rem; overflow: hidden; }
     .sec-inner { max-width: 1100px; margin: 0 auto; }
-    .sec-head { text-align: center; margin-bottom: 2.75rem; }
+    .sec-head { text-align: center; margin-bottom: 0; padding: 0 1.5rem 0.5rem; }
     .sec-head h2 { font-size: 2.2rem; font-weight: 900; color: var(--text); margin-bottom: 0.5rem; }
     .sec-head p { font-size: 1.05rem; color: var(--muted); }
 
-    .feat-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem;
+    .feat-fan {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      padding: 3.5rem 2rem 5rem;
     }
-    .feat-card {
-      background: white; border-radius: var(--radius); padding: 1.75rem;
-      box-shadow: var(--shadow); transition: transform 0.2s, box-shadow 0.2s;
+    .fan-card {
+      width: 210px;
+      min-height: 290px;
+      border-radius: 26px;
+      padding: 1.6rem 1.4rem 1.5rem;
+      flex-shrink: 0;
+      margin: 0 -20px;
+      position: relative;
+      box-shadow: 0 8px 28px rgba(0,0,0,0.10);
+      cursor: pointer;
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      user-select: none;
     }
-    .feat-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
-    .feat-wide { grid-column: span 2; }
-    .feat-icon { font-size: 2rem; margin-bottom: 0.75rem; }
-    .feat-card h3 { font-size: 1.15rem; font-weight: 800; margin-bottom: 0.45rem; color: var(--text); }
-    .feat-card p { font-size: 0.93rem; color: var(--muted); line-height: 1.65; }
-    .feat-pills { display: flex; gap: 0.5rem; margin-top: 1rem; flex-wrap: wrap; }
-    .feat-pills span { font-size: 0.78rem; font-weight: 700; padding: 0.28rem 0.75rem; border-radius: 999px; }
-
-    .c-green { border-left: 4px solid var(--green); background: linear-gradient(135deg, #F0FAE0, white); }
-    .c-green .feat-pills span { background: var(--green-light); color: #3d7000; }
-    .c-blue { border-left: 4px solid var(--blue); background: linear-gradient(135deg, #EBF3FF, white); }
-    .c-amber { border-left: 4px solid #F59E0B; background: linear-gradient(135deg, #FFFBEB, white); }
-    .c-pink { border-left: 4px solid #EC4899; background: linear-gradient(135deg, #FFF0F7, white); }
-    .c-purple { border-left: 4px solid #8B5CF6; background: linear-gradient(135deg, #F5F0FF, white); }
+    .fan-card:nth-child(1) { transform: rotate(-15deg) translateY(38px); z-index: 1; background: linear-gradient(155deg, #e2f7b2, #cff086); }
+    .fan-card:nth-child(2) { transform: rotate(-7deg) translateY(18px); z-index: 2; background: linear-gradient(155deg, #d5e9ff, #b8d8ff); }
+    .fan-card:nth-child(3) { transform: rotate(0deg) translateY(0); z-index: 5; background: linear-gradient(155deg, #ede0ff, #d5bdff); }
+    .fan-card:nth-child(4) { transform: rotate(7deg) translateY(18px); z-index: 2; background: linear-gradient(155deg, #ffd9ef, #ffbfe4); }
+    .fan-card:nth-child(5) { transform: rotate(15deg) translateY(38px); z-index: 1; background: linear-gradient(155deg, #fff0c0, #ffe48a); }
+    .fan-card.active {
+      transform: rotate(0deg) translateY(-18px) scale(1.06) !important;
+      z-index: 10 !important;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.18) !important;
+    }
+    .fan-card:not(.active):hover {
+      transform: rotate(0deg) translateY(-8px) !important;
+      z-index: 8 !important;
+      box-shadow: 0 14px 40px rgba(0,0,0,0.14) !important;
+    }
+    .fan-icon { flex-shrink: 0; }
+    .fan-icon svg { width: 2.4rem; height: 2.4rem; stroke-width: 1.5; color: var(--text); }
+    .fan-label { font-size: 1rem; font-weight: 800; color: var(--text); margin-top: auto; padding-top: 0.5rem; }
+    .fan-desc {
+      font-size: 0.8rem; color: #374151; line-height: 1.6;
+      max-height: 0; overflow: hidden; opacity: 0;
+      transition: max-height 0.4s ease, opacity 0.35s ease;
+    }
+    .fan-card.active .fan-desc { max-height: 160px; opacity: 1; }
+    .fan-pills { display: flex; gap: 0.35rem; flex-wrap: wrap; }
+    .fan-pills span {
+      font-size: 0.72rem; font-weight: 700;
+      padding: 0.2rem 0.6rem; border-radius: 999px;
+      background: rgba(255,255,255,0.55); color: #1E2140;
+    }
 
     /* CTA */
     .cta {
@@ -238,25 +252,35 @@
     @media (max-width: 900px) {
       .hero-inner { grid-template-columns: 1fr; padding-top: 3.5rem; }
       .hero-phone { order: -1; }
-      .feat-grid { grid-template-columns: 1fr 1fr; }
+      .fan-card { width: 180px; min-height: 255px; margin: 0 -16px; }
     }
     @media (max-width: 600px) {
       .hero-inner { padding: 3rem 1rem 2.5rem; }
-      .feat-grid { grid-template-columns: 1fr; }
-      .feat-wide { grid-column: span 1; }
       .hero-downloads { flex-direction: column; }
       .dl-btn { justify-content: center; }
       .cta h2 { font-size: 1.8rem; }
+      .features { overflow: visible; }
+      .feat-fan {
+        overflow-x: auto; scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        justify-content: flex-start; align-items: stretch;
+        padding: 1.5rem 1.25rem 2.5rem; gap: 0.75rem;
+      }
+      .fan-card { margin: 0; width: 200px; min-height: 220px; scroll-snap-align: center; }
+      .fan-card:nth-child(n) { transform: none !important; }
+      .fan-card.active { transform: none !important; box-shadow: var(--shadow-lg) !important; }
+      .fan-card .fan-desc { max-height: none !important; opacity: 1 !important; }
     }
   </style>
 </head>
 <body>
 
+  <div class="hero-area">
   <!-- NAV -->
   <nav class="nav">
     <div class="nav-inner">
       <a class="logo" href="/">
-        <div class="logo-mark">B</div>
+        <img src="/shared-pic/bun-white.svg" height="32" alt="BlotzTask" style="border-radius:10px;width:auto;" />
         BlotzTask
       </a>
       <button class="lang-btn" id="lang-toggle">
@@ -317,16 +341,15 @@
       </div>
       <div class="hero-phone">
         <div class="phone-wrap">
-          <div class="phone">
-            <div class="phone-notch"></div>
-            <div class="phone-screen">
-              <div class="app-header">📋 Today's Tasks</div>
-              <div class="app-task t-done">✅ Morning workout</div>
-              <div class="app-task t-todo">⏰ Review project</div>
-              <div class="app-task t-ai">🤖 AI: Study plan</div>
-              <div class="app-gacha">🎰 Random pick!</div>
-            </div>
-          </div>
+          <video
+            id="hero-video"
+            class="hero-video"
+            src="/en-videos/ai-voice-video.MP4"
+            autoplay
+            muted
+            loop
+            playsinline
+          ></video>
           <div class="phone-glow"></div>
         </div>
       </div>
@@ -335,6 +358,7 @@
       <path d="M0 35 C360 70 720 0 1080 35 C1260 53 1380 22 1440 35 L1440 70 L0 70 Z" fill="#FFFDF5"/>
     </svg>
   </section>
+  </div>
 
   <!-- FEATURES -->
   <section class="features">
@@ -343,40 +367,37 @@
         <h2 id="feat-title">Key Features</h2>
         <p id="feat-sub">Everything you need to stay on top of your tasks</p>
       </div>
-      <div class="feat-grid">
+      <div class="feat-fan">
 
-        <div class="feat-card feat-wide c-green">
-          <div class="feat-icon">🎙️</div>
-          <h3 id="f1-title">Voice to Tasks</h3>
-          <p id="f1-desc">Generate tasks from your voice input. AI automatically breaks them down into manageable steps, with monthly &amp; weekly progress reports.</p>
-          <div class="feat-pills">
-            <span id="f1-p1">🤖 AI Breakdown</span>
-            <span id="f1-p2">📊 Reports</span>
-          </div>
+        <div class="fan-card">
+          <div class="fan-icon"><Icon name="lucide:mic" /></div>
+          <div class="fan-label" id="f1-title">Voice to Tasks</div>
+          <div class="fan-desc" id="f1-desc">Generate tasks from your voice input. AI automatically breaks them down into manageable steps, with monthly &amp; weekly progress reports.</div>
+          <div class="fan-pills"><span id="f1-p1">🤖 AI Breakdown</span><span id="f1-p2">📊 Reports</span></div>
         </div>
 
-        <div class="feat-card c-blue">
-          <div class="feat-icon">📊</div>
-          <h3 id="f2-title">AI Summarization</h3>
-          <p id="f2-desc">Let AI recap everything you've accomplished this week or month — see your progress at a glance.</p>
+        <div class="fan-card">
+          <div class="fan-icon"><Icon name="lucide:sparkles" /></div>
+          <div class="fan-label" id="f2-title">AI Summarization</div>
+          <div class="fan-desc" id="f2-desc">Let AI recap everything you've accomplished this week or month — see your progress at a glance.</div>
         </div>
 
-        <div class="feat-card c-amber">
-          <div class="feat-icon">🎰</div>
-          <h3 id="f3-title">Gacha Machine</h3>
-          <p id="f3-desc">Can't decide where to start? Spin the Gacha to randomly pick your next task and break the freeze!</p>
+        <div class="fan-card">
+          <div class="fan-icon"><Icon name="lucide:dices" /></div>
+          <div class="fan-label" id="f3-title">Gacha Machine</div>
+          <div class="fan-desc" id="f3-desc">Can't decide where to start? Spin the Gacha to randomly pick your next task and break the freeze!</div>
         </div>
 
-        <div class="feat-card c-pink">
-          <div class="feat-icon">📝</div>
-          <h3 id="f4-title">Quick Notes</h3>
-          <p id="f4-desc">Capture thoughts and ideas instantly — nothing slips through the cracks.</p>
+        <div class="fan-card">
+          <div class="fan-icon"><Icon name="lucide:notebook-pen" /></div>
+          <div class="fan-label" id="f4-title">Quick Notes</div>
+          <div class="fan-desc" id="f4-desc">Capture thoughts and ideas instantly — nothing slips through the cracks.</div>
         </div>
 
-        <div class="feat-card c-purple">
-          <div class="feat-icon">⏰</div>
-          <h3 id="f5-title">Deadline Tracker</h3>
-          <p id="f5-desc">Mark tasks as deadlines and always know how many days remain. Stay on top of what matters most without the anxiety.</p>
+        <div class="fan-card">
+          <div class="fan-icon"><Icon name="lucide:clock" /></div>
+          <div class="fan-label" id="f5-title">Deadline Tracker</div>
+          <div class="fan-desc" id="f5-desc">Mark tasks as deadlines and always know how many days remain. Stay on top of what matters most without the anxiety.</div>
         </div>
 
       </div>
@@ -462,7 +483,22 @@
       }
     };
 
+    const fanCards = document.querySelectorAll('.fan-card');
+    fanCards[2]?.classList.add('active');
+    fanCards.forEach(card => {
+      card.addEventListener('click', () => {
+        fanCards.forEach(c => c.classList.remove('active'));
+        card.classList.add('active');
+      });
+    });
+
     let currentLang: 'en' | 'zh' = 'en';
+
+    const heroVideo = document.getElementById('hero-video') as HTMLVideoElement;
+    if (heroVideo) {
+      heroVideo.playbackRate = 3;
+      heroVideo.addEventListener('loadedmetadata', () => { heroVideo.playbackRate = 3; });
+    }
 
     document.getElementById('lang-toggle')?.addEventListener('click', toggleLang);
 
