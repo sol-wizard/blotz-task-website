@@ -1,11 +1,464 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<!DOCTYPE html>
+<html lang="en" id="html-root">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BlotzTask – AI-Powered ADHD Task Manager</title>
+  <meta name="description" content="The AI-powered way to manage ADHD tasks. Quick task generation, AI breakdown, and easy capture." />
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <style is:global>
+    :root {
+      --green: #96D21B;
+      --blue: #3486F3;
+      --green-light: #EAF8C7;
+      --blue-light: #D5E9FF;
+      --bg: #FFFDF5;
+      --text: #1E2140;
+      --muted: #6B7280;
+      --radius: 20px;
+      --shadow: 0 4px 24px rgba(0,0,0,0.08);
+      --shadow-lg: 0 8px 40px rgba(0,0,0,0.14);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Nunito', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* NAV */
+    .nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,253,245,0.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(150,210,27,0.18);
+    }
+    .nav-inner {
+      max-width: 1100px; margin: 0 auto;
+      padding: 1rem 1.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .logo {
+      display: flex; align-items: center; gap: 0.6rem;
+      text-decoration: none; font-weight: 900; font-size: 1.25rem; color: var(--text);
+    }
+    .logo-mark {
+      width: 36px; height: 36px;
+      background: linear-gradient(135deg, var(--green), var(--blue));
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      color: white; font-weight: 900; font-size: 1.1rem;
+    }
+    .lang-btn {
+      background: var(--green-light);
+      border: 2px solid var(--green);
+      color: #3d6b00;
+      font-family: 'Nunito', 'PingFang SC', sans-serif;
+      font-weight: 700; font-size: 0.9rem;
+      padding: 0.4rem 1.1rem; border-radius: 999px; cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .lang-btn:hover { background: var(--green); color: white; }
+
+    /* HERO */
+    .hero {
+      position: relative;
+      background: linear-gradient(135deg, #e5f7bf 0%, #edf4ff 55%, #d2e8ff 100%);
+      overflow: hidden;
+    }
+    .blob {
+      position: absolute; border-radius: 50%;
+      filter: blur(80px); opacity: 0.32; pointer-events: none;
+    }
+    .blob-g {
+      width: 480px; height: 480px; background: var(--green);
+      top: -180px; left: -120px;
+      animation: blobMove 9s ease-in-out infinite;
+    }
+    .blob-b {
+      width: 380px; height: 380px; background: var(--blue);
+      bottom: 20px; right: -80px;
+      animation: blobMove 12s ease-in-out infinite reverse;
+    }
+    @keyframes blobMove {
+      0%,100% { transform: translate(0,0); }
+      33% { transform: translate(15px,-25px); }
+      66% { transform: translate(-10px,15px); }
+    }
+    .hero-inner {
+      position: relative; z-index: 1;
+      max-width: 1100px; margin: 0 auto;
+      padding: 5rem 1.5rem 3.5rem;
+      display: grid; grid-template-columns: 1fr 400px; align-items: center; gap: 3rem;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: white; color: var(--text);
+      padding: 0.35rem 1rem; border-radius: 999px;
+      font-size: 0.85rem; font-weight: 700;
+      box-shadow: 0 2px 14px rgba(0,0,0,0.1);
+      margin-bottom: 1.25rem;
+    }
+    .hero-title {
+      font-size: clamp(2rem, 3.5vw, 3.1rem);
+      font-weight: 900; line-height: 1.2;
+      color: var(--text); margin-bottom: 1rem;
+    }
+    .hero-sub {
+      font-size: 1.05rem; color: #374151;
+      margin-bottom: 2rem; line-height: 1.75;
+    }
+    .hero-downloads { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+    .dl-btn {
+      display: flex; align-items: center; gap: 0.75rem;
+      padding: 0.8rem 1.5rem; border-radius: 14px;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .dl-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+    .dl-btn > div { display: flex; flex-direction: column; }
+    .dl-small { font-size: 0.68rem; font-weight: 600; opacity: 0.8; line-height: 1; }
+    .dl-big { font-size: 1rem; font-weight: 800; line-height: 1.3; }
+    .dl-ios { background: #1a1a2e; color: white; }
+    .dl-and { background: var(--green); color: white; }
+
+    /* PHONE MOCKUP */
+    .hero-phone { display: flex; justify-content: center; }
+    .phone-wrap { position: relative; animation: float 4s ease-in-out infinite; }
+    @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+    .phone {
+      width: 220px; height: 450px;
+      background: #0f0f1c;
+      border-radius: 38px; padding: 14px;
+      box-shadow: 0 30px 80px rgba(52,134,243,0.25), 0 0 0 1px rgba(255,255,255,0.08);
+      position: relative; z-index: 1;
+    }
+    .phone-notch { width: 70px; height: 6px; background: #252535; border-radius: 3px; margin: 4px auto 10px; }
+    .phone-screen {
+      background: #F8FAFF; border-radius: 26px;
+      height: calc(100% - 28px); overflow: hidden; padding: 14px;
+    }
+    .app-header {
+      font-size: 0.72rem; font-weight: 900; color: var(--text);
+      margin-bottom: 10px; padding-bottom: 7px;
+      border-bottom: 2px solid #E8F7C5;
+    }
+    .app-task { font-size: 0.68rem; font-weight: 700; padding: 6px 8px; border-radius: 9px; margin-bottom: 5px; }
+    .t-done { background: #EAF8C7; color: #3d7000; text-decoration: line-through; opacity: 0.7; }
+    .t-todo { background: #EBF3FF; color: #1a4fa0; }
+    .t-ai { background: linear-gradient(90deg, #EBF3FF, #E8F7C5); color: #333; }
+    .app-gacha {
+      margin-top: 10px; text-align: center;
+      font-size: 0.72rem; font-weight: 800; color: white;
+      background: linear-gradient(135deg, var(--green), var(--blue));
+      border-radius: 10px; padding: 8px;
+    }
+    .phone-glow {
+      position: absolute; width: 180px; height: 180px;
+      background: radial-gradient(circle, rgba(150,210,27,0.4), transparent 70%);
+      bottom: -55px; left: 50%; transform: translateX(-50%);
+      border-radius: 50%; filter: blur(20px); z-index: 0;
+    }
+
+    /* WAVE DIVIDER */
+    .hero-wave { margin-top: -1px; display: block; width: 100%; }
+
+    /* FEATURES */
+    .features { padding: 4rem 1.5rem 5rem; }
+    .sec-inner { max-width: 1100px; margin: 0 auto; }
+    .sec-head { text-align: center; margin-bottom: 2.75rem; }
+    .sec-head h2 { font-size: 2.2rem; font-weight: 900; color: var(--text); margin-bottom: 0.5rem; }
+    .sec-head p { font-size: 1.05rem; color: var(--muted); }
+
+    .feat-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem;
+    }
+    .feat-card {
+      background: white; border-radius: var(--radius); padding: 1.75rem;
+      box-shadow: var(--shadow); transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .feat-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+    .feat-wide { grid-column: span 2; }
+    .feat-icon { font-size: 2rem; margin-bottom: 0.75rem; }
+    .feat-card h3 { font-size: 1.15rem; font-weight: 800; margin-bottom: 0.45rem; color: var(--text); }
+    .feat-card p { font-size: 0.93rem; color: var(--muted); line-height: 1.65; }
+    .feat-pills { display: flex; gap: 0.5rem; margin-top: 1rem; flex-wrap: wrap; }
+    .feat-pills span { font-size: 0.78rem; font-weight: 700; padding: 0.28rem 0.75rem; border-radius: 999px; }
+
+    .c-green { border-left: 4px solid var(--green); background: linear-gradient(135deg, #F0FAE0, white); }
+    .c-green .feat-pills span { background: var(--green-light); color: #3d7000; }
+    .c-blue { border-left: 4px solid var(--blue); background: linear-gradient(135deg, #EBF3FF, white); }
+    .c-amber { border-left: 4px solid #F59E0B; background: linear-gradient(135deg, #FFFBEB, white); }
+    .c-pink { border-left: 4px solid #EC4899; background: linear-gradient(135deg, #FFF0F7, white); }
+    .c-purple { border-left: 4px solid #8B5CF6; background: linear-gradient(135deg, #F5F0FF, white); }
+
+    /* CTA */
+    .cta {
+      background: linear-gradient(135deg, var(--green) 0%, var(--blue) 100%);
+      padding: 5rem 1.5rem; text-align: center; color: white;
+      position: relative; overflow: hidden;
+    }
+    .cta::before, .cta::after {
+      content: ''; position: absolute; border-radius: 50%;
+      background: rgba(255,255,255,0.08);
+    }
+    .cta::before { width: 400px; height: 400px; top: -160px; left: -100px; }
+    .cta::after { width: 280px; height: 280px; bottom: -100px; right: -60px; }
+    .cta-inner { position: relative; z-index: 1; max-width: 600px; margin: 0 auto; }
+    .cta h2 { font-size: 2.4rem; font-weight: 900; margin-bottom: 0.75rem; }
+    .cta p { font-size: 1.05rem; opacity: 0.92; margin-bottom: 2rem; }
+    .cta-btns { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+    .cta-btn {
+      padding: 0.85rem 2rem; border-radius: 14px;
+      font-family: 'Nunito', 'PingFang SC', sans-serif;
+      font-weight: 800; font-size: 1rem;
+      text-decoration: none; background: white; color: var(--text);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+    .cta-btn-out { background: transparent; border: 2px solid white; color: white; }
+
+    /* FOOTER */
+    .footer {
+      background: #1E2140; color: rgba(255,255,255,0.5);
+      text-align: center; padding: 2rem 1.5rem; font-size: 0.88rem;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .hero-inner { grid-template-columns: 1fr; padding-top: 3.5rem; }
+      .hero-phone { order: -1; }
+      .feat-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 600px) {
+      .hero-inner { padding: 3rem 1rem 2.5rem; }
+      .feat-grid { grid-template-columns: 1fr; }
+      .feat-wide { grid-column: span 1; }
+      .hero-downloads { flex-direction: column; }
+      .dl-btn { justify-content: center; }
+      .cta h2 { font-size: 1.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="logo" href="/">
+        <div class="logo-mark">B</div>
+        BlotzTask
+      </a>
+      <button class="lang-btn" id="lang-toggle" onclick="toggleLang()">
+        <span id="lang-label">中文</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="blob blob-g"></div>
+    <div class="blob blob-b"></div>
+    <div class="hero-inner">
+      <div class="hero-text">
+        <div class="hero-badge" id="hero-badge">✨ AI-Powered ADHD Tool</div>
+        <h1 class="hero-title" id="hero-title">The AI-powered way to manage ADHD tasks!</h1>
+        <p class="hero-sub" id="hero-sub">Use AI to tackle your daily tasks: Quick task generation&nbsp;•&nbsp;AI breakdown&nbsp;•&nbsp;Easy capture</p>
+        <div class="hero-downloads">
+          <a class="dl-btn dl-ios"
+            href="https://apps.apple.com/au/app/blotztask-adhd-time-manager/id6752492404"
+            target="_blank" rel="noopener noreferrer">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+            </svg>
+            <div>
+              <span class="dl-small" id="dl-ios-s">Download on the</span>
+              <span class="dl-big">App Store</span>
+            </div>
+          </a>
+          <a class="dl-btn dl-and"
+            href="https://play.google.com/store/apps/details?id=com.blotz.blotztask&hl=en"
+            target="_blank" rel="noopener noreferrer">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M3.18 23.76c.38.21.83.22 1.22.04L14.84 12 4.4.2C4.01.02 3.57.02 3.18.24 2.42.67 2 1.52 2 2.56v18.88c0 1.04.42 1.89 1.18 2.32zM16.55 13.71l2.89 2.89-9.58 5.51 6.69-8.4zm3.38-3.38c.67.38 1.07 1.04 1.07 1.76s-.4 1.38-1.06 1.76l-2.1 1.21-3.19-3.19 3.19-3.19 2.09 1.65zM9.86 12L4.17 6.31 13.85 11.9l-3.99.1z"/>
+            </svg>
+            <div>
+              <span class="dl-small" id="dl-and-s">Get it on</span>
+              <span class="dl-big">Google Play</span>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div class="hero-phone">
+        <div class="phone-wrap">
+          <div class="phone">
+            <div class="phone-notch"></div>
+            <div class="phone-screen">
+              <div class="app-header">📋 Today's Tasks</div>
+              <div class="app-task t-done">✅ Morning workout</div>
+              <div class="app-task t-todo">⏰ Review project</div>
+              <div class="app-task t-ai">🤖 AI: Study plan</div>
+              <div class="app-gacha">🎰 Random pick!</div>
+            </div>
+          </div>
+          <div class="phone-glow"></div>
+        </div>
+      </div>
+    </div>
+    <svg class="hero-wave" viewBox="0 0 1440 70" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <path d="M0 35 C360 70 720 0 1080 35 C1260 53 1380 22 1440 35 L1440 70 L0 70 Z" fill="#FFFDF5"/>
+    </svg>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features">
+    <div class="sec-inner">
+      <div class="sec-head">
+        <h2 id="feat-title">Key Features</h2>
+        <p id="feat-sub">Everything you need to stay on top of your tasks</p>
+      </div>
+      <div class="feat-grid">
+
+        <div class="feat-card feat-wide c-green">
+          <div class="feat-icon">🎙️</div>
+          <h3 id="f1-title">Voice to Tasks</h3>
+          <p id="f1-desc">Generate tasks from your voice input. AI automatically breaks them down into manageable steps, with monthly &amp; weekly progress reports.</p>
+          <div class="feat-pills">
+            <span id="f1-p1">🤖 AI Breakdown</span>
+            <span id="f1-p2">📊 Reports</span>
+          </div>
+        </div>
+
+        <div class="feat-card c-blue">
+          <div class="feat-icon">📊</div>
+          <h3 id="f2-title">AI Summarization</h3>
+          <p id="f2-desc">Let AI recap everything you've accomplished this week or month — see your progress at a glance.</p>
+        </div>
+
+        <div class="feat-card c-amber">
+          <div class="feat-icon">🎰</div>
+          <h3 id="f3-title">Gacha Machine</h3>
+          <p id="f3-desc">Can't decide where to start? Spin the Gacha to randomly pick your next task and break the freeze!</p>
+        </div>
+
+        <div class="feat-card c-pink">
+          <div class="feat-icon">📝</div>
+          <h3 id="f4-title">Quick Notes</h3>
+          <p id="f4-desc">Capture thoughts and ideas instantly — nothing slips through the cracks.</p>
+        </div>
+
+        <div class="feat-card c-purple">
+          <div class="feat-icon">⏰</div>
+          <h3 id="f5-title">Deadline Tracker</h3>
+          <p id="f5-desc">Mark tasks as deadlines and always know how many days remain. Stay on top of what matters most without the anxiety.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <div class="cta-inner">
+      <h2 id="cta-title">Ready to take control?</h2>
+      <p id="cta-sub">Download BlotzTask and start managing your ADHD tasks with ease.</p>
+      <div class="cta-btns">
+        <a class="cta-btn"
+          href="https://apps.apple.com/au/app/blotztask-adhd-time-manager/id6752492404"
+          target="_blank" rel="noopener noreferrer" id="cta-ios">📱 App Store</a>
+        <a class="cta-btn cta-btn-out"
+          href="https://play.google.com/store/apps/details?id=com.blotz.blotztask&hl=en"
+          target="_blank" rel="noopener noreferrer" id="cta-and">🤖 Google Play</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p id="footer-copy">© 2025 BlotzTask. Made with ❤️ for the ADHD community.</p>
+  </footer>
+
+  <script>
+    const translations = {
+      en: {
+        langLabel: '中文',
+        'hero-badge': '✨ AI-Powered ADHD Tool',
+        'hero-title': 'The AI-powered way to manage ADHD tasks!',
+        'hero-sub': 'Use AI to tackle your daily tasks: Quick task generation • AI breakdown • Easy capture',
+        'dl-ios-s': 'Download on the',
+        'dl-and-s': 'Get it on',
+        'feat-title': 'Key Features',
+        'feat-sub': 'Everything you need to stay on top of your tasks',
+        'f1-title': 'Voice to Tasks',
+        'f1-desc': 'Generate tasks from your voice input. AI automatically breaks them down into manageable steps, with monthly & weekly progress reports.',
+        'f1-p1': '🤖 AI Breakdown',
+        'f1-p2': '📊 Reports',
+        'f2-title': 'AI Summarization',
+        'f2-desc': "Let AI recap everything you've accomplished this week or month — see your progress at a glance.",
+        'f3-title': 'Gacha Machine',
+        'f3-desc': "Can't decide where to start? Spin the Gacha to randomly pick your next task and break the freeze!",
+        'f4-title': 'Quick Notes',
+        'f4-desc': 'Capture thoughts and ideas instantly — nothing slips through the cracks.',
+        'f5-title': 'Deadline Tracker',
+        'f5-desc': 'Mark tasks as deadlines and always know how many days remain. Stay on top of what matters most without the anxiety.',
+        'cta-title': 'Ready to take control?',
+        'cta-sub': 'Download BlotzTask and start managing your ADHD tasks with ease.',
+        'cta-ios': '📱 App Store',
+        'cta-and': '🤖 Google Play',
+        'footer-copy': '© 2025 BlotzTask. Made with ❤️ for the ADHD community.',
+      },
+      zh: {
+        langLabel: 'English',
+        'hero-badge': '✨ AI驱动的ADHD助手',
+        'hero-title': '专为ADHD设计的AI任务管理方式！',
+        'hero-sub': '用AI轻松管理你的日常任务：快速生成任务 • AI拆解 • 随时记录',
+        'dl-ios-s': '下载于',
+        'dl-and-s': '获取于',
+        'feat-title': '核心功能',
+        'feat-sub': '你需要的一切，都在这里',
+        'f1-title': '语音生成任务',
+        'f1-desc': '通过语音输入，AI自动生成并拆解任务，还提供每月和每周的详细进度报告。',
+        'f1-p1': '🤖 AI拆解',
+        'f1-p2': '📊 周月报告',
+        'f2-title': 'AI总结回顾',
+        'f2-desc': '让AI为你总结过去一周或一个月完成的所有任务，见证你的每一步进步。',
+        'f3-title': '扭蛋机随机任务',
+        'f3-desc': '不知道从哪开始？让扭蛋机帮你随机选一个任务，轻松破冰启动！',
+        'f4-title': '快速笔记',
+        'f4-desc': '随时随地记录任何想法，灵感永不丢失。',
+        'f5-title': '截止日期追踪',
+        'f5-desc': '将重要任务设为截止日期，随时掌握剩余天数，不再错过任何期限。',
+        'cta-title': '准备好掌控你的任务了吗？',
+        'cta-sub': '立即下载BlotzTask，轻松管理你的ADHD任务。',
+        'cta-ios': '📱 App Store',
+        'cta-and': '🤖 Google Play',
+        'footer-copy': '© 2025 BlotzTask. 用❤️为ADHD社区打造。',
+      }
+    };
+
+    let currentLang: 'en' | 'zh' = 'en';
+
+    function toggleLang() {
+      currentLang = currentLang === 'en' ? 'zh' : 'en';
+      const d: Record<string, string> = translations[currentLang];
+      document.getElementById('html-root')?.setAttribute('lang', currentLang);
+      const langLabel = document.getElementById('lang-label');
+      if (langLabel) langLabel.textContent = d.langLabel;
+      for (const [id, val] of Object.entries(d)) {
+        if (id === 'langLabel') continue;
+        const el = document.getElementById(id);
+        if (el) el.textContent = val;
+      }
+    }
+  </script>
+</body>
+</html>
