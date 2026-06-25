@@ -267,6 +267,60 @@ import { Icon } from 'astro-icon/components';
       .fan-card:nth-child(n) { transform: none !important; }
       .fan-card.active { transform: none !important; box-shadow: var(--shadow-lg) !important; }
     }
+    /* LIGHTBOX */
+    .lightbox {
+      display: none;
+      position: fixed; inset: 0; z-index: 1000;
+      align-items: center; justify-content: center;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox-backdrop {
+      position: absolute; inset: 0;
+      background: rgba(225, 237, 255, 0.78);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+    }
+    .lightbox-close {
+      position: absolute; top: 1.5rem; right: 1.5rem; z-index: 2;
+      width: 46px; height: 46px; border-radius: 50%;
+      background: rgba(0,0,0,0.07); border: 2px solid rgba(0,0,0,0.14);
+      color: var(--text); cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s;
+    }
+    .lightbox-close:hover { background: rgba(0,0,0,0.14); }
+    .lightbox-content {
+      position: relative; z-index: 1;
+      display: flex; flex-direction: column; gap: 1.5rem;
+      width: min(920px, 92vw);
+    }
+    .lightbox-title {
+      font-size: 1.75rem; font-weight: 900; color: var(--text);
+    }
+    .lightbox-body {
+      display: flex; align-items: center; gap: 2.5rem;
+    }
+    .lightbox-arrow {
+      flex-shrink: 0;
+      width: 48px; height: 48px; border-radius: 50%;
+      background: rgba(0,0,0,0.07); border: 2px solid rgba(0,0,0,0.14);
+      color: var(--text); cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s;
+    }
+    .lightbox-arrow:hover { background: rgba(0,0,0,0.14); }
+    .lightbox-video {
+      max-height: 68vh; max-width: 42vw;
+      border-radius: 24px;
+      box-shadow: 0 20px 60px rgba(52,134,243,0.18), 0 4px 20px rgba(0,0,0,0.10);
+      flex-shrink: 0;
+    }
+    .lightbox-info {
+      flex: 1; display: flex; flex-direction: column; gap: 0.75rem;
+    }
+    .lightbox-desc {
+      font-size: 1rem; color: #374151; line-height: 1.75;
+    }
   </style>
 </head>
 <body>
@@ -365,32 +419,31 @@ import { Icon } from 'astro-icon/components';
       </div>
       <div class="feat-fan">
 
-        <div class="fan-card">
+        <div class="fan-card" data-video="/en-videos/ai-voice-video.MP4">
           <div class="fan-icon"><Icon name="lucide:mic" /></div>
           <div class="fan-label" id="f1-title">Voice to Tasks</div>
           <div class="fan-desc" id="f1-desc">Generate tasks from your voice input. AI automatically breaks them down into manageable steps, with monthly &amp; weekly progress reports.</div>
-          
         </div>
 
-        <div class="fan-card">
+        <div class="fan-card" data-video="/en-videos/month-review.MP4">
           <div class="fan-icon"><Icon name="lucide:sparkles" /></div>
           <div class="fan-label" id="f2-title">AI Summarization</div>
           <div class="fan-desc" id="f2-desc">Let AI recap everything you've accomplished this week or month — see your progress at a glance.</div>
         </div>
 
-        <div class="fan-card">
+        <div class="fan-card" data-video="/en-videos/gashapon-machine.MP4">
           <div class="fan-icon"><Icon name="lucide:dices" /></div>
           <div class="fan-label" id="f3-title">Gacha Machine</div>
           <div class="fan-desc" id="f3-desc">Can't decide where to start? Spin the Gacha to randomly pick your next task and break the freeze!</div>
         </div>
 
-        <div class="fan-card">
+        <div class="fan-card" data-video="/en-videos/note.MP4">
           <div class="fan-icon"><Icon name="lucide:notebook-pen" /></div>
           <div class="fan-label" id="f4-title">Quick Notes</div>
           <div class="fan-desc" id="f4-desc">Capture thoughts and ideas instantly — nothing slips through the cracks.</div>
         </div>
 
-        <div class="fan-card">
+        <div class="fan-card" data-video="/en-videos/deadline.MP4">
           <div class="fan-icon"><Icon name="lucide:clock" /></div>
           <div class="fan-label" id="f5-title">Deadline Tracker</div>
           <div class="fan-desc" id="f5-desc">Mark tasks as deadlines and always know how many days remain. Stay on top of what matters most without the anxiety.</div>
@@ -479,13 +532,63 @@ import { Icon } from 'astro-icon/components';
       }
     };
 
-    const fanCards = document.querySelectorAll('.fan-card');
+    const fanCards = Array.from(document.querySelectorAll('.fan-card')) as HTMLElement[];
+    const lightbox = document.getElementById('lightbox')!;
+    const lbVideo = document.getElementById('lightbox-video') as HTMLVideoElement;
+    const lbClose = document.getElementById('lightbox-close')!;
+    const lbPrev = document.getElementById('lightbox-prev')!;
+    const lbNext = document.getElementById('lightbox-next')!;
+    const lbTitle = document.getElementById('lightbox-title')!;
+    const lbDesc = document.getElementById('lightbox-desc')!;
+
+    let currentIndex = 0;
+
+    function loadCard(index: number) {
+      const card = fanCards[index];
+      lbVideo.src = card.dataset.video!;
+      lbTitle.textContent = card.querySelector('.fan-label')?.textContent ?? '';
+      lbDesc.textContent = card.querySelector('.fan-desc')?.textContent ?? '';
+      lbVideo.load();
+      lbVideo.play();
+    }
+
+    function openLightbox(index: number) {
+      currentIndex = index;
+      loadCard(index);
+      lightbox.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove('open');
+      lbVideo.pause();
+      lbVideo.src = '';
+      document.body.style.overflow = '';
+    }
+
+    function navigate(dir: number) {
+      currentIndex = (currentIndex + dir + fanCards.length) % fanCards.length;
+      loadCard(currentIndex);
+    }
+
     fanCards[2]?.classList.add('active');
-    fanCards.forEach(card => {
+    fanCards.forEach((card, i) => {
       card.addEventListener('click', () => {
         fanCards.forEach(c => c.classList.remove('active'));
         card.classList.add('active');
+        openLightbox(i);
       });
+    });
+
+    lbClose.addEventListener('click', closeLightbox);
+    lbPrev.addEventListener('click', () => navigate(-1));
+    lbNext.addEventListener('click', () => navigate(1));
+    lightbox.querySelector('.lightbox-backdrop')!.addEventListener('click', closeLightbox);
+    document.addEventListener('keydown', (e) => {
+      if (!lightbox.classList.contains('open')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft') navigate(-1);
+      if (e.key === 'ArrowRight') navigate(1);
     });
 
     let currentLang: 'en' | 'zh' = 'en';
@@ -511,5 +614,34 @@ import { Icon } from 'astro-icon/components';
       }
     }
   </script>
+  <!-- VIDEO LIGHTBOX -->
+  <div id="lightbox" class="lightbox" aria-modal="true" role="dialog">
+    <div class="lightbox-backdrop"></div>
+    <button class="lightbox-close" id="lightbox-close" aria-label="Close">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+    <div class="lightbox-content">
+      <h2 class="lightbox-title" id="lightbox-title"></h2>
+      <div class="lightbox-body">
+        <button class="lightbox-arrow" id="lightbox-prev" aria-label="Previous">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"/>
+          </svg>
+        </button>
+        <video id="lightbox-video" class="lightbox-video" playsinline controls></video>
+        <div class="lightbox-info">
+          <p class="lightbox-desc" id="lightbox-desc"></p>
+        </div>
+        <button class="lightbox-arrow" id="lightbox-next" aria-label="Next">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
 </body>
 </html>
