@@ -322,6 +322,47 @@ import { Icon } from 'astro-icon/components';
     .lightbox-desc {
       font-size: 1rem; color: #374151; line-height: 1.75;
     }
+    /* FEEDBACK */
+    .feedback {
+      padding: 5rem 1.5rem;
+      background: #ffffff;
+      text-align: center;
+    }
+    .feedback-inner { max-width: 560px; margin: 0 auto; }
+    .feedback-inner h2 { font-size: 2rem; font-weight: 900; color: var(--text); margin-bottom: 0.75rem; }
+    .feedback-inner p { font-size: 1rem; color: #374151; line-height: 1.75; margin-bottom: 2rem; }
+    .feedback-btn {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      padding: 0.9rem 2.2rem; border-radius: 14px;
+      background: var(--text); color: white;
+      font-family: 'Nunito', 'PingFang SC', sans-serif;
+      font-weight: 800; font-size: 1rem;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 20px rgba(30,33,64,0.18);
+    }
+    .feedback-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(30,33,64,0.28); }
+
+    /* CONTACT */
+    .contact { padding: 4rem 1.5rem; background: white; }
+    .contact-inner { max-width: 600px; margin: 0 auto; text-align: center; }
+    .contact-inner h2 { font-size: 2rem; font-weight: 900; color: var(--text); margin-bottom: 0.5rem; }
+    .contact-inner p { font-size: 1rem; color: var(--muted); margin-bottom: 2.5rem; }
+    .contact-links { display: flex; justify-content: center; gap: 1.25rem; flex-wrap: wrap; }
+    .contact-card {
+      display: flex; align-items: center; gap: 0.85rem;
+      padding: 1rem 1.75rem; border-radius: 16px;
+      text-decoration: none; font-weight: 700; font-size: 0.95rem;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: var(--shadow);
+    }
+    .contact-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+    .contact-card svg { flex-shrink: 0; }
+    .contact-rednote { background: #ff2442; color: white; }
+    .contact-linkedin { background: #0a66c2; color: white; }
+    .contact-card-label { display: flex; flex-direction: column; text-align: left; }
+    .contact-card-sub { font-size: 0.72rem; font-weight: 600; opacity: 0.85; line-height: 1; margin-bottom: 2px; }
+    .contact-card-name { font-size: 1rem; font-weight: 800; line-height: 1.2; }
   </style>
 </head>
 <body>
@@ -454,6 +495,48 @@ import { Icon } from 'astro-icon/components';
     </div>
   </section>
 
+  <!-- FEEDBACK -->
+  <section class="feedback">
+    <div class="feedback-inner">
+      <h2 id="feedback-title">We Want to Hear from You</h2>
+      <p id="feedback-sub">Help us improve Blotz by sharing your ideas and feedback. Your input shapes the future of AI-powered task management.</p>
+      <a class="feedback-btn"
+        href="https://m3cetbcyp2d.usttp.larksuite.com/share/base/form/shrutCtpZYEZ0KeRokQpJ7K96rd"
+        target="_blank" rel="noopener noreferrer">
+        <Icon name="lucide:message-square-heart" style="width:20px;height:20px;" />
+        <span id="feedback-btn-label">Share Your Feedback</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact">
+    <div class="contact-inner">
+      <h2 id="contact-title">Find us on</h2>
+      <p id="contact-sub">Follow BlotzTask for updates, tips, and community.</p>
+      <div class="contact-links">
+        <a class="contact-card contact-rednote"
+          href="https://www.xiaohongshu.com/user/profile/67bc12d6000000000e01f09a"
+          target="_blank" rel="noopener noreferrer">
+          <Icon name="simple-icons:xiaohongshu" style="width:26px;height:26px;" />
+          <div class="contact-card-label">
+            <span class="contact-card-sub" id="contact-rn-sub">Follow us on</span>
+            <span class="contact-card-name" id="contact-rn-name">Red Note</span>
+          </div>
+        </a>
+        <a class="contact-card contact-linkedin"
+          href="https://www.linkedin.com/company/blotz-app/"
+          target="_blank" rel="noopener noreferrer">
+          <Icon name="lucide:linkedin" style="width:26px;height:26px;" />
+          <div class="contact-card-label">
+            <span class="contact-card-sub" id="contact-li-sub">Connect on</span>
+            <span class="contact-card-name" id="contact-li-name">LinkedIn</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
   <!-- CTA -->
   <section class="cta">
     <div class="cta-inner">
@@ -506,6 +589,15 @@ import { Icon } from 'astro-icon/components';
         'cta-ios': '📱 App Store',
         'cta-and': '🤖 Google Play',
         'footer-copy': '© 2025 BlotzTask. Made with ❤️ for the ADHD community.',
+        'feedback-title': 'We Want to Hear from You',
+        'feedback-sub': 'Help us improve Blotz by sharing your ideas and feedback. Your input shapes the future of AI-powered task management.',
+        'feedback-btn-label': 'Share Your Feedback',
+        'contact-title': 'Find us on',
+        'contact-sub': 'Follow BlotzTask for updates, tips, and community.',
+        'contact-rn-sub': 'Follow us on',
+        'contact-rn-name': 'Red Note',
+        'contact-li-sub': 'Connect on',
+        'contact-li-name': 'LinkedIn',
       },
       zh: {
         langLabel: 'English',
@@ -533,6 +625,15 @@ import { Icon } from 'astro-icon/components';
         'cta-ios': '📱 App Store',
         'cta-and': '🤖 Google Play',
         'footer-copy': '© 2025 BlotzTask. 用❤️为ADHD社区打造。',
+        'feedback-title': '我们想听听你的声音',
+        'feedback-sub': '通过分享你的想法和反馈，帮助我们改进 Blotz。你的意见将塑造 AI 驱动任务管理的未来。',
+        'feedback-btn-label': '分享你的反馈',
+        'contact-title': '关注我们',
+        'contact-sub': '关注 BlotzTask，获取最新动态、使用技巧和社区资讯。',
+        'contact-rn-sub': '关注我们',
+        'contact-rn-name': '小红书',
+        'contact-li-sub': '联系我们',
+        'contact-li-name': 'LinkedIn',
       }
     };
 
