@@ -50,8 +50,15 @@ const t = (key: TranslationKey): string =>
 
     /* NAV */
     .nav {
-      position: sticky; top: 0; z-index: 100;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       background: transparent;
+      transition: background 0.3s, backdrop-filter 0.3s, box-shadow 0.3s;
+    }
+    .nav.scrolled {
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: 0 1px 20px rgba(0, 0, 0, 0.08);
     }
     .nav-inner {
       max-width: 1100px; margin: 0 auto;
@@ -97,7 +104,7 @@ const t = (key: TranslationKey): string =>
     .hero-inner {
       position: relative; z-index: 1;
       max-width: 1100px; margin: 0 auto;
-      padding: 5rem 1.5rem 3.5rem;
+      padding: 7rem 1.5rem 3.5rem;
       display: grid; grid-template-columns: 1fr 480px; align-items: center; gap: 3rem;
     }
     .hero-badge {
@@ -267,12 +274,12 @@ const t = (key: TranslationKey): string =>
 
     /* RESPONSIVE */
     @media (max-width: 900px) {
-      .hero-inner { grid-template-columns: 1fr; padding-top: 3.5rem; }
+      .hero-inner { grid-template-columns: 1fr; padding-top: 5.5rem; }
       .hero-phone { order: -1; }
       .fan-card { width: 180px; min-height: 255px; margin: 0 -16px; }
     }
     @media (max-width: 600px) {
-      .hero-inner { padding: 3rem 1rem 2.5rem; }
+      .hero-inner { padding: 5rem 1rem 2.5rem; }
       .hero-downloads { flex-direction: column; }
       .dl-btn { justify-content: center; }
       .cta h2 { font-size: 1.8rem; }
@@ -386,7 +393,6 @@ const t = (key: TranslationKey): string =>
 </head>
 <body>
 
-  <div class="hero-area">
   <!-- NAV -->
   <nav class="nav">
     <div class="nav-inner">
@@ -397,6 +403,7 @@ const t = (key: TranslationKey): string =>
     </div>
   </nav>
 
+  <div class="hero-area">
   <!-- HERO -->
   <section class="hero">
     <div class="blob blob-g"></div>
@@ -643,6 +650,11 @@ const t = (key: TranslationKey): string =>
       if (e.key === 'ArrowLeft') navigate(-1);
       if (e.key === 'ArrowRight') navigate(1);
     });
+
+    const nav = document.querySelector('.nav') as HTMLElement;
+    const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 10);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
 
     const heroVideo = document.getElementById('hero-video') as HTMLVideoElement;
     if (heroVideo) {
