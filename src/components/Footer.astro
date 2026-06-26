@@ -1,0 +1,86 @@
+---
+import { Icon } from 'astro-icon/components';
+import { ui, defaultLocale } from '../i18n/landing';
+import type { Lang, TranslationKey } from '../i18n/landing';
+
+const locale = (Astro.currentLocale ?? defaultLocale) as Lang;
+const t = (key: TranslationKey): string =>
+  (ui[locale] as typeof ui[typeof defaultLocale])[key] ?? ui[defaultLocale][key];
+---
+
+<footer class="site-footer">
+  <div class="footer-main">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a class="footer-logo-link" href={`/${locale}/`}>
+          <div class="footer-logo-icon"></div>
+          BlotzTask
+        </a>
+        <p class="footer-tagline">AI-Powered ADHD Task Manager</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>{t('footer-resources')}</h4>
+        <a class="footer-link" href={`/${locale}/privacy`}>{t('footer-privacy')}</a>
+        <a class="footer-link"
+          href="https://m3cetbcyp2d.usttp.larksuite.com/share/base/form/shrutCtpZYEZ0KeRokQpJ7K96rd"
+          target="_blank" rel="noopener noreferrer">
+          {t('footer-feedback')}
+        </a>
+      </div>
+
+      <div class="footer-col">
+        <h4>{t('footer-follow')}</h4>
+        <a class="footer-link"
+          href="https://www.xiaohongshu.com/user/profile/67bc12d6000000000e01f09a"
+          target="_blank" rel="noopener noreferrer">
+          <Icon name="simple-icons:xiaohongshu" width={15} height={15} />
+          Red Note
+        </a>
+        <a class="footer-link"
+          href="https://www.linkedin.com/company/blotz-app/"
+          target="_blank" rel="noopener noreferrer">
+          <Icon name="lucide:linkedin" width={15} height={15} />
+          LinkedIn
+        </a>
+        <a class="footer-link" href="mailto:blotztask.app@gmail.com">
+          <Icon name="lucide:mail" width={15} height={15} />
+          {t('footer-contact')}
+        </a>
+      </div>
+    </div>
+  </div>
+  <hr class="footer-divider" />
+  <div class="footer-bottom">
+    <p>{t('footer-copy')}</p>
+  </div>
+</footer>
+
+<style is:global>
+  .site-footer { background: #1E2140; color: white; }
+  .footer-main { padding: 3.5rem 1.5rem 2rem; }
+  .footer-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1.5fr; gap: 3rem; }
+  .footer-logo-link { display: flex; align-items: center; gap: 0.55rem; text-decoration: none; color: white; font-weight: 900; font-size: 1.2rem; margin-bottom: 0.65rem; }
+  .footer-logo-icon {
+    width: 26px; height: 26px; flex-shrink: 0; background-color: white;
+    -webkit-mask-image: url('/shared-pic/bun-white.svg'); -webkit-mask-size: contain; -webkit-mask-repeat: no-repeat; -webkit-mask-position: center;
+    mask-image: url('/shared-pic/bun-white.svg'); mask-size: contain; mask-repeat: no-repeat; mask-position: center;
+  }
+  .footer-tagline { font-size: 0.85rem; color: rgba(255,255,255,0.4); line-height: 1.55; max-width: 220px; }
+  .footer-col { display: flex; flex-direction: column; }
+  .footer-col h4 { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.35); margin-bottom: 0.85rem; }
+  .footer-link { color: rgba(255,255,255,0.62); text-decoration: none; font-size: 0.88rem; font-weight: 600; padding: 0.28rem 0; display: flex; align-items: center; gap: 0.45rem; transition: color 0.18s; line-height: 1.5; }
+  .footer-link:hover { color: white; }
+  .footer-link svg { flex-shrink: 0; opacity: 0.75; }
+  .footer-divider { border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 0 1.5rem; }
+  .footer-bottom { max-width: 1100px; margin: 0 auto; padding: 1.2rem 1.5rem; text-align: center; font-size: 0.8rem; color: rgba(255,255,255,0.28); }
+  @media (max-width: 720px) {
+    .footer-inner { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .footer-brand { grid-column: 1 / -1; }
+  }
+  @media (max-width: 480px) {
+    .footer-inner { grid-template-columns: 1fr; }
+    .footer-brand { grid-column: auto; }
+    .footer-main { padding: 2.5rem 1.25rem 1.5rem; }
+  }
+</style>

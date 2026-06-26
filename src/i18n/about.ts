@@ -14,7 +14,6 @@ export const aboutUi = {
     'dev-desc': 'Building fast, reliable features that make the app feel effortless to use.',
     'product-role': 'Product',
     'product-desc': 'Shaping the vision, roadmap, and everything that makes BlotzTask tick.',
-    'footer-copy': '© 2025 BlotzTask. Made with ❤️ for the ADHD community.',
   },
   zh: {
     'nav-home': '首页',
@@ -29,7 +28,6 @@ export const aboutUi = {
     'dev-desc': '构建快速、可靠的功能，让应用使用起来毫不费力。',
     'product-role': '产品',
     'product-desc': '塑造产品愿景、路线图，以及让BlotzTask与众不同的一切。',
-    'footer-copy': '© 2025 BlotzTask. 用❤️为ADHD社区打造。',
   },
 } as const;
 
