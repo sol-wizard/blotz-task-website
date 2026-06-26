@@ -1,0 +1,147 @@
+---
+import { Icon } from 'astro-icon/components';
+import { ui, defaultLocale } from '../i18n/landing';
+import type { Lang, TranslationKey } from '../i18n/landing';
+
+const locale = (Astro.currentLocale ?? defaultLocale) as Lang;
+const t = (key: TranslationKey): string =>
+  (ui[locale] as typeof ui[typeof defaultLocale])[key] ?? ui[defaultLocale][key];
+
+const pathname = Astro.url.pathname;
+const isHome = pathname === `/${locale}/` || pathname === `/${locale}`;
+const isAbout = pathname.includes('/about');
+---
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="logo" href={`/${locale}/`}>
+      <div class="logo-icon" aria-hidden="true"></div>
+      BlotzTask
+    </a>
+    <div class="nav-links">
+      <a class:list={['nav-link', { active: isHome }]} href={`/${locale}/`}>{t('nav-home')}</a>
+      <div class="nav-dropdown">
+        <button class="nav-link">
+          {t('nav-made-for')}
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="nav-dropdown-menu">
+          <a class="nav-dropdown-item" href={`/${locale}/#features`}>
+            <Icon name="lucide:check-square" width={16} height={16} />
+            <div class="nav-dropdown-item-text">
+              <span class="nav-dropdown-item-title">{t('nav-mf-task')}</span>
+            </div>
+          </a>
+          <a class="nav-dropdown-item" href={`/${locale}/#features`}>
+            <Icon name="lucide:sparkles" width={16} height={16} />
+            <div class="nav-dropdown-item-text">
+              <span class="nav-dropdown-item-title">{t('nav-mf-ai')}</span>
+            </div>
+          </a>
+          <a class="nav-dropdown-item" href={`/${locale}/#features`}>
+            <Icon name="lucide:dices" width={16} height={16} />
+            <div class="nav-dropdown-item-text">
+              <span class="nav-dropdown-item-title">{t('nav-mf-game')}</span>
+            </div>
+          </a>
+        </div>
+      </div>
+      <a class:list={['nav-link', { active: isAbout }]} href={`/${locale}/about`}>{t('nav-about')}</a>
+    </div>
+  </div>
+</nav>
+
+<style>
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: transparent;
+    transition: background 0.3s, backdrop-filter 0.3s, box-shadow 0.3s;
+  }
+  .nav.scrolled {
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 1px 20px rgba(0, 0, 0, 0.08);
+  }
+  .nav-inner {
+    max-width: 1100px; margin: 0 auto;
+    padding: 1rem 1.5rem;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .logo {
+    display: flex; align-items: center; gap: 0.6rem;
+    text-decoration: none; font-weight: 900; font-size: 1.25rem; color: var(--text);
+  }
+  .logo-icon {
+    width: 32px; height: 32px; flex-shrink: 0;
+    background-color: white;
+    -webkit-mask-image: url('/shared-pic/bun-white.svg');
+    -webkit-mask-size: contain; -webkit-mask-repeat: no-repeat; -webkit-mask-position: center;
+    mask-image: url('/shared-pic/bun-white.svg');
+    mask-size: contain; mask-repeat: no-repeat; mask-position: center;
+  }
+  .nav-links {
+    display: flex; align-items: center; gap: 0.25rem;
+  }
+  .nav-link {
+    padding: 0.45rem 0.9rem; border-radius: 999px;
+    font-size: 0.9rem; font-weight: 700; color: var(--text);
+    text-decoration: none; background: none; border: none; cursor: pointer;
+    appearance: none; -webkit-appearance: none;
+    display: flex; align-items: center; gap: 0.3rem;
+    transition: background 0.18s;
+    white-space: nowrap;
+    font-family: 'Nunito', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
+  }
+  .nav-link:hover { background: rgba(0,0,0,0.06); }
+  .nav-link svg { transition: transform 0.2s; }
+  .nav-dropdown { position: relative; }
+  .nav-dropdown:hover .nav-dropdown-menu,
+  .nav-dropdown:focus-within .nav-dropdown-menu { display: flex; }
+  .nav-dropdown:hover .nav-link svg,
+  .nav-dropdown:focus-within .nav-link svg { transform: rotate(180deg); }
+  .nav-dropdown-menu {
+    display: none;
+    flex-direction: column; gap: 0.15rem;
+    position: absolute; top: calc(100% + 0.5rem); left: 50%;
+    transform: translateX(-50%);
+    background: white; border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.12), 0 0 0 1px rgba(0,0,0,0.06);
+    padding: 0.5rem;
+    min-width: 200px; z-index: 200;
+  }
+  .nav-dropdown-item {
+    display: flex; align-items: center; gap: 0.75rem;
+    padding: 0.65rem 0.85rem; border-radius: 10px;
+    text-decoration: none; color: var(--text);
+    transition: background 0.15s;
+  }
+  .nav-dropdown-item:hover { background: #f5f5f5; }
+  .nav-dropdown-item svg { flex-shrink: 0; color: var(--green); }
+  .nav-dropdown-item-text { display: flex; flex-direction: column; }
+  .nav-dropdown-item-title { font-size: 0.88rem; font-weight: 800; }
+</style>
+
+<script>
+  const nav = document.querySelector('.nav') as HTMLElement;
+  const logoIcon = document.querySelector('.logo-icon') as HTMLElement;
+  const heroArea = document.querySelector('.hero-area') as HTMLElement | null;
+
+  if (!heroArea) {
+    // Not on home page — always frosted, logo always green
+    nav.classList.add('scrolled');
+    logoIcon.style.backgroundColor = '#8AC936';
+  } else {
+    const onScroll = () => {
+      const heroH = heroArea.offsetHeight ?? 600;
+      const ratio = Math.min(Math.max(window.scrollY / heroH, 0), 1);
+      const r = Math.round(255 + (138 - 255) * ratio);
+      const g = Math.round(255 + (201 - 255) * ratio);
+      const b = Math.round(255 + (54  - 255) * ratio);
+      logoIcon.style.backgroundColor = `rgb(${r},${g},${b})`;
+      nav.classList.toggle('scrolled', window.scrollY > 10);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
+</script>

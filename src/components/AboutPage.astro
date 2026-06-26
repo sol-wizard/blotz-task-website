@@ -1,4 +1,5 @@
 ---
+import Layout from '../layouts/Layout.astro';
 import { Icon } from 'astro-icon/components';
 import { aboutUi, defaultLocale } from '../i18n/about';
 import type { AboutLang, AboutKey } from '../i18n/about';
@@ -8,127 +9,14 @@ const t = (key: AboutKey): string =>
   (aboutUi[locale] as typeof aboutUi[typeof defaultLocale])[key] ?? aboutUi[defaultLocale][key];
 
 const teams = [
-  { key: 'design',     icon: 'lucide:palette',          color: '#ede0ff', accent: '#a78bfa' },
-  { key: 'marketing',  icon: 'lucide:megaphone',         color: '#ffd9ef', accent: '#f472b6' },
-  { key: 'dev',        icon: 'lucide:code-2',            color: '#d5e9ff', accent: '#3486F3' },
-  { key: 'product',    icon: 'lucide:compass',           color: '#e2f7b2', accent: '#8AC936' },
+  { key: 'design',    icon: 'lucide:palette',   color: '#ede0ff', accent: '#a78bfa' },
+  { key: 'marketing', icon: 'lucide:megaphone',  color: '#ffd9ef', accent: '#f472b6' },
+  { key: 'dev',       icon: 'lucide:code-2',     color: '#d5e9ff', accent: '#3486F3' },
+  { key: 'product',   icon: 'lucide:compass',    color: '#e2f7b2', accent: '#8AC936' },
 ] as const;
 ---
 
-<!DOCTYPE html>
-<html lang={locale}>
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>About – BlotzTask</title>
-  <link rel="icon" type="image/png" href="/shared-pic/bun-icon.png" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
-  <style is:global>
-    :root {
-      --green: #96D21B; --blue: #3486F3;
-      --text: #1E2140; --muted: #6B7280;
-      --shadow: 0 4px 24px rgba(0,0,0,0.08);
-      --shadow-lg: 0 8px 40px rgba(0,0,0,0.14);
-    }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: 'Nunito', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
-      background: #fff; color: var(--text); line-height: 1.6;
-    }
-
-    /* NAV */
-    .nav {
-      position: sticky; top: 0; z-index: 100;
-      background: rgba(255,255,255,0.8);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      box-shadow: 0 1px 20px rgba(0,0,0,0.07);
-    }
-    .nav-inner {
-      max-width: 1100px; margin: 0 auto;
-      padding: 1rem 1.5rem;
-      display: flex; align-items: center; justify-content: space-between;
-    }
-    .logo {
-      display: flex; align-items: center; gap: 0.6rem;
-      text-decoration: none; font-weight: 900; font-size: 1.25rem; color: var(--text);
-    }
-    .logo-icon {
-      width: 32px; height: 32px; flex-shrink: 0;
-      background-color: #8AC936;
-      -webkit-mask-image: url('/shared-pic/bun-white.svg');
-      -webkit-mask-size: contain; -webkit-mask-repeat: no-repeat; -webkit-mask-position: center;
-      mask-image: url('/shared-pic/bun-white.svg');
-      mask-size: contain; mask-repeat: no-repeat; mask-position: center;
-    }
-    .nav-link {
-      padding: 0.45rem 0.9rem; border-radius: 999px;
-      font-size: 0.9rem; font-weight: 700; color: var(--text);
-      text-decoration: none; transition: background 0.18s;
-    }
-    .nav-link:hover { background: rgba(0,0,0,0.06); }
-
-    /* HERO */
-    .about-hero {
-      background: linear-gradient(135deg, #e5f7bf 0%, #edf4ff 55%, #d2e8ff 100%);
-      padding: 6rem 1.5rem 5rem; text-align: center;
-    }
-    .about-hero h1 {
-      font-size: clamp(2rem, 4vw, 3rem); font-weight: 900; color: var(--text);
-      margin-bottom: 1rem;
-    }
-    .about-hero p {
-      font-size: 1.1rem; color: #374151; max-width: 540px;
-      margin: 0 auto; line-height: 1.75;
-    }
-    .hero-wave { margin-top: -1px; display: block; width: 100%; }
-
-    /* TEAM GRID */
-    .team-section {
-      padding: 5rem 1.5rem 6rem; background: white;
-    }
-    .team-grid {
-      max-width: 900px; margin: 0 auto;
-      display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem;
-    }
-    .team-card {
-      border-radius: 24px; padding: 2rem 1.75rem;
-      display: flex; flex-direction: column; gap: 1rem;
-    }
-    .team-icon {
-      width: 52px; height: 52px; border-radius: 14px;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .team-icon svg { width: 26px; height: 26px; }
-    .team-card h3 { font-size: 1.2rem; font-weight: 900; }
-    .team-card p { font-size: 0.95rem; color: #374151; line-height: 1.7; }
-
-    /* FOOTER */
-    .footer {
-      background: #1E2140; color: rgba(255,255,255,0.5);
-      text-align: center; padding: 2rem 1.5rem; font-size: 0.88rem;
-    }
-
-    @media (max-width: 600px) {
-      .team-grid { grid-template-columns: 1fr; }
-      .about-hero { padding: 5rem 1rem 4rem; }
-    }
-  </style>
-</head>
-<body>
-  <nav class="nav">
-    <div class="nav-inner">
-      <a class="logo" href={`/${locale}/`}>
-        <div class="logo-icon" aria-hidden="true"></div>
-        BlotzTask
-      </a>
-      <a class="nav-link" href={`/${locale}/`}>{t('nav-home')}</a>
-    </div>
-  </nav>
-
+<Layout title="About – BlotzTask">
   <div class="about-hero">
     <h1>{t('title')}</h1>
     <p>{t('subtitle')}</p>
@@ -154,5 +42,26 @@ const teams = [
   <footer class="footer">
     <p>{t('footer-copy')}</p>
   </footer>
-</body>
-</html>
+</Layout>
+
+<style is:global>
+  .about-hero {
+    background: linear-gradient(135deg, #e5f7bf 0%, #edf4ff 55%, #d2e8ff 100%);
+    padding: 8rem 1.5rem 5rem; text-align: center;
+  }
+  .about-hero h1 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 900; color: var(--text); margin-bottom: 1rem; }
+  .about-hero p { font-size: 1.1rem; color: #374151; max-width: 540px; margin: 0 auto; line-height: 1.75; }
+  .hero-wave { margin-top: -1px; display: block; width: 100%; }
+  .team-section { padding: 5rem 1.5rem 6rem; background: white; }
+  .team-grid { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+  .team-card { border-radius: 24px; padding: 2rem 1.75rem; display: flex; flex-direction: column; gap: 1rem; }
+  .team-icon { width: 52px; height: 52px; border-radius: 14px; display: flex; align-items: center; justify-content: center; }
+  .team-icon svg { width: 26px; height: 26px; }
+  .team-card h3 { font-size: 1.2rem; font-weight: 900; }
+  .team-card p { font-size: 0.95rem; color: #374151; line-height: 1.7; }
+  .footer { background: #1E2140; color: rgba(255,255,255,0.5); text-align: center; padding: 2rem 1.5rem; font-size: 0.88rem; }
+  @media (max-width: 600px) {
+    .team-grid { grid-template-columns: 1fr; }
+    .about-hero { padding: 7rem 1rem 4rem; }
+  }
+</style>
