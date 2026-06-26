@@ -63,16 +63,6 @@ import { Icon } from 'astro-icon/components';
       display: flex; align-items: center; justify-content: center;
       color: white; font-weight: 900; font-size: 1.1rem;
     }
-    .lang-btn {
-      background: var(--green-light);
-      border: 2px solid var(--green);
-      color: #3d6b00;
-      font-family: 'Nunito', 'PingFang SC', sans-serif;
-      font-weight: 700; font-size: 0.9rem;
-      padding: 0.4rem 1.1rem; border-radius: 999px; cursor: pointer;
-      transition: background 0.2s, color 0.2s;
-    }
-    .lang-btn:hover { background: var(--green); color: white; }
 
     /* HERO */
     .hero {
@@ -398,9 +388,6 @@ import { Icon } from 'astro-icon/components';
         <img src="/shared-pic/bun-white.svg" height="32" alt="BlotzTask" style="border-radius:10px;width:auto;" />
         BlotzTask
       </a>
-      <button class="lang-btn" id="lang-toggle">
-        <span id="lang-label">中文</span>
-      </button>
     </div>
   </nav>
 
@@ -730,20 +717,18 @@ import { Icon } from 'astro-icon/components';
       heroVideo.addEventListener('loadedmetadata', () => { heroVideo.playbackRate = 3; });
     }
 
-    document.getElementById('lang-toggle')?.addEventListener('click', toggleLang);
-
-    function toggleLang() {
-      currentLang = currentLang === 'en' ? 'zh' : 'en';
+    (function applyLang() {
+      const browserLang = navigator.language || (navigator as any).userLanguage || 'en';
+      currentLang = browserLang.toLowerCase().startsWith('zh') ? 'zh' : 'en';
+      if (currentLang === 'en') return;
       const d: Record<string, string> = translations[currentLang];
       document.getElementById('html-root')?.setAttribute('lang', currentLang);
-      const langLabel = document.getElementById('lang-label');
-      if (langLabel) langLabel.textContent = d.langLabel;
       for (const [id, val] of Object.entries(d)) {
         if (id === 'langLabel') continue;
         const el = document.getElementById(id);
         if (el) el.textContent = val;
       }
-    }
+    })();
   </script>
   <!-- VIDEO LIGHTBOX -->
   <div id="lightbox" class="lightbox" aria-modal="true" role="dialog">
