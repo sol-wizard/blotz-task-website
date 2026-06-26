@@ -17,9 +17,15 @@ const teams = [
 ---
 
 <Layout title="About – BlotzTask">
-  <div class="about-hero">
-    <h1>{t('title')}</h1>
-    <p>{t('subtitle')}</p>
+  <div class="hero-area">
+    <div class="about-hero">
+      <div class="blob blob-g"></div>
+      <div class="blob blob-b"></div>
+      <div class="about-hero-content">
+        <h1>{t('title')}</h1>
+        <p>{t('subtitle')}</p>
+      </div>
+    </div>
   </div>
   <svg class="hero-wave" viewBox="0 0 1440 70" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
     <path d="M0 35 C360 70 720 0 1080 35 C1260 53 1380 22 1440 35 L1440 70 L0 70 Z" fill="#ffffff"/>
@@ -46,9 +52,10 @@ const teams = [
 
 <style is:global>
   .about-hero {
-    background: linear-gradient(135deg, #e5f7bf 0%, #edf4ff 55%, #d2e8ff 100%);
-    padding: 8rem 1.5rem 5rem; text-align: center;
+    position: relative; background: transparent;
+    overflow: hidden; padding: 8rem 1.5rem 5rem; text-align: center;
   }
+  .about-hero-content { position: relative; z-index: 1; }
   .about-hero h1 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 900; color: var(--text); margin-bottom: 1rem; }
   .about-hero p { font-size: 1.1rem; color: #374151; max-width: 540px; margin: 0 auto; line-height: 1.75; }
   .hero-wave { margin-top: -1px; display: block; width: 100%; }
