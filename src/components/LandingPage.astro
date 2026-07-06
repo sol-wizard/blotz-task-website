@@ -13,6 +13,10 @@ const features = [
     icon: 'lucide:mic',
     title: t('f1-title'),
     desc: t('f1-desc'),
+    accent: '#96D21B',
+    accent2: '#3486F3',
+    surface: '#F4FDE6',
+    surface2: '#EDF6FF',
     video: '/en-videos/ai-voice-video.MP4',
     poster: '/en-pic/ai-voice.PNG',
   },
@@ -20,6 +24,10 @@ const features = [
     icon: 'lucide:sparkles',
     title: t('f2-title'),
     desc: t('f2-desc'),
+    accent: '#3486F3',
+    accent2: '#96D21B',
+    surface: '#EEF6FF',
+    surface2: '#F5FDEA',
     video: '/en-videos/month-review.MP4',
     poster: '/en-pic/monthly-review.PNG',
   },
@@ -27,6 +35,10 @@ const features = [
     icon: 'lucide:dices',
     title: t('f3-title'),
     desc: t('f3-desc'),
+    accent: '#F6B73C',
+    accent2: '#3486F3',
+    surface: '#FFF7E7',
+    surface2: '#EEF6FF',
     video: '/en-videos/gashapon-machine.MP4',
     poster: '/shared-pic/gashapon.PNG',
   },
@@ -34,6 +46,10 @@ const features = [
     icon: 'lucide:notebook-pen',
     title: t('f4-title'),
     desc: t('f4-desc'),
+    accent: '#21BFA7',
+    accent2: '#96D21B',
+    surface: '#EAFBF7',
+    surface2: '#F6FDEB',
     video: '/en-videos/note.MP4',
     poster: undefined,
   },
@@ -41,10 +57,24 @@ const features = [
     icon: 'lucide:clock',
     title: t('f5-title'),
     desc: t('f5-desc'),
+    accent: '#8B6EF6',
+    accent2: '#3486F3',
+    surface: '#F3EFFF',
+    surface2: '#EDF6FF',
     video: '/en-videos/deadline.MP4',
     poster: '/en-pic/calendar.PNG',
   },
 ];
+
+// One distinct bun expression per gap between feature cards (4 gaps → 4 faces),
+// with bun-happy on the start mark and bun-wink on the end mark, so no two
+// buns down the whole section repeat.
+const featureBrandMarks = [
+  '/shared-pic/buns/bun-grin.svg',
+  '/shared-pic/buns/bun-smile.svg',
+  '/shared-pic/buns/bun-teary.svg',
+  '/shared-pic/buns/bun-sleepy.svg',
+] as const;
 ---
 
 <Layout
@@ -59,20 +89,30 @@ const features = [
       <div class="hero-inner">
         <div class="hero-text">
           <div class="hero-eyebrow">
-            <span class="hero-stars" aria-hidden="true">★★★★★</span>
+            <span class="hero-badge-stack" aria-hidden="true">
+              <span class="hero-badge-bun hbb-1"><img src="/shared-pic/buns/bun-grin.svg" alt="" width="66" height="66" /></span>
+              <span class="hero-badge-bun hbb-2"><img src="/shared-pic/buns/bun-wink.svg" alt="" width="66" height="66" /></span>
+              <span class="hero-badge-bun hbb-3"><img src="/shared-pic/buns/bun-smile.svg" alt="" width="66" height="66" /></span>
+            </span>
             <span>{t('hero-eyebrow')}</span>
           </div>
           <h1 class="hero-title">{t('hero-title')}</h1>
-          <p class="hero-sub">{t('hero-sub')}</p>
           <a class="hero-cta" href="#download">
             <span>{t('hero-download-cta')}</span>
             <Icon name="lucide:arrow-right" />
           </a>
         </div>
         <div class="hero-phone">
-          <div class="phone-wrap">
-            <video id="hero-video" class="hero-video" src="/en-videos/ai-voice-video.MP4" autoplay muted loop playsinline></video>
-            <div class="phone-glow"></div>
+          <div class="bun-cluster" id="hero-bun-cluster">
+            <button class="bun-tile bun-tile-main" type="button" aria-label="Blotz bun mascot">
+              <img class="bun-face" src="/shared-pic/buns/bun-happy.svg" data-rest="/shared-pic/buns/bun-happy.svg" alt="" width="66" height="66" />
+            </button>
+            <button class="bun-tile bun-tile-top" type="button" aria-label="Blotz bun mascot">
+              <img class="bun-face" src="/shared-pic/buns/bun-wink.svg" data-rest="/shared-pic/buns/bun-wink.svg" alt="" width="66" height="66" />
+            </button>
+            <button class="bun-tile bun-tile-bot" type="button" aria-label="Blotz bun mascot">
+              <img class="bun-face" src="/shared-pic/buns/bun-grin.svg" data-rest="/shared-pic/buns/bun-grin.svg" alt="" width="66" height="66" />
+            </button>
           </div>
         </div>
       </div>
@@ -108,41 +148,83 @@ const features = [
           <div class="feature-progress" aria-hidden="true">
             <span class="feature-progress-fill"></span>
           </div>
+          <div class="feature-start-brand" aria-hidden="true">
+            <span class="feature-brand-mark feature-brand-mark-start">
+              <img
+                src="/shared-pic/buns/bun-happy.svg"
+                alt=""
+                width="156"
+                height="140"
+                loading="lazy"
+                decoding="async"
+              />
+            </span>
+          </div>
           {features.map((feature, index) => (
-            <button
-              class:list={['feature-card', { active: index === 0 }]}
-              type="button"
-              data-feature-card
-              data-feature-index={index}
-              data-video={feature.video}
-              data-poster={feature.poster}
+            <div
+              class:list={['feature-step', { 'feature-step-first': index === 0 }]}
+              style={`--feature-accent: ${feature.accent}; --feature-accent-2: ${feature.accent2}; --feature-surface: ${feature.surface}; --feature-surface-2: ${feature.surface2};`}
             >
-              <span class="feature-number">{String(index + 1).padStart(2, '0')}</span>
-              <span class="feature-card-icon"><Icon name={feature.icon} /></span>
-              <span class="feature-card-text">
-                <span class="feature-card-title">{feature.title}</span>
-                <span class="feature-card-desc">{feature.desc}</span>
-              </span>
-              <span class="feature-card-cue" aria-hidden="true"><Icon name="lucide:arrow-up-right" /></span>
-              <span class:list={['feature-card-media', { 'has-fallback': !feature.poster }]} aria-hidden="true">
-                <video
-                  class="mobile-feature-video"
-                  src={feature.video}
-                  poster={feature.poster}
-                  muted
-                  loop
-                  playsinline
-                  preload="metadata"
-                ></video>
-                {!feature.poster && (
-                  <span class="feature-media-fallback">
-                    <Icon name={feature.icon} />
-                    <span>{feature.title}</span>
+              <button
+                class:list={['feature-card', { active: index === 0 }]}
+                type="button"
+                data-feature-card
+                data-feature-index={index}
+                data-video={feature.video}
+                data-poster={feature.poster}
+              >
+                <span class="feature-card-icon"><Icon name={feature.icon} /></span>
+                <span class="feature-card-text">
+                  <span class="feature-card-title">{feature.title}</span>
+                  <span class="feature-card-desc">{feature.desc}</span>
+                </span>
+                <span class="feature-card-cue" aria-hidden="true"><Icon name="lucide:arrow-right" /></span>
+                <span class:list={['feature-card-media', { 'has-fallback': !feature.poster }]} aria-hidden="true">
+                  <video
+                    class="mobile-feature-video"
+                    src={feature.video}
+                    poster={feature.poster}
+                    muted
+                    loop
+                    playsinline
+                    preload="metadata"
+                  ></video>
+                  {!feature.poster && (
+                    <span class="feature-media-fallback">
+                      <Icon name={feature.icon} />
+                      <span>{feature.title}</span>
+                    </span>
+                  )}
+                </span>
+              </button>
+              {index < features.length - 1 && (
+                <span class="feature-brand-gap" aria-hidden="true">
+                  <span class="feature-brand-mark">
+                    <img
+                      src={featureBrandMarks[index % featureBrandMarks.length]}
+                      alt=""
+                      width="156"
+                      height="140"
+                      loading="lazy"
+                      decoding="async"
+                    />
                   </span>
-                )}
-              </span>
-            </button>
+                </span>
+              )}
+            </div>
           ))}
+          <div class="feature-end-brand" aria-hidden="true">
+            <span class="feature-end-mark">
+              <img
+                src="/shared-pic/buns/bun-wink.svg"
+                alt=""
+                width="156"
+                height="140"
+                loading="lazy"
+                decoding="async"
+              />
+            </span>
+          </div>
         </div>
       </div>
     </div>
@@ -185,7 +267,7 @@ const features = [
         <a class="cta-btn cta-btn-out"
           href="https://play.google.com/store/apps/details?id=com.blotz.blotztask&hl=en"
           target="_blank" rel="noopener noreferrer">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#ctaclip)"><mask id="ctamask" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24"><path d="M24 0H0V24H24V0Z" fill="white"/></mask><g mask="url(#ctamask)"><path d="M21.3995 12.9508L16.8795 15.2108L13.6895 12.0208L16.9095 8.80078L21.3995 11.0508C22.1895 11.4408 22.1895 12.5608 21.3995 12.9508Z" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 9.06025V3.07026C2 2.27026 2.83 1.76024 3.55 2.11024L16.92 8.80024L13.7 12.0202L4.12 21.6003L3.54 21.8903C2.83 22.2403 2 21.7303 2 20.9303V13.5703" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M16.8891 15.2095L4.11914 21.5995L13.6991 12.0195L16.8891 15.2095Z" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M13.6998 12.0201L4.08984 2.41016" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></g></g><defs><clipPath id="ctaclip"><rect width="24" height="24" fill="white"/></clipPath></defs></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.199l2.807 1.626a1 1 0 0 1 0 1.73l-2.808 1.626L15.302 12l2.396-2.492zM5.864 2.658L16.802 8.99l-2.302 2.302-8.636-8.634z"/></svg>
           Google Play
         </a>
       </div>
@@ -323,11 +405,34 @@ const features = [
     });
     setActiveFeature(0, false);
 
-    const heroVideo = document.getElementById('hero-video') as HTMLVideoElement;
-    if (heroVideo) {
-      heroVideo.playbackRate = 3;
-      heroVideo.addEventListener('loadedmetadata', () => { heroVideo.playbackRate = 3; });
-    }
+    // Reactive hero buns: each tile swaps to a fresh random expression on
+    // hover/focus/tap and springs back to its resting face on leave.
+    const BUN_FACES = [
+      '/shared-pic/buns/bun-happy.svg',
+      '/shared-pic/buns/bun-wink.svg',
+      '/shared-pic/buns/bun-grin.svg',
+      '/shared-pic/buns/bun-smile.svg',
+      '/shared-pic/buns/bun-teary.svg',
+      '/shared-pic/buns/bun-sleepy.svg',
+    ];
+    document.querySelectorAll<HTMLElement>('#hero-bun-cluster .bun-tile').forEach((tile) => {
+      const face = tile.querySelector('img') as HTMLImageElement | null;
+      if (!face) return;
+      const rest = face.dataset.rest ?? face.src;
+      let current = rest;
+      const pop = () => { face.classList.remove('bun-pop'); void face.offsetWidth; face.classList.add('bun-pop'); };
+      const swap = () => {
+        let next = current;
+        while (next === current) next = BUN_FACES[Math.floor(Math.random() * BUN_FACES.length)];
+        current = next; face.src = next; pop();
+      };
+      const reset = () => { current = rest; face.src = rest; pop(); };
+      tile.addEventListener('mouseenter', swap);
+      tile.addEventListener('mouseleave', reset);
+      tile.addEventListener('focus', swap);
+      tile.addEventListener('blur', reset);
+      tile.addEventListener('click', swap);
+    });
   </script>
 
   <!-- VIDEO LIGHTBOX -->
@@ -364,34 +469,80 @@ const features = [
     padding: 7rem 2rem 3.5rem;
     display: grid; grid-template-columns: minmax(0, 1fr) 520px; align-items: center; gap: 3.5rem;
   }
-  .hero-eyebrow { display: inline-flex; align-items: center; gap: 0.5rem; margin-bottom: 1.1rem; padding: 0.35rem 0.85rem; border-radius: 999px; background: rgba(255,255,255,0.65); border: 1px solid rgba(150,210,27,0.35); font-size: 0.82rem; font-weight: 800; color: var(--text); box-shadow: 0 4px 14px rgba(30,33,64,0.06); backdrop-filter: blur(6px); }
-  .hero-stars { color: #f5a623; letter-spacing: 1px; font-size: 0.8rem; }
-  .hero-title { font-size: clamp(2rem, 3.35vw, 3rem); font-weight: 900; line-height: 1.22; color: var(--text); margin-bottom: 1rem; }
-  .hero-sub { font-size: 1.05rem; color: #374151; margin-bottom: 2rem; line-height: 1.7; max-width: 30rem; }
+  .hero-eyebrow { display: inline-flex; align-items: center; gap: 0.5rem; margin-bottom: 1.1rem; padding: 0.45rem 0.95rem; border-radius: 999px; background: rgba(255,255,255,0.68); border: 1px solid rgba(150,210,27,0.35); font-size: 0.9rem; font-weight: 900; color: var(--text); box-shadow: 0 4px 14px rgba(30,33,64,0.06); backdrop-filter: blur(6px); }
+  .hero-title { font-size: clamp(2.25rem, 4.2vw, 4.25rem); font-weight: 900; line-height: 1.12; color: var(--text); max-width: 46rem; margin-bottom: 2.2rem; }
   .hero-cta { display: inline-flex; align-items: center; gap: 0.6rem; padding: 1rem 1.9rem; border-radius: 16px; background: linear-gradient(135deg, var(--green), var(--blue)); color: white; font-family: 'Nunito', 'PingFang SC', sans-serif; font-weight: 900; font-size: 1.05rem; text-decoration: none; box-shadow: 0 12px 30px -8px rgba(52,134,243,0.55); transition: transform 0.2s ease, box-shadow 0.2s ease; animation: cta-pulse 2.8s ease-in-out infinite; }
   .hero-cta:hover { transform: translateY(-2px) scale(1.02); box-shadow: 0 18px 40px -8px rgba(52,134,243,0.7); animation-play-state: paused; }
   .hero-cta svg { width: 20px; height: 20px; flex-shrink: 0; transition: transform 0.2s ease; }
   .hero-cta:hover svg { transform: translateX(3px); }
   @keyframes cta-pulse { 0%, 100% { box-shadow: 0 12px 30px -8px rgba(52,134,243,0.5); } 50% { box-shadow: 0 12px 38px -6px rgba(52,134,243,0.85); } }
-  @media (prefers-reduced-motion: reduce) { .hero-cta { animation: none; } }
-  .hero-phone { display: flex; justify-content: flex-end; }
-  .phone-wrap { position: relative; animation: float 4s ease-in-out infinite; }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-cta { animation: none; }
+    .bun-tile-main, .bun-tile-top, .bun-tile-bot { animation: none; }
+    .bun-pop { animation: none; }
+  }
+  .hero-phone { display: flex; justify-content: center; }
   @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
-  .hero-video { width: 280px; border-radius: 40px; box-shadow: 0 30px 80px rgba(52,134,243,0.25), 0 0 0 1px rgba(255,255,255,0.08); display: block; position: relative; z-index: 1; }
-  .phone-glow { position: absolute; width: 180px; height: 180px; background: radial-gradient(circle, rgba(150,210,27,0.4), transparent 70%); bottom: -55px; left: 50%; transform: translateX(-50%); border-radius: 50%; filter: blur(20px); z-index: 0; }
+
+  /* interactive hero bun cluster (replaces the app-video showcase) */
+  .bun-cluster { position: relative; width: 300px; height: 290px; }
+  .bun-tile {
+    position: absolute; border: none; padding: 0; cursor: pointer;
+    display: grid; place-items: center; border-radius: 38px;
+    box-shadow: 0 22px 52px -20px rgba(52,134,243,0.55), inset 0 0 0 1px rgba(255,255,255,0.4);
+    transition: transform 0.3s cubic-bezier(.34,1.56,.64,1), box-shadow 0.3s ease;
+  }
+  .bun-tile-main {
+    width: 196px; height: 196px; border-radius: 50px; left: 52px; top: 46px; z-index: 2; transform: rotate(-4deg);
+    background: radial-gradient(circle at 28% 24%, rgba(255,255,255,0.34), transparent 40%), linear-gradient(135deg, var(--green), var(--blue));
+    animation: float 4.5s ease-in-out infinite;
+  }
+  .bun-tile-top {
+    width: 108px; height: 108px; border-radius: 28px; right: 0; top: 0; z-index: 3; transform: rotate(7deg);
+    background: radial-gradient(circle at 28% 24%, rgba(255,255,255,0.34), transparent 40%), linear-gradient(135deg, var(--blue), #8B6EF6);
+    animation: float 4s ease-in-out infinite 0.6s;
+  }
+  .bun-tile-bot {
+    width: 126px; height: 126px; border-radius: 32px; left: 0; bottom: 0; z-index: 3; transform: rotate(5deg);
+    background: radial-gradient(circle at 28% 24%, rgba(255,255,255,0.34), transparent 40%), linear-gradient(135deg, #F6B73C, var(--green));
+    animation: float 5s ease-in-out infinite 0.3s;
+  }
+  .bun-tile:hover, .bun-tile:focus-visible {
+    transform: rotate(0deg) scale(1.07); z-index: 5; outline: none;
+    box-shadow: 0 30px 66px -20px rgba(52,134,243,0.75), inset 0 0 0 1px rgba(255,255,255,0.5);
+  }
+  .bun-tile:focus-visible { outline: 3px solid var(--blue); outline-offset: 5px; }
+  .bun-face { width: 66%; height: 66%; display: block; filter: drop-shadow(0 8px 14px rgba(30,33,64,0.18)); }
+  .bun-pop { animation: bun-pop 0.34s cubic-bezier(.34,1.56,.64,1); }
+  @keyframes bun-pop { 0% { transform: scale(0.68) rotate(-8deg); opacity: 0.3; } 100% { transform: scale(1) rotate(0); opacity: 1; } }
+
+  /* mini bun avatar stack inside the trust badge */
+  .hero-badge-stack { display: inline-flex; margin-right: 0.15rem; }
+  .hero-badge-bun {
+    width: 24px; height: 24px; border-radius: 50%; margin-left: -9px; overflow: hidden;
+    display: grid; place-items: center; border: 2px solid #fff; flex-shrink: 0;
+  }
+  .hero-badge-bun:first-child { margin-left: 0; }
+  .hbb-1 { background: linear-gradient(135deg, var(--green), var(--blue)); }
+  .hbb-2 { background: linear-gradient(135deg, var(--blue), #8B6EF6); }
+  .hbb-3 { background: linear-gradient(135deg, #F6B73C, var(--green)); }
+  .hero-badge-bun img { width: 20px; height: 20px; display: block; }
   .hero-wave { margin-top: -1px; display: block; width: 100%; }
 
   .features { scroll-margin-top: 6rem; padding: 2.5rem 0 5.5rem; overflow: clip; background: white; }
   .sec-inner { max-width: 1260px; margin: 0 auto; }
   .feature-demo {
-    --feature-step-height: clamp(430px, 56vh, 540px);
+    --feature-start-hold: clamp(215px, 29vh, 320px);
+    --feature-scroll-gap: clamp(270px, 38vh, 420px);
+    --feature-first-scroll-gap: clamp(420px, 54vh, 620px);
+    --feature-end-hold: clamp(150px, 20vh, 240px);
     display: grid;
     grid-template-columns: minmax(360px, 0.98fr) minmax(0, 1.02fr);
-    align-items: start;
+    align-items: stretch;
     gap: 3.5rem;
     padding: 0 2rem;
   }
-  .feature-preview { min-height: 2820px; }
+  .feature-preview { min-height: 0; }
   .feature-preview-sticky {
     position: sticky;
     top: 7rem;
@@ -437,12 +588,135 @@ const features = [
     position: relative;
     display: grid;
     gap: 1.75rem;
+    padding-top: 0;
     padding-left: 1.35rem;
+    padding-bottom: 0;
+  }
+  .feature-step {
+    display: grid;
+    min-width: 0;
+  }
+  .feature-brand-gap {
+    position: relative;
+    display: grid;
+    align-items: center;
+    min-height: var(--feature-scroll-gap);
+    pointer-events: none;
+  }
+  .feature-start-brand {
+    position: relative;
+    display: grid;
+    align-items: center;
+    min-height: var(--feature-start-hold);
+    pointer-events: none;
+  }
+  .feature-start-brand::before {
+    content: '';
+    position: absolute;
+    left: 18%;
+    right: 18%;
+    top: 50%;
+    height: 1px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, transparent, rgba(150,210,27,0.24), rgba(52,134,243,0.22), transparent);
+  }
+  .feature-end-brand {
+    position: relative;
+    display: grid;
+    align-items: center;
+    min-height: var(--feature-end-hold);
+    pointer-events: none;
+  }
+  .feature-end-brand::before {
+    content: '';
+    position: absolute;
+    left: 18%;
+    right: 18%;
+    top: 50%;
+    height: 1px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, transparent, rgba(139,110,246,0.24), rgba(52,134,243,0.22), transparent);
+  }
+  .feature-step-first .feature-brand-gap {
+    min-height: var(--feature-first-scroll-gap);
+  }
+  .feature-brand-gap::before {
+    content: '';
+    position: absolute;
+    left: 12%;
+    right: 12%;
+    top: 50%;
+    height: 1px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--feature-accent, var(--green)) 34%, transparent), color-mix(in srgb, var(--feature-accent-2, var(--blue)) 28%, transparent), transparent);
+  }
+  .feature-brand-mark {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    justify-self: center;
+    width: clamp(128px, 11vw, 166px);
+    aspect-ratio: 1;
+    border-radius: 34px;
+    background:
+      radial-gradient(circle at 28% 24%, rgba(255,255,255,0.32), transparent 36%),
+      linear-gradient(135deg, var(--feature-accent, var(--green)), var(--feature-accent-2, var(--blue)));
+    box-shadow:
+      0 22px 52px color-mix(in srgb, var(--feature-accent-2, var(--blue)) 24%, transparent),
+      inset 0 0 0 1px rgba(255,255,255,0.38);
+    transform: rotate(-4deg);
+  }
+  .feature-step:nth-child(even) .feature-brand-mark {
+    justify-self: end;
+    margin-right: 16%;
+    transform: rotate(5deg);
+  }
+  .feature-step:nth-child(odd) .feature-brand-mark {
+    justify-self: start;
+    margin-left: 16%;
+  }
+  .feature-brand-mark img {
+    display: block;
+    width: clamp(88px, 7vw, 118px);
+    height: auto;
+    filter: drop-shadow(0 12px 18px rgba(30,33,64,0.16));
+  }
+  .feature-brand-mark-start {
+    justify-self: center;
+    width: clamp(120px, 10vw, 158px);
+    transform: rotate(6deg);
+    background:
+      radial-gradient(circle at 28% 24%, rgba(255,255,255,0.32), transparent 36%),
+      linear-gradient(135deg, var(--green), var(--blue));
+  }
+  .feature-end-mark {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    justify-self: center;
+    width: clamp(96px, 8vw, 130px);
+    aspect-ratio: 1;
+    border-radius: 30px;
+    background:
+      radial-gradient(circle at 28% 24%, rgba(255,255,255,0.32), transparent 36%),
+      linear-gradient(135deg, #8B6EF6, var(--blue));
+    box-shadow:
+      0 20px 46px rgba(52,134,243,0.18),
+      inset 0 0 0 1px rgba(255,255,255,0.38);
+    transform: rotate(5deg);
+  }
+  .feature-end-mark img {
+    display: block;
+    width: clamp(70px, 5.8vw, 92px);
+    height: auto;
+    filter: drop-shadow(0 10px 16px rgba(30,33,64,0.16));
   }
   .feature-progress {
     position: absolute;
     top: 1.1rem;
-    bottom: 1.1rem;
+    bottom: calc(var(--feature-end-hold) + 1.1rem);
     left: 0;
     width: 3px;
     overflow: hidden;
@@ -462,77 +736,105 @@ const features = [
   .feature-card {
     position: relative;
     display: grid;
-    grid-template-columns: 2.4rem 3rem minmax(0, 1fr) 2rem;
+    grid-template-columns: 4.4rem minmax(0, 1fr) 2.5rem;
     align-items: center;
-    gap: 1rem;
-    min-height: var(--feature-step-height);
+    gap: 1.25rem;
+    min-height: clamp(145px, 18vh, 180px);
     width: 100%;
-    padding: 1.45rem 1.35rem;
-    border: 1px solid rgba(30,33,64,0.08);
-    border-radius: 18px;
-    background: #fff;
-    box-shadow: 0 8px 28px rgba(30,33,64,0.055);
+    padding: 1.25rem 1.35rem;
+    border: 1px solid color-mix(in srgb, var(--feature-accent, var(--green)) 42%, white);
+    border-radius: 22px;
+    background:
+      radial-gradient(circle at 15% 18%, color-mix(in srgb, var(--feature-accent, var(--green)) 24%, transparent), transparent 36%),
+      radial-gradient(circle at 88% 86%, color-mix(in srgb, var(--feature-accent-2, var(--blue)) 18%, transparent), transparent 42%),
+      linear-gradient(135deg, var(--feature-surface, #f7fee7), var(--feature-surface-2, #eef6ff));
+    box-shadow: 0 18px 50px rgba(30,33,64,0.09);
     color: var(--text);
     text-align: left;
     cursor: pointer;
     font-family: 'Nunito', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
     transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, transform 0.2s ease;
   }
+  .feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 1.5rem;
+    left: 1.5rem;
+    height: 4px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--feature-accent, var(--green)), var(--feature-accent-2, var(--blue)));
+    opacity: 0.7;
+  }
   .feature-card:hover {
     transform: translateY(-2px);
-    border-color: rgba(52,134,243,0.2);
-    box-shadow: 0 16px 42px rgba(30,33,64,0.1);
+    border-color: color-mix(in srgb, var(--feature-accent-2, var(--blue)) 46%, white);
+    box-shadow: 0 24px 62px rgba(30,33,64,0.12);
   }
   .feature-card:focus { outline: none; }
   .feature-card:focus-visible { outline: 2px solid var(--blue); outline-offset: 4px; }
   .feature-card.active {
-    border-color: rgba(150,210,27,0.44);
-    background: linear-gradient(135deg, #fbfff2, #f4faff);
-    box-shadow: 0 20px 50px rgba(52,134,243,0.12);
+    border-color: color-mix(in srgb, var(--feature-accent, var(--green)) 70%, white);
+    background:
+      radial-gradient(circle at 15% 18%, color-mix(in srgb, var(--feature-accent, var(--green)) 28%, transparent), transparent 36%),
+      radial-gradient(circle at 88% 86%, color-mix(in srgb, var(--feature-accent-2, var(--blue)) 22%, transparent), transparent 42%),
+      linear-gradient(135deg, var(--feature-surface, #f7fee7), var(--feature-surface-2, #eef6ff));
+    box-shadow: 0 26px 72px rgba(52,134,243,0.16);
   }
-  .feature-number {
-    color: #8ba0b8;
-    font-size: 0.84rem;
-    font-weight: 900;
+  .feature-card.active::before {
+    opacity: 1;
   }
-  .feature-card.active .feature-number { color: #4d7d09; }
   .feature-card-icon {
+    grid-column: 1 / 2;
+    align-self: center;
+    justify-self: start;
     display: grid;
     place-items: center;
-    width: 3rem;
-    height: 3rem;
-    border-radius: 14px;
-    color: var(--green);
-    background: var(--green-light);
+    width: 4.4rem;
+    height: 4.4rem;
+    border-radius: 18px;
+    color: color-mix(in srgb, var(--feature-accent, var(--green)) 82%, #1e2140);
+    background: rgba(255,255,255,0.62);
+    box-shadow:
+      inset 0 0 0 1px color-mix(in srgb, var(--feature-accent, var(--green)) 28%, white),
+      0 12px 28px color-mix(in srgb, var(--feature-accent, var(--green)) 18%, transparent);
   }
-  .feature-card-icon svg { width: 1.5rem; height: 1.5rem; stroke-width: 1.8; }
-  .feature-card-text { min-width: 0; }
+  .feature-card-icon svg { width: 2rem; height: 2rem; stroke-width: 2.15; }
+  .feature-card-text {
+    grid-column: 2 / 3;
+    min-width: 0;
+  }
   .feature-card-title {
     display: block;
     color: var(--text);
-    font-size: 1.14rem;
+    font-size: clamp(1.55rem, 2vw, 1.95rem);
     font-weight: 900;
-    line-height: 1.25;
+    line-height: 1.08;
     overflow-wrap: break-word;
   }
   .feature-card-desc {
     display: block;
     margin-top: 0.45rem;
     color: #4b5563;
-    font-size: 0.96rem;
-    line-height: 1.62;
+    font-size: clamp(1rem, 1.18vw, 1.12rem);
+    font-weight: 800;
+    line-height: 1.35;
     overflow-wrap: break-word;
   }
   .feature-card-cue {
+    grid-column: 3 / 4;
+    align-self: center;
+    justify-self: end;
     display: grid;
     place-items: center;
-    width: 2rem;
-    height: 2rem;
-    color: #7b8aa0;
-    border-radius: 10px;
-    background: #f4f7fb;
+    width: 2.5rem;
+    height: 2.5rem;
+    color: var(--feature-accent-2, var(--blue));
+    border-radius: 50%;
+    background: rgba(255,255,255,0.68);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--feature-accent-2, var(--blue)) 18%, white);
   }
-  .feature-card-cue svg { width: 1rem; height: 1rem; }
+  .feature-card-cue svg { width: 1.1rem; height: 1.1rem; stroke-width: 2.35; }
   .feature-card-media { display: none; }
 
   .cta { background: linear-gradient(135deg, var(--green) 0%, var(--blue) 100%); padding: 5rem 1.5rem; text-align: center; color: white; position: relative; overflow: hidden; }
@@ -579,7 +881,10 @@ const features = [
     .hero-inner { grid-template-columns: 1fr; padding-top: 5.5rem; }
     .hero-phone { order: -1; justify-content: center; }
     .feature-demo {
-      --feature-step-height: clamp(260px, 42vh, 340px);
+      --feature-start-hold: 0px;
+      --feature-scroll-gap: 0px;
+      --feature-first-scroll-gap: 0px;
+      --feature-end-hold: 0px;
       grid-template-columns: 1fr;
       gap: 2rem;
     }
@@ -591,10 +896,14 @@ const features = [
     }
     .feature-phone { width: min(360px, 82vw); }
     .feature-preview-video { max-height: 620px; }
+    .feature-start-brand,
+    .feature-end-brand,
+    .feature-brand-gap { display: none; }
   }
   @media (max-width: 600px) {
     .hero-inner { padding: 5rem 1rem 2.5rem; }
-    .hero-video { width: 260px; border-radius: 38px; }
+    .bun-cluster { width: 264px; height: 256px; }
+    .bun-tile-main { width: 172px; height: 172px; left: 46px; top: 40px; }
     .hero-cta { width: 100%; justify-content: center; }
     .cta h2 { font-size: 1.8rem; }
     .features { padding: 2.25rem 0 3.25rem; overflow: hidden; }
@@ -603,21 +912,23 @@ const features = [
     .feature-list {
       gap: 0.85rem;
       padding-left: 0;
+      padding-bottom: 0;
     }
     .feature-progress { display: none; }
     .feature-card {
-      grid-template-columns: 2rem 2.75rem minmax(0, 1fr);
+      grid-template-columns: 3.25rem minmax(0, 1fr) 2.2rem;
       gap: 0.85rem;
       min-height: 0;
-      padding: 1rem;
+      padding: 1.1rem;
       border-radius: 18px;
     }
     .feature-card:hover { transform: none; }
     .feature-card-cue { display: none; }
-    .feature-number { align-self: start; padding-top: 0.8rem; }
-    .feature-card-icon { width: 2.75rem; height: 2.75rem; }
-    .feature-card-title { font-size: 1rem; }
-    .feature-card-desc { font-size: 0.86rem; }
+    .feature-card-icon { grid-column: 1; width: 3.25rem; height: 3.25rem; }
+    .feature-card-icon svg { width: 1.55rem; height: 1.55rem; }
+    .feature-card-text { grid-column: 2 / 4; }
+    .feature-card-title { font-size: 1.35rem; }
+    .feature-card-desc { font-size: 0.98rem; line-height: 1.35; }
     .feature-card-media {
       grid-column: 1 / -1;
       display: grid;

@@ -20,6 +20,7 @@ export const aboutUi = {
     'contact-sub': 'Follow BlotzTask for updates, sponsor conversations, and community news.',
     'contact-rn-name': 'Red Note',
     'contact-li-name': 'LinkedIn',
+    'contact-ig-name': 'Instagram',
   },
   zh: {
     'nav-home': '首页',
@@ -40,6 +41,7 @@ export const aboutUi = {
     'contact-sub': '关注 BlotzTask，获取最新动态、赞助合作信息和社区资讯。',
     'contact-rn-name': '小红书',
     'contact-li-name': 'LinkedIn',
+    'contact-ig-name': 'Instagram',
   },
 } as const;
 
