@@ -1,0 +1,95 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { Icon } from 'astro-icon/components';
+import { defaultLocale } from '../i18n/landing';
+
+const locale = Astro.currentLocale ?? defaultLocale;
+const zh = locale === 'zh';
+
+// PLACEHOLDER COPY — replace the reason + sponsor link with the real ones.
+const sponsorEmail = 'blotztask.app@gmail.com';
+const c = zh
+  ? {
+      title: '支持 BlotzTask',
+      subtitle: '我们是一支独立的小团队，为 ADHD 人群打造更从容的效率工具。你的支持让 AI 持续运行，也让应用对所有人保持免费。',
+      whyTitle: '为什么你的支持很重要',
+      reasons: [
+        { icon: 'lucide:heart', title: '保持免费', desc: 'AI 功能的运行需要真实的成本。赞助让 BlotzTask 对每个人保持免费，不设付费墙。' },
+        { icon: 'lucide:shield-check', title: '保持独立', desc: '没有广告，也不会出售你的数据。你的支持让我们只对用户负责。' },
+        { icon: 'lucide:rocket', title: '更快迭代', desc: '更多支持意味着更多时间去打造你真正想要的功能。' },
+      ],
+      ctaTitle: '成为赞助者',
+      ctaSub: '无论你是个人还是企业，我们都很乐意聊聊。',
+      ctaBtn: '发邮件给我们',
+    }
+  : {
+      title: 'Support BlotzTask',
+      subtitle: "We're a tiny, independent team building calmer productivity for ADHD minds. Your support keeps the AI running — and the app free for everyone.",
+      whyTitle: 'Why your support matters',
+      reasons: [
+        { icon: 'lucide:heart', title: 'Keep it free', desc: 'AI features cost real money to run. Sponsors let us keep BlotzTask free, with no paywalls between you and focus.' },
+        { icon: 'lucide:shield-check', title: 'Stay independent', desc: 'No ads, no selling your data. Your support keeps us answerable to users, not advertisers.' },
+        { icon: 'lucide:rocket', title: 'Ship faster', desc: 'More support means more time building the features you actually ask for.' },
+      ],
+      ctaTitle: 'Become a sponsor',
+      ctaSub: "Whether you're an individual or a company, we'd love to talk.",
+      ctaBtn: 'Email us',
+    };
+---
+
+<Layout title={`${c.title} – BlotzTask`}>
+  <div class="hero-area">
+    <div class="sub-hero">
+      <h1>{c.title}</h1>
+      <p>{c.subtitle}</p>
+    </div>
+  </div>
+  <svg class="sub-wave" viewBox="0 0 1440 70" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <path d="M0 35 C360 70 720 0 1080 35 C1260 53 1380 22 1440 35 L1440 70 L0 70 Z" fill="#ffffff"/>
+  </svg>
+
+  <section class="sponsor-body">
+    <h2 class="sponsor-why">{c.whyTitle}</h2>
+    <div class="reason-grid">
+      {c.reasons.map((r) => (
+        <div class="reason-card">
+          <div class="reason-icon"><Icon name={r.icon} width={22} height={22} /></div>
+          <h3>{r.title}</h3>
+          <p>{r.desc}</p>
+        </div>
+      ))}
+    </div>
+
+    <div class="sponsor-cta">
+      <h2>{c.ctaTitle}</h2>
+      <p>{c.ctaSub}</p>
+      <a class="sponsor-btn" href={`mailto:${sponsorEmail}`}>
+        <Icon name="lucide:mail" width={18} height={18} />
+        {c.ctaBtn}
+      </a>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .sub-hero { position: relative; text-align: center; padding: 8rem 1.5rem 5rem; max-width: 680px; margin: 0 auto; }
+  .sub-hero h1 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 900; color: var(--text); margin-bottom: 1rem; }
+  .sub-hero p { font-size: 1.1rem; color: #374151; line-height: 1.75; }
+  .sub-wave { margin-top: -1px; display: block; width: 100%; }
+
+  .sponsor-body { background: #fff; padding: 4rem 2rem 6rem; max-width: 1040px; margin: 0 auto; }
+  .sponsor-why { text-align: center; font-size: 2rem; font-weight: 900; color: var(--text); margin-bottom: 2.5rem; }
+  .reason-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .reason-card { background: #fff; border: 1px solid #eef0f2; border-radius: 22px; padding: 2rem 1.5rem; box-shadow: 0 10px 30px -18px rgba(30,33,64,0.25); }
+  .reason-icon { width: 48px; height: 48px; border-radius: 14px; display: flex; align-items: center; justify-content: center; background: var(--green-light); color: var(--green); margin-bottom: 1rem; }
+  .reason-card h3 { font-size: 1.15rem; font-weight: 900; color: var(--text); margin-bottom: 0.5rem; }
+  .reason-card p { font-size: 0.95rem; color: #374151; line-height: 1.65; }
+
+  .sponsor-cta { margin-top: 3.5rem; text-align: center; background: linear-gradient(135deg, var(--green), var(--blue)); border-radius: 28px; padding: 3.5rem 2rem; color: #fff; }
+  .sponsor-cta h2 { font-size: 2rem; font-weight: 900; margin-bottom: 0.6rem; }
+  .sponsor-cta p { font-size: 1.05rem; opacity: 0.95; margin-bottom: 1.75rem; }
+  .sponsor-btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.9rem 1.9rem; border-radius: 14px; background: #fff; color: var(--text); font-weight: 900; font-size: 1rem; text-decoration: none; box-shadow: 0 10px 26px -8px rgba(0,0,0,0.3); transition: transform 0.2s ease; }
+  .sponsor-btn:hover { transform: translateY(-2px); }
+
+  @media (max-width: 800px) { .reason-grid { grid-template-columns: 1fr; max-width: 380px; margin: 0 auto; } }
+</style>

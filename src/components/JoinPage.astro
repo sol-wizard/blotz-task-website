@@ -1,0 +1,108 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { Icon } from 'astro-icon/components';
+import { defaultLocale } from '../i18n/landing';
+
+const locale = Astro.currentLocale ?? defaultLocale;
+const zh = locale === 'zh';
+
+// PLACEHOLDER COPY — swap in real open roles when you have them.
+const joinEmail = 'blotztask.app@gmail.com';
+const c = zh
+  ? {
+      title: '加入我们',
+      subtitle: '和我们一起，为数百万 ADHD 人群打造更从容的效率工具。',
+      perksTitle: '在 BlotzTask 工作',
+      perks: [
+        { icon: 'lucide:target', title: '真实的影响', desc: '小团队，真产品。你的工作会直接影响每天使用它的用户。' },
+        { icon: 'lucide:laptop', title: '远程友好', desc: '我们分布在各地，看重成果而非打卡。' },
+        { icon: 'lucide:sparkles', title: '有意义的使命', desc: '帮助人们更从容地完成任务，做出有意义的产品。' },
+      ],
+      rolesTitle: '我们期待的伙伴',
+      roles: ['工程（全栈 / 移动端）', '产品设计（UI / UX）', '增长与社区'],
+      ctaTitle: '没看到合适的岗位？',
+      ctaSub: '我们始终欢迎优秀的人。做个自我介绍，聊聊你想解决的问题。',
+      ctaBtn: '发邮件给我们',
+    }
+  : {
+      title: 'Join us',
+      subtitle: 'Help build calmer productivity for millions of ADHD minds.',
+      perksTitle: 'Working at BlotzTask',
+      perks: [
+        { icon: 'lucide:target', title: 'Real impact', desc: 'Small team, real product. Your work ships to the people who use it every day.' },
+        { icon: 'lucide:laptop', title: 'Remote-friendly', desc: "We're distributed and value outcomes over hours at a desk." },
+        { icon: 'lucide:sparkles', title: 'Meaningful mission', desc: 'Build something that genuinely helps people get through their day with less friction.' },
+      ],
+      rolesTitle: 'The kinds of people we look for',
+      roles: ['Engineering (full-stack / mobile)', 'Product Design (UI / UX)', 'Growth & Community'],
+      ctaTitle: "Don't see your role?",
+      ctaSub: "We're always keen to meet talented people. Introduce yourself and tell us what you'd love to work on.",
+      ctaBtn: 'Email us',
+    };
+---
+
+<Layout title={`${c.title} – BlotzTask`}>
+  <div class="hero-area">
+    <div class="sub-hero">
+      <h1>{c.title}</h1>
+      <p>{c.subtitle}</p>
+    </div>
+  </div>
+  <svg class="sub-wave" viewBox="0 0 1440 70" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <path d="M0 35 C360 70 720 0 1080 35 C1260 53 1380 22 1440 35 L1440 70 L0 70 Z" fill="#ffffff"/>
+  </svg>
+
+  <section class="join-body">
+    <h2 class="join-h2">{c.perksTitle}</h2>
+    <div class="perk-grid">
+      {c.perks.map((p) => (
+        <div class="perk-card">
+          <div class="perk-icon"><Icon name={p.icon} width={22} height={22} /></div>
+          <h3>{p.title}</h3>
+          <p>{p.desc}</p>
+        </div>
+      ))}
+    </div>
+
+    <h2 class="join-h2 roles-h2">{c.rolesTitle}</h2>
+    <div class="role-tags">
+      {c.roles.map((r) => <span class="role-tag">{r}</span>)}
+    </div>
+
+    <div class="join-cta">
+      <h2>{c.ctaTitle}</h2>
+      <p>{c.ctaSub}</p>
+      <a class="join-btn" href={`mailto:${joinEmail}`}>
+        <Icon name="lucide:mail" width={18} height={18} />
+        {c.ctaBtn}
+      </a>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .sub-hero { position: relative; text-align: center; padding: 8rem 1.5rem 5rem; max-width: 680px; margin: 0 auto; }
+  .sub-hero h1 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 900; color: var(--text); margin-bottom: 1rem; }
+  .sub-hero p { font-size: 1.1rem; color: #374151; line-height: 1.75; }
+  .sub-wave { margin-top: -1px; display: block; width: 100%; }
+
+  .join-body { background: #fff; padding: 4rem 2rem 6rem; max-width: 1040px; margin: 0 auto; }
+  .join-h2 { text-align: center; font-size: 2rem; font-weight: 900; color: var(--text); margin-bottom: 2.5rem; }
+  .roles-h2 { margin-top: 4rem; }
+  .perk-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .perk-card { background: #fff; border: 1px solid #eef0f2; border-radius: 22px; padding: 2rem 1.5rem; box-shadow: 0 10px 30px -18px rgba(30,33,64,0.25); }
+  .perk-icon { width: 48px; height: 48px; border-radius: 14px; display: flex; align-items: center; justify-content: center; background: var(--blue-light); color: var(--blue); margin-bottom: 1rem; }
+  .perk-card h3 { font-size: 1.15rem; font-weight: 900; color: var(--text); margin-bottom: 0.5rem; }
+  .perk-card p { font-size: 0.95rem; color: #374151; line-height: 1.65; }
+
+  .role-tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; }
+  .role-tag { padding: 0.6rem 1.15rem; border-radius: 999px; background: var(--green-light); color: #4d7d09; font-weight: 800; font-size: 0.95rem; }
+
+  .join-cta { margin-top: 4rem; text-align: center; background: linear-gradient(135deg, var(--green), var(--blue)); border-radius: 28px; padding: 3.5rem 2rem; color: #fff; }
+  .join-cta h2 { font-size: 1.9rem; font-weight: 900; margin-bottom: 0.6rem; }
+  .join-cta p { font-size: 1.05rem; opacity: 0.95; margin-bottom: 1.75rem; max-width: 520px; margin-left: auto; margin-right: auto; }
+  .join-btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.9rem 1.9rem; border-radius: 14px; background: #fff; color: var(--text); font-weight: 900; font-size: 1rem; text-decoration: none; box-shadow: 0 10px 26px -8px rgba(0,0,0,0.3); transition: transform 0.2s ease; }
+  .join-btn:hover { transform: translateY(-2px); }
+
+  @media (max-width: 800px) { .perk-grid { grid-template-columns: 1fr; max-width: 380px; margin: 0 auto; } }
+</style>

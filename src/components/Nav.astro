@@ -8,140 +8,417 @@ const t = (key: TranslationKey): string =>
   (ui[locale] as typeof ui[typeof defaultLocale])[key] ?? ui[defaultLocale][key];
 
 const pathname = Astro.url.pathname;
-const isHome = pathname === `/${locale}/` || pathname === `/${locale}`;
 const isAbout = pathname.includes('/about');
+const isMadeFor = pathname.includes('/features');
+const isRoadmap = pathname.includes('/roadmap');
+const isJoin = pathname.includes('/join');
+const menuOpenLabel = locale === 'zh' ? '打开导航菜单' : 'Open navigation menu';
+const menuCloseLabel = locale === 'zh' ? '关闭导航菜单' : 'Close navigation menu';
 ---
 
-<nav class="nav">
-  <div class="nav-inner">
+<div class="nav-wrap">
+  <nav class="nav">
     <a class="logo" href={`/${locale}/`}>
-      <div class="logo-icon" aria-hidden="true"></div>
-      BlotzTask
+      <span class="logo-icon" aria-hidden="true"></span>
+      <span class="logo-word">BlotzTask</span>
     </a>
+
     <div class="nav-links">
-      <a class:list={['nav-link', { active: isHome }]} href={`/${locale}/`}>{t('nav-home')}</a>
       <div class="nav-dropdown">
-        <button class="nav-link">
+        <button class:list={['nav-link', { active: isMadeFor }]} aria-haspopup="true">
           {t('nav-made-for')}
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          <svg class="chev" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
         </button>
         <div class="nav-dropdown-menu">
           <a class="nav-dropdown-item" href={`/${locale}/features/task-management`}>
-            <Icon name="lucide:check-square" width={16} height={16} />
-            <div class="nav-dropdown-item-text">
-              <span class="nav-dropdown-item-title">{t('nav-mf-task')}</span>
-            </div>
+            <span class="ddi-icon"><Icon name="lucide:check-square" width={17} height={17} /></span>
+            <span class="ddi-title">{t('nav-mf-task')}</span>
           </a>
           <a class="nav-dropdown-item" href={`/${locale}/features/ai`}>
-            <Icon name="lucide:sparkles" width={16} height={16} />
-            <div class="nav-dropdown-item-text">
-              <span class="nav-dropdown-item-title">{t('nav-mf-ai')}</span>
-            </div>
+            <span class="ddi-icon"><Icon name="lucide:sparkles" width={17} height={17} /></span>
+            <span class="ddi-title">{t('nav-mf-ai')}</span>
           </a>
           <a class="nav-dropdown-item" href={`/${locale}/features/gamified`}>
-            <Icon name="lucide:dices" width={16} height={16} />
-            <div class="nav-dropdown-item-text">
-              <span class="nav-dropdown-item-title">{t('nav-mf-game')}</span>
-            </div>
+            <span class="ddi-icon"><Icon name="lucide:dices" width={17} height={17} /></span>
+            <span class="ddi-title">{t('nav-mf-game')}</span>
           </a>
         </div>
       </div>
       <a class:list={['nav-link', { active: isAbout }]} href={`/${locale}/about`}>{t('nav-about')}</a>
+      <a class:list={['nav-link', { active: isRoadmap }]} href={`/${locale}/roadmap`}>{t('nav-roadmap')}</a>
+      <a class:list={['nav-link', { active: isJoin }]} href={`/${locale}/join`}>{t('nav-join')}</a>
+    </div>
+
+    <a class="nav-cta" href={`/${locale}/sponsor`}>
+      {t('nav-cta')}
+    </a>
+
+    <button class="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label={menuOpenLabel} data-open-label={menuOpenLabel} data-close-label={menuCloseLabel}>
+      <Icon class="menu-icon menu-icon-open" name="lucide:menu" width={22} height={22} />
+      <Icon class="menu-icon menu-icon-close" name="lucide:x" width={22} height={22} />
+    </button>
+  </nav>
+
+  <div class="mobile-menu" id="mobile-menu" aria-hidden="true" inert hidden>
+    <div class="mobile-menu-section">
+      <p class="mobile-menu-label">{t('nav-made-for')}</p>
+      <a class="mobile-menu-item" href={`/${locale}/features/task-management`}>
+        <span class="ddi-icon"><Icon name="lucide:check-square" width={17} height={17} /></span>
+        <span>{t('nav-mf-task')}</span>
+      </a>
+      <a class="mobile-menu-item" href={`/${locale}/features/ai`}>
+        <span class="ddi-icon"><Icon name="lucide:sparkles" width={17} height={17} /></span>
+        <span>{t('nav-mf-ai')}</span>
+      </a>
+      <a class="mobile-menu-item" href={`/${locale}/features/gamified`}>
+        <span class="ddi-icon"><Icon name="lucide:dices" width={17} height={17} /></span>
+        <span>{t('nav-mf-game')}</span>
+      </a>
+    </div>
+
+    <div class="mobile-menu-section">
+      <a class:list={['mobile-menu-link', { active: isAbout }]} href={`/${locale}/about`}>{t('nav-about')}</a>
+      <a class:list={['mobile-menu-link', { active: isRoadmap }]} href={`/${locale}/roadmap`}>{t('nav-roadmap')}</a>
+      <a class:list={['mobile-menu-link', { active: isJoin }]} href={`/${locale}/join`}>{t('nav-join')}</a>
+      <a class="mobile-menu-cta" href={`/${locale}/sponsor`}>{t('nav-cta')}</a>
     </div>
   </div>
-</nav>
+</div>
 
 <style>
-  .nav {
+  /* Floating "island" capsule that sits detached from the top edge */
+  .nav-wrap {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    background: transparent;
-    transition: background 0.3s, backdrop-filter 0.3s, box-shadow 0.3s;
+    display: flex; justify-content: center;
+    /* side padding matches the page content's 2rem gutters */
+    padding: 0.85rem 2rem;
+    pointer-events: none;
   }
-  .nav.scrolled {
-    background: rgba(255, 255, 255, 0.72);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    box-shadow: 0 1px 20px rgba(0, 0, 0, 0.08);
+  .nav {
+    pointer-events: auto;
+    /* content container is 1260px; subtract the 2rem gutters both sides */
+    width: 100%; max-width: 1196px;
+    display: flex; align-items: center; gap: 1rem;
+    padding: 0.5rem 0.6rem 0.5rem 1.15rem;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.62);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.6) inset,
+      0 10px 30px -12px rgba(30, 33, 64, 0.22);
+    backdrop-filter: blur(18px) saturate(1.6);
+    -webkit-backdrop-filter: blur(18px) saturate(1.6);
+    transition: box-shadow 0.3s ease, transform 0.3s ease, background 0.3s ease;
   }
-  .nav-inner {
-    max-width: 1100px; margin: 0 auto;
-    padding: 1rem 1.5rem;
-    display: flex; align-items: center; justify-content: space-between;
+  .nav-wrap.scrolled .nav {
+    background: rgba(255, 255, 255, 0.82);
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.7) inset,
+      0 14px 40px -14px rgba(30, 33, 64, 0.34);
   }
+
+  /* Logo */
   .logo {
-    display: flex; align-items: center; gap: 0.6rem;
-    text-decoration: none; font-weight: 900; font-size: 1.25rem; color: var(--text);
+    display: flex; align-items: center; gap: 0.55rem;
+    text-decoration: none; margin-right: auto;
   }
   .logo-icon {
-    width: 32px; height: 32px; flex-shrink: 0;
-    background-color: white;
+    width: 30px; height: 30px; flex-shrink: 0;
+    background: linear-gradient(135deg, var(--green), var(--blue));
     -webkit-mask-image: url('/shared-pic/bun-white.svg');
     -webkit-mask-size: contain; -webkit-mask-repeat: no-repeat; -webkit-mask-position: center;
     mask-image: url('/shared-pic/bun-white.svg');
     mask-size: contain; mask-repeat: no-repeat; mask-position: center;
+    transition: transform 0.28s cubic-bezier(.34, 1.56, .64, 1);
   }
-  .nav-links {
-    display: flex; align-items: center; gap: 0.25rem;
+  /* the mascot winks + perks up when you hover the logo */
+  .logo:hover .logo-icon,
+  .logo:focus-visible .logo-icon {
+    -webkit-mask-image: url('/shared-pic/bun-wink.svg');
+    mask-image: url('/shared-pic/bun-wink.svg');
+    transform: rotate(-8deg) scale(1.1);
   }
+  @media (prefers-reduced-motion: reduce) {
+    .logo:hover .logo-icon,
+    .logo:focus-visible .logo-icon { transform: none; }
+  }
+  .logo-word {
+    font-weight: 900; font-size: 1.2rem; letter-spacing: -0.01em; color: var(--text);
+  }
+
+  /* Links */
+  .nav-links { display: flex; align-items: center; gap: 0.15rem; }
   .nav-link {
-    padding: 0.45rem 0.9rem; border-radius: 999px;
-    font-size: 0.9rem; font-weight: 700; color: var(--text);
+    position: relative;
+    padding: 0.5rem 1.05rem; border-radius: 12px;
+    font-size: 1rem; font-weight: 800; color: var(--text);
     text-decoration: none; background: none; border: none; cursor: pointer;
     appearance: none; -webkit-appearance: none;
     display: flex; align-items: center; gap: 0.3rem;
-    transition: background 0.18s;
     white-space: nowrap;
     font-family: 'Nunito', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
+    transition: background 0.18s ease, color 0.18s ease, transform 0.12s ease;
+    -webkit-tap-highlight-color: transparent;
   }
-  .nav-link:hover { background: rgba(0,0,0,0.06); }
-  .nav-link svg { transition: transform 0.2s; }
+  /* hover previews the active color with a faint green wash */
+  .nav-link:hover { background: rgba(150, 210, 27, 0.16); color: #4d7d09; }
+  .nav-link:active { transform: translateY(0.5px); }
+  .nav-link:focus { outline: none; }
+  .nav-link:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
+  /* active page: a solid pale-green pill with bold navy text — clearly the
+     current page, while the vivid gradient CTA stays the dominant action */
+  .nav-link.active,
+  .nav-link.active:hover {
+    color: var(--text);
+    background: var(--green-light);
+    box-shadow: inset 0 0 0 1px rgba(150, 210, 27, 0.35);
+  }
+  .chev { transition: transform 0.22s ease; margin-top: 1px; }
+
+  /* Dropdown */
   .nav-dropdown { position: relative; }
   .nav-dropdown:hover .nav-dropdown-menu,
-  .nav-dropdown:focus-within .nav-dropdown-menu { display: flex; }
-  .nav-dropdown:hover .nav-link svg,
-  .nav-dropdown:focus-within .nav-link svg { transform: rotate(180deg); }
+  .nav-dropdown:focus-within .nav-dropdown-menu {
+    opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0);
+  }
+  .nav-dropdown:hover .chev,
+  .nav-dropdown:focus-within .chev { transform: rotate(180deg); }
   .nav-dropdown-menu {
-    display: none;
-    flex-direction: column; gap: 0.15rem;
-    position: absolute; top: calc(100% + 0.5rem); left: 50%;
-    transform: translateX(-50%);
-    background: white; border-radius: 16px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.12), 0 0 0 1px rgba(0,0,0,0.06);
-    padding: 0.5rem;
-    min-width: 200px; z-index: 200;
+    opacity: 0; visibility: hidden;
+    transform: translateX(-50%) translateY(6px);
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+    flex-direction: column; gap: 0.1rem;
+    position: absolute; top: calc(100% + 0.65rem); left: 50%;
+    display: flex;
+    background: rgba(255,255,255,0.92);
+    border: 1px solid rgba(30,33,64,0.07);
+    border-radius: 18px;
+    box-shadow: 0 18px 44px -14px rgba(30,33,64,0.32);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 0.4rem; min-width: 210px; z-index: 200;
+  }
+  /* hover bridge so the menu doesn't close in the gap */
+  .nav-dropdown-menu::before {
+    content: ''; position: absolute; top: -0.65rem; left: 0; right: 0; height: 0.65rem;
   }
   .nav-dropdown-item {
-    display: flex; align-items: center; gap: 0.75rem;
-    padding: 0.65rem 0.85rem; border-radius: 10px;
+    display: flex; align-items: center; gap: 0.7rem;
+    padding: 0.6rem 0.7rem; border-radius: 12px;
     text-decoration: none; color: var(--text);
     transition: background 0.15s;
   }
-  .nav-dropdown-item:hover { background: #f5f5f5; }
-  .nav-dropdown-item svg { flex-shrink: 0; color: var(--green); }
-  .nav-dropdown-item-text { display: flex; flex-direction: column; }
-  .nav-dropdown-item-title { font-size: 0.88rem; font-weight: 800; }
+  .nav-dropdown-item:hover { background: var(--green-light); }
+  .ddi-icon {
+    display: flex; align-items: center; justify-content: center;
+    width: 32px; height: 32px; flex-shrink: 0; border-radius: 9px;
+    background: var(--green-light); color: var(--green);
+  }
+  .nav-dropdown-item:hover .ddi-icon { background: white; }
+  .ddi-title { font-size: 0.9rem; font-weight: 800; }
+
+  /* CTA */
+  .nav-cta {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    padding: 0.55rem 1.1rem; border-radius: 14px;
+    font-family: 'Nunito', 'PingFang SC', sans-serif;
+    font-weight: 900; font-size: 0.9rem; white-space: nowrap;
+    text-decoration: none; color: white;
+    background: linear-gradient(135deg, var(--green), var(--blue));
+    box-shadow: 0 8px 20px -6px rgba(52, 134, 243, 0.5);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .nav-cta:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 12px 26px -6px rgba(52, 134, 243, 0.6);
+    filter: brightness(1.04);
+  }
+  .nav-cta:active { transform: translateY(0); filter: brightness(0.97); }
+  .nav-cta:focus { outline: none; }
+  /* crisp focus halo: white gap + solid brand ring, follows the pill shape */
+  .nav-cta:focus-visible {
+    outline: none;
+    box-shadow:
+      0 0 0 3px var(--bg),
+      0 0 0 5px var(--blue),
+      0 8px 20px -6px rgba(52, 134, 243, 0.5);
+  }
+  .nav-cta svg { transition: transform 0.2s ease; }
+  .nav-cta:hover svg { transform: translateX(2px); }
+
+  .mobile-menu-toggle,
+  .mobile-menu {
+    display: none;
+  }
+
+  @media (max-width: 720px) {
+    .nav-wrap {
+      align-items: center;
+      flex-direction: column;
+      padding: 0.6rem 1rem;
+    }
+    .nav {
+      max-width: 100%;
+      gap: 0.75rem;
+      padding: 0.5rem 0.55rem 0.5rem 0.85rem;
+      border-radius: 18px;
+    }
+    .logo-word {
+      display: inline;
+      font-size: 1rem;
+    }
+    .nav-links,
+    .nav-cta {
+      display: none;
+    }
+    .mobile-menu-toggle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      height: 42px;
+      flex: 0 0 42px;
+      border: 0;
+      border-radius: 13px;
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.72);
+      box-shadow: inset 0 0 0 1px rgba(30, 33, 64, 0.07);
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .mobile-menu-toggle:focus {
+      outline: none;
+    }
+    .mobile-menu-toggle:focus-visible {
+      outline: 2px solid var(--blue);
+      outline-offset: 3px;
+    }
+    .menu-icon {
+      display: block;
+    }
+    .menu-icon-close {
+      display: none;
+    }
+    .nav-wrap.menu-open .menu-icon-open {
+      display: none;
+    }
+    .nav-wrap.menu-open .menu-icon-close {
+      display: block;
+    }
+    .mobile-menu {
+      pointer-events: auto;
+      width: 100%;
+      max-width: 100%;
+      display: block;
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(-8px);
+      visibility: hidden;
+      transition: max-height 0.24s ease, opacity 0.18s ease, transform 0.24s ease;
+    }
+    .mobile-menu[hidden] {
+      display: none;
+    }
+    .nav-wrap.menu-open .mobile-menu {
+      max-height: 520px;
+      opacity: 1;
+      transform: translateY(0);
+      visibility: visible;
+    }
+    .mobile-menu-section {
+      margin-top: 0.55rem;
+      padding: 0.75rem;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      box-shadow: 0 16px 40px -18px rgba(30, 33, 64, 0.32);
+      backdrop-filter: blur(18px) saturate(1.4);
+      -webkit-backdrop-filter: blur(18px) saturate(1.4);
+    }
+    .mobile-menu-label {
+      padding: 0.2rem 0.35rem 0.55rem;
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .mobile-menu-item,
+    .mobile-menu-link,
+    .mobile-menu-cta {
+      display: flex;
+      align-items: center;
+      min-height: 48px;
+      border-radius: 13px;
+      color: var(--text);
+      font-weight: 900;
+      text-decoration: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .mobile-menu-item {
+      gap: 0.75rem;
+      padding: 0.48rem 0.55rem;
+    }
+    .mobile-menu-link {
+      padding: 0.5rem 0.7rem;
+    }
+    .mobile-menu-link.active {
+      background: var(--green-light);
+      box-shadow: inset 0 0 0 1px rgba(150, 210, 27, 0.3);
+    }
+    .mobile-menu-item:hover,
+    .mobile-menu-link:hover {
+      background: rgba(150, 210, 27, 0.14);
+    }
+    .mobile-menu-cta {
+      justify-content: center;
+      margin-top: 0.45rem;
+      color: white;
+      background: linear-gradient(135deg, var(--green), var(--blue));
+      box-shadow: 0 8px 20px -8px rgba(52, 134, 243, 0.55);
+    }
+  }
+  /* match the hero's 1rem gutters on phones */
+  @media (max-width: 600px) {
+    .nav-wrap { padding: 0.6rem 1rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .nav, .nav-link, .chev, .nav-dropdown-menu, .nav-cta, .nav-cta svg, .mobile-menu { transition: none; }
+  }
 </style>
 
 <script>
-  const nav = document.querySelector('.nav') as HTMLElement;
-  const logoIcon = document.querySelector('.logo-icon') as HTMLElement;
-  const heroArea = document.querySelector('.hero-area') as HTMLElement | null;
+  const wrap = document.querySelector('.nav-wrap') as HTMLElement;
+  const menuButton = wrap?.querySelector('.mobile-menu-toggle') as HTMLButtonElement | null;
+  const mobileMenu = wrap?.querySelector('.mobile-menu') as HTMLElement | null;
 
-  if (!heroArea) {
-    // Not on home page — always frosted, logo always green
-    nav.classList.add('scrolled');
-    logoIcon.style.backgroundColor = '#8AC936';
-  } else {
-    const onScroll = () => {
-      const heroH = heroArea.offsetHeight ?? 600;
-      const ratio = Math.min(Math.max(window.scrollY / heroH, 0), 1);
-      const r = Math.round(255 + (138 - 255) * ratio);
-      const g = Math.round(255 + (201 - 255) * ratio);
-      const b = Math.round(255 + (54  - 255) * ratio);
-      logoIcon.style.backgroundColor = `rgb(${r},${g},${b})`;
-      nav.classList.toggle('scrolled', window.scrollY > 10);
-    };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-  }
+  const setMenuOpen = (isOpen: boolean) => {
+    if (mobileMenu && isOpen) mobileMenu.hidden = false;
+    wrap.classList.toggle('menu-open', isOpen);
+    menuButton?.setAttribute('aria-expanded', String(isOpen));
+    menuButton?.setAttribute(
+      'aria-label',
+      isOpen
+        ? menuButton.dataset.closeLabel ?? 'Close navigation menu'
+        : menuButton.dataset.openLabel ?? 'Open navigation menu'
+    );
+    mobileMenu?.setAttribute('aria-hidden', String(!isOpen));
+    if (mobileMenu) mobileMenu.inert = !isOpen;
+    if (mobileMenu && !isOpen) mobileMenu.hidden = true;
+  };
+
+  const onScroll = () => wrap.classList.toggle('scrolled', window.scrollY > 12);
+  window.addEventListener('scroll', onScroll, { passive: true });
+  menuButton?.addEventListener('click', () => {
+    setMenuOpen(!wrap.classList.contains('menu-open'));
+  });
+  mobileMenu?.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => setMenuOpen(false));
+  });
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 720) setMenuOpen(false);
+  });
+  onScroll();
 </script>

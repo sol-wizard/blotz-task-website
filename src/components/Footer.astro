@@ -17,16 +17,27 @@ const t = (key: TranslationKey): string =>
           BlotzTask
         </a>
         <p class="footer-tagline">AI-Powered ADHD Task Manager</p>
+        <a class="footer-feedback-btn"
+          href="https://m3cetbcyp2d.usttp.larksuite.com/share/base/form/shrutCtpZYEZ0KeRokQpJ7K96rd"
+          target="_blank" rel="noopener noreferrer">
+          <Icon name="lucide:message-square-heart" width={16} height={16} />
+          {t('feedback-btn-label')}
+        </a>
+      </div>
+
+      <div class="footer-col">
+        <h4>{t('footer-explore')}</h4>
+        <a class="footer-link" href={`/${locale}/#features`}>{t('nav-made-for')}</a>
+        <a class="footer-link" href={`/${locale}/roadmap`}>{t('nav-roadmap')}</a>
+        <a class="footer-link" href={`/${locale}/about`}>{t('nav-about')}</a>
+        <a class="footer-link" href={`/${locale}/join`}>{t('nav-join')}</a>
       </div>
 
       <div class="footer-col">
         <h4>{t('footer-resources')}</h4>
+        <a class="footer-link" href={`/${locale}/sponsor`}>{t('nav-cta')}</a>
         <a class="footer-link" href={`/${locale}/privacy`}>{t('footer-privacy')}</a>
-        <a class="footer-link"
-          href="https://m3cetbcyp2d.usttp.larksuite.com/share/base/form/shrutCtpZYEZ0KeRokQpJ7K96rd"
-          target="_blank" rel="noopener noreferrer">
-          {t('footer-feedback')}
-        </a>
+        <a class="footer-link" href="mailto:blotztask.app@gmail.com">{t('footer-contact')}</a>
       </div>
 
       <div class="footer-col">
@@ -43,10 +54,6 @@ const t = (key: TranslationKey): string =>
           <Icon name="lucide:linkedin" width={15} height={15} />
           LinkedIn
         </a>
-        <a class="footer-link" href="mailto:blotztask.app@gmail.com">
-          <Icon name="lucide:mail" width={15} height={15} />
-          {t('footer-contact')}
-        </a>
       </div>
     </div>
   </div>
@@ -59,7 +66,7 @@ const t = (key: TranslationKey): string =>
 <style is:global>
   .site-footer { background: #1E2140; color: white; }
   .footer-main { padding: 3.5rem 1.5rem 2rem; }
-  .footer-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1.5fr; gap: 3rem; }
+  .footer-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1.8fr 1fr 1fr 1fr; gap: 2.5rem; align-items: start; }
   .footer-logo-link { display: flex; align-items: center; gap: 0.55rem; text-decoration: none; color: white; font-weight: 900; font-size: 1.2rem; margin-bottom: 0.65rem; }
   .footer-logo-icon {
     width: 26px; height: 26px; flex-shrink: 0; background-color: white;
@@ -67,6 +74,16 @@ const t = (key: TranslationKey): string =>
     mask-image: url('/shared-pic/bun-white.svg'); mask-size: contain; mask-repeat: no-repeat; mask-position: center;
   }
   .footer-tagline { font-size: 0.85rem; color: rgba(255,255,255,0.4); line-height: 1.55; max-width: 220px; }
+  .footer-feedback-btn {
+    margin-top: 1.15rem; display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.6rem 1.1rem; border-radius: 12px;
+    background: linear-gradient(135deg, var(--green), var(--blue));
+    color: white; font-size: 0.86rem; font-weight: 800; text-decoration: none;
+    box-shadow: 0 8px 20px -8px rgba(52,134,243,0.6);
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+  }
+  .footer-feedback-btn:hover { transform: translateY(-1px); box-shadow: 0 12px 24px -8px rgba(52,134,243,0.7); }
+  .footer-feedback-btn svg { flex-shrink: 0; }
   .footer-col { display: flex; flex-direction: column; }
   .footer-col h4 { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.35); margin-bottom: 0.85rem; }
   .footer-link { color: rgba(255,255,255,0.62); text-decoration: none; font-size: 0.88rem; font-weight: 600; padding: 0.28rem 0; display: flex; align-items: center; gap: 0.45rem; transition: color 0.18s; line-height: 1.5; }

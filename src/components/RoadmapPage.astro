@@ -1,0 +1,82 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { defaultLocale } from '../i18n/landing';
+
+const locale = Astro.currentLocale ?? defaultLocale;
+const zh = locale === 'zh';
+
+// PLACEHOLDER ITEMS — seeded from the FAQ; edit these to match the real plan.
+const c = zh
+  ? {
+      title: '产品路线图',
+      subtitle: 'BlotzTask 的前进方向 —— 由你的反馈塑造。',
+      columns: [
+        { key: 'shipped', label: '已上线', tone: 'done', items: ['语音生成任务', 'AI 周报 / 月报', '扭蛋机', '快速笔记', '截止日期追踪', 'iOS 应用'] },
+        { key: 'building', label: '开发中', tone: 'building', items: ['Android 应用', '报告体验优化'] },
+        { key: 'planned', label: '规划中', tone: 'planned', items: ['离线支持', '中国大陆上线', '桌面小组件', '重复任务', '网页版'] },
+      ],
+    }
+  : {
+      title: 'Roadmap',
+      subtitle: 'Where BlotzTask is headed — shaped by your feedback.',
+      columns: [
+        { key: 'shipped', label: 'Shipped', tone: 'done', items: ['Voice to Tasks', 'AI weekly & monthly reports', 'Gacha Machine', 'Quick Notes', 'Deadline Tracker', 'iOS app'] },
+        { key: 'building', label: 'Building now', tone: 'building', items: ['Android app', 'Reports experience polish'] },
+        { key: 'planned', label: 'Planned', tone: 'planned', items: ['Offline support', 'Availability in mainland China', 'Home-screen widgets', 'Recurring tasks', 'Web app'] },
+      ],
+    };
+---
+
+<Layout title={`${c.title} – BlotzTask`}>
+  <div class="hero-area">
+    <div class="sub-hero">
+      <h1>{c.title}</h1>
+      <p>{c.subtitle}</p>
+    </div>
+  </div>
+  <svg class="sub-wave" viewBox="0 0 1440 70" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <path d="M0 35 C360 70 720 0 1080 35 C1260 53 1380 22 1440 35 L1440 70 L0 70 Z" fill="#ffffff"/>
+  </svg>
+
+  <section class="roadmap-body">
+    <div class="roadmap-grid">
+      {c.columns.map((col) => (
+        <div class={`roadmap-col tone-${col.tone}`}>
+          <div class="roadmap-col-head">
+            <span class="roadmap-dot"></span>
+            <h3>{col.label}</h3>
+          </div>
+          <ul>
+            {col.items.map((item) => <li>{item}</li>)}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .sub-hero { position: relative; text-align: center; padding: 8rem 1.5rem 5rem; max-width: 680px; margin: 0 auto; }
+  .sub-hero h1 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 900; color: var(--text); margin-bottom: 1rem; }
+  .sub-hero p { font-size: 1.1rem; color: #374151; line-height: 1.75; }
+  .sub-wave { margin-top: -1px; display: block; width: 100%; }
+
+  .roadmap-body { background: #fff; padding: 4rem 2rem 6rem; max-width: 1100px; margin: 0 auto; }
+  .roadmap-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; align-items: start; }
+  .roadmap-col { border: 1px solid #eef0f2; border-radius: 22px; padding: 1.75rem 1.5rem; background: #fff; box-shadow: 0 10px 30px -20px rgba(30,33,64,0.25); }
+  .roadmap-col-head { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 1.25rem; }
+  .roadmap-col-head h3 { font-size: 1.15rem; font-weight: 900; color: var(--text); }
+  .roadmap-dot { width: 11px; height: 11px; border-radius: 50%; flex-shrink: 0; }
+  .tone-done .roadmap-dot { background: var(--green); }
+  .tone-building .roadmap-dot { background: #f5a623; }
+  .tone-planned .roadmap-dot { background: var(--blue); }
+  .roadmap-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
+  .roadmap-col li { position: relative; padding-left: 1.4rem; font-size: 0.95rem; color: #374151; line-height: 1.5; }
+  .roadmap-col li::before { content: ''; position: absolute; left: 0; top: 0.5rem; width: 8px; height: 8px; border-radius: 3px; background: currentColor; opacity: 0.25; }
+  .tone-done { color: var(--green); }
+  .tone-building { color: #f5a623; }
+  .tone-planned { color: var(--blue); }
+  .roadmap-col li { color: #374151; }
+
+  @media (max-width: 800px) { .roadmap-grid { grid-template-columns: 1fr; max-width: 420px; margin: 0 auto; } }
+</style>

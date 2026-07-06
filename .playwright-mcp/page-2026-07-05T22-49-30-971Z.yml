@@ -1,0 +1,145 @@
+- generic [active] [ref=f12e1]:
+  - navigation [ref=f12e2]:
+    - link "BlotzTask" [ref=f12e3] [cursor=pointer]:
+      - /url: /en/
+      - generic [ref=f12e5]: BlotzTask
+    - button "Open navigation menu" [ref=f12e6] [cursor=pointer]:
+      - img [ref=f12e7]
+  - generic [ref=f12e10]:
+    - generic [ref=f12e12]:
+      - generic [ref=f12e13]:
+        - generic [ref=f12e14]: ★★★★★
+        - generic [ref=f12e15]: Loved by 2,000+ users
+      - heading "The AI-powered way to manage ADHD tasks!" [level=1] [ref=f12e16]
+      - paragraph [ref=f12e17]: Capture tasks by voice, let AI break them into clear steps, and finally beat the blank-page freeze.
+      - link "Download the app" [ref=f12e18] [cursor=pointer]:
+        - /url: "#download"
+        - generic [ref=f12e19]: Download the app
+        - img [ref=f12e20]
+    - img [ref=f12e26]
+  - generic [ref=f12e29]:
+    - generic [ref=f12e30]:
+      - heading "Key Features" [level=2] [ref=f12e31]
+      - paragraph [ref=f12e32]: Everything you need to stay on top of your tasks
+    - generic [ref=f12e33]:
+      - generic [ref=f12e34] [cursor=pointer]:
+        - img [ref=f12e36]
+        - generic [ref=f12e38]: Voice to Tasks
+        - generic [ref=f12e39]: Generate tasks from your voice input. AI automatically breaks them down into manageable steps, with monthly & weekly progress reports.
+      - generic [ref=f12e40] [cursor=pointer]:
+        - img [ref=f12e42]
+        - generic [ref=f12e44]: AI Summarization
+        - generic [ref=f12e45]: Let AI recap everything you've accomplished this week or month — see your progress at a glance.
+      - generic [ref=f12e46] [cursor=pointer]:
+        - img [ref=f12e48]
+        - generic [ref=f12e50]: Gacha Machine
+        - generic [ref=f12e51]: Can't decide where to start? Spin the Gacha to randomly pick your next task and break the freeze!
+      - generic [ref=f12e52] [cursor=pointer]:
+        - img [ref=f12e54]
+        - generic [ref=f12e56]: Quick Notes
+        - generic [ref=f12e57]: Capture thoughts and ideas instantly — nothing slips through the cracks.
+      - generic [ref=f12e58] [cursor=pointer]:
+        - img [ref=f12e60]
+        - generic [ref=f12e62]: Deadline Tracker
+        - generic [ref=f12e63]: Mark tasks as deadlines and always know how many days remain. Stay on top of what matters most without the anxiety.
+  - generic [ref=f12e65]:
+    - heading "Find us on" [level=2] [ref=f12e66]
+    - paragraph [ref=f12e67]: Follow BlotzTask for updates, tips, and community.
+    - generic [ref=f12e68]:
+      - link "Red Note" [ref=f12e69] [cursor=pointer]:
+        - /url: https://www.xiaohongshu.com/user/profile/67bc12d6000000000e01f09a
+        - img [ref=f12e70]
+        - generic [ref=f12e72]: Red Note
+      - link "LinkedIn" [ref=f12e73] [cursor=pointer]:
+        - /url: https://www.linkedin.com/company/blotz-app/
+        - img [ref=f12e74]
+        - generic [ref=f12e76]: LinkedIn
+  - generic [ref=f12e78]:
+    - heading "Frequently Asked Questions" [level=2] [ref=f12e79]
+    - generic [ref=f12e80]:
+      - group [ref=f12e81]:
+        - generic "Is BlotzTask free?" [ref=f12e82] [cursor=pointer]:
+          - generic [ref=f12e83]: Is BlotzTask free?
+          - img [ref=f12e84]
+      - group [ref=f12e86]:
+        - generic "Is my data private?" [ref=f12e87] [cursor=pointer]:
+          - generic [ref=f12e88]: Is my data private?
+          - img [ref=f12e89]
+      - group [ref=f12e91]:
+        - generic "Does BlotzTask work offline?" [ref=f12e92] [cursor=pointer]:
+          - generic [ref=f12e93]: Does BlotzTask work offline?
+          - img [ref=f12e94]
+      - group [ref=f12e96]:
+        - generic "Is it only for people with ADHD?" [ref=f12e97] [cursor=pointer]:
+          - generic [ref=f12e98]: Is it only for people with ADHD?
+          - img [ref=f12e99]
+      - group [ref=f12e101]:
+        - generic "What platforms is BlotzTask available on?" [ref=f12e102] [cursor=pointer]:
+          - generic [ref=f12e103]: What platforms is BlotzTask available on?
+          - img [ref=f12e104]
+  - generic [ref=f12e107]:
+    - heading "Get started — it's free" [level=2] [ref=f12e108]
+    - paragraph [ref=f12e109]: Download BlotzTask and turn scattered thoughts into a clear, doable plan.
+    - generic [ref=f12e110]:
+      - link "App Store" [ref=f12e111] [cursor=pointer]:
+        - /url: https://apps.apple.com/au/app/blotztask-adhd-time-manager/id6752492404
+        - img [ref=f12e112]
+        - text: App Store
+      - link "Google Play" [ref=f12e114] [cursor=pointer]:
+        - /url: https://play.google.com/store/apps/details?id=com.blotz.blotztask&hl=en
+        - img [ref=f12e115]
+        - text: Google Play
+  - contentinfo [ref=f12e122]:
+    - generic [ref=f12e124]:
+      - generic [ref=f12e125]:
+        - link "BlotzTask" [ref=f12e126] [cursor=pointer]:
+          - /url: /en/
+          - text: BlotzTask
+        - paragraph [ref=f12e128]: AI-Powered ADHD Task Manager
+        - link "Share Your Feedback" [ref=f12e129] [cursor=pointer]:
+          - /url: https://m3cetbcyp2d.usttp.larksuite.com/share/base/form/shrutCtpZYEZ0KeRokQpJ7K96rd
+          - img [ref=f12e130]
+          - text: Share Your Feedback
+      - generic [ref=f12e132]:
+        - heading "Explore" [level=4] [ref=f12e133]
+        - link "Features" [ref=f12e134] [cursor=pointer]:
+          - /url: /en/#features
+        - link "Roadmap" [ref=f12e135] [cursor=pointer]:
+          - /url: /en/roadmap
+        - link "Our team" [ref=f12e136] [cursor=pointer]:
+          - /url: /en/about
+        - link "Join us" [ref=f12e137] [cursor=pointer]:
+          - /url: /en/join
+      - generic [ref=f12e138]:
+        - heading "Resources" [level=4] [ref=f12e139]
+        - link "Be our sponsor" [ref=f12e140] [cursor=pointer]:
+          - /url: /en/sponsor
+        - link "Privacy Policy" [ref=f12e141] [cursor=pointer]:
+          - /url: /en/privacy
+        - link "Contact Support" [ref=f12e142] [cursor=pointer]:
+          - /url: mailto:blotztask.app@gmail.com
+      - generic [ref=f12e143]:
+        - heading "Follow Us" [level=4] [ref=f12e144]
+        - link "Red Note" [ref=f12e145] [cursor=pointer]:
+          - /url: https://www.xiaohongshu.com/user/profile/67bc12d6000000000e01f09a
+          - img [ref=f12e146]
+          - text: Red Note
+        - link "LinkedIn" [ref=f12e148] [cursor=pointer]:
+          - /url: https://www.linkedin.com/company/blotz-app/
+          - img [ref=f12e149]
+          - text: LinkedIn
+    - separator [ref=f12e151]
+    - paragraph [ref=f12e153]: © 2025 BlotzTask. Made with ❤️ for the ADHD community.
+  - generic [ref=f12e156]:
+    - button "Menu" [ref=f12e157]:
+      - img [ref=f12e159]
+      - generic: Menu
+    - button "Inspect" [ref=f12e163]:
+      - img [ref=f12e165]
+      - generic: Inspect
+    - button "Audit" [ref=f12e167]:
+      - img [ref=f12e169]
+      - generic: Audit
+    - button "Settings" [ref=f12e172]:
+      - img [ref=f12e174]
+      - generic: Settings
