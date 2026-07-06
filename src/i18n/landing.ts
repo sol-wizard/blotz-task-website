@@ -66,59 +66,82 @@ export const ui = {
     "nav-made-for": "功能",
     "nav-mf-task": "任务管理",
     "nav-mf-ai": "AI 功能",
-    "nav-mf-game": "游戏化",
+    "nav-mf-game": "趣味功能",
     "nav-about": "我们的团队",
-    "nav-roadmap": "路线图",
+    "nav-roadmap": "产品路线图",
     "nav-join": "加入我们",
-    "nav-cta": "成为赞助者",
-    "hero-eyebrow": "3,000+ 用户正在使用",
-    "hero-title": "用 AI 帮助 ADHD 用户管理任务",
-    "hero-sub": "用语音记录任务，让 AI 拆解成清晰步骤，彻底告别无从下手的拖延。",
-    "hero-download-cta": "下载应用",
-    "dl-ios-s": "下载于",
-    "dl-and-s": "获取于",
+    "nav-cta": "成为合作伙伴",
+
+    "hero-eyebrow": "已有 3,000+ 用户加入",
+    "hero-title": "AI 驱动的 ADHD 任务管理工具",
+    "hero-sub": "用语音快速记录想法，让 AI 自动拆解任务，把每一个待办变成真正可以开始的第一步。",
+    "hero-download-cta": "立即下载",
+
+    "dl-ios-s": "App Store 下载",
+    "dl-and-s": "Google Play 下载",
+
     "feat-title": "核心功能",
-    "feat-sub": "你需要的一切，都在这里",
-    "f1-title": "AI 语音转任务",
-    "f1-desc": "说一句，自动变任务。",
-    "f2-title": "AI 月度回顾",
-    "f2-desc": "成长信，一键分享。",
+    "feat-sub": "专注、清晰、高效，一切只为帮你完成任务。",
+
+    "f1-title": "AI 语音创建任务",
+    "f1-desc": "说一句，AI 自动整理成任务。",
+
+    "f2-title": "AI 成果回顾",
+    "f2-desc": "自动生成每月总结，看看自己到底完成了多少任務，告別迷茫。",
+
     "f3-title": "扭蛋抽任务",
-    "f3-desc": "不知道做什么？随机抽一个。",
-    "f4-title": "随手记",
-    "f4-desc": "先记想法，之后变任务。",
-    "f5-title": "截止日期追踪",
-    "f5-desc": "一眼知道现在该做什么。",
-    "feedback-title": "我们想听听你的声音",
+    "f3-desc": "不知道先做什么？交给扭蛋机随机决定。",
+
+    "f4-title": "随手记录",
+    "f4-desc": "灵感先记下来，之后一键变成任务。",
+
+    "f5-title": "截止日期提醒",
+    "f5-desc": "重要任务一目了然，不再错过截止时间。",
+
+    "feedback-title": "你的建议，对我们很重要",
     "feedback-sub":
-      "通过分享你的想法和反馈，帮助我们改进 Blotz。你的意见将塑造 AI 驱动任务管理的未来。",
-    "feedback-btn-label": "分享你的反馈",
+      "欢迎分享你的想法和建议，协助我们持续优化 BlotzTask，一起打造更好用的 AI 任务管理体验。",
+    "feedback-btn-label": "提交反馈",
+
     "contact-title": "关注我们",
-    "contact-sub": "关注 BlotzTask，获取最新动态、使用技巧和社区资讯。",
-    "contact-rn-sub": "关注我们",
+    "contact-sub": "获取最新产品动态、使用技巧和社区资讯。",
+    "contact-rn-sub": "关注",
     "contact-rn-name": "小红书",
-    "contact-li-sub": "联系我们",
+    "contact-li-sub": "关注",
     "contact-li-name": "LinkedIn",
+
     "faq-title": "常见问题",
-    "faq-q1": "BlotzTask 是免费的吗？",
-    "faq-a1": "是的！BlotzTask 免费下载使用。为了保障所有用户的服务体验，AI 功能有一定的合理使用限额。",
+
+    "faq-q1": "BlotzTask 免费吗？",
+    "faq-a1":
+      "是的，BlotzTask 可以免费下载和使用。为了保证所有用户都能获得稳定体验，AI 功能采用合理的免费额度。",
+
     "faq-q2": "我的数据安全吗？",
-    "faq-a2": "完全放心。你的数据经过加密，安全存储在微软 Azure SQL 数据库中。我们绝不会出售或向任何第三方分享你的信息。",
-    "faq-q3": "离线可以使用吗？",
-    "faq-a3": "BlotzTask 需要网络连接来驱动 AI 功能，并在设备间同步任务。离线模式已在我们的开发路线图上！",
-    "faq-q4": "只有 ADHD 人群才能使用吗？",
-    "faq-a4": "当然不是！虽然我们以 ADHD 用户为核心设计——简洁的界面、低摩擦操作、智能默认——但任何想用 AI 高效管理任务的人都可以使用。",
+    "faq-a2":
+      "当然。所有数据都会经过加密，并安全存储在 Microsoft Azure SQL。我们不会出售或向第三方共享你的个人数据。",
+
+    "faq-q3": "支持离线使用吗？",
+    "faq-a3":
+      "目前需要联网使用 AI 功能，并同步你的任务数据。离线模式已经在开发计划中，敬请期待。",
+
+    "faq-q4": "只有 ADHD 用户才能使用吗？",
+    "faq-a4":
+      "当然不是。BlotzTask 在设计时充分考虑了 ADHD 用户的需求，但无论你是谁，只要想更高效地管理任务，都可以使用。",
+
     "faq-q5": "目前支持哪些平台？",
-    "faq-a5": "BlotzTask 目前已在 iOS（App Store）上线。Android（Google Play）即将推出，中国大陆安卓平台的上架工作也在积极推进中。",
-    "cta-title": "免费开始使用",
-    "cta-sub": "下载 BlotzTask，把杂乱的思绪整理成清晰、可执行的计划。",
+    "faq-a5":
+      "目前已上线 iOS（App Store）和 Android（Google Play），我们也正在积极推进中国大陆应用市场的发布。",
+
+    "cta-title": "立即开始，免费使用",
+    "cta-sub": "下载 BlotzTask，把脑海里的想法变成真正可以完成的任务。",
+
     "footer-explore": "探索",
     "footer-resources": "资源",
     "footer-privacy": "隐私政策",
-    "footer-feedback": "用户反馈",
+    "footer-feedback": "意见反馈",
     "footer-follow": "关注我们",
-    "footer-contact": "联系支持",
-    "footer-copy": "© 2025 BlotzTask. 用❤️为ADHD社区打造。",
+    "footer-contact": "联系客服",
+    "footer-copy": "© 2025 BlotzTask. 为 ADHD 用户打造，也适合每一位想高效完成任务的人。",
   },
 } as const;
 
