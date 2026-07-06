@@ -19,15 +19,15 @@ export const ui = {
     "dl-and-s": "Get it on",
     "feat-title": "Key Features",
     "feat-sub": "Everything you need to stay on top of your tasks",
-    "f1-title": "Voice to Tasks",
+    "f1-title": "AI Voice to Task",
     "f1-desc":
       "Generate tasks from your voice input. AI automatically breaks them down into manageable steps, with monthly & weekly progress reports.",
-    "f2-title": "AI Summarization",
+    "f2-title": "AI Summary",
     "f2-desc":
       "Let AI recap everything you've accomplished this week or month — see your progress at a glance.",
-    "f3-title": "Gacha Machine",
+    "f3-title": "Random Task Picker",
     "f3-desc":
-      "Can't decide where to start? Spin the Gacha to randomly pick your next task and break the freeze!",
+      "Can't decide where to start? Let BlotzTask randomly pick your next task so you can start without overthinking.",
     "f4-title": "Quick Notes",
     "f4-desc":
       "Capture thoughts and ideas instantly — nothing slips through the cracks.",
@@ -84,14 +84,14 @@ export const ui = {
     "dl-and-s": "获取于",
     "feat-title": "核心功能",
     "feat-sub": "你需要的一切，都在这里",
-    "f1-title": "语音生成任务",
+    "f1-title": "AI 语音转任务",
     "f1-desc":
       "通过语音输入，AI自动生成并拆解任务，还提供每月和每周的详细进度报告。",
-    "f2-title": "AI总结回顾",
+    "f2-title": "AI 总结",
     "f2-desc":
       "让AI为你总结过去一周或一个月完成的所有任务，见证你的每一步进步。",
-    "f3-title": "扭蛋机随机任务",
-    "f3-desc": "不知道从哪开始？让扭蛋机帮你随机选一个任务，轻松破冰启动！",
+    "f3-title": "随机任务选择",
+    "f3-desc": "不知道从哪开始？让 BlotzTask 随机帮你选一个任务，减少纠结，直接开始。",
     "f4-title": "快速笔记",
     "f4-desc": "随时随地记录任何想法，灵感永不丢失。",
     "f5-title": "截止日期追踪",

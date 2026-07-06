@@ -7,6 +7,44 @@ import type { Lang, TranslationKey } from '../i18n/landing';
 const locale = (Astro.currentLocale ?? defaultLocale) as Lang;
 const t = (key: TranslationKey): string =>
   (ui[locale] as typeof ui[typeof defaultLocale])[key] ?? ui[defaultLocale][key];
+
+const features = [
+  {
+    icon: 'lucide:mic',
+    title: t('f1-title'),
+    desc: t('f1-desc'),
+    video: '/en-videos/ai-voice-video.MP4',
+    poster: '/en-pic/ai-voice.PNG',
+  },
+  {
+    icon: 'lucide:sparkles',
+    title: t('f2-title'),
+    desc: t('f2-desc'),
+    video: '/en-videos/month-review.MP4',
+    poster: '/en-pic/monthly-review.PNG',
+  },
+  {
+    icon: 'lucide:dices',
+    title: t('f3-title'),
+    desc: t('f3-desc'),
+    video: '/en-videos/gashapon-machine.MP4',
+    poster: '/shared-pic/gashapon.PNG',
+  },
+  {
+    icon: 'lucide:notebook-pen',
+    title: t('f4-title'),
+    desc: t('f4-desc'),
+    video: '/en-videos/note.MP4',
+    poster: undefined,
+  },
+  {
+    icon: 'lucide:clock',
+    title: t('f5-title'),
+    desc: t('f5-desc'),
+    video: '/en-videos/deadline.MP4',
+    poster: '/en-pic/calendar.PNG',
+  },
+];
 ---
 
 <Layout
@@ -47,58 +85,65 @@ const t = (key: TranslationKey): string =>
   <!-- FEATURES -->
   <section class="features" id="features">
     <div class="sec-inner">
-      <div class="sec-head">
-        <h2>{t('feat-title')}</h2>
-        <p>{t('feat-sub')}</p>
-      </div>
-      <div class="feat-fan">
-        <div class="fan-card" data-video="/en-videos/ai-voice-video.MP4">
-          <div class="fan-icon"><Icon name="lucide:mic" /></div>
-          <div class="fan-label">{t('f1-title')}</div>
-          <div class="fan-desc">{t('f1-desc')}</div>
+      <div class="feature-demo" data-feature-demo>
+        <div class="feature-preview">
+          <div class="feature-preview-sticky">
+            <div class="feature-phone" aria-hidden="true">
+              <video
+                id="feature-preview-video"
+                class="feature-preview-video"
+                src={features[0].video}
+                poster={features[0].poster}
+                autoplay
+                muted
+                loop
+                playsinline
+              ></video>
+              <div class="feature-phone-glow"></div>
+            </div>
+          </div>
         </div>
-        <div class="fan-card" data-video="/en-videos/month-review.MP4">
-          <div class="fan-icon"><Icon name="lucide:sparkles" /></div>
-          <div class="fan-label">{t('f2-title')}</div>
-          <div class="fan-desc">{t('f2-desc')}</div>
-        </div>
-        <div class="fan-card" data-video="/en-videos/gashapon-machine.MP4">
-          <div class="fan-icon"><Icon name="lucide:dices" /></div>
-          <div class="fan-label">{t('f3-title')}</div>
-          <div class="fan-desc">{t('f3-desc')}</div>
-        </div>
-        <div class="fan-card" data-video="/en-videos/note.MP4">
-          <div class="fan-icon"><Icon name="lucide:notebook-pen" /></div>
-          <div class="fan-label">{t('f4-title')}</div>
-          <div class="fan-desc">{t('f4-desc')}</div>
-        </div>
-        <div class="fan-card" data-video="/en-videos/deadline.MP4">
-          <div class="fan-icon"><Icon name="lucide:clock" /></div>
-          <div class="fan-label">{t('f5-title')}</div>
-          <div class="fan-desc">{t('f5-desc')}</div>
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- CONTACT -->
-  <section class="contact">
-    <div class="contact-inner">
-      <h2>{t('contact-title')}</h2>
-      <p>{t('contact-sub')}</p>
-      <div class="contact-links">
-        <a class="contact-card contact-rednote"
-          href="https://www.xiaohongshu.com/user/profile/67bc12d6000000000e01f09a"
-          target="_blank" rel="noopener noreferrer">
-          <Icon name="simple-icons:xiaohongshu" style="width:24px;height:24px;" />
-          <span class="contact-card-name">{t('contact-rn-name')}</span>
-        </a>
-        <a class="contact-card contact-linkedin"
-          href="https://www.linkedin.com/company/blotz-app/"
-          target="_blank" rel="noopener noreferrer">
-          <Icon name="lucide:linkedin" style="width:24px;height:24px;" />
-          <span class="contact-card-name">{t('contact-li-name')}</span>
-        </a>
+        <div class="feature-list" aria-label={t('feat-title')}>
+          <div class="feature-progress" aria-hidden="true">
+            <span class="feature-progress-fill"></span>
+          </div>
+          {features.map((feature, index) => (
+            <button
+              class:list={['feature-card', { active: index === 0 }]}
+              type="button"
+              data-feature-card
+              data-feature-index={index}
+              data-video={feature.video}
+              data-poster={feature.poster}
+            >
+              <span class="feature-number">{String(index + 1).padStart(2, '0')}</span>
+              <span class="feature-card-icon"><Icon name={feature.icon} /></span>
+              <span class="feature-card-text">
+                <span class="feature-card-title">{feature.title}</span>
+                <span class="feature-card-desc">{feature.desc}</span>
+              </span>
+              <span class="feature-card-cue" aria-hidden="true"><Icon name="lucide:arrow-up-right" /></span>
+              <span class:list={['feature-card-media', { 'has-fallback': !feature.poster }]} aria-hidden="true">
+                <video
+                  class="mobile-feature-video"
+                  src={feature.video}
+                  poster={feature.poster}
+                  muted
+                  loop
+                  playsinline
+                  preload="metadata"
+                ></video>
+                {!feature.poster && (
+                  <span class="feature-media-fallback">
+                    <Icon name={feature.icon} />
+                    <span>{feature.title}</span>
+                  </span>
+                )}
+              </span>
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   </section>
@@ -148,7 +193,9 @@ const t = (key: TranslationKey): string =>
   </section>
 
   <script>
-    const fanCards = Array.from(document.querySelectorAll('.fan-card')) as HTMLElement[];
+    const featureCards = Array.from(document.querySelectorAll('[data-feature-card]')) as HTMLElement[];
+    const featureList = document.querySelector('.feature-list') as HTMLElement | null;
+    const previewVideo = document.getElementById('feature-preview-video') as HTMLVideoElement | null;
     const lightbox = document.getElementById('lightbox')!;
     const lbVideo = document.getElementById('lightbox-video') as HTMLVideoElement;
     const lbClose = document.getElementById('lightbox-close')!;
@@ -157,14 +204,17 @@ const t = (key: TranslationKey): string =>
     const lbTitle = document.getElementById('lightbox-title')!;
     const lbDesc = document.getElementById('lightbox-desc')!;
     let currentIndex = 0;
+    let activeIndex = 0;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     function loadCard(index: number) {
-      const card = fanCards[index];
+      const card = featureCards[index];
       lbVideo.src = card.dataset.video!;
-      lbTitle.textContent = card.querySelector('.fan-label')?.textContent ?? '';
-      lbDesc.textContent = card.querySelector('.fan-desc')?.textContent ?? '';
+      lbVideo.poster = card.dataset.poster ?? '';
+      lbTitle.textContent = card.querySelector('.feature-card-title')?.textContent ?? '';
+      lbDesc.textContent = card.querySelector('.feature-card-desc')?.textContent ?? '';
       lbVideo.load();
-      lbVideo.play();
+      lbVideo.play().catch(() => {});
     }
     function openLightbox(index: number) {
       currentIndex = index;
@@ -176,21 +226,91 @@ const t = (key: TranslationKey): string =>
       lightbox.classList.remove('open');
       lbVideo.pause();
       lbVideo.src = '';
+      lbVideo.poster = '';
       document.body.style.overflow = '';
     }
     function navigate(dir: number) {
-      currentIndex = (currentIndex + dir + fanCards.length) % fanCards.length;
+      currentIndex = (currentIndex + dir + featureCards.length) % featureCards.length;
       loadCard(currentIndex);
+      setActiveFeature(currentIndex, false);
     }
 
-    fanCards[2]?.classList.add('active');
-    fanCards.forEach((card, i) => {
+    function updatePreviewVideo(videoSrc: string) {
+      if (!previewVideo || previewVideo.src.endsWith(videoSrc)) return;
+
+      const swapVideo = () => {
+        previewVideo.src = videoSrc;
+        const activeCard = featureCards[activeIndex];
+        previewVideo.poster = activeCard?.dataset.poster ?? '';
+        previewVideo.load();
+        previewVideo.play().catch(() => {});
+        previewVideo.classList.remove('switching');
+      };
+
+      if (reduceMotion) {
+        swapVideo();
+        return;
+      }
+
+      previewVideo.classList.add('switching');
+      window.setTimeout(swapVideo, 140);
+    }
+
+    function setActiveFeature(index: number, updateVideo = true) {
+      const card = featureCards[index];
+      if (!card) return;
+
+      activeIndex = index;
+      featureCards.forEach((item, itemIndex) => {
+        item.classList.toggle('active', itemIndex === index);
+        item.setAttribute('aria-pressed', String(itemIndex === index));
+      });
+      featureList?.style.setProperty('--feature-progress', String((index + 1) / featureCards.length));
+      if (updateVideo) updatePreviewVideo(card.dataset.video!);
+    }
+
+    featureCards.forEach((card, i) => {
+      card.setAttribute('aria-pressed', String(i === 0));
+      card.addEventListener('focus', () => setActiveFeature(i));
       card.addEventListener('click', () => {
-        fanCards.forEach(c => c.classList.remove('active'));
-        card.classList.add('active');
+        setActiveFeature(i);
         openLightbox(i);
       });
     });
+
+    if ('IntersectionObserver' in window && featureCards.length) {
+      const observer = new IntersectionObserver((entries) => {
+        const centered = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        const index = centered?.target instanceof HTMLElement
+          ? Number(centered.target.dataset.featureIndex)
+          : NaN;
+        if (Number.isFinite(index) && index !== activeIndex) setActiveFeature(index);
+      }, {
+        threshold: 0,
+        rootMargin: '-46% 0px -46% 0px',
+      });
+
+      featureCards.forEach((card) => observer.observe(card));
+    }
+
+    const mobileVideos = Array.from(document.querySelectorAll('.mobile-feature-video')) as HTMLVideoElement[];
+    if ('IntersectionObserver' in window && mobileVideos.length) {
+      const videoObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          const video = entry.target as HTMLVideoElement;
+          if (entry.isIntersecting) {
+            video.play().catch(() => {});
+          } else {
+            video.pause();
+          }
+        });
+      }, { threshold: 0.45 });
+
+      mobileVideos.forEach((video) => videoObserver.observe(video));
+    }
+
     lbClose.addEventListener('click', closeLightbox);
     lbPrev.addEventListener('click', () => navigate(-1));
     lbNext.addEventListener('click', () => navigate(1));
@@ -201,6 +321,7 @@ const t = (key: TranslationKey): string =>
       if (e.key === 'ArrowLeft') navigate(-1);
       if (e.key === 'ArrowRight') navigate(1);
     });
+    setActiveFeature(0, false);
 
     const heroVideo = document.getElementById('hero-video') as HTMLVideoElement;
     if (heroVideo) {
@@ -260,24 +381,159 @@ const t = (key: TranslationKey): string =>
   .phone-glow { position: absolute; width: 180px; height: 180px; background: radial-gradient(circle, rgba(150,210,27,0.4), transparent 70%); bottom: -55px; left: 50%; transform: translateX(-50%); border-radius: 50%; filter: blur(20px); z-index: 0; }
   .hero-wave { margin-top: -1px; display: block; width: 100%; }
 
-  .features { padding: 4rem 0 2rem; overflow: hidden; background: white; }
+  .features { scroll-margin-top: 6rem; padding: 2.5rem 0 5.5rem; overflow: clip; background: white; }
   .sec-inner { max-width: 1260px; margin: 0 auto; }
-  .sec-head { text-align: center; margin-bottom: 0; padding: 0 1.5rem 0.5rem; }
-  .sec-head h2 { font-size: 2.2rem; font-weight: 900; color: var(--text); margin-bottom: 0.5rem; }
-  .sec-head p { font-size: 1.05rem; color: var(--muted); }
-  .feat-fan { display: flex; justify-content: center; align-items: flex-end; padding: 3.5rem 2rem 3rem; }
-  .fan-card { width: 210px; min-height: 290px; border-radius: 26px; padding: 1.6rem 1.4rem 1.5rem; flex-shrink: 0; margin: 0 -20px; position: relative; box-shadow: 0 8px 28px rgba(0,0,0,0.10); cursor: pointer; transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease; display: flex; flex-direction: column; gap: 0.5rem; user-select: none; }
-  .fan-card:nth-child(1) { transform: rotate(-15deg) translateY(38px); z-index: 1; background: linear-gradient(155deg, #e5f8bf, #cdf086); }
-  .fan-card:nth-child(2) { transform: rotate(-7deg) translateY(18px); z-index: 2; background: linear-gradient(155deg, #c6f2d8, #9de8b8); }
-  .fan-card:nth-child(3) { transform: rotate(0deg) translateY(0); z-index: 5; background: linear-gradient(155deg, #beeef4, #8adde8); }
-  .fan-card:nth-child(4) { transform: rotate(7deg) translateY(18px); z-index: 2; background: linear-gradient(155deg, #bde2fc, #8ec8fc); }
-  .fan-card:nth-child(5) { transform: rotate(15deg) translateY(38px); z-index: 1; background: linear-gradient(155deg, #d4e8ff, #a4c4ff); }
-  .fan-card.active { transform: rotate(0deg) translateY(-18px) scale(1.06) !important; z-index: 10 !important; box-shadow: 0 24px 60px rgba(0,0,0,0.18) !important; }
-  .fan-card:not(.active):hover { transform: rotate(0deg) translateY(-8px) !important; z-index: 8 !important; box-shadow: 0 14px 40px rgba(0,0,0,0.14) !important; }
-  .fan-icon { flex-shrink: 0; }
-  .fan-icon svg { width: 2.4rem; height: 2.4rem; stroke-width: 1.5; color: var(--text); }
-  .fan-label { font-size: 1rem; font-weight: 800; color: var(--text); margin-top: auto; padding-top: 0.5rem; }
-  .fan-desc { font-size: 0.8rem; color: #374151; line-height: 1.6; }
+  .feature-demo {
+    --feature-step-height: clamp(430px, 56vh, 540px);
+    display: grid;
+    grid-template-columns: minmax(360px, 0.98fr) minmax(0, 1.02fr);
+    align-items: start;
+    gap: 3.5rem;
+    padding: 0 2rem;
+  }
+  .feature-preview { min-height: 2820px; }
+  .feature-preview-sticky {
+    position: sticky;
+    top: 7rem;
+    display: grid;
+    align-content: center;
+    justify-items: center;
+    min-height: calc(100vh - 9rem);
+    padding: clamp(0.25rem, 1vw, 0.75rem);
+  }
+  .feature-phone {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: min(500px, 96%);
+    margin: 0 auto;
+  }
+  .feature-preview-video {
+    position: relative;
+    z-index: 1;
+    width: auto;
+    max-width: 100%;
+    max-height: calc(100vh - 9.5rem);
+    border-radius: clamp(34px, 6vw, 48px);
+    box-shadow:
+      0 32px 82px rgba(52,134,243,0.22),
+      0 0 0 1px rgba(30,33,64,0.08);
+    transition: opacity 0.22s ease, transform 0.22s ease;
+  }
+  .feature-preview-video.switching {
+    opacity: 0;
+    transform: translateY(8px) scale(0.985);
+  }
+  .feature-phone-glow {
+    position: absolute;
+    inset: auto -18% -2.4rem;
+    height: 58%;
+    border-radius: 999px;
+    background: linear-gradient(135deg, rgba(150,210,27,0.36), rgba(52,134,243,0.38));
+    filter: blur(40px);
+  }
+  .feature-list {
+    --feature-progress: 0.2;
+    position: relative;
+    display: grid;
+    gap: 1.75rem;
+    padding-left: 1.35rem;
+  }
+  .feature-progress {
+    position: absolute;
+    top: 1.1rem;
+    bottom: 1.1rem;
+    left: 0;
+    width: 3px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: #e7edf5;
+  }
+  .feature-progress-fill {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(180deg, var(--green), var(--blue));
+    transform: scaleY(var(--feature-progress));
+    transform-origin: top;
+    transition: transform 0.28s ease;
+  }
+  .feature-card {
+    position: relative;
+    display: grid;
+    grid-template-columns: 2.4rem 3rem minmax(0, 1fr) 2rem;
+    align-items: center;
+    gap: 1rem;
+    min-height: var(--feature-step-height);
+    width: 100%;
+    padding: 1.45rem 1.35rem;
+    border: 1px solid rgba(30,33,64,0.08);
+    border-radius: 18px;
+    background: #fff;
+    box-shadow: 0 8px 28px rgba(30,33,64,0.055);
+    color: var(--text);
+    text-align: left;
+    cursor: pointer;
+    font-family: 'Nunito', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, transform 0.2s ease;
+  }
+  .feature-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(52,134,243,0.2);
+    box-shadow: 0 16px 42px rgba(30,33,64,0.1);
+  }
+  .feature-card:focus { outline: none; }
+  .feature-card:focus-visible { outline: 2px solid var(--blue); outline-offset: 4px; }
+  .feature-card.active {
+    border-color: rgba(150,210,27,0.44);
+    background: linear-gradient(135deg, #fbfff2, #f4faff);
+    box-shadow: 0 20px 50px rgba(52,134,243,0.12);
+  }
+  .feature-number {
+    color: #8ba0b8;
+    font-size: 0.84rem;
+    font-weight: 900;
+  }
+  .feature-card.active .feature-number { color: #4d7d09; }
+  .feature-card-icon {
+    display: grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 14px;
+    color: var(--green);
+    background: var(--green-light);
+  }
+  .feature-card-icon svg { width: 1.5rem; height: 1.5rem; stroke-width: 1.8; }
+  .feature-card-text { min-width: 0; }
+  .feature-card-title {
+    display: block;
+    color: var(--text);
+    font-size: 1.14rem;
+    font-weight: 900;
+    line-height: 1.25;
+    overflow-wrap: break-word;
+  }
+  .feature-card-desc {
+    display: block;
+    margin-top: 0.45rem;
+    color: #4b5563;
+    font-size: 0.96rem;
+    line-height: 1.62;
+    overflow-wrap: break-word;
+  }
+  .feature-card-cue {
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    color: #7b8aa0;
+    border-radius: 10px;
+    background: #f4f7fb;
+  }
+  .feature-card-cue svg { width: 1rem; height: 1rem; }
+  .feature-card-media { display: none; }
 
   .cta { background: linear-gradient(135deg, var(--green) 0%, var(--blue) 100%); padding: 5rem 1.5rem; text-align: center; color: white; position: relative; overflow: hidden; }
   .cta::before, .cta::after { content: ''; position: absolute; border-radius: 50%; background: rgba(255,255,255,0.08); }
@@ -290,20 +546,6 @@ const t = (key: TranslationKey): string =>
   .cta-btn { display: inline-flex; align-items: center; gap: 0.55rem; padding: 0.85rem 2rem; border-radius: 14px; font-family: 'Nunito', 'PingFang SC', sans-serif; font-weight: 800; font-size: 1rem; text-decoration: none; background: white; color: var(--text); transition: transform 0.2s, box-shadow 0.2s; }
   .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
   .cta-btn-out { background: transparent; border: 2px solid white; color: white; }
-
-  .contact { padding: 4.5rem 1.5rem; background: linear-gradient(135deg, #f0fae0 0%, #edf4ff 100%); }
-  .contact-inner { max-width: 600px; margin: 0 auto; text-align: center; }
-  .contact-inner h2 { font-size: 2rem; font-weight: 900; color: var(--text); margin-bottom: 0.5rem; }
-  .contact-inner p { font-size: 1rem; color: var(--muted); margin-bottom: 2.5rem; }
-  .contact-links { display: flex; justify-content: center; gap: 1.25rem; flex-wrap: wrap; }
-  .contact-card { display: flex; align-items: center; gap: 0.85rem; padding: 1rem 1.75rem; border-radius: 16px; text-decoration: none; font-weight: 700; font-size: 0.95rem; transition: transform 0.2s, box-shadow 0.2s; box-shadow: var(--shadow); }
-  .contact-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
-  .contact-card svg { flex-shrink: 0; }
-  .contact-rednote { background: #ff2442; color: white; }
-  .contact-linkedin { background: #0a66c2; color: white; }
-  .contact-card-label { display: flex; flex-direction: column; text-align: left; }
-  .contact-card-sub { font-size: 0.72rem; font-weight: 600; opacity: 0.85; line-height: 1; margin-bottom: 2px; }
-  .contact-card-name { font-size: 1rem; font-weight: 800; line-height: 1.2; }
 
   .faq { padding: 5rem 2rem; background: #fff; }
   .faq-inner { max-width: 1260px; margin: 0 auto; }
@@ -336,17 +578,90 @@ const t = (key: TranslationKey): string =>
   @media (max-width: 900px) {
     .hero-inner { grid-template-columns: 1fr; padding-top: 5.5rem; }
     .hero-phone { order: -1; justify-content: center; }
-    .fan-card { width: 180px; min-height: 255px; margin: 0 -16px; }
+    .feature-demo {
+      --feature-step-height: clamp(260px, 42vh, 340px);
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+    .feature-preview { min-height: auto; }
+    .feature-preview-sticky {
+      position: static;
+      min-height: auto;
+      padding: 0;
+    }
+    .feature-phone { width: min(360px, 82vw); }
+    .feature-preview-video { max-height: 620px; }
   }
   @media (max-width: 600px) {
     .hero-inner { padding: 5rem 1rem 2.5rem; }
     .hero-video { width: 260px; border-radius: 38px; }
     .hero-cta { width: 100%; justify-content: center; }
     .cta h2 { font-size: 1.8rem; }
-    .features { overflow: visible; }
-    .feat-fan { overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; justify-content: flex-start; align-items: stretch; padding: 1.5rem 1.25rem 2.5rem; gap: 0.75rem; }
-    .fan-card { margin: 0; width: 200px; min-height: 220px; scroll-snap-align: center; }
-    .fan-card:nth-child(n) { transform: none !important; }
-    .fan-card.active { transform: none !important; box-shadow: var(--shadow-lg) !important; }
+    .features { padding: 2.25rem 0 3.25rem; overflow: hidden; }
+    .feature-demo { display: block; padding: 0 1rem; }
+    .feature-preview { display: none; }
+    .feature-list {
+      gap: 0.85rem;
+      padding-left: 0;
+    }
+    .feature-progress { display: none; }
+    .feature-card {
+      grid-template-columns: 2rem 2.75rem minmax(0, 1fr);
+      gap: 0.85rem;
+      min-height: 0;
+      padding: 1rem;
+      border-radius: 18px;
+    }
+    .feature-card:hover { transform: none; }
+    .feature-card-cue { display: none; }
+    .feature-number { align-self: start; padding-top: 0.8rem; }
+    .feature-card-icon { width: 2.75rem; height: 2.75rem; }
+    .feature-card-title { font-size: 1rem; }
+    .feature-card-desc { font-size: 0.86rem; }
+    .feature-card-media {
+      grid-column: 1 / -1;
+      display: grid;
+      place-items: center;
+      min-height: 310px;
+      margin-top: 0.35rem;
+      border-radius: 16px;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(150,210,27,0.22), transparent 34%),
+        radial-gradient(circle at 80% 90%, rgba(52,134,243,0.22), transparent 38%),
+        #f7fbff;
+      overflow: hidden;
+    }
+    .mobile-feature-video {
+      display: block;
+      width: min(210px, 72vw);
+      max-height: 285px;
+      border-radius: 32px;
+      box-shadow: 0 18px 48px rgba(52,134,243,0.18);
+    }
+    .feature-card-media.has-fallback .mobile-feature-video {
+      display: none;
+    }
+    .feature-media-fallback {
+      display: grid;
+      place-items: center;
+      align-content: center;
+      gap: 0.8rem;
+      width: min(210px, 72vw);
+      min-height: 260px;
+      border-radius: 32px;
+      color: var(--text);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.86), rgba(255,255,255,0.66)),
+        radial-gradient(circle at 30% 20%, rgba(150,210,27,0.42), transparent 38%),
+        radial-gradient(circle at 80% 80%, rgba(52,134,243,0.22), transparent 42%);
+      box-shadow: 0 18px 48px rgba(52,134,243,0.14);
+      font-weight: 900;
+    }
+    .feature-media-fallback svg {
+      width: 2rem;
+      height: 2rem;
+      color: var(--green);
+      stroke-width: 1.8;
+    }
   }
 </style>

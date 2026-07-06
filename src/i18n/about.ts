@@ -16,6 +16,10 @@ export const aboutUi = {
     'design-tag': 'Designer at a top Australian SaaS company',
     'design-bio': "A product designer in Sydney, Guanghan has designed for a top Australian SaaS company. He crafts BlotzTask's clear, low-friction interfaces — modern, functional, and tuned for ADHD minds.",
     'connect': 'LinkedIn',
+    'contact-title': 'Find us on',
+    'contact-sub': 'Follow BlotzTask for updates, sponsor conversations, and community news.',
+    'contact-rn-name': 'Red Note',
+    'contact-li-name': 'LinkedIn',
   },
   zh: {
     'nav-home': '首页',
@@ -32,6 +36,10 @@ export const aboutUi = {
     'design-tag': '就职于澳洲顶尖 SaaS 公司',
     'design-bio': 'Guanghan 是一位常驻悉尼的产品设计师，曾为澳洲顶尖 SaaS 公司设计产品。他为 BlotzTask 打造清晰、低摩擦的界面——现代、实用，专为 ADHD 用户设计。',
     'connect': '领英',
+    'contact-title': '关注我们',
+    'contact-sub': '关注 BlotzTask，获取最新动态、赞助合作信息和社区资讯。',
+    'contact-rn-name': '小红书',
+    'contact-li-name': 'LinkedIn',
   },
 } as const;
 
