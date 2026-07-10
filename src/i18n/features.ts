@@ -51,11 +51,11 @@ export const featuresUi = {
 
     // AI Features
     'ai-title': 'AI 功能',
-    'ai-sub': '把繁琐交给 AI，从记录灵感、拆解任务到回顾成果，让 AI 成为你的效率助手。',
+    'ai-sub': '把繁琐交给 AI——记录灵感、拆解任务、回顾成果，效率助手随时在线。',
 
     'ai-f1-badge': '想到就说',
     'ai-f1-title': 'AI 语音记录',
-    'ai-f1-desc': '无论是语音还是文字，把脑海里的想法直接告诉 AI。BlotzTask 会自动整理成清晰、可执行的任务列表。',
+    'ai-f1-desc': '无论是语音还是文字，把脑子里的想法直接告诉 AI。BlotzTask 会自动整理成清晰、可执行的任务列表。',
 
     'ai-f2-badge': '轻松开始',
     'ai-f2-title': 'AI 智能拆解任务',

@@ -14,6 +14,11 @@ const isRoadmap = pathname.includes('/roadmap');
 const isJoin = pathname.includes('/join');
 const menuOpenLabel = locale === 'zh' ? '展开菜单' : 'Open navigation menu';
 const menuCloseLabel = locale === 'zh' ? '收起菜单' : 'Close navigation menu';
+
+const otherLocale: Lang = locale === 'zh' ? 'en' : 'zh';
+const otherLocalePath = `/${otherLocale}${pathname.replace(/^\/(en|zh)(?=\/|$)/, '')}`;
+const langSwitchLabel = otherLocale === 'zh' ? '中文' : 'EN';
+const langSwitchAriaLabel = otherLocale === 'zh' ? 'Switch to Chinese' : '切换到英文';
 ---
 
 <div class="nav-wrap">
@@ -49,6 +54,11 @@ const menuCloseLabel = locale === 'zh' ? '收起菜单' : 'Close navigation menu
       <a class:list={['nav-link', { active: isJoin }]} href={`/${locale}/join`}>{t('nav-join')}</a>
     </div>
 
+    <a class="nav-lang" href={otherLocalePath} aria-label={langSwitchAriaLabel}>
+      <Icon name="lucide:globe" width={16} height={16} />
+      <span>{langSwitchLabel}</span>
+    </a>
+
     <a class="nav-cta" href={`/${locale}/sponsor`}>
       {t('nav-cta')}
     </a>
@@ -80,6 +90,10 @@ const menuCloseLabel = locale === 'zh' ? '收起菜单' : 'Close navigation menu
       <a class:list={['mobile-menu-link', { active: isAbout }]} href={`/${locale}/about`}>{t('nav-about')}</a>
       <a class:list={['mobile-menu-link', { active: isRoadmap }]} href={`/${locale}/roadmap`}>{t('nav-roadmap')}</a>
       <a class:list={['mobile-menu-link', { active: isJoin }]} href={`/${locale}/join`}>{t('nav-join')}</a>
+      <a class="mobile-menu-link mobile-menu-lang" href={otherLocalePath} aria-label={langSwitchAriaLabel}>
+        <span class="ddi-icon"><Icon name="lucide:globe" width={17} height={17} /></span>
+        <span>{langSwitchLabel}</span>
+      </a>
       <a class="mobile-menu-cta" href={`/${locale}/sponsor`}>{t('nav-cta')}</a>
     </div>
   </div>
@@ -217,6 +231,23 @@ const menuCloseLabel = locale === 'zh' ? '收起菜单' : 'Close navigation menu
   .nav-dropdown-item:hover .ddi-icon { background: white; }
   .ddi-title { font-size: 0.9rem; font-weight: 800; }
 
+  /* Language switch */
+  .nav-lang {
+    display: inline-flex; align-items: center; gap: 0.35rem;
+    padding: 0.5rem 0.85rem; border-radius: 12px;
+    font-size: 0.9rem; font-weight: 800; color: var(--text);
+    text-decoration: none; white-space: nowrap;
+    background: rgba(52, 134, 243, 0.08);
+    box-shadow: inset 0 0 0 1px rgba(52, 134, 243, 0.18);
+    transition: background 0.18s ease, transform 0.12s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .nav-lang svg { flex-shrink: 0; }
+  .nav-lang:hover { background: rgba(52, 134, 243, 0.16); }
+  .nav-lang:active { transform: translateY(0.5px); }
+  .nav-lang:focus { outline: none; }
+  .nav-lang:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
+
   /* CTA */
   .nav-cta {
     display: inline-flex; align-items: center; gap: 0.4rem;
@@ -269,6 +300,7 @@ const menuCloseLabel = locale === 'zh' ? '收起菜单' : 'Close navigation menu
       font-size: 1rem;
     }
     .nav-links,
+    .nav-lang,
     .nav-cta {
       display: none;
     }
@@ -363,6 +395,10 @@ const menuCloseLabel = locale === 'zh' ? '收起菜单' : 'Close navigation menu
     }
     .mobile-menu-link {
       padding: 0.5rem 0.7rem;
+    }
+    .mobile-menu-lang {
+      gap: 0.75rem;
+      padding: 0.48rem 0.55rem;
     }
     .mobile-menu-link.active {
       background: var(--green-light);

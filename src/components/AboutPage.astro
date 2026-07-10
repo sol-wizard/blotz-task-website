@@ -18,9 +18,13 @@ const team = [
   { key: 'tech',   name: 'Nicole Nan',    avatar: 'avatar2', photo: '/people/1768978273644.jpeg', accent: '#3486F3', roleColor: '#1f66c9', mascot: '/shared-pic/bun-wink.svg', linkedin: 'https://www.linkedin.com/in/nicole-nan-501a6831b/' },
   { key: 'design', name: 'Guanghan Li',   avatar: 'avatar1', photo: '/people/1771639472356.jpeg', accent: '#a78bfa', roleColor: '#6d4bc4', mascot: '/shared-pic/bun-white.svg', linkedin: 'https://www.linkedin.com/in/guanghan-li-ab9973258/' },
 ] as const;
+
+const description = locale === 'zh'
+  ? '认识 BlotzTask 团队：一个专注打造 ADHD 友好 AI 任务管理 App 的产品、技术与设计团队。'
+  : 'Meet the BlotzTask team building an ADHD-friendly AI task management app for calmer planning and productivity.';
 ---
 
-<Layout title="Our team – BlotzTask">
+<Layout title={`${t('title')} | BlotzTask`} description={description}>
   <div class="hero-area">
     <div class="about-hero">
       <div class="blob blob-g"></div>

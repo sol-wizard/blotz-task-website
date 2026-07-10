@@ -83,11 +83,45 @@ const featureIconMarks = [
   '/shared-pic/buns/bun-teary.svg',
   '/shared-pic/buns/bun-sleepy.svg',
 ] as const;
+
+const seo = locale === 'zh'
+  ? {
+      title: 'BlotzTask | ADHD 友好的 AI 任务管理 App',
+      description: 'BlotzTask 是专为 ADHD 用户打造的 AI 任务管理 App，帮你快速记录任务、智能拆解步骤、管理截止日期，让计划更清晰、更容易开始。',
+    }
+  : {
+      title: 'BlotzTask | ADHD-friendly Task Management App',
+      description: 'BlotzTask is an ADHD-friendly task management app that helps you capture tasks, break work into clear steps, manage deadlines, and plan with less overwhelm.',
+    };
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'BlotzTask',
+    url: `https://blotz-task-website.vercel.app/${locale}/`,
+    inLanguage: locale,
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: 'BlotzTask',
+    applicationCategory: 'ProductivityApplication',
+    operatingSystem: 'iOS, Android',
+    description: seo.description,
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'USD',
+    },
+  },
+];
 ---
 
 <Layout
-  title="BlotzTask – AI-Powered ADHD Task Manager"
-  description="The AI-powered way to manage ADHD tasks. Quick task generation, AI breakdown, and easy capture."
+  title={seo.title}
+  description={seo.description}
+  jsonLd={jsonLd}
 >
   <div class="hero-area">
     <!-- HERO -->
@@ -189,7 +223,7 @@ const featureIconMarks = [
                   <span class="feature-card-desc">{feature.desc}</span>
                 </span>
                 <span class="feature-card-cue" aria-hidden="true"><Icon name="lucide:arrow-right" /></span>
-                <span class:list={['feature-card-media', { 'has-fallback': !feature.poster }]} aria-hidden="true">
+                <span class:list={['feature-card-media', { 'has-fallback': !feature.video }]} aria-hidden="true">
                   <video
                     class="mobile-feature-video"
                     src={feature.video}
@@ -199,7 +233,7 @@ const featureIconMarks = [
                     playsinline
                     preload="metadata"
                   ></video>
-                  {!feature.poster && (
+                  {!feature.video && (
                     <span class="feature-media-fallback">
                       <img src={featureIconMarks[index]} alt="" width="66" height="66" loading="lazy" decoding="async" />
                       <span>{feature.title}</span>
@@ -892,6 +926,20 @@ const featureIconMarks = [
   .lightbox-video { max-height: 68vh; max-width: 42vw; border-radius: 24px; box-shadow: 0 20px 60px rgba(52,134,243,0.18), 0 4px 20px rgba(0,0,0,0.10); flex-shrink: 0; }
   .lightbox-info { flex: 1; display: flex; flex-direction: column; gap: 0.75rem; }
   .lightbox-desc { font-size: 1rem; color: #374151; line-height: 1.75; }
+
+  @media (max-width: 640px) {
+    .lightbox-content { width: 94vw; gap: 0.75rem; }
+    .lightbox-title { font-size: 1.3rem; text-align: center; }
+    .lightbox-body { flex-wrap: wrap; justify-content: center; gap: 0.75rem; }
+    .lightbox-video {
+      order: 0;
+      max-width: 72vw;
+      max-height: 52vh;
+    }
+    .lightbox-arrow:first-child { order: 1; }
+    .lightbox-arrow:last-child { order: 2; }
+    .lightbox-info { order: 3; flex: 0 0 100%; text-align: center; }
+  }
 
   @media (max-width: 900px) {
     .hero-inner { grid-template-columns: 1fr; padding-top: 5.5rem; }

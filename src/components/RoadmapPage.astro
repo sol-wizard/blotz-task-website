@@ -21,9 +21,13 @@ const c = zh
       badge: 'v2.0 planning',
       cta: 'Stay tuned',
     };
+
+const description = zh
+  ? '了解 BlotzTask 产品路线图和即将上线的 AI 任务管理功能。'
+  : 'See what is next for BlotzTask, including upcoming AI task management and calmer planning features.';
 ---
 
-<Layout title={`${c.title} – BlotzTask`}>
+<Layout title={`${c.title} | BlotzTask`} description={description}>
   <div class="hero-area">
     <section class="roadmap-hold">
       <div class="roadmap-card">

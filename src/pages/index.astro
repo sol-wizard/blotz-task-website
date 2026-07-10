@@ -3,13 +3,31 @@
 // This page is never displayed — it only runs the script below.
 ---
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex,follow" />
+  <title>BlotzTask | ADHD-friendly Task Management App</title>
+  <meta
+    name="description"
+    content="BlotzTask is an ADHD-friendly task management app that helps you capture tasks, break work into clear steps, manage deadlines, and plan with less overwhelm."
+  />
+  <link rel="canonical" href="https://blotz-task-website.vercel.app/en/" />
+  <link rel="alternate" hreflang="en" href="https://blotz-task-website.vercel.app/en/" />
+  <link rel="alternate" hreflang="zh" href="https://blotz-task-website.vercel.app/zh/" />
+  <link rel="alternate" hreflang="x-default" href="https://blotz-task-website.vercel.app/en/" />
+  <meta http-equiv="refresh" content="0; url=/en/" />
   <script is:inline>
     const lang = navigator.language.toLowerCase().startsWith('zh') ? '/zh/' : '/en/';
     location.replace(lang);
   </script>
 </head>
-<body></body>
+<body>
+  <main>
+    <h1>BlotzTask</h1>
+    <p>ADHD-friendly task management app for calmer planning.</p>
+    <p><a href="/en/">Continue in English</a> · <a href="/zh/">继续访问中文版</a></p>
+  </main>
+</body>
 </html>

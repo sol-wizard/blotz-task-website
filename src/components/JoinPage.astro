@@ -36,9 +36,13 @@ const c = zh
       ctaSub: 'Everything you need — roles, process, and how we work — is in our joining guide.',
       ctaBtn: 'Open the joining guide',
     };
+
+const description = zh
+  ? '加入 BlotzTask 团队，一起打造更智能、更轻松的 ADHD 友好 AI 任务管理体验。'
+  : 'Join the BlotzTask team and help build calmer AI task management for ADHD minds.';
 ---
 
-<Layout title={`${c.title} – BlotzTask`}>
+<Layout title={`${c.title} | BlotzTask`} description={description}>
   <div class="hero-area">
     <div class="sub-hero">
       <h1>{c.title}</h1>

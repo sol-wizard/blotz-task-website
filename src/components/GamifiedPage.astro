@@ -8,9 +8,13 @@ import '../styles/features.css';
 const locale = (Astro.currentLocale ?? defaultLocale) as FeaturesLang;
 const t = (key: FeaturesKey): string =>
   (featuresUi[locale] as typeof featuresUi[typeof defaultLocale])[key] ?? featuresUi[defaultLocale][key];
+
+const description = locale === 'zh'
+  ? 'BlotzTask 的趣味任务管理功能包含扭蛋抽任务和隐藏徽章，帮助你减少选择压力，用更轻松的方式开始任务。'
+  : 'BlotzTask gamified features use a Gachapon task picker and hidden badges to reduce choice overload and make starting tasks easier.';
 ---
 
-<Layout title={`${t('game-title')} – BlotzTask`}>
+<Layout title={`${t('game-title')} | BlotzTask`} description={description}>
   <div class="hero-area">
     <div class="fp-hero">
       <div class="blob blob-g"></div>

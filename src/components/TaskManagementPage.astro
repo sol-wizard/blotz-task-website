@@ -8,9 +8,13 @@ import '../styles/features.css';
 const locale = (Astro.currentLocale ?? defaultLocale) as FeaturesLang;
 const t = (key: FeaturesKey): string =>
   (featuresUi[locale] as typeof featuresUi[typeof defaultLocale])[key] ?? featuresUi[defaultLocale][key];
+
+const description = locale === 'zh'
+  ? 'BlotzTask 的任务管理功能帮助你快速创建任务、编辑计划、追踪截止日期，用更清晰的方式管理 ADHD 日常任务。'
+  : 'BlotzTask task management helps you create tasks quickly, edit plans, and track deadlines with a clearer workflow for ADHD minds.';
 ---
 
-<Layout title={`${t('tm-title')} – BlotzTask`}>
+<Layout title={`${t('tm-title')} | BlotzTask`} description={description}>
   <div class="hero-area">
     <div class="fp-hero">
       <div class="blob blob-g"></div>

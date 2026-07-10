@@ -46,9 +46,13 @@ const c = zh
         { icon: 'lucide:heart-handshake', title: 'Grow the community', desc: 'Help BlotzTask reach more people who need a lower-friction way to manage tasks.' },
       ],
     };
+
+const description = zh
+  ? '成为 BlotzTask 赞助伙伴，支持年轻 AI 产品团队持续研发 ADHD 友好的任务管理工具。'
+  : 'Become a BlotzTask sponsor and support a young AI product team building ADHD-friendly task management tools.';
 ---
 
-<Layout title={`${c.title} – BlotzTask`}>
+<Layout title={`${c.title} | BlotzTask`} description={description}>
   <div class="hero-area">
     <section class="sponsor-hero">
       <div class="sponsor-hero-copy">

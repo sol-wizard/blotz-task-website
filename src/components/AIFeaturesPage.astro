@@ -8,9 +8,13 @@ import '../styles/features.css';
 const locale = (Astro.currentLocale ?? defaultLocale) as FeaturesLang;
 const t = (key: FeaturesKey): string =>
   (featuresUi[locale] as typeof featuresUi[typeof defaultLocale])[key] ?? featuresUi[defaultLocale][key];
+
+const description = locale === 'zh'
+  ? '了解 BlotzTask 的 AI 功能：语音记录、AI 任务拆解、周报月报回顾，帮助 ADHD 用户更轻松地开始行动。'
+  : 'Explore BlotzTask AI features for ADHD task management, including voice input, task breakdown, and weekly or monthly progress reviews.';
 ---
 
-<Layout title={`${t('ai-title')} – BlotzTask`}>
+<Layout title={`${t('ai-title')} | BlotzTask`} description={description}>
   <div class="hero-area">
     <div class="fp-hero">
       <div class="blob blob-g"></div>

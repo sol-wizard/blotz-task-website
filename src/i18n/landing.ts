@@ -73,21 +73,21 @@ export const ui = {
     "nav-cta": "成为合作伙伴",
 
     "hero-eyebrow": "已有 3,000+ 用户加入",
-    "hero-title": "AI 驱动的 ADHD 任务管理工具",
-    "hero-sub": "用语音快速记录想法，让 AI 自动拆解任务，把每一个待办变成真正可以开始的第一步。",
+    "hero-title": "AI 任务管理，专为 ADHD 大脑打造",
+    "hero-sub": "语音随口一说，AI 帮你拆解成清晰步骤，跟「看到任务就脑子卡壳」说拜拜。",
     "hero-download-cta": "立即下载",
 
     "dl-ios-s": "App Store 下载",
     "dl-and-s": "Google Play 下载",
 
     "feat-title": "核心功能",
-    "feat-sub": "专注、清晰、高效，一切只为帮你完成任务。",
+    "feat-sub": "专注、清晰、有行动力——每一个功能，都是为了帮你把任务完成。",
 
     "f1-title": "AI 语音创建任务",
     "f1-desc": "说一句，AI 自动整理成任务。",
 
     "f2-title": "AI 成果回顾",
-    "f2-desc": "自动生成每月总结，看看自己到底完成了多少任務，告別迷茫。",
+    "f2-desc": "AI 自动整理每月成果，你会惊讶自己原来完成了这么多。",
 
     "f3-title": "扭蛋抽任务",
     "f3-desc": "不知道先做什么？交给扭蛋机随机决定。",
@@ -133,7 +133,7 @@ export const ui = {
       "目前已上线 iOS（App Store）和 Android（Google Play），我们也正在积极推进中国大陆应用市场的发布。",
 
     "cta-title": "立即开始，免费使用",
-    "cta-sub": "下载 BlotzTask，把脑海里的想法变成真正可以完成的任务。",
+    "cta-sub": "下载 BlotzTask，把脑子里的想法，变成真正能完成的任务。",
 
     "footer-explore": "探索",
     "footer-resources": "资源",

@@ -1,8 +1,14 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { defaultLocale } from '../i18n/landing';
+
+const locale = Astro.currentLocale ?? defaultLocale;
+const description = locale === 'zh'
+  ? '阅读 BlotzTask 隐私政策，了解我们如何处理、保护和使用你的个人信息与任务数据。'
+  : 'Read the BlotzTask privacy policy to understand how we handle, protect, and use personal information and task data.';
 ---
 
-<Layout title="Privacy Policy – BlotzTask" description="BlotzTask Privacy Policy">
+<Layout title="Privacy Policy | BlotzTask" description={description}>
   <div class="policy-page">
     <article class="policy">
       <h1>Privacy Policy</h1>

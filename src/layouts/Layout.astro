@@ -5,10 +5,29 @@ import Footer from '../components/Footer.astro';
 interface Props {
   title: string;
   description?: string;
+  image?: string;
+  noindex?: boolean;
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 }
 
-const { title, description = 'BlotzTask – AI-Powered ADHD Task Manager' } = Astro.props;
+const siteUrl = 'https://blotz-task-website.vercel.app';
+const {
+  title,
+  description = 'BlotzTask is an ADHD-friendly task management app that helps you capture tasks, break work into clear steps, manage deadlines, and plan with less overwhelm.',
+  image = '/og-image.svg',
+  noindex = false,
+  jsonLd,
+} = Astro.props;
 const locale = Astro.currentLocale ?? 'en';
+const currentPath = Astro.url.pathname;
+const canonicalUrl = new URL(currentPath, siteUrl).toString();
+const alternateBasePath = currentPath.replace(/^\/(en|zh)(?=\/|$)/, '') || '/';
+const enUrl = new URL(`/en${alternateBasePath === '/' ? '/' : alternateBasePath}`, siteUrl).toString();
+const zhUrl = new URL(`/zh${alternateBasePath === '/' ? '/' : alternateBasePath}`, siteUrl).toString();
+const xDefaultUrl = enUrl;
+const imageUrl = new URL(image, siteUrl).toString();
+const ogLocale = locale === 'zh' ? 'zh_CN' : 'en_US';
+const alternateLocale = locale === 'zh' ? 'en_US' : 'zh_CN';
 ---
 
 <!DOCTYPE html>
@@ -18,11 +37,30 @@ const locale = Astro.currentLocale ?? 'en';
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{title}</title>
   <meta name="description" content={description} />
+  {noindex && <meta name="robots" content="noindex,follow" />}
+  <link rel="canonical" href={canonicalUrl} />
+  <link rel="alternate" hreflang="en" href={enUrl} />
+  <link rel="alternate" hreflang="zh" href={zhUrl} />
+  <link rel="alternate" hreflang="x-default" href={xDefaultUrl} />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="BlotzTask" />
+  <meta property="og:locale" content={ogLocale} />
+  <meta property="og:locale:alternate" content={alternateLocale} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonicalUrl} />
+  <meta property="og:image" content={imageUrl} />
+  <meta property="og:image:alt" content="BlotzTask ADHD-friendly task management app preview" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={imageUrl} />
   <link rel="icon" type="image/png" href="/shared-pic/bun-icon.png" />
   <link rel="apple-touch-icon" href="/shared-pic/bun-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
 </head>
 <body>
   <Nav />
