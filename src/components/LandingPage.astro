@@ -86,13 +86,22 @@ const featureIconMarks = [
 
 const seo = locale === 'zh'
   ? {
-      title: 'BlotzTask | ADHD 友好的 AI 任务管理 App',
-      description: 'BlotzTask 是专为 ADHD 用户打造的 AI 任务管理 App，帮你快速记录任务、智能拆解步骤、管理截止日期，让计划更清晰、更容易开始。',
+      title: 'BlotzTask | ADHD 任务管理 App 与 AI 待办事项工具',
+      description: 'BlotzTask 是 ADHD 友好的 AI 任务管理 App，支持语音创建待办事项、AI 任务拆解、截止日期提醒和成果回顾，帮助你更轻松地开始任务。',
     }
   : {
       title: 'BlotzTask | ADHD-friendly Task Management App',
       description: 'BlotzTask is an ADHD-friendly task management app that helps you capture tasks, break work into clear steps, manage deadlines, and plan with less overwhelm.',
     };
+
+const faqItems = ([1,2,3,4,5,6] as const).map((n) => ({
+  '@type': 'Question',
+  name: t(`faq-q${n}` as TranslationKey),
+  acceptedAnswer: {
+    '@type': 'Answer',
+    text: t(`faq-a${n}` as TranslationKey),
+  },
+}));
 
 const jsonLd = [
   {
@@ -109,11 +118,19 @@ const jsonLd = [
     applicationCategory: 'ProductivityApplication',
     operatingSystem: 'iOS, Android',
     description: seo.description,
+    keywords: locale === 'zh'
+      ? 'ADHD 任务管理 App, AI 任务管理, ADHD 待办事项 App, 任务拆解 App, 截止日期提醒'
+      : 'ADHD task management app, AI task management, ADHD to-do app, task breakdown app, deadline reminder app',
     offers: {
       '@type': 'Offer',
       price: '0',
       priceCurrency: 'USD',
     },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqItems,
   },
 ];
 ---
@@ -139,6 +156,7 @@ const jsonLd = [
             <span>{t('hero-eyebrow')}</span>
           </div>
           <h1 class="hero-title">{t('hero-title')}</h1>
+          <p class="hero-subtitle">{t('hero-sub')}</p>
           <a class="hero-cta" href="#download">
             <span>{t('hero-download-cta')}</span>
             <Icon name="lucide:arrow-right" />
@@ -279,7 +297,7 @@ const jsonLd = [
     <div class="faq-inner">
       <h2>{t('faq-title')}</h2>
       <div class="faq-list">
-        {([1,2,3,4,5] as const).map((n) => (
+        {([1,2,3,4,5,6] as const).map((n) => (
           <details class="faq-item">
             <summary class="faq-question">
               <span>{t(`faq-q${n}` as TranslationKey)}</span>
@@ -514,7 +532,8 @@ const jsonLd = [
     display: grid; grid-template-columns: minmax(0, 1fr) 520px; align-items: center; gap: 3.5rem;
   }
   .hero-eyebrow { display: inline-flex; align-items: center; gap: 0.5rem; margin-bottom: 1.1rem; padding: 0.45rem 0.95rem; border-radius: 999px; background: rgba(255,255,255,0.68); border: 1px solid rgba(150,210,27,0.35); font-size: 0.9rem; font-weight: 900; color: var(--text); box-shadow: 0 4px 14px rgba(30,33,64,0.06); backdrop-filter: blur(6px); }
-  .hero-title { font-size: clamp(2.25rem, 4.2vw, 4.25rem); font-weight: 900; line-height: 1.12; color: var(--text); max-width: 46rem; margin-bottom: 2.2rem; }
+  .hero-title { font-size: clamp(2.25rem, 4.2vw, 4.25rem); font-weight: 900; line-height: 1.12; color: var(--text); max-width: 46rem; margin-bottom: 1rem; }
+  .hero-subtitle { max-width: 42rem; color: #374151; font-size: clamp(1rem, 1.7vw, 1.2rem); line-height: 1.75; margin-bottom: 2.2rem; font-weight: 700; }
   .hero-cta { display: inline-flex; align-items: center; gap: 0.6rem; padding: 1rem 1.9rem; border-radius: 16px; background: linear-gradient(135deg, var(--green), var(--blue)); color: white; font-family: 'Nunito', 'PingFang SC', sans-serif; font-weight: 900; font-size: 1.05rem; text-decoration: none; box-shadow: 0 12px 30px -8px rgba(52,134,243,0.55); transition: transform 0.2s ease, box-shadow 0.2s ease; animation: cta-pulse 2.8s ease-in-out infinite; }
   .hero-cta:hover { transform: translateY(-2px) scale(1.02); box-shadow: 0 18px 40px -8px rgba(52,134,243,0.7); animation-play-state: paused; }
   .hero-cta svg { width: 20px; height: 20px; flex-shrink: 0; transition: transform 0.2s ease; }
