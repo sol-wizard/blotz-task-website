@@ -5,8 +5,11 @@ import { ui, defaultLocale } from '../i18n/landing';
 import type { Lang, TranslationKey } from '../i18n/landing';
 
 const locale = (Astro.currentLocale ?? defaultLocale) as Lang;
+const getTranslation = (key: string): string | undefined =>
+  (ui[locale] as Record<string, string | undefined>)[key] ??
+  (ui[defaultLocale] as Record<string, string | undefined>)[key];
 const t = (key: TranslationKey): string =>
-  (ui[locale] as typeof ui[typeof defaultLocale])[key] ?? ui[defaultLocale][key];
+  getTranslation(key) ?? '';
 
 const features = [
   {
@@ -94,12 +97,21 @@ const seo = locale === 'zh'
       description: 'BlotzTask is an ADHD-friendly task management app that helps you capture tasks, break work into clear steps, manage deadlines, and plan with less overwhelm.',
     };
 
-const faqItems = ([1,2,3,4,5,6] as const).map((n) => ({
+const faqEntries = ([1,2,3,4,5,6] as const)
+  .map((n) => ({
+    question: getTranslation(`faq-q${n}`),
+    answer: getTranslation(`faq-a${n}`),
+  }))
+  .filter((item): item is { question: string; answer: string } =>
+    Boolean(item.question?.trim() && item.answer?.trim())
+  );
+
+const faqItems = faqEntries.map((item) => ({
   '@type': 'Question',
-  name: t(`faq-q${n}` as TranslationKey),
+  name: item.question,
   acceptedAnswer: {
     '@type': 'Answer',
-    text: t(`faq-a${n}` as TranslationKey),
+    text: item.answer,
   },
 }));
 
@@ -297,14 +309,14 @@ const jsonLd = [
     <div class="faq-inner">
       <h2>{t('faq-title')}</h2>
       <div class="faq-list">
-        {([1,2,3,4,5,6] as const).map((n) => (
+        {faqEntries.map((item) => (
           <details class="faq-item">
             <summary class="faq-question">
-              <span>{t(`faq-q${n}` as TranslationKey)}</span>
+              <span>{item.question}</span>
               <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
             </summary>
             <div class="faq-answer">
-              <p>{t(`faq-a${n}` as TranslationKey)}</p>
+              <p>{item.answer}</p>
             </div>
           </details>
         ))}
