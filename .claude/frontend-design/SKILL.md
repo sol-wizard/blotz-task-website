@@ -6,6 +6,9 @@ license: Complete terms in LICENSE.txt
 
 # Frontend Design
 
+> **Blotz org context:** Shared organization/background docs (product brief, PRDs, reward & VIP systems, team roster, milestones, positioning) live at `Blotz-Task-App-Main/context/` (`../context/` from this project). If this task would benefit from understanding the product or org big picture — user-facing copy, feature rationale, naming, priorities — read the relevant files there first. `blotz-pitch-2026.md` contains confidential funding details: never copy them into code, PRs, or any output.
+
+
 Approach this as the design lead at a small studio known for giving every client a visual identity that could not be mistaken for anyone else's. This client has already rejected proposals that felt templated, and is paying for a distinctive point of view: make deliberate, opinionated choices about palette, typography, and layout that are specific to this brief, and take one real aesthetic risk you can justify.
 
 ## Ground it in the subject
