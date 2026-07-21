@@ -1,4 +1,4 @@
-const siteUrl = 'https://blotz-task-website.vercel.app';
+const siteUrl = 'https://blotztask.com';
 
 const paths = [
   '/',
