@@ -1,4 +1,4 @@
-const siteUrl = 'https://blotztask.com';
+const siteUrl = 'https://www.blotztask.com';
 
 const paths = [
   '/',
@@ -29,11 +29,11 @@ const today = new Date().toISOString().slice(0, 10);
 export function GET() {
   const urls = paths.flatMap((path) =>
     ['en', 'zh'].map((locale) => {
-      const pathname = `/${locale}${path}`;
+      const suffix = path === '/' ? '' : path;
+      const pathname = `/${locale}${suffix}/`;
       const loc = new URL(pathname, siteUrl).toString();
-      const alternatePath = path === '/' ? '/' : path;
-      const enHref = new URL(`/en${alternatePath}`, siteUrl).toString();
-      const zhHref = new URL(`/zh${alternatePath}`, siteUrl).toString();
+      const enHref = new URL(`/en${suffix}/`, siteUrl).toString();
+      const zhHref = new URL(`/zh${suffix}/`, siteUrl).toString();
 
       return `
   <url>
