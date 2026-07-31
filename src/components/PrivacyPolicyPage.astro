@@ -12,7 +12,7 @@ const description = locale === 'zh'
   <div class="policy-page">
     <article class="policy">
       <h1>Privacy Policy</h1>
-      <p class="policy-meta">Last updated: March 18, 2026 &nbsp;·&nbsp; Effective date: March 18, 2026</p>
+      <p class="policy-meta">Last updated: July 31, 2026 &nbsp;·&nbsp; Effective date: July 31, 2026</p>
 
       <div class="policy-intro">
         <p>This Policy applies only to Blotz ("we", "us", or "our"), the Blotz product, and related services.</p>
@@ -61,13 +61,10 @@ const description = locale === 'zh'
         <h4>2.2 Task Reminders</h4>
         <p>If you set a reminder for a task in Blotz, we process the task title, task content, due date or time range, and reminder time so the app can notify you at the scheduled time.</p>
 
-        <h4>2.3 Location-Based Reminders</h4>
-        <p>If you set a location-based reminder for a task and grant Blotz access to location permissions, we may collect your saved location coordinates so Blotz can notify you when you arrive at or leave that location.</p>
-
-        <h4>2.4 Search</h4>
+        <h4>2.3 Search</h4>
         <p>If you use search in Blotz, we may collect the keywords you search for so you can view recent search history. These keywords are stored only locally on your device and are not synced to the cloud.</p>
 
-        <h4>2.5 AI Features</h4>
+        <h4>2.4 AI Features</h4>
         <p>Some Blotz features are powered by artificial intelligence. We integrate Microsoft Azure OpenAI services for those features.</p>
         <p>When you actively use an AI feature, we process only the content you choose to enter or select, such as task titles, task details, quick notes, tags, and date information. That data is transmitted to Azure OpenAI to generate content or suggestions related to your request.</p>
         <p>Under Microsoft's default Azure OpenAI data handling policy, your prompts and completions are not used by Microsoft to train models and are not persistently stored after the API request is completed.</p>
@@ -75,8 +72,16 @@ const description = locale === 'zh'
         <p>Your input may be quoted, rewritten, or combined in the AI output to better complete the task you requested. All such processing is limited to what is needed to provide the feature. We do not use this data for unrelated purposes or for model training.</p>
         <p>You decide whether to use AI features. If you choose not to use them, we will not trigger related collection, processing, or third-party transfer, and your use of other core services will not be affected.</p>
 
-        <h4>2.6 Profile Information</h4>
+        <h4>2.5 Profile Information</h4>
         <p>You may choose to complete your profile by providing an avatar and nickname. This information is optional and is not required for core product or system functionality. If you choose not to provide it, your use of Blotz will not be adversely affected.</p>
+
+        <h4>2.6 Analytics and Error Reporting</h4>
+        <p>To understand how Blotz is used and to find and fix problems, we use two third-party services that process data on our behalf:</p>
+        <ul>
+          <li><strong>PostHog (product analytics):</strong> We record actions you take in the app, such as which screens you open, when you create or complete a task, and when you use an AI feature. These events are linked to your account identifier, and we send your email address and display name so we can recognise the same person across devices and reinstalls. We do not send the content of your tasks or notes to PostHog.</li>
+          <li><strong>Sentry (error and crash reporting):</strong> When the app crashes or hits an error, we collect diagnostic information such as the error details, device model, operating system version, app version, and IP address, so we can reproduce and fix the problem. An error report may include a recording of the app screens leading up to the error, in which text and images are automatically masked.</li>
+        </ul>
+        <p>These services are used only to operate and improve Blotz. They are not permitted to use your information for their own purposes, and we do not sell your personal information or use it for advertising. Analytics events are collected only from the production version of the app.</p>
 
         <h3>3. Permissions Requested in the App</h3>
         <p>Some features require system permissions that may involve personal information. We request authorization only when you use those features, and we access related information only after receiving your permission. You may refuse authorization if you do not need the feature.</p>
@@ -84,7 +89,6 @@ const description = locale === 'zh'
         <h4>3.1 Android Permissions</h4>
         <ul>
           <li><strong>Calendar access:</strong> Requested when you enable calendar sync so system calendar events can sync into Blotz.</li>
-          <li><strong>Approximate and precise location:</strong> Requested when you use location reminders so Blotz can remind you when you arrive at or leave a selected location.</li>
           <li><strong>Write external storage:</strong> Requested when you save attachments from a task to your phone.</li>
           <li><strong>Read external storage:</strong> Requested when you upload attachments to a task.</li>
           <li><strong>Microphone access:</strong> Requested when you add audio attachments or use voice input.</li>
@@ -95,7 +99,6 @@ const description = locale === 'zh'
         <h4>3.2 iOS Permissions</h4>
         <ul>
           <li><strong>Calendar access:</strong> Requested when you enable calendar sync.</li>
-          <li><strong>Approximate and precise location:</strong> Requested when you use location reminders.</li>
           <li><strong>Write external storage:</strong> Requested when you save attachments from a task to your phone.</li>
           <li><strong>Read external storage:</strong> Requested when you upload attachments to a task.</li>
           <li><strong>Microphone access:</strong> Requested when you add audio attachments or use voice input.</li>
@@ -110,8 +113,12 @@ const description = locale === 'zh'
           <li><strong>Backend services (Microsoft / NuGet):</strong> Our backend is built with Microsoft NuGet components for server-side logic, data storage, and API communication.</li>
           <li><strong>Frontend framework (React Native / Expo):</strong> Our mobile app frontend is built with React Native and Expo. These frameworks themselves do not independently collect your personal information and are used to provide the app interface and interactions.</li>
           <li><strong>AI services (Microsoft Azure OpenAI):</strong> As described above, we use Microsoft Azure OpenAI for AI features. The Azure OpenAI server we use is located in US East.</li>
+          <li><strong>Product analytics (PostHog):</strong> Used to record in-app actions and linked to your account, as described in section 2.6. PostHog processes this data on servers located in the United States.</li>
+          <li><strong>Error and crash reporting (Sentry):</strong> Used to collect diagnostic information when the app crashes or hits an error, as described in section 2.6.</li>
         </ul>
         <p><a href="https://privacy.microsoft.com/en-us/privacystatement" target="_blank" rel="noopener noreferrer">Microsoft Privacy Statement →</a></p>
+        <p><a href="https://posthog.com/privacy" target="_blank" rel="noopener noreferrer">PostHog Privacy Policy →</a></p>
+        <p><a href="https://sentry.io/privacy/" target="_blank" rel="noopener noreferrer">Sentry Privacy Policy →</a></p>
 
         <h3>5. User Research and Community Activities</h3>
         <p>From time to time, we may conduct user research, mainly in the form of surveys. To better understand different user groups and improve our features and services, we may collect information such as age, gender, industry, occupation, device information, and personal interests from participants.</p>
@@ -133,6 +140,7 @@ const description = locale === 'zh'
         <p>We do not share your personal information with other companies, organizations, or individuals without your consent, except in the following cases:</p>
         <ul>
           <li><strong>With your explicit consent or authorization:</strong> After obtaining your explicit authorization, we may share your personal information with other parties, including AI service providers such as Microsoft Azure OpenAI.</li>
+          <li><strong>With service providers acting on our behalf:</strong> We share limited information with the providers listed in section 1.4, such as PostHog for product analytics and Sentry for error reporting, so they can perform those services for us. They may not use your information for their own purposes.</li>
           <li><strong>Where required by law:</strong> We may share your personal information when required by laws and regulations, for dispute resolution, or in response to mandatory requests or judicial decisions from competent authorities.</li>
           <li><strong>To protect legitimate interests:</strong> We may provide your personal information to third parties when necessary to protect Blotz, our users, or the public from harm to rights, property, or safety.</li>
         </ul>
@@ -159,7 +167,8 @@ const description = locale === 'zh'
         <p>While you use our platform, we will continue to retain your personal information for no longer than necessary to provide services to you. After you stop using the platform or withdraw relevant authorizations, we will delete or anonymize your information unless laws or regulations require a longer retention period for specific information.</p>
 
         <h3>2. Storage Location</h3>
-        <p>Our primary servers are located in Australia. If some features involve cross-border transfers, such as AI features that use Microsoft Azure OpenAI services hosted in US East, we will comply with applicable legal requirements and protect the security of your personal information.</p>
+        <p>Our primary servers, including the servers that store your account and task data, are located in Australia.</p>
+        <p>Some features involve cross-border transfers. AI features use Microsoft Azure OpenAI services hosted in US East. Product analytics are processed by PostHog on servers located in the United States, and error reports are processed by Sentry outside Australia. In each case we transfer only the information described in the relevant section above, and we comply with applicable legal requirements and protect the security of your personal information.</p>
       </section>
 
       <section id="section-5">
