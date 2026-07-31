@@ -43,7 +43,7 @@ export const ui = {
     "faq-q1": "Is BlotzTask free?",
     "faq-a1": "Yes! BlotzTask is free to download and use. We apply fair usage limits on AI features to keep the service running smoothly for everyone.",
     "faq-q2": "Is my data private?",
-    "faq-a2": "Absolutely. Your data is encrypted and stored securely on Microsoft Azure SQL. We never sell or share your information with third parties.",
+    "faq-a2": "Blotz has no ads and never sells your data. Your tasks are encrypted and stored on our own servers. When you use an AI feature, the relevant content is sent to Microsoft Azure OpenAI to generate the result — Microsoft does not use it to train models. You can delete your account and everything in it at any time from Settings.",
     "faq-q3": "Does BlotzTask work offline?",
     "faq-a3": "BlotzTask requires an internet connection to power its AI features and sync your tasks across devices. Offline support is on our roadmap!",
     "faq-q4": "Is it only for people with ADHD?",
@@ -116,9 +116,9 @@ export const ui = {
     "faq-a1":
       "是的，BlotzTask 可以免费下载和使用。为了保证所有用户都能获得稳定体验，AI 功能采用合理的免费额度。",
 
-    "faq-q2": "我的数据安全吗？",
+    "faq-q2": "我的数据会被怎么使用？",
     "faq-a2":
-      "当然。所有数据都会经过加密，并安全存储在 Microsoft Azure SQL。我们不会出售或向第三方共享你的个人数据。",
+      "Blotz 没有广告，也不会出售你的数据。你的任务经过加密，存储在我们自己的服务器上。使用 AI 功能时，相关内容会发送给微软 Azure OpenAI 来生成结果，微软不会用它训练模型。你可以随时在设置里删除账号和全部数据。",
 
     "faq-q3": "支持离线使用吗？",
     "faq-a3":
