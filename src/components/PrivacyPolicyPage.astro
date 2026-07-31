@@ -75,13 +75,9 @@ const description = locale === 'zh'
         <h4>2.5 Profile Information</h4>
         <p>You may choose to complete your profile by providing an avatar and nickname. This information is optional and is not required for core product or system functionality. If you choose not to provide it, your use of Blotz will not be adversely affected.</p>
 
-        <h4>2.6 Analytics and Error Reporting</h4>
-        <p>To understand how Blotz is used and to find and fix problems, we use two third-party services that process data on our behalf:</p>
-        <ul>
-          <li><strong>PostHog (product analytics):</strong> We record actions you take in the app, such as which screens you open, when you create or complete a task, and when you use an AI feature. These events are linked to your account identifier, and we send your email address and display name so we can recognise the same person across devices and reinstalls. We do not send the content of your tasks or notes to PostHog.</li>
-          <li><strong>Sentry (error and crash reporting):</strong> When the app crashes or hits an error, we collect diagnostic information such as the error details, device model, operating system version, app version, and IP address, so we can reproduce and fix the problem. An error report may include a recording of the app screens leading up to the error, in which text and images are automatically masked.</li>
-        </ul>
-        <p>These services are used only to operate and improve Blotz. They are not permitted to use your information for their own purposes, and we do not sell your personal information or use it for advertising. Analytics events are collected only from the production version of the app.</p>
+        <h4>2.6 Analytics</h4>
+        <p>We use PostHog, a third-party product analytics service, to understand how Blotz is used. PostHog receives your account identifier, email address, and display name so we can recognise the same person across devices and reinstalls.</p>
+        <p>We do not send the content of your tasks or notes to PostHog. PostHog processes this information on our behalf and is not permitted to use it for its own purposes.</p>
 
         <h3>3. Permissions Requested in the App</h3>
         <p>Some features require system permissions that may involve personal information. We request authorization only when you use those features, and we access related information only after receiving your permission. You may refuse authorization if you do not need the feature.</p>
@@ -113,12 +109,10 @@ const description = locale === 'zh'
           <li><strong>Backend services (Microsoft / NuGet):</strong> Our backend is built with Microsoft NuGet components for server-side logic, data storage, and API communication.</li>
           <li><strong>Frontend framework (React Native / Expo):</strong> Our mobile app frontend is built with React Native and Expo. These frameworks themselves do not independently collect your personal information and are used to provide the app interface and interactions.</li>
           <li><strong>AI services (Microsoft Azure OpenAI):</strong> As described above, we use Microsoft Azure OpenAI for AI features. The Azure OpenAI server we use is located in US East.</li>
-          <li><strong>Product analytics (PostHog):</strong> Used to record in-app actions and linked to your account, as described in section 2.6. PostHog processes this data on servers located in the United States.</li>
-          <li><strong>Error and crash reporting (Sentry):</strong> Used to collect diagnostic information when the app crashes or hits an error, as described in section 2.6.</li>
+          <li><strong>Product analytics (PostHog):</strong> Used to understand how Blotz is used, as described in section 2.6. PostHog processes this data on servers located in the United States.</li>
         </ul>
         <p><a href="https://privacy.microsoft.com/en-us/privacystatement" target="_blank" rel="noopener noreferrer">Microsoft Privacy Statement →</a></p>
         <p><a href="https://posthog.com/privacy" target="_blank" rel="noopener noreferrer">PostHog Privacy Policy →</a></p>
-        <p><a href="https://sentry.io/privacy/" target="_blank" rel="noopener noreferrer">Sentry Privacy Policy →</a></p>
 
         <h3>5. User Research and Community Activities</h3>
         <p>From time to time, we may conduct user research, mainly in the form of surveys. To better understand different user groups and improve our features and services, we may collect information such as age, gender, industry, occupation, device information, and personal interests from participants.</p>
@@ -140,7 +134,7 @@ const description = locale === 'zh'
         <p>We do not share your personal information with other companies, organizations, or individuals without your consent, except in the following cases:</p>
         <ul>
           <li><strong>With your explicit consent or authorization:</strong> After obtaining your explicit authorization, we may share your personal information with other parties, including AI service providers such as Microsoft Azure OpenAI.</li>
-          <li><strong>With service providers acting on our behalf:</strong> We share limited information with the providers listed in section 1.4, such as PostHog for product analytics and Sentry for error reporting, so they can perform those services for us. They may not use your information for their own purposes.</li>
+          <li><strong>With service providers acting on our behalf:</strong> We share limited information with the providers listed in section 1.4, such as PostHog for product analytics, so they can perform those services for us. They may not use your information for their own purposes.</li>
           <li><strong>Where required by law:</strong> We may share your personal information when required by laws and regulations, for dispute resolution, or in response to mandatory requests or judicial decisions from competent authorities.</li>
           <li><strong>To protect legitimate interests:</strong> We may provide your personal information to third parties when necessary to protect Blotz, our users, or the public from harm to rights, property, or safety.</li>
         </ul>
@@ -168,7 +162,7 @@ const description = locale === 'zh'
 
         <h3>2. Storage Location</h3>
         <p>Our primary servers, including the servers that store your account and task data, are located in Australia.</p>
-        <p>Some features involve cross-border transfers. AI features use Microsoft Azure OpenAI services hosted in US East. Product analytics are processed by PostHog on servers located in the United States, and error reports are processed by Sentry outside Australia. In each case we transfer only the information described in the relevant section above, and we comply with applicable legal requirements and protect the security of your personal information.</p>
+        <p>Some features involve cross-border transfers. AI features use Microsoft Azure OpenAI services hosted in US East, and product analytics are processed by PostHog on servers located in the United States. In each case we transfer only the information described in the relevant section above, and we comply with applicable legal requirements and protect the security of your personal information.</p>
       </section>
 
       <section id="section-5">
