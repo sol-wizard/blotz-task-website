@@ -41,7 +41,7 @@ const en: PolicyContent = {
           type: "p",
           text: "We follow the principles of legitimacy, lawfulness, and necessity. For the features and services listed below, we collect and use the personal information you provide yourself while using Blotz.",
         },
-        { type: "h3", text: "1. Account Registration" },
+        { type: "h3", text: "A. Account Registration" },
         { type: "p", text: "You can register and sign in to your Blotz account in the following ways:" },
         {
           type: "ul",
@@ -54,8 +54,8 @@ const en: PolicyContent = {
           type: "p",
           text: "Blotz has no account-free local mode. You need an account to use all Blotz features, and your task data syncs across your devices.",
         },
-        { type: "h3", text: "2. App Features" },
-        { type: "h4", text: "2.1 Task Data Sync" },
+        { type: "h3", text: "B. App Features" },
+        { type: "h4", text: "B.1 Task Data Sync" },
         {
           type: "p",
           text: "Once you have an account and start creating tasks or other data, we collect the following so your data syncs correctly and completely across your devices:",
@@ -72,17 +72,17 @@ const en: PolicyContent = {
           type: "p",
           text: "We use this only to sync your task data across devices. Without your authorization, we do not read your task content for anything else.",
         },
-        { type: "h4", text: "2.2 Task Reminders" },
+        { type: "h4", text: "B.2 Task Reminders" },
         {
           type: "p",
           text: "If you set a reminder for a task, we process the task title, task content, due date or time range, and reminder time so the app can notify you at the right moment.",
         },
-        { type: "h4", text: "2.3 Search" },
+        { type: "h4", text: "B.3 Search" },
         {
           type: "p",
           text: "If you use search in Blotz, we may collect the keywords you search for so you can see your recent searches. These keywords stay on your device and are not synced to the cloud.",
         },
-        { type: "h4", text: "2.4 AI Features" },
+        { type: "h4", text: "B.4 AI Features" },
         {
           type: "p",
           text: "Some Blotz features are powered by AI. Those features run on Microsoft Azure OpenAI.",
@@ -108,12 +108,12 @@ const en: PolicyContent = {
           type: "p",
           text: "Using AI is your choice. If you choose not to, none of this collection, processing, or sending to a third party happens, and the rest of Blotz works as normal.",
         },
-        { type: "h4", text: "2.5 Profile Information" },
+        { type: "h4", text: "B.5 Profile Information" },
         {
           type: "p",
           text: "An avatar and a nickname are optional. Core product and system features do not need them, and Blotz works the same if you leave them blank.",
         },
-        { type: "h4", text: "2.6 Analytics" },
+        { type: "h4", text: "B.6 Analytics" },
         {
           type: "p",
           text: "We use PostHog, an outside analytics service, to see how Blotz is used. PostHog receives your account identifier, email address, and display name, so we can tell it is the same person across devices and after a reinstall.",
@@ -122,12 +122,12 @@ const en: PolicyContent = {
           type: "p",
           text: "We do not send the content of your tasks or notes to PostHog. PostHog handles this information on our behalf and may not use it for its own purposes.",
         },
-        { type: "h3", text: "3. Permissions Requested in the App" },
+        { type: "h3", text: "C. Permissions Requested in the App" },
         {
           type: "p",
           text: "Some features need permission from your phone, and those permissions can touch personal information. We ask only when you use the feature, and we look at the related information only after you say yes. If you do not need the feature, you can say no.",
         },
-        { type: "h4", text: "3.1 Android Permissions" },
+        { type: "h4", text: "C.1 Android Permissions" },
         {
           type: "ul",
           items: [
@@ -139,7 +139,7 @@ const en: PolicyContent = {
             "<strong>Clipboard access:</strong> If you turn on clipboard recognition and your clipboard holds something time-related, the app may ask whether you want to create a task when you open it.",
           ],
         },
-        { type: "h4", text: "3.2 iOS Permissions" },
+        { type: "h4", text: "C.2 iOS Permissions" },
         {
           type: "ul",
           items: [
@@ -152,7 +152,7 @@ const en: PolicyContent = {
             "<strong>Siri access:</strong> Requested when you turn on adding tasks through Siri.",
           ],
         },
-        { type: "h3", text: "4. Third-Party SDKs and Services" },
+        { type: "h3", text: "D. Third-Party SDKs and Services" },
         {
           type: "p",
           text: "Blotz relies on the following third-party libraries and services:",
@@ -163,7 +163,7 @@ const en: PolicyContent = {
             "<strong>Backend services (Microsoft / NuGet):</strong> Our servers are built with Microsoft NuGet components, which run the logic behind the app, store data, and handle communication with the app.",
             "<strong>Frontend framework (React Native / Expo):</strong> The mobile app itself is built with React Native and Expo. They make up what you see and tap, and do not collect your personal information on their own.",
             "<strong>AI services (Microsoft Azure OpenAI):</strong> As described above, AI features run on Microsoft Azure OpenAI. The Azure OpenAI server we use is located in US East.",
-            "<strong>Product analytics (PostHog):</strong> Used to see how Blotz is used, as described in section 2.6. PostHog processes this data on servers located in the United States.",
+            "<strong>Product analytics (PostHog):</strong> Used to see how Blotz is used, as described in Analytics (B.6). PostHog processes this data on servers located in the United States.",
           ],
         },
         {
@@ -176,7 +176,7 @@ const en: PolicyContent = {
           href: "https://posthog.com/privacy",
           text: "PostHog Privacy Policy →",
         },
-        { type: "h3", text: "5. User Research and Community Activities" },
+        { type: "h3", text: "E. User Research and Community Activities" },
         {
           type: "p",
           text: "We sometimes run user research, usually a survey. If you take part, we may collect information such as your age, gender, industry, occupation, device information, and personal interests, so we can understand who uses Blotz and improve our features and services.",
@@ -213,7 +213,7 @@ const en: PolicyContent = {
       id: "section-3",
       title: "3. How We Share, Transfer, and Publicly Disclose Your Personal Information",
       blocks: [
-        { type: "h3", text: "1. Sharing" },
+        { type: "h3", text: "A. Sharing" },
         {
           type: "p",
           text: "We do not share your personal information with other companies, organizations, or individuals without your consent, except in these cases:",
@@ -222,12 +222,12 @@ const en: PolicyContent = {
           type: "ul",
           items: [
             "<strong>With your explicit consent or authorization:</strong> Once you have explicitly authorized it, we may share your personal information with other parties, including AI service providers such as Microsoft Azure OpenAI.",
-            "<strong>With service providers acting on our behalf:</strong> We share limited information with the providers listed in section 1.4, such as PostHog for product analytics, so they can do that work for us. They may not use your information for their own purposes.",
+            "<strong>With service providers acting on our behalf:</strong> We share limited information with the providers listed in Third-Party SDKs and Services (D), such as PostHog for product analytics, so they can do that work for us. They may not use your information for their own purposes.",
             "<strong>Where required by law:</strong> We may share your personal information when laws and regulations require it, to resolve a dispute, or in response to a mandatory request or judicial decision from a competent authority.",
             "<strong>To protect legitimate interests:</strong> We may give your personal information to a third party where that is necessary to protect Blotz, our users, or the public from harm to rights, property, or safety.",
           ],
         },
-        { type: "h3", text: "2. Transfer" },
+        { type: "h3", text: "B. Transfer" },
         {
           type: "p",
           text: "We do not transfer your personal information to any company, organization, or individual without your consent, except in these cases:",
@@ -239,7 +239,7 @@ const en: PolicyContent = {
             "In a merger, acquisition, or bankruptcy liquidation, in which case we will require the new holder of your personal information to stay bound by this Policy",
           ],
         },
-        { type: "h3", text: "3. Public Disclosure" },
+        { type: "h3", text: "C. Public Disclosure" },
         {
           type: "p",
           text: "We do not publicly disclose your personal information without your consent, except in these cases:",
@@ -257,12 +257,12 @@ const en: PolicyContent = {
       id: "section-4",
       title: "4. How We Store Your Personal Information",
       blocks: [
-        { type: "h3", text: "1. Retention Period" },
+        { type: "h3", text: "A. Retention Period" },
         {
           type: "p",
           text: "We keep your personal information for no longer than we need it to provide the service. After you stop using the platform or withdraw the relevant authorizations, we delete your information or anonymize it, meaning we strip out anything that points back to you. The exception is information that laws or regulations require us to keep for longer.",
         },
-        { type: "h3", text: "2. Storage Location" },
+        { type: "h3", text: "B. Storage Location" },
         {
           type: "p",
           text: "Our main servers, including the ones holding your account and task data, are located in Australia.",
@@ -303,7 +303,7 @@ const en: PolicyContent = {
       id: "section-6",
       title: "6. Your Rights to Manage Personal Information",
       blocks: [
-        { type: "h3", text: "1. Access and Correction" },
+        { type: "h3", text: "A. Access and Correction" },
         {
           type: "p",
           text: "You have the right to see and correct your personal information. You can do that here:",
@@ -315,7 +315,7 @@ const en: PolicyContent = {
             "<strong>Search history:</strong> Open search to see or clear your recent search keywords.",
           ],
         },
-        { type: "h3", text: "2. Deletion" },
+        { type: "h3", text: "B. Deletion" },
         {
           type: "p",
           text: "You may ask us to delete your personal information in these situations:",
@@ -333,12 +333,12 @@ const en: PolicyContent = {
           type: "p",
           text: "You can delete your account and all the personal data that goes with it in Settings &gt; Account &gt; Delete Account. After that, we stop providing services and delete your personal information as you asked, unless the law says otherwise.",
         },
-        { type: "h3", text: "3. Changing the Scope of Consent" },
+        { type: "h3", text: "C. Changing the Scope of Consent" },
         {
           type: "p",
           text: "For the extra personal information we collect based on your consent, you can give or withdraw that consent whenever you like. Once you withdraw it, we stop processing that information. Withdrawing does not undo processing we already carried out while you had consented.",
         },
-        { type: "h3", text: "4. Revoking System Permissions" },
+        { type: "h3", text: "D. Revoking System Permissions" },
         {
           type: "p",
           text: "You can take back any system permission you granted earlier, in your device settings:",
@@ -354,7 +354,7 @@ const en: PolicyContent = {
           type: "p",
           text: "After you revoke a permission, we no longer process the related personal information under it, but the feature it powers may stop working. Other core functions are unaffected.",
         },
-        { type: "h3", text: "5. Response Time" },
+        { type: "h3", text: "E. Response Time" },
         {
           type: "p",
           text: "We will respond to your reasonable requests within 15 days. If you need help, contact us using the details at the end of this Policy.",
@@ -434,7 +434,7 @@ const zh: PolicyContent = {
           type: "p",
           text: "我们遵循正当、合法、必要的原则。针对下面列出的功能与服务，我们会收集和使用您在使用 Blotz 时主动提供的个人信息。",
         },
-        { type: "h3", text: "1. 账号注册" },
+        { type: "h3", text: "A. 账号注册" },
         { type: "p", text: "您可以通过以下方式注册并登录 Blotz 账号：" },
         {
           type: "ul",
@@ -447,8 +447,8 @@ const zh: PolicyContent = {
           type: "p",
           text: "Blotz 不提供无需注册的纯本地模式。使用 Blotz 的全部功能需要注册账号，您的任务数据会在您的各个设备之间同步。",
         },
-        { type: "h3", text: "2. 应用功能" },
-        { type: "h4", text: "2.1 任务数据同步" },
+        { type: "h3", text: "B. 应用功能" },
+        { type: "h4", text: "B.1 任务数据同步" },
         {
           type: "p",
           text: "您注册账号并开始创建任务或其他数据后，为了让数据在设备之间完整、正常地同步，我们会收集以下信息：",
@@ -465,17 +465,17 @@ const zh: PolicyContent = {
           type: "p",
           text: "这些信息只用于在设备之间同步您的任务数据。未经您的授权，我们不会为别的目的读取您的任务内容。",
         },
-        { type: "h4", text: "2.2 任务提醒" },
+        { type: "h4", text: "B.2 任务提醒" },
         {
           type: "p",
           text: "如果您给任务设了提醒，我们会处理任务标题、任务内容、截止日期或时间范围、提醒时间，好让应用在该提醒的时候通知您。",
         },
-        { type: "h4", text: "2.3 搜索" },
+        { type: "h4", text: "B.3 搜索" },
         {
           type: "p",
           text: "如果您使用搜索，我们可能会收集您搜索的关键词，方便您查看最近搜过什么。这些关键词只存在您的设备上，不会同步到云端。",
         },
-        { type: "h4", text: "2.4 AI 功能" },
+        { type: "h4", text: "B.4 AI 功能" },
         {
           type: "p",
           text: "Blotz 的部分功能由 AI 提供支持，这些功能接入的是微软 Azure OpenAI 服务。",
@@ -501,12 +501,12 @@ const zh: PolicyContent = {
           type: "p",
           text: "是否使用 AI 由您决定。如果您不用，上面这些收集、处理和向第三方传输都不会发生，Blotz 的其他核心服务照常使用。",
         },
-        { type: "h4", text: "2.5 个人资料" },
+        { type: "h4", text: "B.5 个人资料" },
         {
           type: "p",
           text: "头像和昵称是选填的，核心产品和系统功能都不需要它们。不填也不影响您正常使用 Blotz。",
         },
-        { type: "h4", text: "2.6 使用分析" },
+        { type: "h4", text: "B.6 使用分析" },
         {
           type: "p",
           text: "我们使用第三方分析服务 PostHog，了解 Blotz 被怎么使用。PostHog 会收到您的账号标识、邮箱地址和昵称，这样我们才能在不同设备上、重装应用之后，认出是同一个人。",
@@ -515,12 +515,12 @@ const zh: PolicyContent = {
           type: "p",
           text: "我们不会把您的任务和笔记内容发给 PostHog。PostHog 只是代我们处理这些信息，不得用于自身目的。",
         },
-        { type: "h3", text: "3. 应用申请的权限" },
+        { type: "h3", text: "C. 应用申请的权限" },
         {
           type: "p",
           text: "有些功能需要用到手机的系统权限，这些权限可能涉及个人信息。我们只在您使用这些功能时才申请，得到您的许可后才会读取相关信息。不需要这个功能，您可以拒绝。",
         },
-        { type: "h4", text: "3.1 Android 权限" },
+        { type: "h4", text: "C.1 Android 权限" },
         {
           type: "ul",
           items: [
@@ -532,7 +532,7 @@ const zh: PolicyContent = {
             "<strong>剪贴板权限：</strong>如果您开启了剪贴板识别，而剪贴板里有时间相关的内容，应用在打开时可能会问您要不要创建任务。",
           ],
         },
-        { type: "h4", text: "3.2 iOS 权限" },
+        { type: "h4", text: "C.2 iOS 权限" },
         {
           type: "ul",
           items: [
@@ -545,7 +545,7 @@ const zh: PolicyContent = {
             "<strong>Siri 权限：</strong>在您开启用 Siri 添加任务时申请。",
           ],
         },
-        { type: "h3", text: "4. 第三方 SDK 与服务" },
+        { type: "h3", text: "D. 第三方 SDK 与服务" },
         { type: "p", text: "Blotz 用到以下第三方库和服务：" },
         {
           type: "ul",
@@ -553,7 +553,7 @@ const zh: PolicyContent = {
             "<strong>后端服务（Microsoft / NuGet）：</strong>我们的服务器用微软 NuGet 组件搭建，负责应用背后的运算逻辑、数据存储，以及和应用之间的通信。",
             "<strong>前端框架（React Native / Expo）：</strong>手机应用本身用 React Native 和 Expo 开发，也就是您看到和点到的界面。它们本身不会收集您的个人信息。",
             "<strong>AI 服务（微软 Azure OpenAI）：</strong>如上所述，AI 功能由微软 Azure OpenAI 提供。我们使用的 Azure OpenAI 服务器位于美国东部。",
-            "<strong>产品分析（PostHog）：</strong>用于了解 Blotz 的使用情况，详见 2.6 节。PostHog 在位于美国的服务器上处理这些数据。",
+            "<strong>产品分析（PostHog）：</strong>用于了解 Blotz 的使用情况，详见「使用分析」(B.6)。PostHog 在位于美国的服务器上处理这些数据。",
           ],
         },
         {
@@ -566,7 +566,7 @@ const zh: PolicyContent = {
           href: "https://posthog.com/privacy",
           text: "PostHog 隐私政策 →",
         },
-        { type: "h3", text: "5. 用户调研与社区活动" },
+        { type: "h3", text: "E. 用户调研与社区活动" },
         {
           type: "p",
           text: "我们有时会做用户调研，一般是问卷。如果您参加，我们可能会收集年龄、性别、行业、职业、设备信息、个人兴趣等信息，用来了解都是哪些人在用 Blotz，并改进我们的功能与服务。",
@@ -603,7 +603,7 @@ const zh: PolicyContent = {
       id: "section-3",
       title: "3. 我们如何共享、转让、公开披露您的个人信息",
       blocks: [
-        { type: "h3", text: "1. 共享" },
+        { type: "h3", text: "A. 共享" },
         {
           type: "p",
           text: "未经您的同意，我们不会与其他公司、组织或个人共享您的个人信息，以下情况除外：",
@@ -612,12 +612,12 @@ const zh: PolicyContent = {
           type: "ul",
           items: [
             "<strong>在获得您的明确同意或授权后：</strong>取得您的明确授权后，我们可能会与其他方共享您的个人信息，包括微软 Azure OpenAI 等 AI 服务提供商。",
-            "<strong>代表我们提供服务的服务商：</strong>我们会与 1.4 节列出的服务商共享有限的信息，例如做产品分析的 PostHog，好让他们替我们完成这部分工作。他们不得把您的信息用于自身目的。",
+            "<strong>代表我们提供服务的服务商：</strong>我们会与「第三方 SDK 与服务」(D) 中列出的服务商共享有限的信息，例如做产品分析的 PostHog，好让他们替我们完成这部分工作。他们不得把您的信息用于自身目的。",
             "<strong>法律法规要求时：</strong>在法律法规要求、解决争议，或应主管机关的强制性要求或司法裁决时，我们可能会共享您的个人信息。",
             "<strong>为保护合法权益：</strong>为保护 Blotz、我们的用户或公众的权利、财产或安全免受损害而确有必要时，我们可能会向第三方提供您的个人信息。",
           ],
         },
-        { type: "h3", text: "2. 转让" },
+        { type: "h3", text: "B. 转让" },
         {
           type: "p",
           text: "未经您的同意，我们不会把您的个人信息转让给任何公司、组织或个人，以下情况除外：",
@@ -629,7 +629,7 @@ const zh: PolicyContent = {
             "在涉及合并、收购或破产清算时，我们会要求个人信息的新持有者继续受本政策约束",
           ],
         },
-        { type: "h3", text: "3. 公开披露" },
+        { type: "h3", text: "C. 公开披露" },
         {
           type: "p",
           text: "未经您的同意，我们不会公开披露您的个人信息，以下情况除外：",
@@ -647,12 +647,12 @@ const zh: PolicyContent = {
       id: "section-4",
       title: "4. 我们如何存储您的个人信息",
       blocks: [
-        { type: "h3", text: "1. 保存期限" },
+        { type: "h3", text: "A. 保存期限" },
         {
           type: "p",
           text: "我们保存您的个人信息，不会超过为您提供服务所必需的期限。您停止使用平台或撤回相关授权后，我们会删除您的信息，或者把它匿名化，也就是去掉一切能指向您本人的部分。法律法规要求某些信息保存更久的除外。",
         },
-        { type: "h3", text: "2. 存储位置" },
+        { type: "h3", text: "B. 存储位置" },
         {
           type: "p",
           text: "我们的主要服务器，包括存放您的账号和任务数据的服务器，都在澳大利亚。",
@@ -693,7 +693,7 @@ const zh: PolicyContent = {
       id: "section-6",
       title: "6. 您管理个人信息的权利",
       blocks: [
-        { type: "h3", text: "1. 访问与更正" },
+        { type: "h3", text: "A. 访问与更正" },
         { type: "p", text: "您有权查看和更正自己的个人信息，可以在这些位置操作：" },
         {
           type: "ul",
@@ -702,7 +702,7 @@ const zh: PolicyContent = {
             "<strong>搜索记录：</strong>打开搜索即可查看或清除最近的搜索关键词。",
           ],
         },
-        { type: "h3", text: "2. 删除" },
+        { type: "h3", text: "B. 删除" },
         { type: "p", text: "在以下情况下，您可以要求我们删除您的个人信息：" },
         {
           type: "ul",
@@ -717,12 +717,12 @@ const zh: PolicyContent = {
           type: "p",
           text: "您可以在「设置 &gt; 账户 &gt; 删除账户」里删除账号和与之相关的全部个人数据。删除之后，我们会停止提供服务，并按您的要求删除您的个人信息，法律另有规定的除外。",
         },
-        { type: "h3", text: "3. 改变授权范围" },
+        { type: "h3", text: "C. 改变授权范围" },
         {
           type: "p",
           text: "对于基于您的同意收集的额外个人信息，您可以随时给予或撤回同意。撤回之后，我们会停止处理这部分信息；在您同意期间已经完成的处理不受影响。",
         },
-        { type: "h3", text: "4. 撤销系统权限" },
+        { type: "h3", text: "D. 撤销系统权限" },
         { type: "p", text: "您可以在设备设置里收回此前授予的系统权限：" },
         {
           type: "ul",
@@ -735,7 +735,7 @@ const zh: PolicyContent = {
           type: "p",
           text: "撤销权限后，我们不会再基于该权限处理相关个人信息，但对应的功能可能就用不了了。其他核心功能不受影响。",
         },
-        { type: "h3", text: "5. 响应时间" },
+        { type: "h3", text: "E. 响应时间" },
         {
           type: "p",
           text: "我们会在 15 天内响应您的合理请求。需要帮助时，请通过本政策末尾的联系方式找我们。",
