@@ -10,29 +10,35 @@ const content = privacy[locale] ?? privacy[defaultLocale];
 <Layout title={`${content.title} | BlotzTask`} description={content.description}>
   <div class="policy-page">
     <article class="policy">
-      <h1>{content.title}</h1>
-      <p class="policy-meta" set:html={content.meta} />
+      <header class="policy-header">
+        <h1>{content.title}</h1>
+        <p class="policy-meta" set:html={content.meta} />
 
-      <div class="policy-intro">
-        {content.intro.map((text) => <p>{text}</p>)}
-      </div>
+        <div class="policy-lede">
+          <div class="policy-intro">
+            {content.intro.map((text) => <p>{text}</p>)}
+          </div>
 
-      <aside class="policy-summary">
-        <p class="summary-label">{content.summaryLabel}</p>
-        <ul>
-          {content.summary.map((item) => <li set:html={item} />)}
-        </ul>
-      </aside>
+          <aside class="policy-summary">
+            <p class="summary-label">{content.summaryLabel}</p>
+            <ul>
+              {content.summary.map((item) => <li set:html={item} />)}
+            </ul>
+          </aside>
+        </div>
+      </header>
 
-      <nav class="policy-toc">
-        <p class="toc-label">{content.tocLabel}</p>
-        <ol>
-          {content.sections.map((section) => (
-            <li><a href={`#${section.id}`}>{section.title.replace(/^\d+\.\s*/, '')}</a></li>
-          ))}
-        </ol>
-      </nav>
+      <div class="policy-body">
+        <nav class="policy-toc">
+          <p class="toc-label">{content.tocLabel}</p>
+          <ol>
+            {content.sections.map((section) => (
+              <li><a href={`#${section.id}`}>{section.title.replace(/^\d+\.\s*/, '')}</a></li>
+            ))}
+          </ol>
+        </nav>
 
+        <div class="policy-sections">
       {content.sections.map((section) => (
         <section id={section.id}>
           <h2>{section.title}</h2>
@@ -60,6 +66,8 @@ const content = privacy[locale] ?? privacy[defaultLocale];
           })}
         </section>
       ))}
+        </div>
+      </div>
     </article>
   </div>
 </Layout>
@@ -67,22 +75,37 @@ const content = privacy[locale] ?? privacy[defaultLocale];
 <style>
   .policy-page { background: #f8fafc; padding: 5.5rem 1.5rem 5rem; min-height: 100vh; }
   .policy {
-    max-width: 760px; margin: 0 auto;
+    max-width: 1196px; margin: 0 auto;
     background: white; border-radius: 24px; padding: 3rem 3.5rem;
     box-shadow: 0 2px 24px rgba(0,0,0,0.07);
   }
+  .policy-body {
+    display: grid; grid-template-columns: 250px minmax(0, 1fr); gap: 3.5rem;
+    align-items: start; margin-top: 2.5rem;
+  }
+  .policy-sections > section:first-child { margin-top: 0; padding-top: 0; border-top: none; }
   .policy h1 { font-size: 2.1rem; font-weight: 900; color: var(--text); margin-bottom: 0.6rem; }
   .policy-meta { font-size: 0.86rem; color: var(--muted); padding-bottom: 1.75rem; border-bottom: 1px solid #e5e7eb; margin-bottom: 1.75rem; }
-  .policy-intro { margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid #e5e7eb; }
+  .policy-header { padding-bottom: 2.5rem; border-bottom: 1px solid #e5e7eb; }
+  .policy-lede {
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.82fr); gap: 3rem;
+    align-items: start;
+  }
   .policy-intro p { font-size: 0.93rem; color: #374151; line-height: 1.8; margin-bottom: 0.65rem; }
+  .policy-intro p:last-child { margin-bottom: 0; }
   .policy-summary {
     background: #f0fae0; border: 1px solid #d9eeb4; border-radius: 16px;
-    padding: 1.4rem 1.75rem; margin-bottom: 2rem;
+    padding: 1.4rem 1.75rem; margin-bottom: 0;
   }
   .summary-label { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: #4d7c0f; margin-bottom: 0.75rem; }
-  .policy-summary ul { padding-left: 1.2rem; display: flex; flex-direction: column; gap: 0.55rem; margin-bottom: 0; }
+  .policy .policy-summary ul { padding-left: 1.2rem; display: flex; flex-direction: column; gap: 0.55rem; margin-bottom: 0; }
   .policy-summary li { font-size: 0.92rem; color: #374151; line-height: 1.7; }
-  .policy-toc { background: #f8fafc; border: 1px solid #e5e7eb; border-radius: 16px; padding: 1.4rem 1.75rem; margin-bottom: 0; }
+  .policy-toc {
+    background: #f8fafc; border: 1px solid #e5e7eb; border-radius: 16px;
+    padding: 1.4rem 1.5rem; margin-bottom: 0;
+    position: sticky; top: 6.5rem;
+    max-height: calc(100vh - 9rem); overflow-y: auto;
+  }
   .toc-label { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: #6b7280; margin-bottom: 0.65rem; }
   .policy-toc ol { padding-left: 1.2rem; display: flex; flex-direction: column; gap: 0.3rem; }
   .policy-toc a { color: #3486F3; font-size: 0.88rem; font-weight: 600; text-decoration: none; }
@@ -97,6 +120,13 @@ const content = privacy[locale] ?? privacy[defaultLocale];
   .policy a { color: #3486F3; font-weight: 600; text-decoration: none; }
   .policy a:hover { text-decoration: underline; }
   .policy-email { margin-top: 1rem; padding: 0.9rem 1.2rem; background: #f0fae0; border-radius: 12px; }
+  @media (max-width: 1000px) {
+    .policy { max-width: 760px; }
+    .policy-lede { grid-template-columns: 1fr; gap: 2rem; }
+    .policy-body { grid-template-columns: 1fr; gap: 0; margin-top: 2rem; }
+    .policy-toc { position: static; max-height: none; overflow-y: visible; }
+    .policy-sections > section:first-child { margin-top: 2.25rem; padding-top: 2.25rem; border-top: 1px solid #e5e7eb; }
+  }
   @media (max-width: 600px) {
     .policy { padding: 2rem 1.25rem; }
     .policy-page { padding: 5rem 1rem 3rem; }
