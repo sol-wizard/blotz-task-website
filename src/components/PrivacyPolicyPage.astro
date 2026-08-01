@@ -84,14 +84,14 @@ const content = privacy[locale] ?? privacy[defaultLocale];
     align-items: start; margin-top: 2.5rem;
   }
   .policy-sections > section:first-child { margin-top: 0; padding-top: 0; border-top: none; }
-  .policy h1 { font-size: 2.1rem; font-weight: 900; color: var(--text); margin-bottom: 0.6rem; }
-  .policy-meta { font-size: 0.86rem; color: var(--muted); padding-bottom: 1.75rem; border-bottom: 1px solid #e5e7eb; margin-bottom: 1.75rem; }
+  .policy h1 { font-size: 2.4rem; font-weight: 900; color: var(--text); margin-bottom: 0.7rem; letter-spacing: -0.01em; }
+  .policy-meta { font-size: 0.9rem; color: var(--muted); padding-bottom: 1.75rem; border-bottom: 1px solid #e5e7eb; margin-bottom: 1.75rem; }
   .policy-header { padding-bottom: 2.5rem; border-bottom: 1px solid #e5e7eb; }
   .policy-lede {
     display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.82fr); gap: 3rem;
     align-items: start;
   }
-  .policy-intro p { font-size: 0.93rem; color: #374151; line-height: 1.8; margin-bottom: 0.65rem; }
+  .policy-intro p { font-size: 1.06rem; color: #374151; line-height: 1.95; margin-bottom: 0.85rem; }
   .policy-intro p:last-child { margin-bottom: 0; }
   .policy-summary {
     background: #f0fae0; border: 1px solid #d9eeb4; border-radius: 16px;
@@ -99,7 +99,7 @@ const content = privacy[locale] ?? privacy[defaultLocale];
   }
   .summary-label { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: #4d7c0f; margin-bottom: 0.75rem; }
   .policy .policy-summary ul { padding-left: 1.2rem; display: flex; flex-direction: column; gap: 0.55rem; margin-bottom: 0; }
-  .policy-summary li { font-size: 0.92rem; color: #374151; line-height: 1.7; }
+  .policy-summary li { font-size: 1rem; color: #374151; line-height: 1.85; }
   .policy-toc {
     background: #f8fafc; border: 1px solid #e5e7eb; border-radius: 16px;
     padding: 1.4rem 1.5rem; margin-bottom: 0;
@@ -108,15 +108,15 @@ const content = privacy[locale] ?? privacy[defaultLocale];
   }
   .toc-label { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: #6b7280; margin-bottom: 0.65rem; }
   .policy-toc ol { padding-left: 1.2rem; display: flex; flex-direction: column; gap: 0.3rem; }
-  .policy-toc a { color: #3486F3; font-size: 0.88rem; font-weight: 600; text-decoration: none; }
+  .policy-toc a { color: #3486F3; font-size: 0.95rem; font-weight: 600; text-decoration: none; }
   .policy-toc a:hover { text-decoration: underline; }
-  .policy section { margin-top: 2.25rem; padding-top: 2.25rem; border-top: 1px solid #e5e7eb; }
-  .policy h2 { font-size: 1.25rem; font-weight: 900; color: var(--text); margin-bottom: 0.9rem; }
-  .policy h3 { font-size: 1rem; font-weight: 800; color: var(--text); margin-top: 1.5rem; margin-bottom: 0.5rem; }
-  .policy h4 { font-size: 0.93rem; font-weight: 700; color: #374151; margin-top: 1.1rem; margin-bottom: 0.35rem; }
-  .policy p { font-size: 0.92rem; color: #374151; line-height: 1.8; margin-bottom: 0.65rem; }
-  .policy ul { padding-left: 1.4rem; margin-bottom: 0.65rem; display: flex; flex-direction: column; gap: 0.35rem; }
-  .policy li { font-size: 0.92rem; color: #374151; line-height: 1.75; }
+  .policy section { margin-top: 3rem; padding-top: 3rem; border-top: 1px solid #e5e7eb; }
+  .policy h2 { font-size: 1.55rem; font-weight: 900; color: var(--text); margin-bottom: 1.1rem; letter-spacing: -0.01em; }
+  .policy h3 { font-size: 1.22rem; font-weight: 800; color: var(--text); margin-top: 2.25rem; margin-bottom: 0.65rem; }
+  .policy h4 { font-size: 1.06rem; font-weight: 700; color: var(--text); margin-top: 1.75rem; margin-bottom: 0.5rem; }
+  .policy p { font-size: 1rem; color: #374151; line-height: 1.95; margin-bottom: 0.9rem; }
+  .policy ul { padding-left: 1.4rem; margin-bottom: 0.9rem; display: flex; flex-direction: column; gap: 0.6rem; }
+  .policy li { font-size: 1rem; color: #374151; line-height: 1.9; }
   .policy a { color: #3486F3; font-weight: 600; text-decoration: none; }
   .policy a:hover { text-decoration: underline; }
   .policy-email { margin-top: 1rem; padding: 0.9rem 1.2rem; background: #f0fae0; border-radius: 12px; }
@@ -130,6 +130,7 @@ const content = privacy[locale] ?? privacy[defaultLocale];
   @media (max-width: 600px) {
     .policy { padding: 2rem 1.25rem; }
     .policy-page { padding: 5rem 1rem 3rem; }
-    .policy h1 { font-size: 1.6rem; }
+    .policy h1 { font-size: 1.8rem; }
+    .policy h2 { font-size: 1.35rem; }
   }
 </style>
