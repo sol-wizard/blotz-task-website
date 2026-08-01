@@ -93,7 +93,7 @@ const en: PolicyContent = {
         },
         {
           type: "p",
-          text: "What you send to the AI, and the tasks and notes it generates, are also included in the analytics we send to PostHog. See Analytics (B.5).",
+          text: "What you send to the AI, and the tasks and notes it generates, are also included in our usage analytics. See Analytics (B.5).",
         },
         {
           type: "p",
@@ -107,19 +107,11 @@ const en: PolicyContent = {
         { type: "h4", text: "B.5 Analytics" },
         {
           type: "p",
-          text: "We use PostHog, an outside analytics service, to see how Blotz is used. PostHog receives your account identifier, email address, and display name, so we can tell it is the same person across devices and after a reinstall. It also receives your platform, operating system version, and app version.",
+          text: "We use an outside analytics service to understand how Blotz is used. It receives your account identifier, email address, display name and device system details, your AI conversations and what the AI produced from them, and a replay of what you did inside the app.",
         },
         {
           type: "p",
-          text: "When you use an AI feature, the analytics event carries what you typed or said to the AI and the tasks and notes it produced. Apart from that, we do not send the content of your tasks or notes to PostHog.",
-        },
-        {
-          type: "p",
-          text: "In the released version of the app, PostHog also records session replays, which reconstruct the screens you saw and the taps you made inside Blotz.",
-        },
-        {
-          type: "p",
-          text: "PostHog handles all of this on our behalf and may not use it for its own purposes.",
+          text: "It handles all of this on our behalf and may not use it for its own purposes.",
         },
         { type: "h3", text: "C. Permissions Requested in the App" },
         {
@@ -214,7 +206,7 @@ const en: PolicyContent = {
           type: "ul",
           items: [
             "<strong>With your explicit consent or authorization:</strong> Once you have explicitly authorized it, we may share your personal information with other parties, including AI service providers such as Microsoft Azure OpenAI.",
-            "<strong>With service providers acting on our behalf:</strong> We share limited information with the providers listed in Third-Party SDKs and Services (D), such as PostHog for product analytics, so they can do that work for us. They may not use your information for their own purposes.",
+            "<strong>With service providers acting on our behalf:</strong> We share limited information with the providers listed in Third-Party SDKs and Services (D) so they can do that work for us. They may not use your information for their own purposes.",
             "<strong>Where required by law:</strong> We may share your personal information when laws and regulations require it, to resolve a dispute, or in response to a mandatory request or judicial decision from a competent authority.",
             "<strong>To protect legitimate interests:</strong> We may give your personal information to a third party where that is necessary to protect Blotz, our users, or the public from harm to rights, property, or safety.",
           ],
@@ -478,7 +470,7 @@ const zh: PolicyContent = {
         },
         {
           type: "p",
-          text: "您发给 AI 的内容，以及 AI 生成的任务和随手记，也会包含在我们发给 PostHog 的分析数据里，详见「使用分析」(B.5)。",
+          text: "您发给 AI 的内容，以及 AI 生成的任务和随手记，也会包含在我们的使用分析数据里，详见「使用分析」(B.5)。",
         },
         {
           type: "p",
@@ -492,19 +484,11 @@ const zh: PolicyContent = {
         { type: "h4", text: "B.5 使用分析" },
         {
           type: "p",
-          text: "我们使用第三方分析服务 PostHog，了解 Blotz 被怎么使用。PostHog 会收到您的账号标识、邮箱地址和昵称，这样我们才能在不同设备上、重装应用之后，认出是同一个人。它还会收到您的系统平台、操作系统版本和应用版本。",
+          text: "我们使用第三方分析服务了解 Blotz 的使用情况。它会收到您的账号标识、邮箱地址、昵称和设备系统信息，您与 AI 的对话及由此生成的内容，以及您在应用内操作过程的回放。",
         },
         {
           type: "p",
-          text: "您使用 AI 功能时，这条分析记录会带上您打字或说给 AI 的内容，以及 AI 生成的任务和随手记。除此之外，我们不会把您的任务和随手记内容发给 PostHog。",
-        },
-        {
-          type: "p",
-          text: "在正式发布的版本里，PostHog 还会录制会话回放，也就是把您在 Blotz 里看到的界面和点过的地方还原出来。",
-        },
-        {
-          type: "p",
-          text: "以上这些 PostHog 都只是代我们处理，不得用于自身目的。",
+          text: "这些数据只是代我们处理，不得用于其自身目的。",
         },
         { type: "h3", text: "C. 应用申请的权限" },
         {
@@ -596,7 +580,7 @@ const zh: PolicyContent = {
           type: "ul",
           items: [
             "<strong>在获得您的明确同意或授权后：</strong>取得您的明确授权后，我们可能会与其他方共享您的个人信息，包括微软 Azure OpenAI 等 AI 服务提供商。",
-            "<strong>代表我们提供服务的服务商：</strong>我们会与「第三方 SDK 与服务」(D) 中列出的服务商共享有限的信息，例如做产品分析的 PostHog，好让他们替我们完成这部分工作。他们不得把您的信息用于自身目的。",
+            "<strong>代表我们提供服务的服务商：</strong>我们会与「第三方 SDK 与服务」(D) 中列出的服务商共享有限的信息，好让他们替我们完成这部分工作。他们不得把您的信息用于自身目的。",
             "<strong>法律法规要求时：</strong>在法律法规要求、解决争议，或应主管机关的强制性要求或司法裁决时，我们可能会共享您的个人信息。",
             "<strong>为保护合法权益：</strong>为保护 Blotz、我们的用户或公众的权利、财产或安全免受损害而确有必要时，我们可能会向第三方提供您的个人信息。",
           ],
