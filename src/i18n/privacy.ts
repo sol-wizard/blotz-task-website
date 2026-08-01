@@ -42,13 +42,9 @@ const en: PolicyContent = {
           text: "We follow the principles of legitimacy, lawfulness, and necessity. For the features and services listed below, we collect and use the personal information you provide yourself while using Blotz.",
         },
         { type: "h3", text: "A. Account Registration" },
-        { type: "p", text: "You can register and sign in to your Blotz account in the following ways:" },
         {
-          type: "ul",
-          items: [
-            "<strong>Register with email:</strong> We collect the email address you give us and send a verification email to confirm it. We use it to create your account, and you sign in with it later.",
-            "<strong>Register with a third-party account:</strong> If you sign up with a third-party account such as Apple or Google, we get basic profile details from that platform, such as your nickname, avatar, and email address, under the relevant authorization agreement. We use them to create your Blotz account.",
-          ],
+          type: "p",
+          text: "Signing in is handled by Auth0, our identity provider. We collect the email address you register with, and Auth0 holds your sign-in credentials on our behalf. We use the address to create your account and to sign you in afterwards.",
         },
         {
           type: "p",
@@ -63,9 +59,8 @@ const en: PolicyContent = {
         {
           type: "ul",
           items: [
-            "Task title, task content, priority, due date or time range, reminder time, and recurrence rules",
+            "Task title, task details, due date or time range, reminder time, and recurrence rules",
             "Quick note content",
-            "Device information attached to an edit, including device model, operating system version, and unique device identifier",
           ],
         },
         {
@@ -75,21 +70,34 @@ const en: PolicyContent = {
         { type: "h4", text: "B.2 Task Reminders" },
         {
           type: "p",
-          text: "If you set a reminder for a task, we process the task title, task content, due date or time range, and reminder time so the app can notify you at the right moment.",
+          text: "If you set a reminder for a task, we process the task title, task details, due date or time range, and reminder time so the app can notify you at the right moment.",
+        },
+        {
+          type: "p",
+          text: "To deliver the notification we also store a push token issued by Expo's push service, along with an identifier for the device it belongs to, so the reminder reaches the right phone.",
         },
         { type: "h4", text: "B.3 Search" },
         {
           type: "p",
-          text: "If you use search in Blotz, we may collect the keywords you search for so you can see your recent searches. These keywords stay on your device and are not synced to the cloud.",
+          text: "Search looks through your quick notes. The keyword you type is sent to our servers to find matches, and it appears in our server logs. Blotz keeps no history of your past searches, on our servers or on your device.",
         },
         { type: "h4", text: "B.4 AI Features" },
         {
           type: "p",
-          text: "Some Blotz features are powered by AI. Those features run on Microsoft Azure OpenAI.",
+          text: "Some Blotz features are powered by AI. Typed content is processed by Microsoft Azure OpenAI. If you speak to Blotz instead of typing, the recording goes to Groq first to be turned into text.",
         },
         {
           type: "p",
-          text: "When you use an AI feature, we process only the content you type in or select, such as task titles, task details, quick notes, tags, and dates. That content is sent to Azure OpenAI, which uses it to produce the content or suggestions you asked for.",
+          text: "When you use an AI feature, we process only the content you type in or select, such as task titles, task details, quick notes, labels, and dates. That content is sent to Azure OpenAI, which uses it to produce the content or suggestions you asked for.",
+        },
+        {
+          type: "p",
+          text: "Voice input is uploaded to Groq, which transcribes it and handles the recording on our behalf. The transcript then follows the same path as anything you type.",
+        },
+        {
+          type: "link",
+          href: "https://groq.com/privacy-policy/",
+          text: "Groq Privacy Policy →",
         },
         {
           type: "p",
@@ -106,21 +114,33 @@ const en: PolicyContent = {
         },
         {
           type: "p",
+          text: "What you send to the AI, and the tasks and notes it generates, are also included in the analytics we send to PostHog. See Analytics (B.6).",
+        },
+        {
+          type: "p",
           text: "Using AI is your choice. If you choose not to, none of this collection, processing, or sending to a third party happens, and the rest of Blotz works as normal.",
         },
         { type: "h4", text: "B.5 Profile Information" },
         {
           type: "p",
-          text: "An avatar and a nickname are optional. Core product and system features do not need them, and Blotz works the same if you leave them blank.",
+          text: "You can pick an avatar from the set built into the app and set a display name. There is no photo upload — the avatars ship with Blotz, and we record only which one you chose. Both are optional, and Blotz works the same if you skip them.",
         },
         { type: "h4", text: "B.6 Analytics" },
         {
           type: "p",
-          text: "We use PostHog, an outside analytics service, to see how Blotz is used. PostHog receives your account identifier, email address, and display name, so we can tell it is the same person across devices and after a reinstall.",
+          text: "We use PostHog, an outside analytics service, to see how Blotz is used. PostHog receives your account identifier, email address, and display name, so we can tell it is the same person across devices and after a reinstall. It also receives your platform, operating system version, and app version.",
         },
         {
           type: "p",
-          text: "We do not send the content of your tasks or notes to PostHog. PostHog handles this information on our behalf and may not use it for its own purposes.",
+          text: "When you use an AI feature, the analytics event carries what you typed or said to the AI and the tasks and notes it produced. Apart from that, we do not send the content of your tasks or notes to PostHog.",
+        },
+        {
+          type: "p",
+          text: "In the released version of the app, PostHog also records session replays, which reconstruct the screens you saw and the taps you made inside Blotz.",
+        },
+        {
+          type: "p",
+          text: "PostHog handles all of this on our behalf and may not use it for its own purposes.",
         },
         { type: "h3", text: "C. Permissions Requested in the App" },
         {
@@ -131,25 +151,16 @@ const en: PolicyContent = {
         {
           type: "ul",
           items: [
-            "<strong>Calendar access:</strong> Requested when you turn on calendar sync, so system calendar events can sync into Blotz.",
-            "<strong>Write external storage:</strong> Requested when you save an attachment from a task to your phone.",
-            "<strong>Read external storage:</strong> Requested when you upload an attachment to a task.",
-            "<strong>Microphone access:</strong> Requested when you add an audio attachment or use voice input.",
-            "<strong>Fingerprint access:</strong> Requested when you turn on fingerprint unlock for the app.",
-            "<strong>Clipboard access:</strong> If you turn on clipboard recognition and your clipboard holds something time-related, the app may ask whether you want to create a task when you open it.",
+            "<strong>Microphone:</strong> Requested when you use voice input to create a task.",
+            "<strong>Notifications:</strong> Requested so we can deliver the reminders you set.",
           ],
         },
         { type: "h4", text: "C.2 iOS Permissions" },
         {
           type: "ul",
           items: [
-            "<strong>Calendar access:</strong> Requested when you turn on calendar sync.",
-            "<strong>Write external storage:</strong> Requested when you save an attachment from a task to your phone.",
-            "<strong>Read external storage:</strong> Requested when you upload an attachment to a task.",
-            "<strong>Microphone access:</strong> Requested when you add an audio attachment or use voice input.",
-            "<strong>Face ID / biometric access:</strong> Requested when you set an app unlock password and turn on Face ID.",
-            "<strong>Clipboard access:</strong> If you turn on clipboard recognition and your clipboard holds something time-related, the app may ask whether you want to create a task when you open it.",
-            "<strong>Siri access:</strong> Requested when you turn on adding tasks through Siri.",
+            "<strong>Microphone:</strong> Requested when you use voice input to create a task.",
+            "<strong>Notifications:</strong> Requested so we can deliver the reminders you set.",
           ],
         },
         { type: "h3", text: "D. Third-Party SDKs and Services" },
@@ -160,9 +171,11 @@ const en: PolicyContent = {
         {
           type: "ul",
           items: [
-            "<strong>Backend services (Microsoft / NuGet):</strong> Our servers are built with Microsoft NuGet components, which run the logic behind the app, store data, and handle communication with the app.",
-            "<strong>Frontend framework (React Native / Expo):</strong> The mobile app itself is built with React Native and Expo. They make up what you see and tap, and do not collect your personal information on their own.",
-            "<strong>AI services (Microsoft Azure OpenAI):</strong> As described above, AI features run on Microsoft Azure OpenAI. The Azure OpenAI server we use is located in US East.",
+            "<strong>Sign-in (Auth0):</strong> Auth0 runs the sign-in screen and holds your sign-in credentials on our behalf.",
+            "<strong>Backend services (Microsoft):</strong> Our servers are built on Microsoft's .NET stack and run on Microsoft Azure, which is also where server logs are collected.",
+            "<strong>App framework (React Native / Expo):</strong> The app is built with React Native and Expo. They make up what you see and tap. Expo's push service issues the token used to deliver your reminders.",
+            "<strong>AI (Microsoft Azure OpenAI):</strong> As described above, typed AI content is processed by Microsoft Azure OpenAI. The Azure OpenAI server we use is located in US East.",
+            "<strong>Speech to text (Groq):</strong> Voice recordings are sent to Groq to be transcribed. Groq processes them on our behalf.",
             "<strong>Product analytics (PostHog):</strong> Used to see how Blotz is used, as described in Analytics (B.6). PostHog processes this data on servers located in the United States.",
           ],
         },
@@ -197,15 +210,15 @@ const en: PolicyContent = {
       blocks: [
         {
           type: "p",
-          text: "A cookie is a small text file a website saves on your device when you visit it. Next time you come back, the site can recognize your browser by that file. Cookies can hold things like your preferences.",
+          text: "A cookie is a small text file a website saves in your browser so it can recognise you when you come back.",
         },
         {
           type: "p",
-          text: "Blotz uses cookies so you do not have to prove who you are again every time you move between Blotz services. We also use them to remember your preferences, make the app nicer to use, and see how our services are used so we can improve them.",
+          text: "The Blotz app is not a website and does not use cookies. This site sets no cookies of its own either, so there is nothing here for you to accept or refuse.",
         },
         {
           type: "p",
-          text: "You can turn cookies off in your browser or device settings. If you do, you may not be able to sign in to Blotz or use the services and features that rely on cookies.",
+          text: "The site does load its fonts from Google Fonts, which means your browser requests those files from Google and Google sees the request. If we ever add cookies for sign-in or analytics on the web, we will update this section before turning them on.",
         },
       ],
     },
@@ -435,13 +448,9 @@ const zh: PolicyContent = {
           text: "我们遵循正当、合法、必要的原则。针对下面列出的功能与服务，我们会收集和使用您在使用 Blotz 时主动提供的个人信息。",
         },
         { type: "h3", text: "A. 账号注册" },
-        { type: "p", text: "您可以通过以下方式注册并登录 Blotz 账号：" },
         {
-          type: "ul",
-          items: [
-            "<strong>邮箱注册：</strong>我们会收集您填写的邮箱地址，并发一封验证邮件确认。我们用它创建您的账号，之后您也用它登录。",
-            "<strong>第三方账号注册：</strong>如果您用 Apple、Google 等第三方账号注册，我们会依据相应的授权协议，从该平台获取昵称、头像、邮箱地址等基础资料，用来创建您的 Blotz 账号。",
-          ],
+          type: "p",
+          text: "登录由我们的身份服务商 Auth0 承担。我们会收集您注册时填写的邮箱地址，您的登录凭据由 Auth0 代我们保管。这个邮箱用于创建您的账号，之后也用它登录。",
         },
         {
           type: "p",
@@ -456,9 +465,8 @@ const zh: PolicyContent = {
         {
           type: "ul",
           items: [
-            "任务标题、任务内容、优先级、截止日期或时间范围、提醒时间、重复规则",
-            "快速笔记内容",
-            "与编辑操作关联的设备信息，包括设备型号、操作系统版本、设备唯一标识",
+            "任务标题、任务详情、截止日期或时间范围、提醒时间、重复规则",
+            "随手记内容",
           ],
         },
         {
@@ -468,21 +476,34 @@ const zh: PolicyContent = {
         { type: "h4", text: "B.2 任务提醒" },
         {
           type: "p",
-          text: "如果您给任务设了提醒，我们会处理任务标题、任务内容、截止日期或时间范围、提醒时间，好让应用在该提醒的时候通知您。",
+          text: "如果您给任务设了提醒，我们会处理任务标题、任务详情、截止日期或时间范围、提醒时间，好让应用在该提醒的时候通知您。",
+        },
+        {
+          type: "p",
+          text: "为了把通知送达，我们还会保存一个由 Expo 推送服务签发的推送令牌，以及它对应的设备标识，这样提醒才能发到正确的手机上。",
         },
         { type: "h4", text: "B.3 搜索" },
         {
           type: "p",
-          text: "如果您使用搜索，我们可能会收集您搜索的关键词，方便您查看最近搜过什么。这些关键词只存在您的设备上，不会同步到云端。",
+          text: "搜索用于查找您的随手记。您输入的关键词会发送到我们的服务器进行匹配，并会出现在服务器日志中。Blotz 不保存您的历史搜索记录，服务器上没有，您的设备上也没有。",
         },
         { type: "h4", text: "B.4 AI 功能" },
         {
           type: "p",
-          text: "Blotz 的部分功能由 AI 提供支持，这些功能接入的是微软 Azure OpenAI 服务。",
+          text: "Blotz 的部分功能由 AI 提供支持。您打字输入的内容由微软 Azure OpenAI 处理；如果您用说的，录音会先交给 Groq 转成文字。",
         },
         {
           type: "p",
-          text: "您使用 AI 功能时，我们只处理您输入或选中的内容，例如任务标题、任务详情、快速笔记、标签和日期。这些内容会发送给 Azure OpenAI，用来生成您想要的内容或建议。",
+          text: "您使用 AI 功能时，我们只处理您输入或选中的内容，例如任务标题、任务详情、随手记、标签和日期。这些内容会发送给 Azure OpenAI，用来生成您想要的内容或建议。",
+        },
+        {
+          type: "p",
+          text: "语音输入的录音会上传给 Groq 转写成文字，Groq 只是代我们处理这段录音。转写出来的文字之后走的路径，和您打字输入的完全一样。",
+        },
+        {
+          type: "link",
+          href: "https://groq.com/privacy-policy/",
+          text: "Groq 隐私政策 →",
         },
         {
           type: "p",
@@ -499,21 +520,33 @@ const zh: PolicyContent = {
         },
         {
           type: "p",
+          text: "您发给 AI 的内容，以及 AI 生成的任务和随手记，同样会包含在我们发给 PostHog 的分析数据里，详见「使用分析」(B.6)。",
+        },
+        {
+          type: "p",
           text: "是否使用 AI 由您决定。如果您不用，上面这些收集、处理和向第三方传输都不会发生，Blotz 的其他核心服务照常使用。",
         },
         { type: "h4", text: "B.5 个人资料" },
         {
           type: "p",
-          text: "头像和昵称是选填的，核心产品和系统功能都不需要它们。不填也不影响您正常使用 Blotz。",
+          text: "头像可以从应用内置的几个形象里挑一个，昵称可以自己填。Blotz 不支持上传照片，我们只记录您选了哪一个内置头像。这两项都是选填的，不填也不影响您正常使用 Blotz。",
         },
         { type: "h4", text: "B.6 使用分析" },
         {
           type: "p",
-          text: "我们使用第三方分析服务 PostHog，了解 Blotz 被怎么使用。PostHog 会收到您的账号标识、邮箱地址和昵称，这样我们才能在不同设备上、重装应用之后，认出是同一个人。",
+          text: "我们使用第三方分析服务 PostHog，了解 Blotz 被怎么使用。PostHog 会收到您的账号标识、邮箱地址和昵称，这样我们才能在不同设备上、重装应用之后，认出是同一个人。它还会收到您的系统平台、操作系统版本和应用版本。",
         },
         {
           type: "p",
-          text: "我们不会把您的任务和笔记内容发给 PostHog。PostHog 只是代我们处理这些信息，不得用于自身目的。",
+          text: "您使用 AI 功能时，这条分析记录会带上您打字或说给 AI 的内容，以及 AI 生成的任务和随手记。除此之外，我们不会把您的任务和随手记内容发给 PostHog。",
+        },
+        {
+          type: "p",
+          text: "在正式发布的版本里，PostHog 还会录制会话回放，也就是把您在 Blotz 里看到的界面和点过的地方还原出来。",
+        },
+        {
+          type: "p",
+          text: "以上这些 PostHog 都只是代我们处理，不得用于自身目的。",
         },
         { type: "h3", text: "C. 应用申请的权限" },
         {
@@ -524,25 +557,16 @@ const zh: PolicyContent = {
         {
           type: "ul",
           items: [
-            "<strong>日历权限：</strong>在您开启日历同步时申请，用于把系统日历事件同步到 Blotz。",
-            "<strong>写入外部存储：</strong>在您把任务里的附件保存到手机时申请。",
-            "<strong>读取外部存储：</strong>在您给任务上传附件时申请。",
-            "<strong>麦克风权限：</strong>在您添加音频附件或使用语音输入时申请。",
-            "<strong>指纹权限：</strong>在您开启应用指纹解锁时申请。",
-            "<strong>剪贴板权限：</strong>如果您开启了剪贴板识别，而剪贴板里有时间相关的内容，应用在打开时可能会问您要不要创建任务。",
+            "<strong>麦克风：</strong>在您用语音输入创建任务时申请。",
+            "<strong>通知：</strong>为了把您设置的提醒送达而申请。",
           ],
         },
         { type: "h4", text: "C.2 iOS 权限" },
         {
           type: "ul",
           items: [
-            "<strong>日历权限：</strong>在您开启日历同步时申请。",
-            "<strong>写入外部存储：</strong>在您把任务里的附件保存到手机时申请。",
-            "<strong>读取外部存储：</strong>在您给任务上传附件时申请。",
-            "<strong>麦克风权限：</strong>在您添加音频附件或使用语音输入时申请。",
-            "<strong>Face ID / 生物识别权限：</strong>在您设置应用解锁密码并开启 Face ID 时申请。",
-            "<strong>剪贴板权限：</strong>如果您开启了剪贴板识别，而剪贴板里有时间相关的内容，应用在打开时可能会问您要不要创建任务。",
-            "<strong>Siri 权限：</strong>在您开启用 Siri 添加任务时申请。",
+            "<strong>麦克风：</strong>在您用语音输入创建任务时申请。",
+            "<strong>通知：</strong>为了把您设置的提醒送达而申请。",
           ],
         },
         { type: "h3", text: "D. 第三方 SDK 与服务" },
@@ -550,9 +574,11 @@ const zh: PolicyContent = {
         {
           type: "ul",
           items: [
-            "<strong>后端服务（Microsoft / NuGet）：</strong>我们的服务器用微软 NuGet 组件搭建，负责应用背后的运算逻辑、数据存储，以及和应用之间的通信。",
-            "<strong>前端框架（React Native / Expo）：</strong>手机应用本身用 React Native 和 Expo 开发，也就是您看到和点到的界面。它们本身不会收集您的个人信息。",
-            "<strong>AI 服务（微软 Azure OpenAI）：</strong>如上所述，AI 功能由微软 Azure OpenAI 提供。我们使用的 Azure OpenAI 服务器位于美国东部。",
+            "<strong>登录（Auth0）：</strong>登录界面由 Auth0 提供，您的登录凭据由它代我们保管。",
+            "<strong>后端服务（微软）：</strong>我们的服务器基于微软 .NET 技术栈搭建，运行在微软 Azure 上，服务器日志也收集在那里。",
+            "<strong>应用框架（React Native / Expo）：</strong>手机应用本身用 React Native 和 Expo 开发，也就是您看到和点到的界面。Expo 的推送服务还负责签发用于送达提醒的推送令牌。",
+            "<strong>AI（微软 Azure OpenAI）：</strong>如上所述，您打字输入的 AI 内容由微软 Azure OpenAI 处理。我们使用的 Azure OpenAI 服务器位于美国东部。",
+            "<strong>语音转文字（Groq）：</strong>语音录音会发送给 Groq 转写，Groq 只是代我们处理。",
             "<strong>产品分析（PostHog）：</strong>用于了解 Blotz 的使用情况，详见「使用分析」(B.6)。PostHog 在位于美国的服务器上处理这些数据。",
           ],
         },
@@ -587,15 +613,15 @@ const zh: PolicyContent = {
       blocks: [
         {
           type: "p",
-          text: "Cookie 是您访问网站时，网站存在您设备上的一个小文件。下次再来，网站就能靠它认出您的浏览器。Cookie 里可能保存偏好设置等信息。",
+          text: "Cookie 是网站存在您浏览器里的一个小文件，下次再来时网站能靠它认出您。",
         },
         {
           type: "p",
-          text: "Blotz 使用 Cookie，是为了让您在 Blotz 各项服务之间切换时不用反复验证身份。我们也用它记住您的偏好设置、改善使用体验，并了解服务的使用情况，以便提升服务质量。",
+          text: "Blotz 应用不是网站，不使用 Cookie。本站也不会写入任何自己的 Cookie，所以这里没有需要您同意或拒绝的东西。",
         },
         {
           type: "p",
-          text: "您可以在浏览器或设备设置里关闭 Cookie。关掉之后，您可能无法登录，也无法使用依赖 Cookie 的 Blotz 服务和功能。",
+          text: "本站的字体来自 Google Fonts，也就是说您的浏览器会向 Google 请求这些字体文件，Google 能看到这次请求。今后如果我们在网页端加入用于登录或分析的 Cookie，会先更新本节再启用。",
         },
       ],
     },
@@ -659,7 +685,7 @@ const zh: PolicyContent = {
         },
         {
           type: "p",
-          text: "有些功能会把数据传到境外：AI 功能使用位于美国东部的微软 Azure OpenAI 服务，产品分析由 PostHog 在位于美国的服务器上处理。这两种情况下，我们只传输上文相应章节写明的信息，并会遵守适用的法律要求、保护您个人信息的安全。",
+          text: "有些功能会把数据传到境外：您打字输入的 AI 内容由位于美国东部的微软 Azure OpenAI 处理，语音录音由 Groq 在美国转写，产品分析由 PostHog 在位于美国的服务器上处理。这几种情况下，我们只传输上文相应章节写明的信息，并会遵守适用的法律要求、保护您个人信息的安全。",
         },
       ],
     },
