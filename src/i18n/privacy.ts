@@ -76,23 +76,15 @@ const en: PolicyContent = {
           type: "p",
           text: "To deliver the notification we also store a push token issued by Expo's push service, along with an identifier for the device it belongs to, so the reminder reaches the right phone.",
         },
-        { type: "h4", text: "B.3 Search" },
+        { type: "h4", text: "B.3 AI Features" },
         {
           type: "p",
-          text: "Search looks through your quick notes. The keyword you type is sent to our servers to find matches, and it appears in our server logs. Blotz keeps no history of your past searches, on our servers or on your device.",
-        },
-        { type: "h4", text: "B.4 AI Features" },
-        {
-          type: "p",
-          text: "Some Blotz features are powered by AI. Typed content is processed by Microsoft Azure OpenAI. If you speak to Blotz instead of typing, the recording goes to Groq first to be turned into text.",
+          text: "Blotz's AI features rely on two outside services. Text you write goes to Microsoft Azure OpenAI, and voice recordings go to Groq to be turned into text. Both handle it on our behalf, and Microsoft does not use it to train models.",
         },
         {
-          type: "p",
-          text: "When you use an AI feature, we process only the content you type in or select, such as task titles, task details, quick notes, labels, and dates. That content is sent to Azure OpenAI, which uses it to produce the content or suggestions you asked for.",
-        },
-        {
-          type: "p",
-          text: "Voice input is uploaded to Groq, which transcribes it and handles the recording on our behalf. The transcript then follows the same path as anything you type.",
+          type: "link",
+          href: "https://learn.microsoft.com/en-us/legal/cognitive-services/openai/data-privacy",
+          text: "Microsoft Azure OpenAI data privacy information →",
         },
         {
           type: "link",
@@ -101,31 +93,18 @@ const en: PolicyContent = {
         },
         {
           type: "p",
-          text: "Under Microsoft's default data handling policy for Azure OpenAI, what you send and what comes back are not used by Microsoft to train models, and are not kept once the request is finished.",
-        },
-        {
-          type: "link",
-          href: "https://learn.microsoft.com/en-us/legal/cognitive-services/openai/data-privacy",
-          text: "Microsoft Azure OpenAI data privacy information →",
+          text: "What you send to the AI, and the tasks and notes it generates, are also included in the analytics we send to PostHog. See Analytics (B.5).",
         },
         {
           type: "p",
-          text: "The AI may quote, rewrite, or combine what you wrote when it answers you. We use this content only to provide the feature, not for unrelated purposes and not for model training.",
+          text: "Using AI is your choice. If you choose not to, none of this happens, and the rest of Blotz works as normal.",
         },
-        {
-          type: "p",
-          text: "What you send to the AI, and the tasks and notes it generates, are also included in the analytics we send to PostHog. See Analytics (B.6).",
-        },
-        {
-          type: "p",
-          text: "Using AI is your choice. If you choose not to, none of this collection, processing, or sending to a third party happens, and the rest of Blotz works as normal.",
-        },
-        { type: "h4", text: "B.5 Profile Information" },
+        { type: "h4", text: "B.4 Profile Information" },
         {
           type: "p",
           text: "You can pick an avatar from the set built into the app and set a display name. There is no photo upload — the avatars ship with Blotz, and we record only which one you chose. Both are optional, and Blotz works the same if you skip them.",
         },
-        { type: "h4", text: "B.6 Analytics" },
+        { type: "h4", text: "B.5 Analytics" },
         {
           type: "p",
           text: "We use PostHog, an outside analytics service, to see how Blotz is used. PostHog receives your account identifier, email address, and display name, so we can tell it is the same person across devices and after a reinstall. It also receives your platform, operating system version, and app version.",
@@ -176,7 +155,7 @@ const en: PolicyContent = {
             "<strong>App framework (React Native / Expo):</strong> The app is built with React Native and Expo. They make up what you see and tap. Expo's push service issues the token used to deliver your reminders.",
             "<strong>AI (Microsoft Azure OpenAI):</strong> As described above, typed AI content is processed by Microsoft Azure OpenAI. The Azure OpenAI server we use is located in US East.",
             "<strong>Speech to text (Groq):</strong> Voice recordings are sent to Groq to be transcribed. Groq processes them on our behalf.",
-            "<strong>Product analytics (PostHog):</strong> Used to see how Blotz is used, as described in Analytics (B.6). PostHog processes this data on servers located in the United States.",
+            "<strong>Product analytics (PostHog):</strong> Used to see how Blotz is used, as described in Analytics (B.5). PostHog processes this data on servers located in the United States.",
           ],
         },
         {
@@ -482,23 +461,15 @@ const zh: PolicyContent = {
           type: "p",
           text: "为了把通知送达，我们还会保存一个由 Expo 推送服务签发的推送令牌，以及它对应的设备标识，这样提醒才能发到正确的手机上。",
         },
-        { type: "h4", text: "B.3 搜索" },
+        { type: "h4", text: "B.3 AI 功能" },
         {
           type: "p",
-          text: "搜索用于查找您的随手记。您输入的关键词会发送到我们的服务器进行匹配，并会出现在服务器日志中。Blotz 不保存您的历史搜索记录，服务器上没有，您的设备上也没有。",
-        },
-        { type: "h4", text: "B.4 AI 功能" },
-        {
-          type: "p",
-          text: "Blotz 的部分功能由 AI 提供支持。您打字输入的内容由微软 Azure OpenAI 处理；如果您用说的，录音会先交给 Groq 转成文字。",
+          text: "Blotz 的 AI 功能借助两家外部服务：您写的文字交给微软 Azure OpenAI，语音录音交给 Groq 转成文字。两家都只是代我们处理，微软不会用它训练模型。",
         },
         {
-          type: "p",
-          text: "您使用 AI 功能时，我们只处理您输入或选中的内容，例如任务标题、任务详情、随手记、标签和日期。这些内容会发送给 Azure OpenAI，用来生成您想要的内容或建议。",
-        },
-        {
-          type: "p",
-          text: "语音输入的录音会上传给 Groq 转写成文字，Groq 只是代我们处理这段录音。转写出来的文字之后走的路径，和您打字输入的完全一样。",
+          type: "link",
+          href: "https://learn.microsoft.com/en-us/legal/cognitive-services/openai/data-privacy",
+          text: "微软 Azure OpenAI 数据隐私说明 →",
         },
         {
           type: "link",
@@ -507,31 +478,18 @@ const zh: PolicyContent = {
         },
         {
           type: "p",
-          text: "根据微软 Azure OpenAI 的默认数据处理政策，您发送的内容和返回的结果不会被微软用于训练模型，也不会在请求完成后继续保存。",
-        },
-        {
-          type: "link",
-          href: "https://learn.microsoft.com/en-us/legal/cognitive-services/openai/data-privacy",
-          text: "微软 Azure OpenAI 数据隐私说明 →",
+          text: "您发给 AI 的内容，以及 AI 生成的任务和随手记，也会包含在我们发给 PostHog 的分析数据里，详见「使用分析」(B.5)。",
         },
         {
           type: "p",
-          text: "AI 在回答时，可能会引用、改写或组合您写下的内容。我们使用这些内容只是为了实现该功能，不会用于无关目的，也不会用于训练模型。",
+          text: "是否使用 AI 由您决定。不用的话，上面这些都不会发生，Blotz 的其他功能照常使用。",
         },
-        {
-          type: "p",
-          text: "您发给 AI 的内容，以及 AI 生成的任务和随手记，同样会包含在我们发给 PostHog 的分析数据里，详见「使用分析」(B.6)。",
-        },
-        {
-          type: "p",
-          text: "是否使用 AI 由您决定。如果您不用，上面这些收集、处理和向第三方传输都不会发生，Blotz 的其他核心服务照常使用。",
-        },
-        { type: "h4", text: "B.5 个人资料" },
+        { type: "h4", text: "B.4 个人资料" },
         {
           type: "p",
           text: "头像可以从应用内置的几个形象里挑一个，昵称可以自己填。Blotz 不支持上传照片，我们只记录您选了哪一个内置头像。这两项都是选填的，不填也不影响您正常使用 Blotz。",
         },
-        { type: "h4", text: "B.6 使用分析" },
+        { type: "h4", text: "B.5 使用分析" },
         {
           type: "p",
           text: "我们使用第三方分析服务 PostHog，了解 Blotz 被怎么使用。PostHog 会收到您的账号标识、邮箱地址和昵称，这样我们才能在不同设备上、重装应用之后，认出是同一个人。它还会收到您的系统平台、操作系统版本和应用版本。",
@@ -579,7 +537,7 @@ const zh: PolicyContent = {
             "<strong>应用框架（React Native / Expo）：</strong>手机应用本身用 React Native 和 Expo 开发，也就是您看到和点到的界面。Expo 的推送服务还负责签发用于送达提醒的推送令牌。",
             "<strong>AI（微软 Azure OpenAI）：</strong>如上所述，您打字输入的 AI 内容由微软 Azure OpenAI 处理。我们使用的 Azure OpenAI 服务器位于美国东部。",
             "<strong>语音转文字（Groq）：</strong>语音录音会发送给 Groq 转写，Groq 只是代我们处理。",
-            "<strong>产品分析（PostHog）：</strong>用于了解 Blotz 的使用情况，详见「使用分析」(B.6)。PostHog 在位于美国的服务器上处理这些数据。",
+            "<strong>产品分析（PostHog）：</strong>用于了解 Blotz 的使用情况，详见「使用分析」(B.5)。PostHog 在位于美国的服务器上处理这些数据。",
           ],
         },
         {
