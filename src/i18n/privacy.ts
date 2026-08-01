@@ -113,6 +113,11 @@ const en: PolicyContent = {
           type: "p",
           text: "It handles all of this on our behalf and may not use it for its own purposes.",
         },
+        {
+          type: "link",
+          href: "https://posthog.com/privacy",
+          text: "Analytics provider privacy policy →",
+        },
         { type: "h3", text: "C. Permissions Requested in the App" },
         {
           type: "p",
@@ -134,33 +139,7 @@ const en: PolicyContent = {
             "<strong>Notifications:</strong> Requested so we can deliver the reminders you set.",
           ],
         },
-        { type: "h3", text: "D. Third-Party SDKs and Services" },
-        {
-          type: "p",
-          text: "Blotz relies on the following third-party libraries and services:",
-        },
-        {
-          type: "ul",
-          items: [
-            "<strong>Sign-in (Auth0):</strong> Auth0 runs the sign-in screen and holds your sign-in credentials on our behalf.",
-            "<strong>Backend services (Microsoft):</strong> Our servers are built on Microsoft's .NET stack and run on Microsoft Azure, which is also where server logs are collected.",
-            "<strong>App framework (React Native / Expo):</strong> The app is built with React Native and Expo. They make up what you see and tap. Expo's push service issues the token used to deliver your reminders.",
-            "<strong>AI (Microsoft Azure OpenAI):</strong> As described above, typed AI content is processed by Microsoft Azure OpenAI. The Azure OpenAI server we use is located in US East.",
-            "<strong>Speech to text (Groq):</strong> Voice recordings are sent to Groq to be transcribed. Groq processes them on our behalf.",
-            "<strong>Product analytics (PostHog):</strong> Used to see how Blotz is used, as described in Analytics (B.5). PostHog processes this data on servers located in the United States.",
-          ],
-        },
-        {
-          type: "link",
-          href: "https://privacy.microsoft.com/en-us/privacystatement",
-          text: "Microsoft Privacy Statement →",
-        },
-        {
-          type: "link",
-          href: "https://posthog.com/privacy",
-          text: "PostHog Privacy Policy →",
-        },
-        { type: "h3", text: "E. User Research and Community Activities" },
+        { type: "h3", text: "D. User Research and Community Activities" },
         {
           type: "p",
           text: "We sometimes run user research, usually a survey. If you take part, we may collect information such as your age, gender, industry, occupation, device information, and personal interests, so we can understand who uses Blotz and improve our features and services.",
@@ -177,25 +156,7 @@ const en: PolicyContent = {
     },
     {
       id: "section-2",
-      title: "2. How We Use Cookies and Similar Technologies",
-      blocks: [
-        {
-          type: "p",
-          text: "A cookie is a small text file a website saves in your browser so it can recognise you when you come back.",
-        },
-        {
-          type: "p",
-          text: "The Blotz app is not a website and does not use cookies. This site sets no cookies of its own either, so there is nothing here for you to accept or refuse.",
-        },
-        {
-          type: "p",
-          text: "The site does load its fonts from Google Fonts, which means your browser requests those files from Google and Google sees the request. If we ever add cookies for sign-in or analytics on the web, we will update this section before turning them on.",
-        },
-      ],
-    },
-    {
-      id: "section-3",
-      title: "3. How We Share, Transfer, and Publicly Disclose Your Personal Information",
+      title: "2. How We Share, Transfer, and Publicly Disclose Your Personal Information",
       blocks: [
         { type: "h3", text: "A. Sharing" },
         {
@@ -206,7 +167,7 @@ const en: PolicyContent = {
           type: "ul",
           items: [
             "<strong>With your explicit consent or authorization:</strong> Once you have explicitly authorized it, we may share your personal information with other parties, including AI service providers such as Microsoft Azure OpenAI.",
-            "<strong>With service providers acting on our behalf:</strong> We share limited information with the providers listed in Third-Party SDKs and Services (D) so they can do that work for us. They may not use your information for their own purposes.",
+            "<strong>With service providers acting on our behalf:</strong> We share limited information with the service providers described in this Policy so they can do that work for us. They may not use your information for their own purposes.",
             "<strong>Where required by law:</strong> We may share your personal information when laws and regulations require it, to resolve a dispute, or in response to a mandatory request or judicial decision from a competent authority.",
             "<strong>To protect legitimate interests:</strong> We may give your personal information to a third party where that is necessary to protect Blotz, our users, or the public from harm to rights, property, or safety.",
           ],
@@ -238,8 +199,8 @@ const en: PolicyContent = {
       ],
     },
     {
-      id: "section-4",
-      title: "4. How We Store Your Personal Information",
+      id: "section-3",
+      title: "3. How We Store Your Personal Information",
       blocks: [
         { type: "h3", text: "A. Retention Period" },
         {
@@ -253,13 +214,13 @@ const en: PolicyContent = {
         },
         {
           type: "p",
-          text: "Some features send data overseas. AI features use Microsoft Azure OpenAI hosted in US East, and product analytics are processed by PostHog on servers located in the United States. In each case we send only the information described in the relevant section above, and we comply with applicable legal requirements and protect the security of your personal information.",
+          text: "Some features send data overseas. AI features use Microsoft Azure OpenAI hosted in US East, and usage analytics are processed on servers located in the United States. In each case we send only the information described in the relevant section above, and we comply with applicable legal requirements and protect the security of your personal information.",
         },
       ],
     },
     {
-      id: "section-5",
-      title: "5. How We Protect Your Personal Information",
+      id: "section-4",
+      title: "4. How We Protect Your Personal Information",
       blocks: [
         {
           type: "p",
@@ -284,8 +245,8 @@ const en: PolicyContent = {
       ],
     },
     {
-      id: "section-6",
-      title: "6. Your Rights to Manage Personal Information",
+      id: "section-5",
+      title: "5. Your Rights to Manage Personal Information",
       blocks: [
         { type: "h3", text: "A. Access and Correction" },
         {
@@ -346,8 +307,8 @@ const en: PolicyContent = {
       ],
     },
     {
-      id: "section-7",
-      title: "7. How We Handle Minors' Personal Information",
+      id: "section-6",
+      title: "6. How We Handle Minors' Personal Information",
       blocks: [
         {
           type: "p",
@@ -360,8 +321,8 @@ const en: PolicyContent = {
       ],
     },
     {
-      id: "section-8",
-      title: "8. How This Policy Is Updated",
+      id: "section-7",
+      title: "7. How This Policy Is Updated",
       blocks: [
         {
           type: "p",
@@ -384,8 +345,8 @@ const en: PolicyContent = {
       ],
     },
     {
-      id: "section-9",
-      title: "9. How to Contact Us",
+      id: "section-8",
+      title: "8. How to Contact Us",
       blocks: [
         {
           type: "p",
@@ -490,6 +451,11 @@ const zh: PolicyContent = {
           type: "p",
           text: "这些数据只是代我们处理，不得用于其自身目的。",
         },
+        {
+          type: "link",
+          href: "https://posthog.com/privacy",
+          text: "分析服务商隐私政策 →",
+        },
         { type: "h3", text: "C. 应用申请的权限" },
         {
           type: "p",
@@ -511,30 +477,7 @@ const zh: PolicyContent = {
             "<strong>通知：</strong>为了把您设置的提醒送达而申请。",
           ],
         },
-        { type: "h3", text: "D. 第三方 SDK 与服务" },
-        { type: "p", text: "Blotz 用到以下第三方库和服务：" },
-        {
-          type: "ul",
-          items: [
-            "<strong>登录（Auth0）：</strong>登录界面由 Auth0 提供，您的登录凭据由它代我们保管。",
-            "<strong>后端服务（微软）：</strong>我们的服务器基于微软 .NET 技术栈搭建，运行在微软 Azure 上，服务器日志也收集在那里。",
-            "<strong>应用框架（React Native / Expo）：</strong>手机应用本身用 React Native 和 Expo 开发，也就是您看到和点到的界面。Expo 的推送服务还负责签发用于送达提醒的推送令牌。",
-            "<strong>AI（微软 Azure OpenAI）：</strong>如上所述，您打字输入的 AI 内容由微软 Azure OpenAI 处理。我们使用的 Azure OpenAI 服务器位于美国东部。",
-            "<strong>语音转文字（Groq）：</strong>语音录音会发送给 Groq 转写，Groq 只是代我们处理。",
-            "<strong>产品分析（PostHog）：</strong>用于了解 Blotz 的使用情况，详见「使用分析」(B.5)。PostHog 在位于美国的服务器上处理这些数据。",
-          ],
-        },
-        {
-          type: "link",
-          href: "https://privacy.microsoft.com/en-us/privacystatement",
-          text: "微软隐私声明 →",
-        },
-        {
-          type: "link",
-          href: "https://posthog.com/privacy",
-          text: "PostHog 隐私政策 →",
-        },
-        { type: "h3", text: "E. 用户调研与社区活动" },
+        { type: "h3", text: "D. 用户调研与社区活动" },
         {
           type: "p",
           text: "我们有时会做用户调研，一般是问卷。如果您参加，我们可能会收集年龄、性别、行业、职业、设备信息、个人兴趣等信息，用来了解都是哪些人在用 Blotz，并改进我们的功能与服务。",
@@ -551,25 +494,7 @@ const zh: PolicyContent = {
     },
     {
       id: "section-2",
-      title: "2. 我们如何使用 Cookie 及同类技术",
-      blocks: [
-        {
-          type: "p",
-          text: "Cookie 是网站存在您浏览器里的一个小文件，下次再来时网站能靠它认出您。",
-        },
-        {
-          type: "p",
-          text: "Blotz 应用不是网站，不使用 Cookie。本站也不会写入任何自己的 Cookie，所以这里没有需要您同意或拒绝的东西。",
-        },
-        {
-          type: "p",
-          text: "本站的字体来自 Google Fonts，也就是说您的浏览器会向 Google 请求这些字体文件，Google 能看到这次请求。今后如果我们在网页端加入用于登录或分析的 Cookie，会先更新本节再启用。",
-        },
-      ],
-    },
-    {
-      id: "section-3",
-      title: "3. 我们如何共享、转让、公开披露您的个人信息",
+      title: "2. 我们如何共享、转让、公开披露您的个人信息",
       blocks: [
         { type: "h3", text: "A. 共享" },
         {
@@ -580,7 +505,7 @@ const zh: PolicyContent = {
           type: "ul",
           items: [
             "<strong>在获得您的明确同意或授权后：</strong>取得您的明确授权后，我们可能会与其他方共享您的个人信息，包括微软 Azure OpenAI 等 AI 服务提供商。",
-            "<strong>代表我们提供服务的服务商：</strong>我们会与「第三方 SDK 与服务」(D) 中列出的服务商共享有限的信息，好让他们替我们完成这部分工作。他们不得把您的信息用于自身目的。",
+            "<strong>代表我们提供服务的服务商：</strong>我们会与本政策中提到的服务商共享有限的信息，好让他们替我们完成这部分工作。他们不得把您的信息用于自身目的。",
             "<strong>法律法规要求时：</strong>在法律法规要求、解决争议，或应主管机关的强制性要求或司法裁决时，我们可能会共享您的个人信息。",
             "<strong>为保护合法权益：</strong>为保护 Blotz、我们的用户或公众的权利、财产或安全免受损害而确有必要时，我们可能会向第三方提供您的个人信息。",
           ],
@@ -612,8 +537,8 @@ const zh: PolicyContent = {
       ],
     },
     {
-      id: "section-4",
-      title: "4. 我们如何存储您的个人信息",
+      id: "section-3",
+      title: "3. 我们如何存储您的个人信息",
       blocks: [
         { type: "h3", text: "A. 保存期限" },
         {
@@ -627,13 +552,13 @@ const zh: PolicyContent = {
         },
         {
           type: "p",
-          text: "有些功能会把数据传到境外：您打字输入的 AI 内容由位于美国东部的微软 Azure OpenAI 处理，语音录音由 Groq 在美国转写，产品分析由 PostHog 在位于美国的服务器上处理。这几种情况下，我们只传输上文相应章节写明的信息，并会遵守适用的法律要求、保护您个人信息的安全。",
+          text: "有些功能会把数据传到境外：您打字输入的 AI 内容由位于美国东部的微软 Azure OpenAI 处理，语音录音由 Groq 在美国转写，使用分析在位于美国的服务器上处理。这几种情况下，我们只传输上文相应章节写明的信息，并会遵守适用的法律要求、保护您个人信息的安全。",
         },
       ],
     },
     {
-      id: "section-5",
-      title: "5. 我们如何保护您的个人信息",
+      id: "section-4",
+      title: "4. 我们如何保护您的个人信息",
       blocks: [
         {
           type: "p",
@@ -658,8 +583,8 @@ const zh: PolicyContent = {
       ],
     },
     {
-      id: "section-6",
-      title: "6. 您管理个人信息的权利",
+      id: "section-5",
+      title: "5. 您管理个人信息的权利",
       blocks: [
         { type: "h3", text: "A. 访问与更正" },
         { type: "p", text: "您有权查看和更正自己的个人信息，可以在这些位置操作：" },
@@ -711,8 +636,8 @@ const zh: PolicyContent = {
       ],
     },
     {
-      id: "section-7",
-      title: "7. 我们如何处理未成年人的个人信息",
+      id: "section-6",
+      title: "6. 我们如何处理未成年人的个人信息",
       blocks: [
         {
           type: "p",
@@ -725,8 +650,8 @@ const zh: PolicyContent = {
       ],
     },
     {
-      id: "section-8",
-      title: "8. 本政策如何更新",
+      id: "section-7",
+      title: "7. 本政策如何更新",
       blocks: [
         {
           type: "p",
@@ -749,8 +674,8 @@ const zh: PolicyContent = {
       ],
     },
     {
-      id: "section-9",
-      title: "9. 如何联系我们",
+      id: "section-8",
+      title: "8. 如何联系我们",
       blocks: [
         {
           type: "p",
