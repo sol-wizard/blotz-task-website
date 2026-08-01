@@ -288,15 +288,23 @@ const en: PolicyContent = {
       blocks: [
         {
           type: "p",
-          text: "The security of your personal information is very important to us. We comply with applicable laws and regulations and adopt reasonable and practical industry-recognized measures to protect your personal information against unauthorized access, disclosure, use, alteration, damage, or loss.",
+          text: "Keeping your information safe is our job. We follow applicable laws and take practical steps to stop anyone from reading, leaking, changing, or losing your information without permission.",
         },
         {
           type: "p",
-          text: "We use security measures that align with industry standards, including SSL/TLS encryption in transit, encryption technologies to protect confidentiality, and access control mechanisms to ensure that only authorized personnel can access personal information.",
+          text: "In practice, that means three things:",
+        },
+        {
+          type: "ul",
+          items: [
+            "<strong>On the way to us:</strong> everything sent between the app and our servers is scrambled, the same way online banking is, so it cannot be read if someone intercepts it. The technology is called SSL/TLS.",
+            "<strong>Once it is stored:</strong> your data stays encrypted on our servers, so it is not readable as plain text.",
+            "<strong>Inside our team:</strong> only the people who genuinely need access to do their job can reach your information.",
+          ],
         },
         {
           type: "p",
-          text: "If a personal information security incident occurs, we will notify you in a timely manner as required by law, including the basic situation, possible impact, measures taken or to be taken, and suggestions for your own protection. We may notify you by email, push notification, or similar means.",
+          text: "If something does go wrong and your information is exposed, we will tell you as quickly as the law requires: what happened, how it may affect you, what we have already done and plan to do about it, and what you can do to protect yourself. We will usually reach you by email or a notification in the app.",
         },
       ],
     },
@@ -419,47 +427,47 @@ const zh: PolicyContent = {
   title: "隐私政策",
   meta: "最后更新：2026 年 7 月 31 日 &nbsp;·&nbsp; 生效日期：2026 年 7 月 31 日",
   description:
-    "阅读 BlotzTask 隐私政策，了解我们如何处理、保护和使用你的个人信息与任务数据。",
+    "阅读 BlotzTask 隐私政策，了解我们如何处理、保护和使用您的个人信息与任务数据。",
   intro: [
     "本政策仅适用于 Blotz（以下称「我们」）、Blotz 产品及相关服务。",
-    "你的个人信息安全对我们很重要。我们会依照相关法律法规收集和使用你的个人信息，以便为你提供更好的产品和服务。我们承诺对你的个人信息及其他数据保密并妥善保管。",
-    "在使用 Blotz 及相关服务前，请仔细阅读本隐私政策（以下称「本政策」）。使用 Blotz 即表示你同意本政策。",
+    "您的个人信息安全对我们很重要。我们会依照相关法律法规收集和使用您的个人信息，以便为您提供更好的产品和服务。我们承诺对您的个人信息及其他数据保密并妥善保管。",
+    "在使用 Blotz 及相关服务前，请仔细阅读本隐私政策（以下称「本政策」）。使用 Blotz 即表示您同意本政策。",
   ],
   summaryLabel: "简单说",
   summary: [
-    "我们<strong>不会把</strong>你的任务和笔记卖给任何人，也不会用于广告。",
-    "你的账号和任务数据存储在<strong>澳大利亚</strong>的服务器上。",
-    "只有在你<strong>主动使用 AI 功能</strong>时，相关内容才会发送给微软 Azure OpenAI。微软不会用它训练模型。",
-    "你可以随时在<strong>「设置 &gt; 账户 &gt; 删除账户」</strong>删除账号和全部数据。",
+    "我们<strong>不会把</strong>您的任务和笔记卖给任何人，也不会用于广告。",
+    "您的账号和任务数据存储在<strong>澳大利亚</strong>的服务器上。",
+    "只有在您<strong>主动使用 AI 功能</strong>时，相关内容才会发送给微软 Azure OpenAI。微软不会用它训练模型。",
+    "您可以随时在<strong>「设置 &gt; 账户 &gt; 删除账户」</strong>删除账号和全部数据。",
   ],
   tocLabel: "目录",
   sections: [
     {
       id: "section-1",
-      title: "1. 我们如何收集和使用你的个人信息",
+      title: "1. 我们如何收集和使用您的个人信息",
       blocks: [
         {
           type: "p",
-          text: "我们遵循正当、合法、必要的原则。基于下述功能与服务，我们会收集和使用你在使用产品与服务过程中主动提供的个人信息。",
+          text: "我们遵循正当、合法、必要的原则。基于下述功能与服务，我们会收集和使用您在使用产品与服务过程中主动提供的个人信息。",
         },
         { type: "h3", text: "1. 账号注册" },
-        { type: "p", text: "你可以通过以下方式注册并登录 Blotz 账号：" },
+        { type: "p", text: "您可以通过以下方式注册并登录 Blotz 账号：" },
         {
           type: "ul",
           items: [
-            "<strong>邮箱注册：</strong>为了创建你的账号并支持后续通过邮箱登录，我们会收集你提供的邮箱地址，并发送验证邮件进行确认。",
-            "<strong>第三方账号注册：</strong>如果你选择使用 Apple、Google 等第三方账号注册，我们会依据相应的授权协议，从该平台获取昵称、头像、邮箱地址等基础资料，用于创建你的 Blotz 账号。",
+            "<strong>邮箱注册：</strong>为了创建您的账号并支持后续通过邮箱登录，我们会收集您提供的邮箱地址，并发送验证邮件进行确认。",
+            "<strong>第三方账号注册：</strong>如果您选择使用 Apple、Google 等第三方账号注册，我们会依据相应的授权协议，从该平台获取昵称、头像、邮箱地址等基础资料，用于创建您的 Blotz 账号。",
           ],
         },
         {
           type: "p",
-          text: "Blotz 不提供无需注册的纯本地模式。你需要注册账号才能使用 Blotz 的全部功能，你的任务数据会在你的各个设备之间同步。",
+          text: "Blotz 不提供无需注册的纯本地模式。您需要注册账号才能使用 Blotz 的全部功能，您的任务数据会在您的各个设备之间同步。",
         },
         { type: "h3", text: "2. 应用功能" },
         { type: "h4", text: "2.1 任务数据同步" },
         {
           type: "p",
-          text: "在你注册账号并创建任务或其他数据后，为了让你的数据能够在设备之间完整、正常地同步，我们会收集以下信息：",
+          text: "在您注册账号并创建任务或其他数据后，为了让您的数据能够在设备之间完整、正常地同步，我们会收集以下信息：",
         },
         {
           type: "ul",
@@ -471,17 +479,17 @@ const zh: PolicyContent = {
         },
         {
           type: "p",
-          text: "这些信息仅用于在设备之间同步你的任务数据。未经你的授权，我们不会为其他目的读取你的任务内容。",
+          text: "这些信息仅用于在设备之间同步您的任务数据。未经您的授权，我们不会为其他目的读取您的任务内容。",
         },
         { type: "h4", text: "2.2 任务提醒" },
         {
           type: "p",
-          text: "如果你为任务设置了提醒，我们会处理任务标题、任务内容、截止日期或时间范围、提醒时间，以便应用在设定的时间通知你。",
+          text: "如果您为任务设置了提醒，我们会处理任务标题、任务内容、截止日期或时间范围、提醒时间，以便应用在设定的时间通知您。",
         },
         { type: "h4", text: "2.3 搜索" },
         {
           type: "p",
-          text: "如果你使用 Blotz 的搜索功能，我们可能会收集你搜索的关键词，以便你查看最近的搜索记录。这些关键词仅保存在你的设备本地，不会同步到云端。",
+          text: "如果您使用 Blotz 的搜索功能，我们可能会收集您搜索的关键词，以便您查看最近的搜索记录。这些关键词仅保存在您的设备本地，不会同步到云端。",
         },
         { type: "h4", text: "2.4 AI 功能" },
         {
@@ -490,11 +498,11 @@ const zh: PolicyContent = {
         },
         {
           type: "p",
-          text: "当你主动使用 AI 功能时，我们仅处理你选择输入或选中的内容，例如任务标题、任务详情、快速笔记、标签和日期信息。这些数据会传输至 Azure OpenAI，用于生成与你的请求相关的内容或建议。",
+          text: "当您主动使用 AI 功能时，我们仅处理您选择输入或选中的内容，例如任务标题、任务详情、快速笔记、标签和日期信息。这些数据会传输至 Azure OpenAI，用于生成与您的请求相关的内容或建议。",
         },
         {
           type: "p",
-          text: "根据微软 Azure OpenAI 的默认数据处理政策，你的输入和输出不会被微软用于训练模型，也不会在 API 请求完成后被持久化存储。",
+          text: "根据微软 Azure OpenAI 的默认数据处理政策，您的输入和输出不会被微软用于训练模型，也不会在 API 请求完成后被持久化存储。",
         },
         {
           type: "link",
@@ -503,54 +511,54 @@ const zh: PolicyContent = {
         },
         {
           type: "p",
-          text: "为了更好地完成你请求的任务，你的输入可能会在 AI 输出中被引用、改写或组合。所有此类处理都限于提供该功能所必需的范围。我们不会将这些数据用于无关目的或模型训练。",
+          text: "为了更好地完成您请求的任务，您的输入可能会在 AI 输出中被引用、改写或组合。所有此类处理都限于提供该功能所必需的范围。我们不会将这些数据用于无关目的或模型训练。",
         },
         {
           type: "p",
-          text: "是否使用 AI 功能由你决定。如果你选择不使用，我们不会触发相关的收集、处理或第三方传输，你使用其他核心服务也不会受到影响。",
+          text: "是否使用 AI 功能由您决定。如果您选择不使用，我们不会触发相关的收集、处理或第三方传输，您使用其他核心服务也不会受到影响。",
         },
         { type: "h4", text: "2.5 个人资料" },
         {
           type: "p",
-          text: "你可以选择填写头像和昵称来完善个人资料。这些信息是可选的，并非核心产品或系统功能所必需。即使你选择不提供，也不会影响你正常使用 Blotz。",
+          text: "您可以选择填写头像和昵称来完善个人资料。这些信息是可选的，并非核心产品或系统功能所必需。即使您选择不提供，也不会影响您正常使用 Blotz。",
         },
         { type: "h4", text: "2.6 使用分析" },
         {
           type: "p",
-          text: "我们使用第三方产品分析服务 PostHog，以了解 Blotz 的使用情况。PostHog 会收到你的账号标识、邮箱地址和昵称，以便我们在不同设备和重装之后识别为同一个人。",
+          text: "我们使用第三方产品分析服务 PostHog，以了解 Blotz 的使用情况。PostHog 会收到您的账号标识、邮箱地址和昵称，以便我们在不同设备和重装之后识别为同一个人。",
         },
         {
           type: "p",
-          text: "我们不会将你的任务和笔记内容发送给 PostHog。PostHog 仅代表我们处理这些信息，不得将其用于自身目的。",
+          text: "我们不会将您的任务和笔记内容发送给 PostHog。PostHog 仅代表我们处理这些信息，不得将其用于自身目的。",
         },
         { type: "h3", text: "3. 应用申请的权限" },
         {
           type: "p",
-          text: "部分功能需要使用可能涉及个人信息的系统权限。我们只在你使用这些功能时申请授权，并且只有在获得你的许可后才会访问相关信息。如果你不需要该功能，可以拒绝授权。",
+          text: "部分功能需要使用可能涉及个人信息的系统权限。我们只在您使用这些功能时申请授权，并且只有在获得您的许可后才会访问相关信息。如果您不需要该功能，可以拒绝授权。",
         },
         { type: "h4", text: "3.1 Android 权限" },
         {
           type: "ul",
           items: [
-            "<strong>日历权限：</strong>在你开启日历同步时申请，用于将系统日历事件同步到 Blotz。",
-            "<strong>写入外部存储：</strong>在你将任务中的附件保存到手机时申请。",
-            "<strong>读取外部存储：</strong>在你向任务上传附件时申请。",
-            "<strong>麦克风权限：</strong>在你添加音频附件或使用语音输入时申请。",
-            "<strong>指纹权限：</strong>在你开启应用指纹解锁时申请。",
-            "<strong>剪贴板权限：</strong>如果你开启了剪贴板识别，且剪贴板中包含时间相关信息，应用在打开时可能会询问你是否要创建任务。",
+            "<strong>日历权限：</strong>在您开启日历同步时申请，用于将系统日历事件同步到 Blotz。",
+            "<strong>写入外部存储：</strong>在您将任务中的附件保存到手机时申请。",
+            "<strong>读取外部存储：</strong>在您向任务上传附件时申请。",
+            "<strong>麦克风权限：</strong>在您添加音频附件或使用语音输入时申请。",
+            "<strong>指纹权限：</strong>在您开启应用指纹解锁时申请。",
+            "<strong>剪贴板权限：</strong>如果您开启了剪贴板识别，且剪贴板中包含时间相关信息，应用在打开时可能会询问您是否要创建任务。",
           ],
         },
         { type: "h4", text: "3.2 iOS 权限" },
         {
           type: "ul",
           items: [
-            "<strong>日历权限：</strong>在你开启日历同步时申请。",
-            "<strong>写入外部存储：</strong>在你将任务中的附件保存到手机时申请。",
-            "<strong>读取外部存储：</strong>在你向任务上传附件时申请。",
-            "<strong>麦克风权限：</strong>在你添加音频附件或使用语音输入时申请。",
-            "<strong>Face ID / 生物识别权限：</strong>在你设置应用解锁密码并开启 Face ID 时申请。",
-            "<strong>剪贴板权限：</strong>如果你开启了剪贴板识别，且剪贴板中包含时间相关信息，应用在打开时可能会询问你是否要创建任务。",
-            "<strong>Siri 权限：</strong>在你开启通过 Siri 添加任务时申请。",
+            "<strong>日历权限：</strong>在您开启日历同步时申请。",
+            "<strong>写入外部存储：</strong>在您将任务中的附件保存到手机时申请。",
+            "<strong>读取外部存储：</strong>在您向任务上传附件时申请。",
+            "<strong>麦克风权限：</strong>在您添加音频附件或使用语音输入时申请。",
+            "<strong>Face ID / 生物识别权限：</strong>在您设置应用解锁密码并开启 Face ID 时申请。",
+            "<strong>剪贴板权限：</strong>如果您开启了剪贴板识别，且剪贴板中包含时间相关信息，应用在打开时可能会询问您是否要创建任务。",
+            "<strong>Siri 权限：</strong>在您开启通过 Siri 添加任务时申请。",
           ],
         },
         { type: "h3", text: "4. 第三方 SDK 与服务" },
@@ -559,7 +567,7 @@ const zh: PolicyContent = {
           type: "ul",
           items: [
             "<strong>后端服务（Microsoft / NuGet）：</strong>我们的后端使用微软 NuGet 组件构建，用于服务端逻辑、数据存储和 API 通信。",
-            "<strong>前端框架（React Native / Expo）：</strong>我们的移动应用前端基于 React Native 和 Expo 构建。这些框架本身不会独立收集你的个人信息，仅用于提供应用界面与交互。",
+            "<strong>前端框架（React Native / Expo）：</strong>我们的移动应用前端基于 React Native 和 Expo 构建。这些框架本身不会独立收集您的个人信息，仅用于提供应用界面与交互。",
             "<strong>AI 服务（微软 Azure OpenAI）：</strong>如上所述，我们使用微软 Azure OpenAI 提供 AI 功能。我们使用的 Azure OpenAI 服务器位于美国东部。",
             "<strong>产品分析（PostHog）：</strong>用于了解 Blotz 的使用情况，详见 2.6 节。PostHog 在位于美国的服务器上处理这些数据。",
           ],
@@ -585,7 +593,7 @@ const zh: PolicyContent = {
         },
         {
           type: "p",
-          text: "这些信息仅用于相关活动。如果你不愿意提供，可以选择不参与该调研或活动。",
+          text: "这些信息仅用于相关活动。如果您不愿意提供，可以选择不参与该调研或活动。",
         },
       ],
     },
@@ -595,57 +603,57 @@ const zh: PolicyContent = {
       blocks: [
         {
           type: "p",
-          text: "Cookie 是你浏览网站时，网站服务器放置在客户端设备上的一个小型文本文件。当你再次访问同一网站时，网站可以通过 Cookie 识别你的浏览器。Cookie 中可能存储用户偏好等信息。",
+          text: "Cookie 是您浏览网站时，网站服务器放置在客户端设备上的一个小型文本文件。当您再次访问同一网站时，网站可以通过 Cookie 识别您的浏览器。Cookie 中可能存储用户偏好等信息。",
         },
         {
           type: "p",
-          text: "Blotz 使用 Cookie 是为了方便你在 Blotz 各项服务之间切换时无需反复验证身份。我们使用 Cookie 存储偏好设置、改善使用体验，并分析服务使用情况以提升服务质量。",
+          text: "Blotz 使用 Cookie 是为了方便您在 Blotz 各项服务之间切换时无需反复验证身份。我们使用 Cookie 存储偏好设置、改善使用体验，并分析服务使用情况以提升服务质量。",
         },
         {
           type: "p",
-          text: "你可以通过更改浏览器或设备设置来拒绝 Cookie。如果你这样做，可能无法登录或使用依赖 Cookie 的 Blotz 服务与功能。",
+          text: "您可以通过更改浏览器或设备设置来拒绝 Cookie。如果您这样做，可能无法登录或使用依赖 Cookie 的 Blotz 服务与功能。",
         },
       ],
     },
     {
       id: "section-3",
-      title: "3. 我们如何共享、转让、公开披露你的个人信息",
+      title: "3. 我们如何共享、转让、公开披露您的个人信息",
       blocks: [
         { type: "h3", text: "1. 共享" },
         {
           type: "p",
-          text: "未经你的同意，我们不会与其他公司、组织或个人共享你的个人信息，以下情况除外：",
+          text: "未经您的同意，我们不会与其他公司、组织或个人共享您的个人信息，以下情况除外：",
         },
         {
           type: "ul",
           items: [
-            "<strong>在获得你的明确同意或授权后：</strong>在获得你的明确授权后，我们可能会与其他方共享你的个人信息，包括微软 Azure OpenAI 等 AI 服务提供商。",
-            "<strong>代表我们提供服务的服务商：</strong>我们会与 1.4 节列出的服务商共享有限的信息，例如用于产品分析的 PostHog，以便他们为我们提供相应服务。他们不得将你的信息用于自身目的。",
-            "<strong>法律法规要求时：</strong>在法律法规要求、解决争议，或应主管机关的强制性要求或司法裁决时，我们可能会共享你的个人信息。",
-            "<strong>为保护合法权益：</strong>在为保护 Blotz、我们的用户或公众的权利、财产或安全免受损害而确有必要时，我们可能会向第三方提供你的个人信息。",
+            "<strong>在获得您的明确同意或授权后：</strong>在获得您的明确授权后，我们可能会与其他方共享您的个人信息，包括微软 Azure OpenAI 等 AI 服务提供商。",
+            "<strong>代表我们提供服务的服务商：</strong>我们会与 1.4 节列出的服务商共享有限的信息，例如用于产品分析的 PostHog，以便他们为我们提供相应服务。他们不得将您的信息用于自身目的。",
+            "<strong>法律法规要求时：</strong>在法律法规要求、解决争议，或应主管机关的强制性要求或司法裁决时，我们可能会共享您的个人信息。",
+            "<strong>为保护合法权益：</strong>在为保护 Blotz、我们的用户或公众的权利、财产或安全免受损害而确有必要时，我们可能会向第三方提供您的个人信息。",
           ],
         },
         { type: "h3", text: "2. 转让" },
         {
           type: "p",
-          text: "未经你的同意，我们不会将你的个人信息转让给任何公司、组织或个人，以下情况除外：",
+          text: "未经您的同意，我们不会将您的个人信息转让给任何公司、组织或个人，以下情况除外：",
         },
         {
           type: "ul",
           items: [
-            "在获得你的明确同意或授权后",
+            "在获得您的明确同意或授权后",
             "在涉及合并、收购或破产清算时，我们会要求个人信息的新持有者继续受本政策约束",
           ],
         },
         { type: "h3", text: "3. 公开披露" },
         {
           type: "p",
-          text: "未经你的同意，我们不会公开披露你的个人信息，以下情况除外：",
+          text: "未经您的同意，我们不会公开披露您的个人信息，以下情况除外：",
         },
         {
           type: "ul",
           items: [
-            "在获得你的明确同意或授权后",
+            "在获得您的明确同意或授权后",
             "在法律、法律程序、诉讼或主管机关强制要求的情况下，此时我们会采取符合法律和行业标准的安全措施",
           ],
         },
@@ -653,48 +661,56 @@ const zh: PolicyContent = {
     },
     {
       id: "section-4",
-      title: "4. 我们如何存储你的个人信息",
+      title: "4. 我们如何存储您的个人信息",
       blocks: [
         { type: "h3", text: "1. 保存期限" },
         {
           type: "p",
-          text: "在你使用我们平台期间，我们会持续保存你的个人信息，且不会超过为你提供服务所必需的期限。在你停止使用平台或撤回相关授权后，我们会删除或匿名化你的信息，法律法规对特定信息另有更长保存期限要求的除外。",
+          text: "在您使用我们平台期间，我们会持续保存您的个人信息，且不会超过为您提供服务所必需的期限。在您停止使用平台或撤回相关授权后，我们会删除或匿名化您的信息，法律法规对特定信息另有更长保存期限要求的除外。",
         },
         { type: "h3", text: "2. 存储位置" },
         {
           type: "p",
-          text: "我们的主要服务器，包括存储你的账号和任务数据的服务器，位于澳大利亚。",
+          text: "我们的主要服务器，包括存储您的账号和任务数据的服务器，位于澳大利亚。",
         },
         {
           type: "p",
-          text: "部分功能会涉及跨境传输。AI 功能使用位于美国东部的微软 Azure OpenAI 服务，产品分析由 PostHog 在位于美国的服务器上处理。在每一种情况下，我们仅传输上文相应章节中所述的信息，并会遵守适用的法律要求、保护你个人信息的安全。",
+          text: "部分功能会涉及跨境传输。AI 功能使用位于美国东部的微软 Azure OpenAI 服务，产品分析由 PostHog 在位于美国的服务器上处理。在每一种情况下，我们仅传输上文相应章节中所述的信息，并会遵守适用的法律要求、保护您个人信息的安全。",
         },
       ],
     },
     {
       id: "section-5",
-      title: "5. 我们如何保护你的个人信息",
+      title: "5. 我们如何保护您的个人信息",
       blocks: [
         {
           type: "p",
-          text: "你的个人信息安全对我们非常重要。我们遵守适用的法律法规，并采取合理可行、符合行业公认标准的措施，保护你的个人信息免遭未经授权的访问、披露、使用、修改、损坏或丢失。",
+          text: "保管好您的信息是我们的分内事。我们会遵守相关法律，并采取实际有效的措施，防止您的信息被人擅自查看、泄露、篡改或弄丢。",
         },
         {
           type: "p",
-          text: "我们采用符合行业标准的安全措施，包括传输过程中的 SSL/TLS 加密、用于保护机密性的加密技术，以及确保只有获得授权的人员才能访问个人信息的访问控制机制。",
+          text: "具体来说，我们做了三件事：",
+        },
+        {
+          type: "ul",
+          items: [
+            "<strong>传输途中：</strong>应用和我们服务器之间来回传送的内容都是加密的，和网上银行一样，即使中途被人截获也看不懂。这项技术叫 SSL/TLS。",
+            "<strong>存储之后：</strong>存放在服务器上的数据同样是加密的，不会以能直接读懂的形式保存。",
+            "<strong>团队内部：</strong>只有工作上确实需要的同事才能接触到您的信息。",
+          ],
         },
         {
           type: "p",
-          text: "如果发生个人信息安全事件，我们会按照法律要求及时告知你，包括事件的基本情况、可能造成的影响、已采取或将要采取的措施，以及你可以自主防范的建议。我们可能通过邮件、推送通知等方式通知你。",
+          text: "万一真的出了问题、您的信息被泄露，我们会在法律要求的时间内尽快告诉您：发生了什么、可能对您有什么影响、我们已经做了和接下来要做什么，以及您自己可以怎么防范。我们通常会通过邮件或应用内通知联系您。",
         },
       ],
     },
     {
       id: "section-6",
-      title: "6. 你管理个人信息的权利",
+      title: "6. 您管理个人信息的权利",
       blocks: [
         { type: "h3", text: "1. 访问与更正" },
-        { type: "p", text: "你有权访问和更正你的个人信息，方式如下：" },
+        { type: "p", text: "您有权访问和更正您的个人信息，方式如下：" },
         {
           type: "ul",
           items: [
@@ -703,27 +719,27 @@ const zh: PolicyContent = {
           ],
         },
         { type: "h3", text: "2. 删除" },
-        { type: "p", text: "在以下情况下，你可以请求删除你的个人信息：" },
+        { type: "p", text: "在以下情况下，您可以请求删除您的个人信息：" },
         {
           type: "ul",
           items: [
             "我们的处理行为违反法律法规",
-            "在需要同意的情况下，我们未经你的同意收集或使用你的个人信息",
-            "你不再使用我们的产品或服务，或你已注销账号",
-            "我们不再向你提供产品或服务",
+            "在需要同意的情况下，我们未经您的同意收集或使用您的个人信息",
+            "您不再使用我们的产品或服务，或您已注销账号",
+            "我们不再向您提供产品或服务",
           ],
         },
         {
           type: "p",
-          text: "你可以在「设置 &gt; 账户 &gt; 删除账户」中删除你的账号及全部相关个人数据。账号删除后，我们会停止提供服务，并按你的要求删除你的个人信息，法律另有规定的除外。",
+          text: "您可以在「设置 &gt; 账户 &gt; 删除账户」中删除您的账号及全部相关个人数据。账号删除后，我们会停止提供服务，并按您的要求删除您的个人信息，法律另有规定的除外。",
         },
         { type: "h3", text: "3. 改变授权范围" },
         {
           type: "p",
-          text: "对于基于你的同意而收集的额外个人信息，你可以随时给予或撤回该同意。撤回同意后，我们会停止处理相应的个人信息，但这不影响此前基于你的授权已经进行的处理。",
+          text: "对于基于您的同意而收集的额外个人信息，您可以随时给予或撤回该同意。撤回同意后，我们会停止处理相应的个人信息，但这不影响此前基于您的授权已经进行的处理。",
         },
         { type: "h3", text: "4. 撤销系统权限" },
-        { type: "p", text: "你可以通过设备设置撤销此前授予的系统权限：" },
+        { type: "p", text: "您可以通过设备设置撤销此前授予的系统权限：" },
         {
           type: "ul",
           items: [
@@ -738,7 +754,7 @@ const zh: PolicyContent = {
         { type: "h3", text: "5. 响应时间" },
         {
           type: "p",
-          text: "我们会在 15 天内响应你的合理请求。如需帮助，请通过本政策末尾的联系方式与我们联系。",
+          text: "我们会在 15 天内响应您的合理请求。如需帮助，请通过本政策末尾的联系方式与我们联系。",
         },
       ],
     },
@@ -748,7 +764,7 @@ const zh: PolicyContent = {
       blocks: [
         {
           type: "p",
-          text: "我们的产品与服务主要面向成年人。如果你未满 18 周岁，请与监护人一起阅读本政策，并在取得监护人同意后再使用我们的服务。",
+          text: "我们的产品与服务主要面向成年人。如果您未满 18 周岁，请与监护人一起阅读本政策，并在取得监护人同意后再使用我们的服务。",
         },
         {
           type: "p",
@@ -762,11 +778,11 @@ const zh: PolicyContent = {
       blocks: [
         {
           type: "p",
-          text: "本隐私政策可能会不定期更新。请你定期查阅，以了解我们如何保护所收集的个人信息。你继续使用 Blotz 服务，即表示接受本隐私政策及其更新版本。",
+          text: "本隐私政策可能会不定期更新。请您定期查阅，以了解我们如何保护所收集的个人信息。您继续使用 Blotz 服务，即表示接受本隐私政策及其更新版本。",
         },
         {
           type: "p",
-          text: "对于重大变更，我们还可能通过更显著的方式告知你具体的变更内容。重大变更包括但不限于：",
+          text: "对于重大变更，我们还可能通过更显著的方式告知您具体的变更内容。重大变更包括但不限于：",
         },
         {
           type: "ul",
@@ -774,7 +790,7 @@ const zh: PolicyContent = {
             "我们的服务模式发生重大变化，例如处理个人信息的目的、类型或方式",
             "我们的股权结构或组织架构发生重大变化",
             "个人信息共享、转让或公开披露的主要对象发生重大变化",
-            "你在个人信息处理方面的权利及其行使方式发生重大变化",
+            "您在个人信息处理方面的权利及其行使方式发生重大变化",
             "负责个人信息安全的部门、联系方式或投诉渠道发生变化",
           ],
         },
@@ -786,10 +802,10 @@ const zh: PolicyContent = {
       blocks: [
         {
           type: "p",
-          text: "如果你对本隐私政策有任何疑问、意见或建议，请通过以下方式与我们联系：",
+          text: "如果您对本隐私政策有任何疑问、意见或建议，请通过以下方式与我们联系：",
         },
         { type: "email", label: "邮箱：", address: "blotztask.app@gmail.com" },
-        { type: "p", text: "我们会在收到你的反馈后 15 天内回复。" },
+        { type: "p", text: "我们会在收到您的反馈后 15 天内回复。" },
       ],
     },
   ],
