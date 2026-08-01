@@ -27,6 +27,17 @@ const priorities: Record<string, string> = {
 const today = new Date().toISOString().slice(0, 10);
 
 export function GET() {
+  const rootUrl = `
+  <url>
+    <loc>${new URL('/', siteUrl).toString()}</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="${new URL('/en/', siteUrl).toString()}" />
+    <xhtml:link rel="alternate" hreflang="zh" href="${new URL('/zh/', siteUrl).toString()}" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="${new URL('/', siteUrl).toString()}" />
+  </url>`;
+
   const urls = paths.flatMap((path) =>
     ['en', 'zh'].map((locale) => {
       const suffix = path === '/' ? '' : path;
@@ -43,14 +54,14 @@ export function GET() {
     <priority>${priorities[path]}</priority>
     <xhtml:link rel="alternate" hreflang="en" href="${enHref}" />
     <xhtml:link rel="alternate" hreflang="zh" href="${zhHref}" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="${enHref}" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="${path === '/' ? new URL('/', siteUrl).toString() : enHref}" />
   </url>`;
     })
   );
 
   const body = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
-${urls.join('')}
+${rootUrl}${urls.join('')}
 </urlset>`;
 
   return new Response(body, {

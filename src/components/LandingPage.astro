@@ -115,12 +115,14 @@ const faqItems = faqEntries.map((item) => ({
   },
 }));
 
+const pageUrl = new URL(Astro.url.pathname, 'https://www.blotztask.com').toString();
+
 const jsonLd = [
   {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     name: 'BlotzTask',
-    url: `https://www.blotztask.com/${locale}/`,
+    url: pageUrl,
     inLanguage: locale,
   },
   {
