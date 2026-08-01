@@ -17,8 +17,6 @@ export type PolicyContent = {
   meta: string;
   description: string;
   intro: string[];
-  summaryLabel: string;
-  summary: string[];
   tocLabel: string;
   sections: PolicySection[];
 };
@@ -32,13 +30,6 @@ const en: PolicyContent = {
     'This Policy applies only to Blotz ("we", "us", or "our"), the Blotz product, and related services.',
     "The security of your personal information is important to us. We collect and use your personal information in accordance with applicable laws and regulations so we can provide better products and services. We are committed to keeping your personal information and other data confidential and secure.",
     'Please read this Privacy Policy (the "Policy") carefully before using Blotz and related services. By using Blotz, you agree to this Policy.',
-  ],
-  summaryLabel: "In short",
-  summary: [
-    "We <strong>do not sell</strong> your tasks or notes to anyone, and we do not use them for advertising.",
-    "Your account and task data are stored on servers in <strong>Australia</strong>.",
-    "Your content is sent to Microsoft Azure OpenAI <strong>only when you choose to use an AI feature</strong>. Microsoft does not use it to train models.",
-    "You can delete your account and all of your data at any time in <strong>Settings &gt; Account &gt; Delete Account</strong>.",
   ],
   tocLabel: "Contents",
   sections: [
@@ -432,13 +423,6 @@ const zh: PolicyContent = {
     "本政策仅适用于 Blotz（以下称「我们」）、Blotz 产品及相关服务。",
     "您的个人信息安全对我们很重要。我们会依照相关法律法规收集和使用您的个人信息，以便为您提供更好的产品和服务。我们承诺对您的个人信息及其他数据保密并妥善保管。",
     "在使用 Blotz 及相关服务前，请仔细阅读本隐私政策（以下称「本政策」）。使用 Blotz 即表示您同意本政策。",
-  ],
-  summaryLabel: "简单说",
-  summary: [
-    "我们<strong>不会把</strong>您的任务和笔记卖给任何人，也不会用于广告。",
-    "您的账号和任务数据存储在<strong>澳大利亚</strong>的服务器上。",
-    "只有在您<strong>主动使用 AI 功能</strong>时，相关内容才会发送给微软 Azure OpenAI。微软不会用它训练模型。",
-    "您可以随时在<strong>「设置 &gt; 账户 &gt; 删除账户」</strong>删除账号和全部数据。",
   ],
   tocLabel: "目录",
   sections: [
