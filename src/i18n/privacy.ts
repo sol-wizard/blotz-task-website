@@ -28,7 +28,7 @@ const en: PolicyContent = {
     "Read the BlotzTask privacy policy to understand how we handle, protect, and use personal information and task data.",
   intro: [
     'This Policy applies only to Blotz ("we", "us", or "our"), the Blotz product, and related services.',
-    "The security of your personal information is important to us. We collect and use your personal information in accordance with applicable laws and regulations so we can provide better products and services. We are committed to keeping your personal information and other data confidential and secure.",
+    "We collect and use your personal information in accordance with applicable laws and regulations, and we keep your personal information and other data confidential and secure.",
     'Please read this Privacy Policy (the "Policy") carefully before using Blotz and related services. By using Blotz, you agree to this Policy.',
   ],
   tocLabel: "Contents",
@@ -39,61 +39,61 @@ const en: PolicyContent = {
       blocks: [
         {
           type: "p",
-          text: "We follow the principles of legitimacy, lawfulness, and necessity. Based on the functions and services described below, we collect and use the personal information that you voluntarily provide while using the product and services.",
+          text: "We follow the principles of legitimacy, lawfulness, and necessity. For the features and services listed below, we collect and use the personal information you provide yourself while using Blotz.",
         },
         { type: "h3", text: "1. Account Registration" },
         { type: "p", text: "You can register and sign in to your Blotz account in the following ways:" },
         {
           type: "ul",
           items: [
-            "<strong>Register with email:</strong> To create your account and allow future sign-in by email, we collect the email address you provide and send a verification email to confirm it.",
-            "<strong>Register with a third-party account:</strong> If you choose to register with a third-party account such as Apple or Google, we obtain certain basic profile information from that platform, such as your nickname, avatar, and email address, in accordance with the relevant authorization agreement, so we can create your Blotz account.",
+            "<strong>Register with email:</strong> We collect the email address you give us and send a verification email to confirm it. We use it to create your account, and you sign in with it later.",
+            "<strong>Register with a third-party account:</strong> If you sign up with a third-party account such as Apple or Google, we get basic profile details from that platform, such as your nickname, avatar, and email address, under the relevant authorization agreement. We use them to create your Blotz account.",
           ],
         },
         {
           type: "p",
-          text: "Blotz does not offer a local-only mode without registration. You must register an account to use all Blotz features, and your task data will sync across your devices.",
+          text: "Blotz has no account-free local mode. You need an account to use all Blotz features, and your task data syncs across your devices.",
         },
         { type: "h3", text: "2. App Features" },
         { type: "h4", text: "2.1 Task Data Sync" },
         {
           type: "p",
-          text: "After you register an account and create tasks or other data, we collect the following information so your data can sync properly and completely across devices:",
+          text: "Once you have an account and start creating tasks or other data, we collect the following so your data syncs correctly and completely across your devices:",
         },
         {
           type: "ul",
           items: [
             "Task title, task content, priority, due date or time range, reminder time, and recurrence rules",
             "Quick note content",
-            "Device information associated with editing actions, including device model, operating system version, and unique device identifier",
+            "Device information attached to an edit, including device model, operating system version, and unique device identifier",
           ],
         },
         {
           type: "p",
-          text: "We use this information only to sync your task data across devices. We do not read your task content for other purposes without your authorization.",
+          text: "We use this only to sync your task data across devices. Without your authorization, we do not read your task content for anything else.",
         },
         { type: "h4", text: "2.2 Task Reminders" },
         {
           type: "p",
-          text: "If you set a reminder for a task in Blotz, we process the task title, task content, due date or time range, and reminder time so the app can notify you at the scheduled time.",
+          text: "If you set a reminder for a task, we process the task title, task content, due date or time range, and reminder time so the app can notify you at the right moment.",
         },
         { type: "h4", text: "2.3 Search" },
         {
           type: "p",
-          text: "If you use search in Blotz, we may collect the keywords you search for so you can view recent search history. These keywords are stored only locally on your device and are not synced to the cloud.",
+          text: "If you use search in Blotz, we may collect the keywords you search for so you can see your recent searches. These keywords stay on your device and are not synced to the cloud.",
         },
         { type: "h4", text: "2.4 AI Features" },
         {
           type: "p",
-          text: "Some Blotz features are powered by artificial intelligence. We integrate Microsoft Azure OpenAI services for those features.",
+          text: "Some Blotz features are powered by AI. Those features run on Microsoft Azure OpenAI.",
         },
         {
           type: "p",
-          text: "When you actively use an AI feature, we process only the content you choose to enter or select, such as task titles, task details, quick notes, tags, and date information. That data is transmitted to Azure OpenAI to generate content or suggestions related to your request.",
+          text: "When you use an AI feature, we process only the content you type in or select, such as task titles, task details, quick notes, tags, and dates. That content is sent to Azure OpenAI, which uses it to produce the content or suggestions you asked for.",
         },
         {
           type: "p",
-          text: "Under Microsoft's default Azure OpenAI data handling policy, your prompts and completions are not used by Microsoft to train models and are not persistently stored after the API request is completed.",
+          text: "Under Microsoft's default data handling policy for Azure OpenAI, what you send and what comes back are not used by Microsoft to train models, and are not kept once the request is finished.",
         },
         {
           type: "link",
@@ -102,68 +102,68 @@ const en: PolicyContent = {
         },
         {
           type: "p",
-          text: "Your input may be quoted, rewritten, or combined in the AI output to better complete the task you requested. All such processing is limited to what is needed to provide the feature. We do not use this data for unrelated purposes or for model training.",
+          text: "The AI may quote, rewrite, or combine what you wrote when it answers you. We use this content only to provide the feature, not for unrelated purposes and not for model training.",
         },
         {
           type: "p",
-          text: "You decide whether to use AI features. If you choose not to use them, we will not trigger related collection, processing, or third-party transfer, and your use of other core services will not be affected.",
+          text: "Using AI is your choice. If you choose not to, none of this collection, processing, or sending to a third party happens, and the rest of Blotz works as normal.",
         },
         { type: "h4", text: "2.5 Profile Information" },
         {
           type: "p",
-          text: "You may choose to complete your profile by providing an avatar and nickname. This information is optional and is not required for core product or system functionality. If you choose not to provide it, your use of Blotz will not be adversely affected.",
+          text: "An avatar and a nickname are optional. Core product and system features do not need them, and Blotz works the same if you leave them blank.",
         },
         { type: "h4", text: "2.6 Analytics" },
         {
           type: "p",
-          text: "We use PostHog, a third-party product analytics service, to understand how Blotz is used. PostHog receives your account identifier, email address, and display name so we can recognise the same person across devices and reinstalls.",
+          text: "We use PostHog, an outside analytics service, to see how Blotz is used. PostHog receives your account identifier, email address, and display name, so we can tell it is the same person across devices and after a reinstall.",
         },
         {
           type: "p",
-          text: "We do not send the content of your tasks or notes to PostHog. PostHog processes this information on our behalf and is not permitted to use it for its own purposes.",
+          text: "We do not send the content of your tasks or notes to PostHog. PostHog handles this information on our behalf and may not use it for its own purposes.",
         },
         { type: "h3", text: "3. Permissions Requested in the App" },
         {
           type: "p",
-          text: "Some features require system permissions that may involve personal information. We request authorization only when you use those features, and we access related information only after receiving your permission. You may refuse authorization if you do not need the feature.",
+          text: "Some features need permission from your phone, and those permissions can touch personal information. We ask only when you use the feature, and we look at the related information only after you say yes. If you do not need the feature, you can say no.",
         },
         { type: "h4", text: "3.1 Android Permissions" },
         {
           type: "ul",
           items: [
-            "<strong>Calendar access:</strong> Requested when you enable calendar sync so system calendar events can sync into Blotz.",
-            "<strong>Write external storage:</strong> Requested when you save attachments from a task to your phone.",
-            "<strong>Read external storage:</strong> Requested when you upload attachments to a task.",
-            "<strong>Microphone access:</strong> Requested when you add audio attachments or use voice input.",
-            "<strong>Fingerprint access:</strong> Requested when you enable fingerprint unlock for the app.",
-            "<strong>Clipboard access:</strong> If you enable clipboard recognition and the clipboard contains time-related information, the app may ask whether you want to create a task when you open it.",
+            "<strong>Calendar access:</strong> Requested when you turn on calendar sync, so system calendar events can sync into Blotz.",
+            "<strong>Write external storage:</strong> Requested when you save an attachment from a task to your phone.",
+            "<strong>Read external storage:</strong> Requested when you upload an attachment to a task.",
+            "<strong>Microphone access:</strong> Requested when you add an audio attachment or use voice input.",
+            "<strong>Fingerprint access:</strong> Requested when you turn on fingerprint unlock for the app.",
+            "<strong>Clipboard access:</strong> If you turn on clipboard recognition and your clipboard holds something time-related, the app may ask whether you want to create a task when you open it.",
           ],
         },
         { type: "h4", text: "3.2 iOS Permissions" },
         {
           type: "ul",
           items: [
-            "<strong>Calendar access:</strong> Requested when you enable calendar sync.",
-            "<strong>Write external storage:</strong> Requested when you save attachments from a task to your phone.",
-            "<strong>Read external storage:</strong> Requested when you upload attachments to a task.",
-            "<strong>Microphone access:</strong> Requested when you add audio attachments or use voice input.",
-            "<strong>Face ID / biometric access:</strong> Requested when you set an app unlock password and enable Face ID.",
-            "<strong>Clipboard access:</strong> If you enable clipboard recognition and the clipboard contains time-related information, the app may ask whether you want to create a task when you open it.",
-            "<strong>Siri access:</strong> Requested when you enable adding tasks through Siri.",
+            "<strong>Calendar access:</strong> Requested when you turn on calendar sync.",
+            "<strong>Write external storage:</strong> Requested when you save an attachment from a task to your phone.",
+            "<strong>Read external storage:</strong> Requested when you upload an attachment to a task.",
+            "<strong>Microphone access:</strong> Requested when you add an audio attachment or use voice input.",
+            "<strong>Face ID / biometric access:</strong> Requested when you set an app unlock password and turn on Face ID.",
+            "<strong>Clipboard access:</strong> If you turn on clipboard recognition and your clipboard holds something time-related, the app may ask whether you want to create a task when you open it.",
+            "<strong>Siri access:</strong> Requested when you turn on adding tasks through Siri.",
           ],
         },
         { type: "h3", text: "4. Third-Party SDKs and Services" },
         {
           type: "p",
-          text: "Blotz uses the following third-party libraries and services to support core functionality:",
+          text: "Blotz relies on the following third-party libraries and services:",
         },
         {
           type: "ul",
           items: [
-            "<strong>Backend services (Microsoft / NuGet):</strong> Our backend is built with Microsoft NuGet components for server-side logic, data storage, and API communication.",
-            "<strong>Frontend framework (React Native / Expo):</strong> Our mobile app frontend is built with React Native and Expo. These frameworks themselves do not independently collect your personal information and are used to provide the app interface and interactions.",
-            "<strong>AI services (Microsoft Azure OpenAI):</strong> As described above, we use Microsoft Azure OpenAI for AI features. The Azure OpenAI server we use is located in US East.",
-            "<strong>Product analytics (PostHog):</strong> Used to understand how Blotz is used, as described in section 2.6. PostHog processes this data on servers located in the United States.",
+            "<strong>Backend services (Microsoft / NuGet):</strong> Our servers are built with Microsoft NuGet components, which run the logic behind the app, store data, and handle communication with the app.",
+            "<strong>Frontend framework (React Native / Expo):</strong> The mobile app itself is built with React Native and Expo. They make up what you see and tap, and do not collect your personal information on their own.",
+            "<strong>AI services (Microsoft Azure OpenAI):</strong> As described above, AI features run on Microsoft Azure OpenAI. The Azure OpenAI server we use is located in US East.",
+            "<strong>Product analytics (PostHog):</strong> Used to see how Blotz is used, as described in section 2.6. PostHog processes this data on servers located in the United States.",
           ],
         },
         {
@@ -179,15 +179,15 @@ const en: PolicyContent = {
         { type: "h3", text: "5. User Research and Community Activities" },
         {
           type: "p",
-          text: "From time to time, we may conduct user research, mainly in the form of surveys. To better understand different user groups and improve our features and services, we may collect information such as age, gender, industry, occupation, device information, and personal interests from participants.",
+          text: "We sometimes run user research, usually a survey. If you take part, we may collect information such as your age, gender, industry, occupation, device information, and personal interests, so we can understand who uses Blotz and improve our features and services.",
         },
         {
           type: "p",
-          text: "We may also run social media activities from time to time. To let users participate and receive prizes, we may collect information such as name, phone number, and mailing address.",
+          text: "We also sometimes run activities on social media. To let you take part and send you a prize, we may collect information such as your name, phone number, and mailing address.",
         },
         {
           type: "p",
-          text: "This information is used only for the relevant activity. If you do not want to provide it, you may choose not to participate in the survey or activity.",
+          text: "We use this information only for that survey or activity. If you would rather not give it, you can choose not to take part.",
         },
       ],
     },
@@ -197,15 +197,15 @@ const en: PolicyContent = {
       blocks: [
         {
           type: "p",
-          text: "A cookie is a small text file placed on a client device by a website server when you browse a website. When you visit the same site again, the site can recognize your browser through the cookie. Cookies may store user preferences and other information.",
+          text: "A cookie is a small text file a website saves on your device when you visit it. Next time you come back, the site can recognize your browser by that file. Cookies can hold things like your preferences.",
         },
         {
           type: "p",
-          text: "Blotz uses cookies as a convenience so you do not need to repeatedly verify your identity when moving between Blotz services. We use cookies to store preferences, improve user experience, and analyze service usage so we can improve service quality.",
+          text: "Blotz uses cookies so you do not have to prove who you are again every time you move between Blotz services. We also use them to remember your preferences, make the app nicer to use, and see how our services are used so we can improve them.",
         },
         {
           type: "p",
-          text: "You can refuse cookies by changing your browser or device settings. If you do so, you may not be able to sign in to or use Blotz services or features that depend on cookies.",
+          text: "You can turn cookies off in your browser or device settings. If you do, you may not be able to sign in to Blotz or use the services and features that rely on cookies.",
         },
       ],
     },
@@ -216,39 +216,39 @@ const en: PolicyContent = {
         { type: "h3", text: "1. Sharing" },
         {
           type: "p",
-          text: "We do not share your personal information with other companies, organizations, or individuals without your consent, except in the following cases:",
+          text: "We do not share your personal information with other companies, organizations, or individuals without your consent, except in these cases:",
         },
         {
           type: "ul",
           items: [
-            "<strong>With your explicit consent or authorization:</strong> After obtaining your explicit authorization, we may share your personal information with other parties, including AI service providers such as Microsoft Azure OpenAI.",
-            "<strong>With service providers acting on our behalf:</strong> We share limited information with the providers listed in section 1.4, such as PostHog for product analytics, so they can perform those services for us. They may not use your information for their own purposes.",
-            "<strong>Where required by law:</strong> We may share your personal information when required by laws and regulations, for dispute resolution, or in response to mandatory requests or judicial decisions from competent authorities.",
-            "<strong>To protect legitimate interests:</strong> We may provide your personal information to third parties when necessary to protect Blotz, our users, or the public from harm to rights, property, or safety.",
+            "<strong>With your explicit consent or authorization:</strong> Once you have explicitly authorized it, we may share your personal information with other parties, including AI service providers such as Microsoft Azure OpenAI.",
+            "<strong>With service providers acting on our behalf:</strong> We share limited information with the providers listed in section 1.4, such as PostHog for product analytics, so they can do that work for us. They may not use your information for their own purposes.",
+            "<strong>Where required by law:</strong> We may share your personal information when laws and regulations require it, to resolve a dispute, or in response to a mandatory request or judicial decision from a competent authority.",
+            "<strong>To protect legitimate interests:</strong> We may give your personal information to a third party where that is necessary to protect Blotz, our users, or the public from harm to rights, property, or safety.",
           ],
         },
         { type: "h3", text: "2. Transfer" },
         {
           type: "p",
-          text: "We do not transfer your personal information to any company, organization, or individual without your consent, except in the following cases:",
+          text: "We do not transfer your personal information to any company, organization, or individual without your consent, except in these cases:",
         },
         {
           type: "ul",
           items: [
             "With your explicit consent or authorization",
-            "In the event of a merger, acquisition, or bankruptcy liquidation, in which case we will require the new holder of your personal information to continue to be bound by this Policy",
+            "In a merger, acquisition, or bankruptcy liquidation, in which case we will require the new holder of your personal information to stay bound by this Policy",
           ],
         },
         { type: "h3", text: "3. Public Disclosure" },
         {
           type: "p",
-          text: "We do not publicly disclose your personal information without your consent, except in the following cases:",
+          text: "We do not publicly disclose your personal information without your consent, except in these cases:",
         },
         {
           type: "ul",
           items: [
             "With your explicit consent or authorization",
-            "When required by law, legal process, litigation, or mandatory requests from competent authorities, in which case we will apply security measures that meet legal and industry standards",
+            "Where required by law, legal process, litigation, or a mandatory request from a competent authority, in which case we will apply security measures that meet legal and industry standards",
           ],
         },
       ],
@@ -260,16 +260,16 @@ const en: PolicyContent = {
         { type: "h3", text: "1. Retention Period" },
         {
           type: "p",
-          text: "While you use our platform, we will continue to retain your personal information for no longer than necessary to provide services to you. After you stop using the platform or withdraw relevant authorizations, we will delete or anonymize your information unless laws or regulations require a longer retention period for specific information.",
+          text: "We keep your personal information for no longer than we need it to provide the service. After you stop using the platform or withdraw the relevant authorizations, we delete your information or anonymize it, meaning we strip out anything that points back to you. The exception is information that laws or regulations require us to keep for longer.",
         },
         { type: "h3", text: "2. Storage Location" },
         {
           type: "p",
-          text: "Our primary servers, including the servers that store your account and task data, are located in Australia.",
+          text: "Our main servers, including the ones holding your account and task data, are located in Australia.",
         },
         {
           type: "p",
-          text: "Some features involve cross-border transfers. AI features use Microsoft Azure OpenAI services hosted in US East, and product analytics are processed by PostHog on servers located in the United States. In each case we transfer only the information described in the relevant section above, and we comply with applicable legal requirements and protect the security of your personal information.",
+          text: "Some features send data overseas. AI features use Microsoft Azure OpenAI hosted in US East, and product analytics are processed by PostHog on servers located in the United States. In each case we send only the information described in the relevant section above, and we comply with applicable legal requirements and protect the security of your personal information.",
         },
       ],
     },
@@ -306,58 +306,58 @@ const en: PolicyContent = {
         { type: "h3", text: "1. Access and Correction" },
         {
           type: "p",
-          text: "You have the right to access and correct your personal information. You can do so in the following ways:",
+          text: "You have the right to see and correct your personal information. You can do that here:",
         },
         {
           type: "ul",
           items: [
-            "<strong>Profile information:</strong> Go to Settings &gt; Account to view or modify your avatar, nickname, email account, and login password.",
-            "<strong>Search history:</strong> Open search to view or clear recent search keywords.",
+            "<strong>Profile information:</strong> Go to Settings &gt; Account to view or change your avatar, nickname, email account, and login password.",
+            "<strong>Search history:</strong> Open search to see or clear your recent search keywords.",
           ],
         },
         { type: "h3", text: "2. Deletion" },
         {
           type: "p",
-          text: "You may request deletion of your personal information in the following situations:",
+          text: "You may ask us to delete your personal information in these situations:",
         },
         {
           type: "ul",
           items: [
-            "If our processing violates laws or regulations",
-            "If we collect or use your personal information without your consent where consent is required",
+            "If our processing breaks laws or regulations",
+            "If we collected or used your personal information without your consent where consent is required",
             "If you no longer use our products or services, or you have closed your account",
             "If we no longer provide products or services to you",
           ],
         },
         {
           type: "p",
-          text: "You can delete your account and all associated personal data in Settings &gt; Account &gt; Delete Account. After account deletion, we will stop providing services and delete your personal information as requested, unless otherwise required by law.",
+          text: "You can delete your account and all the personal data that goes with it in Settings &gt; Account &gt; Delete Account. After that, we stop providing services and delete your personal information as you asked, unless the law says otherwise.",
         },
         { type: "h3", text: "3. Changing the Scope of Consent" },
         {
           type: "p",
-          text: "For additional personal information collected based on your consent, you may give or withdraw that consent at any time. After you withdraw consent, we will stop processing the corresponding personal information, but this does not affect processing that was already carried out based on your prior authorization.",
+          text: "For the extra personal information we collect based on your consent, you can give or withdraw that consent whenever you like. Once you withdraw it, we stop processing that information. Withdrawing does not undo processing we already carried out while you had consented.",
         },
         { type: "h3", text: "4. Revoking System Permissions" },
         {
           type: "p",
-          text: "You can revoke previously granted system permissions through your device settings:",
+          text: "You can take back any system permission you granted earlier, in your device settings:",
         },
         {
           type: "ul",
           items: [
             "<strong>Android:</strong> Settings &gt; Apps &gt; Blotz &gt; Permissions",
-            "<strong>iOS:</strong> Settings &gt; Privacy &amp; Security &gt; select the relevant permission type and disable Blotz access, or Settings &gt; Apps &gt; Blotz &gt; disable the relevant permission",
+            "<strong>iOS:</strong> Settings &gt; Privacy &amp; Security &gt; select the relevant permission type and turn off Blotz access, or Settings &gt; Apps &gt; Blotz &gt; turn off the relevant permission",
           ],
         },
         {
           type: "p",
-          text: "After you revoke a permission, we will no longer process related personal information based on that permission, but the corresponding feature may not work properly. This will not affect other core functions.",
+          text: "After you revoke a permission, we no longer process the related personal information under it, but the feature it powers may stop working. Other core functions are unaffected.",
         },
         { type: "h3", text: "5. Response Time" },
         {
           type: "p",
-          text: "We will respond to your reasonable requests within 15 days. If you need help, please contact us using the information at the end of this Policy.",
+          text: "We will respond to your reasonable requests within 15 days. If you need help, contact us using the details at the end of this Policy.",
         },
       ],
     },
@@ -367,11 +367,11 @@ const en: PolicyContent = {
       blocks: [
         {
           type: "p",
-          text: "Our products and services are mainly intended for adults. If you are under 18 years old, please read this Policy with your guardian and use our services only after obtaining your guardian's consent.",
+          text: "Our products and services are mainly meant for adults. If you are under 18, please read this Policy with your guardian and use our services only after your guardian agrees.",
         },
         {
           type: "p",
-          text: "If we discover that we collected a minor's personal information without verifiable guardian consent in advance, we will try to delete the relevant data as soon as possible.",
+          text: "If we find that we collected a minor's personal information without verifiable guardian consent beforehand, we will try to delete that data as soon as possible.",
         },
       ],
     },
@@ -381,11 +381,11 @@ const en: PolicyContent = {
       blocks: [
         {
           type: "p",
-          text: "This Privacy Policy may be updated from time to time. You should review it periodically to understand how we protect the personal information we collect. Your continued use of Blotz services constitutes your acceptance of this Privacy Policy and any updated versions.",
+          text: "We may update this Privacy Policy from time to time, so please check it now and then to see how we protect the personal information we collect. If you keep using Blotz services, you accept this Privacy Policy and any updated version of it.",
         },
         {
           type: "p",
-          text: "For material changes, we may also provide more prominent notice explaining the specific changes. Material changes include, but are not limited to:",
+          text: "For material changes, we may also tell you more prominently what exactly changed. Material changes include, but are not limited to:",
         },
         {
           type: "ul",
@@ -405,7 +405,7 @@ const en: PolicyContent = {
       blocks: [
         {
           type: "p",
-          text: "If you have any questions, comments, or suggestions about this Privacy Policy, please contact us at:",
+          text: "If you have any questions, comments, or suggestions about this Privacy Policy, contact us at:",
         },
         { type: "email", label: "Email:", address: "blotztask.app@gmail.com" },
         { type: "p", text: "We will respond within 15 days after receiving your feedback." },
@@ -421,8 +421,8 @@ const zh: PolicyContent = {
     "阅读 BlotzTask 隐私政策，了解我们如何处理、保护和使用您的个人信息与任务数据。",
   intro: [
     "本政策仅适用于 Blotz（以下称「我们」）、Blotz 产品及相关服务。",
-    "您的个人信息安全对我们很重要。我们会依照相关法律法规收集和使用您的个人信息，以便为您提供更好的产品和服务。我们承诺对您的个人信息及其他数据保密并妥善保管。",
-    "在使用 Blotz 及相关服务前，请仔细阅读本隐私政策（以下称「本政策」）。使用 Blotz 即表示您同意本政策。",
+    "我们会依照相关法律法规收集和使用您的个人信息，并对您的个人信息及其他数据保密、妥善保管。",
+    "使用 Blotz 及相关服务前，请仔细阅读本隐私政策（以下称「本政策」）。使用 Blotz 即表示您同意本政策。",
   ],
   tocLabel: "目录",
   sections: [
@@ -432,26 +432,26 @@ const zh: PolicyContent = {
       blocks: [
         {
           type: "p",
-          text: "我们遵循正当、合法、必要的原则。基于下述功能与服务，我们会收集和使用您在使用产品与服务过程中主动提供的个人信息。",
+          text: "我们遵循正当、合法、必要的原则。针对下面列出的功能与服务，我们会收集和使用您在使用 Blotz 时主动提供的个人信息。",
         },
         { type: "h3", text: "1. 账号注册" },
         { type: "p", text: "您可以通过以下方式注册并登录 Blotz 账号：" },
         {
           type: "ul",
           items: [
-            "<strong>邮箱注册：</strong>为了创建您的账号并支持后续通过邮箱登录，我们会收集您提供的邮箱地址，并发送验证邮件进行确认。",
-            "<strong>第三方账号注册：</strong>如果您选择使用 Apple、Google 等第三方账号注册，我们会依据相应的授权协议，从该平台获取昵称、头像、邮箱地址等基础资料，用于创建您的 Blotz 账号。",
+            "<strong>邮箱注册：</strong>我们会收集您填写的邮箱地址，并发一封验证邮件确认。我们用它创建您的账号，之后您也用它登录。",
+            "<strong>第三方账号注册：</strong>如果您用 Apple、Google 等第三方账号注册，我们会依据相应的授权协议，从该平台获取昵称、头像、邮箱地址等基础资料，用来创建您的 Blotz 账号。",
           ],
         },
         {
           type: "p",
-          text: "Blotz 不提供无需注册的纯本地模式。您需要注册账号才能使用 Blotz 的全部功能，您的任务数据会在您的各个设备之间同步。",
+          text: "Blotz 不提供无需注册的纯本地模式。使用 Blotz 的全部功能需要注册账号，您的任务数据会在您的各个设备之间同步。",
         },
         { type: "h3", text: "2. 应用功能" },
         { type: "h4", text: "2.1 任务数据同步" },
         {
           type: "p",
-          text: "在您注册账号并创建任务或其他数据后，为了让您的数据能够在设备之间完整、正常地同步，我们会收集以下信息：",
+          text: "您注册账号并开始创建任务或其他数据后，为了让数据在设备之间完整、正常地同步，我们会收集以下信息：",
         },
         {
           type: "ul",
@@ -463,30 +463,30 @@ const zh: PolicyContent = {
         },
         {
           type: "p",
-          text: "这些信息仅用于在设备之间同步您的任务数据。未经您的授权，我们不会为其他目的读取您的任务内容。",
+          text: "这些信息只用于在设备之间同步您的任务数据。未经您的授权，我们不会为别的目的读取您的任务内容。",
         },
         { type: "h4", text: "2.2 任务提醒" },
         {
           type: "p",
-          text: "如果您为任务设置了提醒，我们会处理任务标题、任务内容、截止日期或时间范围、提醒时间，以便应用在设定的时间通知您。",
+          text: "如果您给任务设了提醒，我们会处理任务标题、任务内容、截止日期或时间范围、提醒时间，好让应用在该提醒的时候通知您。",
         },
         { type: "h4", text: "2.3 搜索" },
         {
           type: "p",
-          text: "如果您使用 Blotz 的搜索功能，我们可能会收集您搜索的关键词，以便您查看最近的搜索记录。这些关键词仅保存在您的设备本地，不会同步到云端。",
+          text: "如果您使用搜索，我们可能会收集您搜索的关键词，方便您查看最近搜过什么。这些关键词只存在您的设备上，不会同步到云端。",
         },
         { type: "h4", text: "2.4 AI 功能" },
         {
           type: "p",
-          text: "Blotz 的部分功能由人工智能提供支持。我们为这些功能接入了微软 Azure OpenAI 服务。",
+          text: "Blotz 的部分功能由 AI 提供支持，这些功能接入的是微软 Azure OpenAI 服务。",
         },
         {
           type: "p",
-          text: "当您主动使用 AI 功能时，我们仅处理您选择输入或选中的内容，例如任务标题、任务详情、快速笔记、标签和日期信息。这些数据会传输至 Azure OpenAI，用于生成与您的请求相关的内容或建议。",
+          text: "您使用 AI 功能时，我们只处理您输入或选中的内容，例如任务标题、任务详情、快速笔记、标签和日期。这些内容会发送给 Azure OpenAI，用来生成您想要的内容或建议。",
         },
         {
           type: "p",
-          text: "根据微软 Azure OpenAI 的默认数据处理政策，您的输入和输出不会被微软用于训练模型，也不会在 API 请求完成后被持久化存储。",
+          text: "根据微软 Azure OpenAI 的默认数据处理政策，您发送的内容和返回的结果不会被微软用于训练模型，也不会在请求完成后继续保存。",
         },
         {
           type: "link",
@@ -495,41 +495,41 @@ const zh: PolicyContent = {
         },
         {
           type: "p",
-          text: "为了更好地完成您请求的任务，您的输入可能会在 AI 输出中被引用、改写或组合。所有此类处理都限于提供该功能所必需的范围。我们不会将这些数据用于无关目的或模型训练。",
+          text: "AI 在回答时，可能会引用、改写或组合您写下的内容。我们使用这些内容只是为了实现该功能，不会用于无关目的，也不会用于训练模型。",
         },
         {
           type: "p",
-          text: "是否使用 AI 功能由您决定。如果您选择不使用，我们不会触发相关的收集、处理或第三方传输，您使用其他核心服务也不会受到影响。",
+          text: "是否使用 AI 由您决定。如果您不用，上面这些收集、处理和向第三方传输都不会发生，Blotz 的其他核心服务照常使用。",
         },
         { type: "h4", text: "2.5 个人资料" },
         {
           type: "p",
-          text: "您可以选择填写头像和昵称来完善个人资料。这些信息是可选的，并非核心产品或系统功能所必需。即使您选择不提供，也不会影响您正常使用 Blotz。",
+          text: "头像和昵称是选填的，核心产品和系统功能都不需要它们。不填也不影响您正常使用 Blotz。",
         },
         { type: "h4", text: "2.6 使用分析" },
         {
           type: "p",
-          text: "我们使用第三方产品分析服务 PostHog，以了解 Blotz 的使用情况。PostHog 会收到您的账号标识、邮箱地址和昵称，以便我们在不同设备和重装之后识别为同一个人。",
+          text: "我们使用第三方分析服务 PostHog，了解 Blotz 被怎么使用。PostHog 会收到您的账号标识、邮箱地址和昵称，这样我们才能在不同设备上、重装应用之后，认出是同一个人。",
         },
         {
           type: "p",
-          text: "我们不会将您的任务和笔记内容发送给 PostHog。PostHog 仅代表我们处理这些信息，不得将其用于自身目的。",
+          text: "我们不会把您的任务和笔记内容发给 PostHog。PostHog 只是代我们处理这些信息，不得用于自身目的。",
         },
         { type: "h3", text: "3. 应用申请的权限" },
         {
           type: "p",
-          text: "部分功能需要使用可能涉及个人信息的系统权限。我们只在您使用这些功能时申请授权，并且只有在获得您的许可后才会访问相关信息。如果您不需要该功能，可以拒绝授权。",
+          text: "有些功能需要用到手机的系统权限，这些权限可能涉及个人信息。我们只在您使用这些功能时才申请，得到您的许可后才会读取相关信息。不需要这个功能，您可以拒绝。",
         },
         { type: "h4", text: "3.1 Android 权限" },
         {
           type: "ul",
           items: [
-            "<strong>日历权限：</strong>在您开启日历同步时申请，用于将系统日历事件同步到 Blotz。",
-            "<strong>写入外部存储：</strong>在您将任务中的附件保存到手机时申请。",
-            "<strong>读取外部存储：</strong>在您向任务上传附件时申请。",
+            "<strong>日历权限：</strong>在您开启日历同步时申请，用于把系统日历事件同步到 Blotz。",
+            "<strong>写入外部存储：</strong>在您把任务里的附件保存到手机时申请。",
+            "<strong>读取外部存储：</strong>在您给任务上传附件时申请。",
             "<strong>麦克风权限：</strong>在您添加音频附件或使用语音输入时申请。",
             "<strong>指纹权限：</strong>在您开启应用指纹解锁时申请。",
-            "<strong>剪贴板权限：</strong>如果您开启了剪贴板识别，且剪贴板中包含时间相关信息，应用在打开时可能会询问您是否要创建任务。",
+            "<strong>剪贴板权限：</strong>如果您开启了剪贴板识别，而剪贴板里有时间相关的内容，应用在打开时可能会问您要不要创建任务。",
           ],
         },
         { type: "h4", text: "3.2 iOS 权限" },
@@ -537,22 +537,22 @@ const zh: PolicyContent = {
           type: "ul",
           items: [
             "<strong>日历权限：</strong>在您开启日历同步时申请。",
-            "<strong>写入外部存储：</strong>在您将任务中的附件保存到手机时申请。",
-            "<strong>读取外部存储：</strong>在您向任务上传附件时申请。",
+            "<strong>写入外部存储：</strong>在您把任务里的附件保存到手机时申请。",
+            "<strong>读取外部存储：</strong>在您给任务上传附件时申请。",
             "<strong>麦克风权限：</strong>在您添加音频附件或使用语音输入时申请。",
             "<strong>Face ID / 生物识别权限：</strong>在您设置应用解锁密码并开启 Face ID 时申请。",
-            "<strong>剪贴板权限：</strong>如果您开启了剪贴板识别，且剪贴板中包含时间相关信息，应用在打开时可能会询问您是否要创建任务。",
-            "<strong>Siri 权限：</strong>在您开启通过 Siri 添加任务时申请。",
+            "<strong>剪贴板权限：</strong>如果您开启了剪贴板识别，而剪贴板里有时间相关的内容，应用在打开时可能会问您要不要创建任务。",
+            "<strong>Siri 权限：</strong>在您开启用 Siri 添加任务时申请。",
           ],
         },
         { type: "h3", text: "4. 第三方 SDK 与服务" },
-        { type: "p", text: "Blotz 使用以下第三方库和服务来支持核心功能：" },
+        { type: "p", text: "Blotz 用到以下第三方库和服务：" },
         {
           type: "ul",
           items: [
-            "<strong>后端服务（Microsoft / NuGet）：</strong>我们的后端使用微软 NuGet 组件构建，用于服务端逻辑、数据存储和 API 通信。",
-            "<strong>前端框架（React Native / Expo）：</strong>我们的移动应用前端基于 React Native 和 Expo 构建。这些框架本身不会独立收集您的个人信息，仅用于提供应用界面与交互。",
-            "<strong>AI 服务（微软 Azure OpenAI）：</strong>如上所述，我们使用微软 Azure OpenAI 提供 AI 功能。我们使用的 Azure OpenAI 服务器位于美国东部。",
+            "<strong>后端服务（Microsoft / NuGet）：</strong>我们的服务器用微软 NuGet 组件搭建，负责应用背后的运算逻辑、数据存储，以及和应用之间的通信。",
+            "<strong>前端框架（React Native / Expo）：</strong>手机应用本身用 React Native 和 Expo 开发，也就是您看到和点到的界面。它们本身不会收集您的个人信息。",
+            "<strong>AI 服务（微软 Azure OpenAI）：</strong>如上所述，AI 功能由微软 Azure OpenAI 提供。我们使用的 Azure OpenAI 服务器位于美国东部。",
             "<strong>产品分析（PostHog）：</strong>用于了解 Blotz 的使用情况，详见 2.6 节。PostHog 在位于美国的服务器上处理这些数据。",
           ],
         },
@@ -569,15 +569,15 @@ const zh: PolicyContent = {
         { type: "h3", text: "5. 用户调研与社区活动" },
         {
           type: "p",
-          text: "我们可能会不定期开展用户调研，主要以问卷形式进行。为了更好地了解不同用户群体、改进我们的功能与服务，我们可能会向参与者收集年龄、性别、行业、职业、设备信息、个人兴趣等信息。",
+          text: "我们有时会做用户调研，一般是问卷。如果您参加，我们可能会收集年龄、性别、行业、职业、设备信息、个人兴趣等信息，用来了解都是哪些人在用 Blotz，并改进我们的功能与服务。",
         },
         {
           type: "p",
-          text: "我们也可能不定期举办社交媒体活动。为了让用户参与活动并领取奖品，我们可能会收集姓名、电话号码、邮寄地址等信息。",
+          text: "我们有时也会在社交媒体上办活动。为了让您参加活动、把奖品寄给您，我们可能会收集姓名、电话号码、邮寄地址等信息。",
         },
         {
           type: "p",
-          text: "这些信息仅用于相关活动。如果您不愿意提供，可以选择不参与该调研或活动。",
+          text: "这些信息只用于该次调研或活动。您不愿意提供，可以不参加。",
         },
       ],
     },
@@ -587,15 +587,15 @@ const zh: PolicyContent = {
       blocks: [
         {
           type: "p",
-          text: "Cookie 是您浏览网站时，网站服务器放置在客户端设备上的一个小型文本文件。当您再次访问同一网站时，网站可以通过 Cookie 识别您的浏览器。Cookie 中可能存储用户偏好等信息。",
+          text: "Cookie 是您访问网站时，网站存在您设备上的一个小文件。下次再来，网站就能靠它认出您的浏览器。Cookie 里可能保存偏好设置等信息。",
         },
         {
           type: "p",
-          text: "Blotz 使用 Cookie 是为了方便您在 Blotz 各项服务之间切换时无需反复验证身份。我们使用 Cookie 存储偏好设置、改善使用体验，并分析服务使用情况以提升服务质量。",
+          text: "Blotz 使用 Cookie，是为了让您在 Blotz 各项服务之间切换时不用反复验证身份。我们也用它记住您的偏好设置、改善使用体验，并了解服务的使用情况，以便提升服务质量。",
         },
         {
           type: "p",
-          text: "您可以通过更改浏览器或设备设置来拒绝 Cookie。如果您这样做，可能无法登录或使用依赖 Cookie 的 Blotz 服务与功能。",
+          text: "您可以在浏览器或设备设置里关闭 Cookie。关掉之后，您可能无法登录，也无法使用依赖 Cookie 的 Blotz 服务和功能。",
         },
       ],
     },
@@ -611,16 +611,16 @@ const zh: PolicyContent = {
         {
           type: "ul",
           items: [
-            "<strong>在获得您的明确同意或授权后：</strong>在获得您的明确授权后，我们可能会与其他方共享您的个人信息，包括微软 Azure OpenAI 等 AI 服务提供商。",
-            "<strong>代表我们提供服务的服务商：</strong>我们会与 1.4 节列出的服务商共享有限的信息，例如用于产品分析的 PostHog，以便他们为我们提供相应服务。他们不得将您的信息用于自身目的。",
+            "<strong>在获得您的明确同意或授权后：</strong>取得您的明确授权后，我们可能会与其他方共享您的个人信息，包括微软 Azure OpenAI 等 AI 服务提供商。",
+            "<strong>代表我们提供服务的服务商：</strong>我们会与 1.4 节列出的服务商共享有限的信息，例如做产品分析的 PostHog，好让他们替我们完成这部分工作。他们不得把您的信息用于自身目的。",
             "<strong>法律法规要求时：</strong>在法律法规要求、解决争议，或应主管机关的强制性要求或司法裁决时，我们可能会共享您的个人信息。",
-            "<strong>为保护合法权益：</strong>在为保护 Blotz、我们的用户或公众的权利、财产或安全免受损害而确有必要时，我们可能会向第三方提供您的个人信息。",
+            "<strong>为保护合法权益：</strong>为保护 Blotz、我们的用户或公众的权利、财产或安全免受损害而确有必要时，我们可能会向第三方提供您的个人信息。",
           ],
         },
         { type: "h3", text: "2. 转让" },
         {
           type: "p",
-          text: "未经您的同意，我们不会将您的个人信息转让给任何公司、组织或个人，以下情况除外：",
+          text: "未经您的同意，我们不会把您的个人信息转让给任何公司、组织或个人，以下情况除外：",
         },
         {
           type: "ul",
@@ -650,16 +650,16 @@ const zh: PolicyContent = {
         { type: "h3", text: "1. 保存期限" },
         {
           type: "p",
-          text: "在您使用我们平台期间，我们会持续保存您的个人信息，且不会超过为您提供服务所必需的期限。在您停止使用平台或撤回相关授权后，我们会删除或匿名化您的信息，法律法规对特定信息另有更长保存期限要求的除外。",
+          text: "我们保存您的个人信息，不会超过为您提供服务所必需的期限。您停止使用平台或撤回相关授权后，我们会删除您的信息，或者把它匿名化，也就是去掉一切能指向您本人的部分。法律法规要求某些信息保存更久的除外。",
         },
         { type: "h3", text: "2. 存储位置" },
         {
           type: "p",
-          text: "我们的主要服务器，包括存储您的账号和任务数据的服务器，位于澳大利亚。",
+          text: "我们的主要服务器，包括存放您的账号和任务数据的服务器，都在澳大利亚。",
         },
         {
           type: "p",
-          text: "部分功能会涉及跨境传输。AI 功能使用位于美国东部的微软 Azure OpenAI 服务，产品分析由 PostHog 在位于美国的服务器上处理。在每一种情况下，我们仅传输上文相应章节中所述的信息，并会遵守适用的法律要求、保护您个人信息的安全。",
+          text: "有些功能会把数据传到境外：AI 功能使用位于美国东部的微软 Azure OpenAI 服务，产品分析由 PostHog 在位于美国的服务器上处理。这两种情况下，我们只传输上文相应章节写明的信息，并会遵守适用的法律要求、保护您个人信息的安全。",
         },
       ],
     },
@@ -694,7 +694,7 @@ const zh: PolicyContent = {
       title: "6. 您管理个人信息的权利",
       blocks: [
         { type: "h3", text: "1. 访问与更正" },
-        { type: "p", text: "您有权访问和更正您的个人信息，方式如下：" },
+        { type: "p", text: "您有权查看和更正自己的个人信息，可以在这些位置操作：" },
         {
           type: "ul",
           items: [
@@ -703,7 +703,7 @@ const zh: PolicyContent = {
           ],
         },
         { type: "h3", text: "2. 删除" },
-        { type: "p", text: "在以下情况下，您可以请求删除您的个人信息：" },
+        { type: "p", text: "在以下情况下，您可以要求我们删除您的个人信息：" },
         {
           type: "ul",
           items: [
@@ -715,15 +715,15 @@ const zh: PolicyContent = {
         },
         {
           type: "p",
-          text: "您可以在「设置 &gt; 账户 &gt; 删除账户」中删除您的账号及全部相关个人数据。账号删除后，我们会停止提供服务，并按您的要求删除您的个人信息，法律另有规定的除外。",
+          text: "您可以在「设置 &gt; 账户 &gt; 删除账户」里删除账号和与之相关的全部个人数据。删除之后，我们会停止提供服务，并按您的要求删除您的个人信息，法律另有规定的除外。",
         },
         { type: "h3", text: "3. 改变授权范围" },
         {
           type: "p",
-          text: "对于基于您的同意而收集的额外个人信息，您可以随时给予或撤回该同意。撤回同意后，我们会停止处理相应的个人信息，但这不影响此前基于您的授权已经进行的处理。",
+          text: "对于基于您的同意收集的额外个人信息，您可以随时给予或撤回同意。撤回之后，我们会停止处理这部分信息；在您同意期间已经完成的处理不受影响。",
         },
         { type: "h3", text: "4. 撤销系统权限" },
-        { type: "p", text: "您可以通过设备设置撤销此前授予的系统权限：" },
+        { type: "p", text: "您可以在设备设置里收回此前授予的系统权限：" },
         {
           type: "ul",
           items: [
@@ -733,12 +733,12 @@ const zh: PolicyContent = {
         },
         {
           type: "p",
-          text: "撤销权限后，我们将不再基于该权限处理相关个人信息，但对应功能可能无法正常使用。这不会影响其他核心功能。",
+          text: "撤销权限后，我们不会再基于该权限处理相关个人信息，但对应的功能可能就用不了了。其他核心功能不受影响。",
         },
         { type: "h3", text: "5. 响应时间" },
         {
           type: "p",
-          text: "我们会在 15 天内响应您的合理请求。如需帮助，请通过本政策末尾的联系方式与我们联系。",
+          text: "我们会在 15 天内响应您的合理请求。需要帮助时，请通过本政策末尾的联系方式找我们。",
         },
       ],
     },
@@ -748,7 +748,7 @@ const zh: PolicyContent = {
       blocks: [
         {
           type: "p",
-          text: "我们的产品与服务主要面向成年人。如果您未满 18 周岁，请与监护人一起阅读本政策，并在取得监护人同意后再使用我们的服务。",
+          text: "我们的产品与服务主要面向成年人。如果您未满 18 周岁，请和监护人一起阅读本政策，并在取得监护人同意后再使用我们的服务。",
         },
         {
           type: "p",
@@ -762,11 +762,11 @@ const zh: PolicyContent = {
       blocks: [
         {
           type: "p",
-          text: "本隐私政策可能会不定期更新。请您定期查阅，以了解我们如何保护所收集的个人信息。您继续使用 Blotz 服务，即表示接受本隐私政策及其更新版本。",
+          text: "本隐私政策可能会不定期更新，请您定期查阅，了解我们如何保护所收集的个人信息。您继续使用 Blotz 服务，即表示接受本隐私政策及其更新版本。",
         },
         {
           type: "p",
-          text: "对于重大变更，我们还可能通过更显著的方式告知您具体的变更内容。重大变更包括但不限于：",
+          text: "遇到重大变更，我们还可能用更显眼的方式告诉您具体改了什么。重大变更包括但不限于：",
         },
         {
           type: "ul",
