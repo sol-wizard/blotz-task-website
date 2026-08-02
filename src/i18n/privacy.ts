@@ -198,14 +198,11 @@ const en: PolicyContent = {
       blocks: [
         {
           type: "p",
-          text: "Keeping your information safe is our job. We follow applicable laws and take practical steps to stop anyone from reading, leaking, changing, or losing your information without permission.",
+          text: "Our backend services and database are hosted on Microsoft Azure, so the data centres, the network, and the infrastructure they run on are secured by Microsoft. Sensitive configuration such as access keys is held in Azure Key Vault rather than in our code.",
         },
         {
-          type: "ul",
-          items: [
-            "<strong>On the way to us:</strong> everything sent between the app and our servers is scrambled, the same way online banking is, so it cannot be read if someone intercepts it. The technology is called SSL/TLS.",
-            "<strong>Once it is stored:</strong> your data stays encrypted on our servers, so it is not readable as plain text.",
-          ],
+          type: "p",
+          text: "Your data is encrypted on the way between the app and our servers, and encrypted again while it sits on those servers.",
         },
       ],
     },
@@ -501,14 +498,11 @@ const zh: PolicyContent = {
       blocks: [
         {
           type: "p",
-          text: "保管好您的信息是我们的分内事。我们会遵守相关法律，并采取实际有效的措施，防止您的信息被人擅自查看、泄露、篡改或弄丢。",
+          text: "我们的后台服务和数据库都托管在微软 Azure 上，机房、网络和底层基础设施的安全由微软负责。访问密钥这类敏感配置存放在 Azure 密钥保管库里，不写在代码中。",
         },
         {
-          type: "ul",
-          items: [
-            "<strong>传输途中：</strong>应用和我们服务器之间来回传送的内容都是加密的，和网上银行一样，即使中途被人截获也看不懂。这项技术叫 SSL/TLS。",
-            "<strong>存储之后：</strong>存放在服务器上的数据同样是加密的，不会以能直接读懂的形式保存。",
-          ],
+          type: "p",
+          text: "您的数据在应用和我们服务器之间传输时是加密的，存放在服务器上时同样是加密的。",
         },
       ],
     },
