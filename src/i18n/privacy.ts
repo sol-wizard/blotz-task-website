@@ -218,8 +218,7 @@ const en: PolicyContent = {
         {
           type: "ul",
           items: [
-            "<strong>Profile information:</strong> Go to Settings &gt; Account to view or change your avatar, nickname, email account, and login password.",
-            "<strong>Search history:</strong> Open search to see or clear your recent search keywords.",
+            "<strong>Profile information:</strong> Change your display name in Settings &gt; Account, and pick a different avatar in Settings &gt; Avatar. Your email address is shown on the account screen but cannot be changed in the app.",
           ],
         },
         { type: "h3", text: "B. Deletion" },
@@ -515,8 +514,7 @@ const zh: PolicyContent = {
         {
           type: "ul",
           items: [
-            "<strong>个人资料：</strong>进入「设置 &gt; 账户」查看或修改头像、昵称、邮箱账号和登录密码。",
-            "<strong>搜索记录：</strong>打开搜索即可查看或清除最近的搜索关键词。",
+            "<strong>个人资料：</strong>在「设置 &gt; 账户」修改昵称，在「设置 &gt; 头像」更换头像。邮箱地址可以在账户页看到，但不能在应用内修改。",
           ],
         },
         { type: "h3", text: "B. 删除" },
