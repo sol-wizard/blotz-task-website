@@ -188,7 +188,7 @@ const en: PolicyContent = {
         },
         {
           type: "p",
-          text: "Some features send data overseas. AI features use Microsoft Azure OpenAI hosted in US East, and usage analytics are processed on servers located in the United States. In each case we send only the information described in the relevant section above, and we comply with applicable legal requirements and protect the security of your personal information.",
+          text: "Some features send data overseas: AI content is processed by Microsoft Azure OpenAI, voice recordings are transcribed by Groq, and usage analytics are processed on servers outside Australia. In each case we send only the information described in the relevant section above, and we comply with applicable legal requirements and protect the security of your personal information.",
         },
       ],
     },
@@ -500,7 +500,7 @@ const zh: PolicyContent = {
         },
         {
           type: "p",
-          text: "有些功能会把数据传到境外：您打字输入的 AI 内容由位于美国东部的微软 Azure OpenAI 处理，语音录音由 Groq 在美国转写，使用分析在位于美国的服务器上处理。这几种情况下，我们只传输上文相应章节写明的信息，并会遵守适用的法律要求、保护您个人信息的安全。",
+          text: "有些功能会把数据传到境外：AI 内容由微软 Azure OpenAI 处理，语音录音由 Groq 转写，使用分析也在境外的服务器上处理。这几种情况下，我们只传输上文相应章节写明的信息，并会遵守适用的法律要求、保护您个人信息的安全。",
         },
       ],
     },
