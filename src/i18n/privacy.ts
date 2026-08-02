@@ -224,19 +224,6 @@ const en: PolicyContent = {
         { type: "h3", text: "B. Deletion" },
         {
           type: "p",
-          text: "You may ask us to delete your personal information in these situations:",
-        },
-        {
-          type: "ul",
-          items: [
-            "If our processing breaks laws or regulations",
-            "If we collected or used your personal information without your consent where consent is required",
-            "If you no longer use our products or services, or you have closed your account",
-            "If we no longer provide products or services to you",
-          ],
-        },
-        {
-          type: "p",
           text: "You can delete your account and all the personal data that goes with it in Settings &gt; Account &gt; Delete Account. After that, we stop providing services and delete your personal information as you asked, unless the law says otherwise.",
         },
         { type: "h3", text: "C. Changing the Scope of Consent" },
@@ -518,16 +505,6 @@ const zh: PolicyContent = {
           ],
         },
         { type: "h3", text: "B. 删除" },
-        { type: "p", text: "在以下情况下，您可以要求我们删除您的个人信息：" },
-        {
-          type: "ul",
-          items: [
-            "我们的处理行为违反法律法规",
-            "在需要同意的情况下，我们未经您的同意收集或使用您的个人信息",
-            "您不再使用我们的产品或服务，或您已注销账号",
-            "我们不再向您提供产品或服务",
-          ],
-        },
         {
           type: "p",
           text: "您可以在「设置 &gt; 账户 &gt; 删除账户」里删除账号和与之相关的全部个人数据。删除之后，我们会停止提供服务，并按您的要求删除您的个人信息，法律另有规定的除外。",
