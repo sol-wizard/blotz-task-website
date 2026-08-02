@@ -201,10 +201,6 @@ const en: PolicyContent = {
           text: "Keeping your information safe is our job. We follow applicable laws and take practical steps to stop anyone from reading, leaking, changing, or losing your information without permission.",
         },
         {
-          type: "p",
-          text: "In practice, that means three things:",
-        },
-        {
           type: "ul",
           items: [
             "<strong>On the way to us:</strong> everything sent between the app and our servers is scrambled, the same way online banking is, so it cannot be read if someone intercepts it. The technology is called SSL/TLS.",
@@ -511,10 +507,6 @@ const zh: PolicyContent = {
         {
           type: "p",
           text: "保管好您的信息是我们的分内事。我们会遵守相关法律，并采取实际有效的措施，防止您的信息被人擅自查看、泄露、篡改或弄丢。",
-        },
-        {
-          type: "p",
-          text: "具体来说，我们做了三件事：",
         },
         {
           type: "ul",
