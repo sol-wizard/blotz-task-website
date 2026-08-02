@@ -198,11 +198,11 @@ const en: PolicyContent = {
       blocks: [
         {
           type: "p",
-          text: "Our backend services and database are hosted on Microsoft Azure, so the data centres, the network, and the infrastructure they run on are secured by Microsoft. Sensitive configuration such as access keys is held in Azure Key Vault rather than in our code.",
+          text: "Our backend services and database are hosted on Microsoft Azure, so the servers they run on and the network around them are looked after by Microsoft.",
         },
         {
           type: "p",
-          text: "Your data is encrypted on the way between the app and our servers, and encrypted again while it sits on those servers.",
+          text: "Your data is encrypted while it travels between the app and our servers, and while it sits on them.",
         },
       ],
     },
@@ -498,11 +498,11 @@ const zh: PolicyContent = {
       blocks: [
         {
           type: "p",
-          text: "我们的后台服务和数据库都托管在微软 Azure 上，机房、网络和底层基础设施的安全由微软负责。访问密钥这类敏感配置存放在 Azure 密钥保管库里，不写在代码中。",
+          text: "我们的后台服务和数据库都托管在微软 Azure 上，服务器和网络层面的安全由微软负责。",
         },
         {
           type: "p",
-          text: "您的数据在应用和我们服务器之间传输时是加密的，存放在服务器上时同样是加密的。",
+          text: "您的数据在传输过程中和存放在服务器上时都是加密的。",
         },
       ],
     },
