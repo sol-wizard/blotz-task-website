@@ -156,45 +156,19 @@ const en: PolicyContent = {
     },
     {
       id: "section-2",
-      title: "2. How We Share, Transfer, and Publicly Disclose Your Personal Information",
+      title: "2. Whether We Give Your Information to Anyone Else",
       blocks: [
-        { type: "h3", text: "A. Sharing" },
         {
           type: "p",
-          text: "We do not share your personal information with other companies, organizations, or individuals without your consent, except in these cases:",
+          text: "We do not sell your personal information to anyone, and we do not hand it out for advertising or for anything unrelated to running Blotz.",
         },
-        {
-          type: "ul",
-          items: [
-            "<strong>With your explicit consent or authorization:</strong> Once you have explicitly authorized it, we may share your personal information with other parties, including AI service providers such as Microsoft Azure OpenAI.",
-            "<strong>With service providers acting on our behalf:</strong> We share limited information with the service providers described in this Policy so they can do that work for us. They may not use your information for their own purposes.",
-            "<strong>Where required by law:</strong> We may share your personal information when laws and regulations require it, to resolve a dispute, or in response to a mandatory request or judicial decision from a competent authority.",
-            "<strong>To protect legitimate interests:</strong> We may give your personal information to a third party where that is necessary to protect Blotz, our users, or the public from harm to rights, property, or safety.",
-          ],
-        },
-        { type: "h3", text: "B. Transfer" },
         {
           type: "p",
-          text: "We do not transfer your personal information to any company, organization, or individual without your consent, except in these cases:",
+          text: "Apart from the service providers named in this Policy, which only handle it on our behalf, we do not share your information with other companies, organisations, or individuals, and we do not make it public.",
         },
-        {
-          type: "ul",
-          items: [
-            "With your explicit consent or authorization",
-            "In a merger, acquisition, or bankruptcy liquidation, in which case we will require the new holder of your personal information to stay bound by this Policy",
-          ],
-        },
-        { type: "h3", text: "C. Public Disclosure" },
         {
           type: "p",
-          text: "We do not publicly disclose your personal information without your consent, except in these cases:",
-        },
-        {
-          type: "ul",
-          items: [
-            "With your explicit consent or authorization",
-            "Where required by law, legal process, litigation, or a mandatory request from a competent authority, in which case we will apply security measures that meet legal and industry standards",
-          ],
+          text: "Two things could change that. The law can compel us, through a court decision or a binding demand from an authority. And if Blotz is ever merged, acquired, or wound up, your information may pass to whoever takes over, and we will require them to stay bound by this Policy.",
         },
       ],
     },
@@ -494,45 +468,19 @@ const zh: PolicyContent = {
     },
     {
       id: "section-2",
-      title: "2. 我们如何共享、转让、公开披露您的个人信息",
+      title: "2. 我们会不会把您的信息给别人",
       blocks: [
-        { type: "h3", text: "A. 共享" },
         {
           type: "p",
-          text: "未经您的同意，我们不会与其他公司、组织或个人共享您的个人信息，以下情况除外：",
+          text: "我们不会把您的个人信息卖给任何人，也不会拿去做广告，或用在与 Blotz 运营无关的地方。",
         },
-        {
-          type: "ul",
-          items: [
-            "<strong>在获得您的明确同意或授权后：</strong>取得您的明确授权后，我们可能会与其他方共享您的个人信息，包括微软 Azure OpenAI 等 AI 服务提供商。",
-            "<strong>代表我们提供服务的服务商：</strong>我们会与本政策中提到的服务商共享有限的信息，好让他们替我们完成这部分工作。他们不得把您的信息用于自身目的。",
-            "<strong>法律法规要求时：</strong>在法律法规要求、解决争议，或应主管机关的强制性要求或司法裁决时，我们可能会共享您的个人信息。",
-            "<strong>为保护合法权益：</strong>为保护 Blotz、我们的用户或公众的权利、财产或安全免受损害而确有必要时，我们可能会向第三方提供您的个人信息。",
-          ],
-        },
-        { type: "h3", text: "B. 转让" },
         {
           type: "p",
-          text: "未经您的同意，我们不会把您的个人信息转让给任何公司、组织或个人，以下情况除外：",
+          text: "除了本政策中写明的那几家服务商（他们只是代我们处理），我们不会把您的信息共享给其他公司、组织或个人，也不会对外公开。",
         },
-        {
-          type: "ul",
-          items: [
-            "在获得您的明确同意或授权后",
-            "在涉及合并、收购或破产清算时，我们会要求个人信息的新持有者继续受本政策约束",
-          ],
-        },
-        { type: "h3", text: "C. 公开披露" },
         {
           type: "p",
-          text: "未经您的同意，我们不会公开披露您的个人信息，以下情况除外：",
-        },
-        {
-          type: "ul",
-          items: [
-            "在获得您的明确同意或授权后",
-            "在法律、法律程序、诉讼或主管机关强制要求的情况下，此时我们会采取符合法律和行业标准的安全措施",
-          ],
+          text: "只有两种情况例外。一是法律强制要求，例如法院裁决或主管机关的强制性要求；二是 Blotz 发生合并、收购或破产清算，您的信息可能转到接手的一方，我们会要求对方继续受本政策约束。",
         },
       ],
     },
