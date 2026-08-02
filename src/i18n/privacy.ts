@@ -205,12 +205,7 @@ const en: PolicyContent = {
           items: [
             "<strong>On the way to us:</strong> everything sent between the app and our servers is scrambled, the same way online banking is, so it cannot be read if someone intercepts it. The technology is called SSL/TLS.",
             "<strong>Once it is stored:</strong> your data stays encrypted on our servers, so it is not readable as plain text.",
-            "<strong>Inside our team:</strong> only the people who genuinely need access to do their job can reach your information.",
           ],
-        },
-        {
-          type: "p",
-          text: "If something does go wrong and your information is exposed, we will tell you as quickly as the law requires: what happened, how it may affect you, what we have already done and plan to do about it, and what you can do to protect yourself. We will usually reach you by email or a notification in the app.",
         },
       ],
     },
@@ -513,12 +508,7 @@ const zh: PolicyContent = {
           items: [
             "<strong>传输途中：</strong>应用和我们服务器之间来回传送的内容都是加密的，和网上银行一样，即使中途被人截获也看不懂。这项技术叫 SSL/TLS。",
             "<strong>存储之后：</strong>存放在服务器上的数据同样是加密的，不会以能直接读懂的形式保存。",
-            "<strong>团队内部：</strong>只有工作上确实需要的同事才能接触到您的信息。",
           ],
-        },
-        {
-          type: "p",
-          text: "万一真的出了问题、您的信息被泄露，我们会在法律要求的时间内尽快告诉您：发生了什么、可能对您有什么影响、我们已经做了和接下来要做什么，以及您自己可以怎么防范。我们通常会通过邮件或应用内通知联系您。",
         },
       ],
     },
