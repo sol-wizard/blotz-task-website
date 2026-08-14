@@ -1,0 +1,189 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { Icon } from 'astro-icon/components';
+
+type GuideSection = {
+  title: string;
+  body: string;
+  points?: string[];
+};
+
+type GuideFaq = {
+  question: string;
+  answer: string;
+};
+
+interface Props {
+  slug: string;
+  title: string;
+  description: string;
+  eyebrow: string;
+  h1: string;
+  intro: string;
+  sections: GuideSection[];
+  faqs: GuideFaq[];
+  related: { label: string; href: string }[];
+}
+
+const {
+  slug,
+  title,
+  description,
+  eyebrow,
+  h1,
+  intro,
+  sections,
+  faqs,
+  related,
+} = Astro.props;
+
+const locale = Astro.currentLocale === 'zh' ? 'zh' : 'en';
+const copy = locale === 'zh'
+  ? {
+      officialSite: 'BlotzTask 官方网站',
+      download: '下载 BlotzTask',
+      seeFeatures: '查看功能',
+      contentLabel: '指南内容',
+      faqTitle: '常见问题',
+      relatedTitle: '相关 BlotzTask 指南',
+    }
+  : {
+      officialSite: 'BlotzTask official site',
+      download: 'Download BlotzTask',
+      seeFeatures: 'See features',
+      contentLabel: 'Guide content',
+      faqTitle: 'Questions people ask about this',
+      relatedTitle: 'Related BlotzTask guides',
+    };
+const canonical = `https://www.blotztask.com/${locale}/${slug}/`;
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: h1,
+    description,
+    url: canonical,
+    author: {
+      '@type': 'Organization',
+      name: 'BlotzTask',
+      url: 'https://www.blotztask.com/',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'BlotzTask',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://www.blotztask.com/shared-pic/bun-icon.png',
+      },
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.answer,
+      },
+    })),
+  },
+];
+---
+
+<Layout title={title} description={description} jsonLd={jsonLd}>
+  <main class="guide-page">
+    <section class="guide-hero">
+      <div class="guide-hero-inner">
+        <a class="guide-back" href={`/${locale}/`}>
+          <Icon name="lucide:arrow-left" width={17} height={17} />
+          <span>{copy.officialSite}</span>
+        </a>
+        <p class="guide-eyebrow">{eyebrow}</p>
+        <h1>{h1}</h1>
+        <p class="guide-intro">{intro}</p>
+        <div class="guide-actions">
+          <a class="guide-primary" href={`/${locale}/#download`}>{copy.download}</a>
+          <a class="guide-secondary" href={`/${locale}/#features`}>{copy.seeFeatures}</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="guide-content" aria-label={copy.contentLabel}>
+      {sections.map((section) => (
+        <article class="guide-section">
+          <h2>{section.title}</h2>
+          <p>{section.body}</p>
+          {section.points && (
+            <ul>
+              {section.points.map((point) => <li>{point}</li>)}
+            </ul>
+          )}
+        </article>
+      ))}
+    </section>
+
+    <section class="guide-faq" aria-labelledby="guide-faq-title">
+      <div class="guide-faq-inner">
+        <h2 id="guide-faq-title">{copy.faqTitle}</h2>
+        <div class="guide-faq-list">
+          {faqs.map((item) => (
+            <details>
+              <summary>{item.question}</summary>
+              <p>{item.answer}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="guide-related" aria-labelledby="guide-related-title">
+      <div class="guide-related-inner">
+        <h2 id="guide-related-title">{copy.relatedTitle}</h2>
+        <div class="guide-related-grid">
+          {related.map((item) => (
+            <a href={item.href}>
+              <span>{item.label}</span>
+              <Icon name="lucide:arrow-right" width={17} height={17} />
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  .guide-page { background: #fff; }
+  .guide-hero { background: linear-gradient(135deg, #eaf8c7 0%, #edf6ff 62%, #d5e9ff 100%); padding: 8.25rem 1.5rem 5rem; }
+  .guide-hero-inner { max-width: 920px; margin: 0 auto; }
+  .guide-back { display: inline-flex; align-items: center; gap: 0.45rem; color: #1e2140; text-decoration: none; font-weight: 900; margin-bottom: 1.4rem; }
+  .guide-eyebrow { color: #4d7d09; font-size: 0.8rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.8rem; }
+  .guide-hero h1 { color: var(--text); font-size: clamp(2.35rem, 5vw, 4.4rem); line-height: 1.04; max-width: 850px; margin-bottom: 1.2rem; }
+  .guide-intro { color: #374151; max-width: 760px; font-size: 1.16rem; line-height: 1.75; }
+  .guide-actions { display: flex; flex-wrap: wrap; gap: 0.9rem; margin-top: 2rem; }
+  .guide-primary, .guide-secondary { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0.8rem 1.2rem; border-radius: 16px; font-weight: 900; text-decoration: none; }
+  .guide-primary { color: #fff; background: linear-gradient(135deg, var(--green), var(--blue)); box-shadow: 0 16px 34px -18px rgba(52,134,243,0.85); }
+  .guide-secondary { color: var(--text); background: rgba(255,255,255,0.72); border: 1px solid rgba(30,33,64,0.08); }
+  .guide-content { max-width: 920px; margin: 0 auto; padding: 4.5rem 1.5rem 2rem; display: grid; gap: 1.35rem; }
+  .guide-section { border-bottom: 1px solid rgba(30,33,64,0.08); padding-bottom: 1.35rem; }
+  .guide-section h2 { color: var(--text); font-size: clamp(1.45rem, 2.6vw, 2rem); line-height: 1.18; margin-bottom: 0.75rem; }
+  .guide-section p, .guide-section li { color: #374151; font-size: 1.02rem; line-height: 1.78; }
+  .guide-section ul { display: grid; gap: 0.55rem; margin: 0.85rem 0 0; padding-left: 1.25rem; }
+  .guide-faq { background: #f8fafc; padding: 4rem 1.5rem; }
+  .guide-faq-inner, .guide-related-inner { max-width: 920px; margin: 0 auto; }
+  .guide-faq h2, .guide-related h2 { color: var(--text); font-size: clamp(1.6rem, 3vw, 2.2rem); margin-bottom: 1.4rem; }
+  .guide-faq-list { display: grid; gap: 0.8rem; }
+  .guide-faq details { background: #fff; border: 1px solid rgba(30,33,64,0.08); border-radius: 16px; padding: 1rem 1.1rem; }
+  .guide-faq summary { cursor: pointer; color: var(--text); font-weight: 900; }
+  .guide-faq details p { color: #4b5563; line-height: 1.7; margin-top: 0.7rem; }
+  .guide-related { padding: 4rem 1.5rem 5rem; }
+  .guide-related-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+  .guide-related-grid a { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 88px; border-radius: 18px; padding: 1rem; color: var(--text); text-decoration: none; font-weight: 900; border: 1px solid rgba(30,33,64,0.08); background: #fff; box-shadow: 0 16px 42px -34px rgba(30,33,64,0.55); }
+  .guide-related-grid svg { color: var(--blue); flex: 0 0 auto; }
+  @media (max-width: 820px) {
+    .guide-hero { padding-top: 7.5rem; }
+    .guide-related-grid { grid-template-columns: 1fr; }
+  }
+</style>

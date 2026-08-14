@@ -10,6 +10,10 @@ const paths = [
   '/privacy',
   '/roadmap',
   '/sponsor',
+  '/adhd-task-management-app',
+  '/ai-task-breakdown',
+  '/voice-to-task-app',
+  '/deadline-tracker-for-adhd',
 ] as const;
 
 const priorities: Record<string, string> = {
@@ -22,6 +26,10 @@ const priorities: Record<string, string> = {
   '/privacy': '0.3',
   '/roadmap': '0.5',
   '/sponsor': '0.5',
+  '/adhd-task-management-app': '0.7',
+  '/ai-task-breakdown': '0.7',
+  '/voice-to-task-app': '0.7',
+  '/deadline-tracker-for-adhd': '0.7',
 };
 
 const today = new Date().toISOString().slice(0, 10);
@@ -45,7 +53,6 @@ export function GET() {
       const loc = new URL(pathname, siteUrl).toString();
       const enHref = new URL(`/en${suffix}/`, siteUrl).toString();
       const zhHref = new URL(`/zh${suffix}/`, siteUrl).toString();
-
       return `
   <url>
     <loc>${loc}</loc>

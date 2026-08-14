@@ -7,6 +7,7 @@ interface Props {
   description?: string;
   image?: string;
   noindex?: boolean;
+  alternateLocales?: boolean;
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 }
 
@@ -16,6 +17,7 @@ const {
   description = 'BlotzTask is an ADHD-friendly task management app that helps you capture tasks, break work into clear steps, manage deadlines, and plan with less overwhelm.',
   image = '/og-image.svg',
   noindex = false,
+  alternateLocales = true,
   jsonLd,
 } = Astro.props;
 const locale = Astro.currentLocale ?? 'en';
@@ -41,13 +43,13 @@ const alternateLocale = locale === 'zh' ? 'en_US' : 'zh_CN';
   <meta name="description" content={description} />
   {noindex && <meta name="robots" content="noindex,follow" />}
   <link rel="canonical" href={canonicalUrl} />
-  <link rel="alternate" hreflang="en" href={enUrl} />
-  <link rel="alternate" hreflang="zh" href={zhUrl} />
-  <link rel="alternate" hreflang="x-default" href={xDefaultUrl} />
+  {alternateLocales && <link rel="alternate" hreflang="en" href={enUrl} />}
+  {alternateLocales && <link rel="alternate" hreflang="zh" href={zhUrl} />}
+  {alternateLocales && <link rel="alternate" hreflang="x-default" href={xDefaultUrl} />}
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="BlotzTask" />
   <meta property="og:locale" content={ogLocale} />
-  <meta property="og:locale:alternate" content={alternateLocale} />
+  {alternateLocales && <meta property="og:locale:alternate" content={alternateLocale} />}
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
   <meta property="og:url" content={canonicalUrl} />
