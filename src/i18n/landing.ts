@@ -13,7 +13,7 @@ export const ui = {
     "nav-cta": "Be our sponsor",
     "hero-eyebrow": "Used by 3,000+ people",
     "hero-title": "BlotzTask Official Website for ADHD task management",
-    "hero-sub": "BlotzTask is the official website for the ADHD-friendly AI task management app. Capture tasks by voice, let AI break them into clear steps, and finally beat the blank-page freeze.",
+    "hero-sub": "This is the official BlotzTask website for the ADHD-friendly AI task management app. Capture tasks by voice, let AI break them into clear steps, and finally beat the blank-page freeze.",
     "hero-download-cta": "Download the app",
     "dl-ios-s": "Download on the",
     "dl-and-s": "Get it on",
@@ -73,8 +73,8 @@ export const ui = {
     "nav-cta": "成为合作伙伴",
 
     "hero-eyebrow": "已有 3,000+ 用户加入",
-    "hero-title": "AI 任务管理，专为 ADHD 大脑打造",
-    "hero-sub": "语音随口一说，AI 帮你拆解成清晰步骤，跟「看到任务就脑子卡壳」说拜拜。",
+    "hero-title": "BlotzTask 官方网站 | ADHD AI 任务管理 App",
+    "hero-sub": "这里是 BlotzTask 官方网站。BlotzTask 是一款 ADHD 友好的 AI 任务管理 App，支持语音记录、AI 任务拆解、待办事项整理和截止日期提醒，让计划更清晰、更容易开始。",
     "hero-download-cta": "立即下载",
 
     "dl-ios-s": "App Store 下载",

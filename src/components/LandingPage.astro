@@ -89,8 +89,8 @@ const featureIconMarks = [
 
 const seo = locale === 'zh'
   ? {
-      title: 'BlotzTask | ADHD 任务管理 App 与 AI 待办事项工具',
-      description: 'BlotzTask 是 ADHD 友好的 AI 任务管理 App，支持语音创建待办事项、AI 任务拆解、截止日期提醒和成果回顾，帮助你更轻松地开始任务。',
+      title: 'BlotzTask 官方网站 | ADHD 任务管理 App 与 AI 待办事项工具',
+      description: 'BlotzTask 官方网站。BlotzTask 是 ADHD 友好的 AI 任务管理 App，支持语音创建待办事项、AI 任务拆解、截止日期提醒和成果回顾，帮助你更轻松地开始任务。',
     }
   : {
       title: 'BlotzTask Official Website | ADHD Task Management App',
@@ -173,41 +173,55 @@ const faqItems = faqEntries.map((item) => ({
   },
 }));
 
-const pageUrl = new URL(Astro.url.pathname, 'https://www.blotztask.com').toString();
+const siteUrl = 'https://www.blotztask.com/';
+const organizationId = 'https://www.blotztask.com/#organization';
+const websiteId = 'https://www.blotztask.com/#website';
+const appId = 'https://www.blotztask.com/#app';
+const appStoreUrl = 'https://apps.apple.com/au/app/blotztask-adhd-time-manager/id6752492404';
+const googlePlayUrl = 'https://play.google.com/store/apps/details?id=com.blotz.blotztask&hl=en';
+const pageUrl = new URL(Astro.url.pathname, siteUrl).toString();
 
 const jsonLd = [
   {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
+    '@id': websiteId,
     name: 'BlotzTask',
-    url: pageUrl,
-    inLanguage: locale,
+    alternateName: ['Blotz Task', 'BlotzTask official website'],
+    url: siteUrl,
+    publisher: { '@id': organizationId },
+    inLanguage: ['en', 'zh'],
   },
   {
     '@context': 'https://schema.org',
     '@type': 'Organization',
+    '@id': organizationId,
     name: 'BlotzTask',
-    url: 'https://www.blotztask.com/',
+    alternateName: ['Blotz Task', 'Blotz'],
+    url: siteUrl,
     logo: 'https://www.blotztask.com/shared-pic/bun-icon.png',
     sameAs: [
-      'https://apps.apple.com/au/app/blotztask-adhd-time-manager/id6752492404',
-      'https://play.google.com/store/apps/details?id=com.blotz.blotztask&hl=en',
+      appStoreUrl,
+      googlePlayUrl,
       'https://www.instagram.com/blotztask.app/',
       'https://www.linkedin.com/company/blotz-app/',
+      'https://www.xiaohongshu.com/user/profile/67bc12d6000000000e01f09a',
     ],
   },
   {
     '@context': 'https://schema.org',
     '@type': ['SoftwareApplication', 'MobileApplication'],
+    '@id': appId,
     name: 'BlotzTask',
-    applicationCategory: 'UtilitiesApplication',
+    alternateName: ['Blotz Task', 'BlotzTask ADHD time manager'],
+    applicationCategory: 'ProductivityApplication',
     operatingSystem: 'iOS, Android',
+    publisher: { '@id': organizationId },
     description: seo.description,
-    url: pageUrl,
-    downloadUrl: [
-      'https://apps.apple.com/au/app/blotztask-adhd-time-manager/id6752492404',
-      'https://play.google.com/store/apps/details?id=com.blotz.blotztask&hl=en',
-    ],
+    url: siteUrl,
+    mainEntityOfPage: pageUrl,
+    sameAs: [appStoreUrl, googlePlayUrl],
+    downloadUrl: [appStoreUrl, googlePlayUrl],
     keywords: locale === 'zh'
       ? 'ADHD 任务管理 App, AI 任务管理, ADHD 待办事项 App, 任务拆解 App, 截止日期提醒'
       : 'ADHD task management app, AI task management, ADHD to-do app, task breakdown app, deadline reminder app',
