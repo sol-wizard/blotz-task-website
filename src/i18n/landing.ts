@@ -10,25 +10,26 @@ export const ui = {
     "nav-about": "Our team",
     "nav-roadmap": "Roadmap",
     "nav-join": "Join us",
-    "nav-cta": "Be our sponsor",
+    "nav-sponsor": "Be our sponsor",
+    "nav-cta": "Download",
     "hero-eyebrow": "Used by 3,000+ people",
-    "hero-title": "BlotzTask Official Website for ADHD task management",
-    "hero-sub": "This is the official BlotzTask website for the ADHD-friendly AI task management app. Capture tasks by voice, let AI break them into clear steps, and finally beat the blank-page freeze.",
+    "hero-title": "Your AI life planner",
+    "hero-sub": "BlotzTask is an AI task app designed for people with ADHD. Record a task by voice, let AI break a big task into small steps, and get reminded before a deadline.",
     "hero-download-cta": "Download the app",
     "dl-ios-s": "Download on the",
     "dl-and-s": "Get it on",
     "feat-title": "Key Features",
     "feat-sub": "Everything you need to stay on top of your tasks",
     "f1-title": "AI Voice to Task",
-    "f1-desc": "Speak to AI and it creates tasks.",
-    "f2-title": "AI Summary Review",
-    "f2-desc": "AI summarizes your monthly progress, you will suprise by the result.",
+    "f1-desc": "Hold the button and say it. AI saves it as a task with a time.",
+    "f2-title": "AI monthly review",
+    "f2-desc": "Each month AI writes you a letter about what you got done.",
     "f3-title": "Gashapon Picker",
-    "f3-desc": "Not sure what to do? Random it.",
+    "f3-desc": "Draws one idea at random from your Quick Notes. If you like it, start right away.",
     "f4-title": "Quick Notes",
-    "f4-desc": "Catch ideas. Turn them into tasks.",
-    "f5-title": "Deadline Tracker",
-    "f5-desc": "Know what needs attention now.",
+    "f4-desc": "Write an idea down first and turn it into a task when you need to.",
+    "f5-title": "Deadline list",
+    "f5-desc": "Tasks with a deadline sit together in one list, and you can pin the most urgent one.",
     "feedback-title": "We Want to Hear from You",
     "feedback-sub":
       "Help us improve Blotz by sharing your ideas and feedback. Your input shapes the future of AI-powered task management.",
@@ -49,7 +50,7 @@ export const ui = {
     "faq-q4": "Is it only for people with ADHD?",
     "faq-a4": "Not at all! While we design with ADHD in mind — clear layouts, low friction, and smart defaults — anyone who wants to manage tasks more effectively with AI is welcome.",
     "faq-q5": "What platforms is BlotzTask available on?",
-    "faq-a5": "BlotzTask is currently available on iOS (App Store). Android (Google Play) is coming soon, and we're actively working on expanding to platforms in mainland China.",
+    "faq-a5": "BlotzTask is available on iOS (App Store) and Android (Google Play).",
     "cta-title": "Get started — it's free",
     "cta-sub":
       "Download BlotzTask and turn scattered thoughts into a clear, doable plan.",
@@ -58,8 +59,7 @@ export const ui = {
     "footer-privacy": "Privacy Policy",
     "footer-feedback": "Feedback",
     "footer-follow": "Follow Us",
-    "footer-contact": "Contact Support",
-    "footer-copy": "© 2025 BlotzTask. Made with ❤️ for the ADHD community.",
+    "footer-copy": "© 2026 BlotzTask. A task app made for people with ADHD.",
   },
   zh: {
     "nav-home": "首页",
@@ -70,11 +70,12 @@ export const ui = {
     "nav-about": "我们的团队",
     "nav-roadmap": "产品路线图",
     "nav-join": "加入我们",
-    "nav-cta": "成为合作伙伴",
+    "nav-sponsor": "成为合作伙伴",
+    "nav-cta": "下载 App",
 
     "hero-eyebrow": "已有 3,000+ 用户加入",
-    "hero-title": "BlotzTask 官方网站 | ADHD AI 任务管理 App",
-    "hero-sub": "这里是 BlotzTask 官方网站。BlotzTask 是一款 ADHD 友好的 AI 任务管理 App，支持语音记录、AI 任务拆解、待办事项整理和截止日期提醒，让计划更清晰、更容易开始。",
+    "hero-title": "你的 AI 生活规划师",
+    "hero-sub": "BlotzTask 是一款为 ADHD 用户设计的 AI 任务管理 App。你可以用语音记下要做的事，AI 会把大任务拆成小步骤，并在截止日期前提醒你。",
     "hero-download-cta": "立即下载",
 
     "dl-ios-s": "App Store 下载",
@@ -84,19 +85,19 @@ export const ui = {
     "feat-sub": "专注、清晰、有行动力——每一个功能，都是为了帮你把任务完成。",
 
     "f1-title": "AI 语音创建任务",
-    "f1-desc": "说一句，AI 自动整理成任务。",
+    "f1-desc": "按住说一句话，AI 会记成带时间的任务。",
 
-    "f2-title": "AI 成果回顾",
-    "f2-desc": "AI 自动整理每月成果，你会惊讶自己原来完成了这么多。",
+    "f2-title": "AI 月度回顾",
+    "f2-desc": "每个月 AI 会给你写一封回顾信，总结你完成了什么。",
 
-    "f3-title": "扭蛋抽任务",
-    "f3-desc": "不知道先做什么？交给扭蛋机随机决定。",
+    "f3-title": "扭蛋机",
+    "f3-desc": "从随手记里随机抽一件事，愿意做就马上开始。",
 
-    "f4-title": "随手记录",
-    "f4-desc": "灵感先记下来，之后一键变成任务。",
+    "f4-title": "随手记",
+    "f4-desc": "想法先记下来，需要时再变成任务。",
 
-    "f5-title": "截止日期提醒",
-    "f5-desc": "重要任务一目了然，不再错过截止时间。",
+    "f5-title": "截止清单",
+    "f5-desc": "有截止日期的任务集中在一个清单里，最要紧的可以置顶。",
 
     "feedback-title": "你的建议，对我们很重要",
     "feedback-sub":
@@ -130,7 +131,7 @@ export const ui = {
 
     "faq-q5": "目前支持哪些平台？",
     "faq-a5":
-      "目前已上线 iOS（App Store）和 Android（Google Play），我们也正在积极推进中国大陆应用市场的发布。",
+      "目前已上线 iOS（App Store）和 Android（Google Play）。",
 
     "cta-title": "立即开始，免费使用",
     "cta-sub": "下载 BlotzTask，把脑子里的想法，变成真正能完成的任务。",
@@ -140,8 +141,7 @@ export const ui = {
     "footer-privacy": "隐私政策",
     "footer-feedback": "意见反馈",
     "footer-follow": "关注我们",
-    "footer-contact": "联系客服",
-    "footer-copy": "© 2025 BlotzTask. 为 ADHD 用户打造，也适合每一位想高效完成任务的人。",
+    "footer-copy": "© 2026 BlotzTask。给 ADHD 用户做的任务 App。",
   },
 } as const;
 

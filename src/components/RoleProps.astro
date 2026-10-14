@@ -1,0 +1,93 @@
+---
+// What the bun wears for each kitchen job on the Join page, drawn over a <Bun> of the same size
+// (same viewBox as the bun). Every job's pieces carry data-prop="<role index>"; only the ones that
+// match the nearest [data-role] ancestor are shown, so one copy works for the picked bun and for
+// each role's own token.
+//   0 捏褶师傅 / designer   beret and a pencil behind the ear
+//   1 掌柜 / product        瓜皮帽 and an abacus
+//   2 店小二 / marketing    headscarf, a towel over the shoulder, a steamer on a tray
+//   3 面点师傅 / mobile     short chef's hat and a rolling pin
+//   4 调馅师傅 / AI         tall chef's hat, a bowl of filling and a spoon, a spark
+//   5 全能师傅 / full stack a stack of steamers for a hat
+interface Props { class?: string }
+const { class: className = '' } = Astro.props;
+---
+
+<svg class:list={['role-props', className]} viewBox="11 14 43 38" aria-hidden="true">
+  <!-- 0 designer -->
+  <path data-prop="0" class="p-coral" d="M20 21.5c0-4.5 6-6.5 11-6.3 5 .2 10 2.6 9.6 5.8-.2 1.6-3 1.4-6.6 1.1-4.4-.4-9.6.2-14 .6z" />
+  <g data-prop="0" transform="translate(45.5 15.5) rotate(38)">
+    <rect class="p-yellow" x="-2.2" y="0" width="4.4" height="13" rx="0.8" />
+    <rect class="p-coral" x="-2.2" y="0" width="4.4" height="3" rx="0.8" />
+    <path class="p-white" d="M-2.2 13h4.4L0 17.5z" />
+  </g>
+
+  <!-- 1 shopkeeper -->
+  <g data-prop="1"><path class="p-ink" d="M22 22.5Q31 10 40 22.5z" /><circle class="p-coral" cx="31" cy="15" r="1.8" /></g>
+  <g data-prop="1" transform="translate(44.5 31) rotate(8)">
+    <rect class="p-wood" x="0" y="0" width="13" height="10" rx="1.2" />
+    <rect class="p-cream" x="1.5" y="1.5" width="10" height="7" rx="0.6" />
+    <path class="p-line" d="M1.5 3.8h10M1.5 6.3h10" />
+    <g class="p-coral">
+      <circle cx="3.2" cy="3.8" r="1" /><circle cx="5.4" cy="3.8" r="1" /><circle cx="9.6" cy="3.8" r="1" />
+      <circle cx="3.2" cy="6.3" r="1" /><circle cx="7.6" cy="6.3" r="1" /><circle cx="9.8" cy="6.3" r="1" />
+    </g>
+  </g>
+
+  <!-- 2 waiter -->
+  <g data-prop="2">
+    <path class="p-blue" d="M20.5 21.5Q31 16.5 41.5 21.5v3.2Q31 19.7 20.5 24.7z" />
+    <path class="p-blue" d="M41 22l4.6-3 .4 4.2z" />
+    <path class="p-blue" d="M41 23.2l4.2 2.6-1.4 1.8z" />
+  </g>
+  <g data-prop="2">
+    <path class="p-white" d="M14.8 24.8q3.4-2 6.6.2l-.4 15.4q-3.4 1.2-6.8 0z" />
+    <path class="p-line" d="M14.6 35.2q3.4 1 6.8 0M14.6 37.4q3.4 1 6.8 0" />
+    <path class="p-line" d="M15.4 40.8v2M17 41.1v2M18.6 41.1v2M20.2 40.8v2" />
+  </g>
+  <g data-prop="2" transform="translate(50 41) scale(1.35) translate(-50 -41)" style="--sw: 0.9">
+    <path class="p-line" d="M48 31.6q-1.2-1.6 0-3.2M52 31.6q-1.2-1.6 0-3.2" />
+    <path class="p-wood" d="M44.6 34.4q5.4-4.4 10.8 0z" />
+    <path class="p-wood" d="M44.6 40v-5.6h10.8V40z" />
+    <path class="p-line" d="M44.6 37.2h10.8" />
+    <rect class="p-white" x="42.6" y="40" width="14.8" height="2.2" rx="1.1" />
+  </g>
+
+  <!-- 3 pastry chef -->
+  <g data-prop="3"><path class="p-white" d="M25 22c-4 0-4.2-6 0-5.6.2-4.6 6.600-5.4 7.400-2 2-3.200 8-1.400 6.400 2.400 3.200.6 2.600 5.200-.8 5.200z" /><path class="p-line" d="M25.4 20.2h12.6" /></g>
+  <g data-prop="3" transform="translate(44.5 42) rotate(-32)">
+    <rect class="p-wood" x="0" y="-1.8" width="13" height="3.6" rx="1.8" />
+    <rect class="p-wood" x="-3.4" y="-0.8" width="3.6" height="1.6" rx="0.8" />
+    <rect class="p-wood" x="12.8" y="-0.8" width="3.6" height="1.6" rx="0.8" />
+  </g>
+
+  <!-- 4 filling chef -->
+  <g data-prop="4"><path class="p-white" d="M25.5 22.5c-4.5 0-4.6-7.4-.4-7-.6-6.4 4.4-9 7-5.6 2.4-3.6 8.6-1 6.8 4.8 3.4.4 3 7.8-.8 7.8z" /><path class="p-line" d="M25.8 20.4h12.4" /></g>
+  <g data-prop="4">
+    <rect class="p-wood" x="52" y="27" width="1.8" height="11" rx="0.9" transform="rotate(22 52.9 32.5)" />
+    <path class="p-white" d="M44 36.4h13q-.8 7-6.5 7t-6.5-7z" />
+    <ellipse class="p-coral" cx="50.5" cy="36.4" rx="6.5" ry="1.5" />
+  </g>
+  <path data-prop="4" class="p-yellow" d="M15 10q0 4 4 4q-4 0-4 4q0-4-4-4q4 0 4-4z" />
+
+  <!-- 5 all-round chef: steamers stacked into a hat -->
+  <g data-prop="5">
+    <rect class="p-wood" x="22.5" y="18.6" width="19" height="4" rx="1" />
+    <rect class="p-wood" x="23" y="14.8" width="18" height="4" rx="1" />
+    <rect class="p-wood" x="23.5" y="11" width="17" height="4" rx="1" />
+    <path class="p-wood" d="M23.5 11q8.5-5.6 17 0z" />
+    <circle class="p-cream" cx="32" cy="7.6" r="1.3" />
+    <path class="p-line" d="M24.5 20.6h15M25 16.8h14M25.5 13h13" />
+  </g>
+</svg>
+
+<style>
+  .role-props { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+  .role-props * { stroke: var(--ink); stroke-width: var(--sw, 1.2); stroke-linejoin: round; stroke-linecap: round; }
+  [data-prop] { display: none; }
+  :global([data-role='0']) [data-prop='0'], :global([data-role='1']) [data-prop='1'], :global([data-role='2']) [data-prop='2'],
+  :global([data-role='3']) [data-prop='3'], :global([data-role='4']) [data-prop='4'], :global([data-role='5']) [data-prop='5'] { display: inline; }
+  .p-yellow { fill: var(--yellow); } .p-coral { fill: var(--coral); } .p-white { fill: #fff; } .p-lime { fill: var(--lime); }
+  .p-blue { fill: var(--blue); } .p-purple { fill: var(--purple); } .p-ink { fill: var(--ink); } .p-line { fill: none; }
+  .p-wood { fill: #e3a65c; } .p-cream { fill: #fff7e6; }
+</style>

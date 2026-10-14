@@ -1,0 +1,319 @@
+---
+// 进群以后有这些: the fan group told as the counter of a bun shop. Fans are the regulars; each one walks
+// up, says something, and the shopkeeper answers. Each little exchange is one thing the group gets:
+// 1 tell us what is off, 2 taste new flavours first (test builds), 3 hear what is next, 4 a regulars' badge.
+// The four menu boards under the scene say the same thing in words, and pressing one plays it.
+import { Icon } from 'astro-icon/components';
+import Bun from './Bun.astro';
+
+const locale = Astro.currentLocale ?? 'zh';
+const zh = locale === 'zh';
+const c = zh
+  ? {
+      title: '粉丝[特别福利]',
+      sub: '把粉丝团当成一家包子铺，你是常来的熟客。',
+      sign: '包子铺',
+      menu: ['肉包', '菜包', '新口味'],
+      badge: '熟',
+      newTag: '新',
+      moments: [
+        { title: 'App 好不好用，直接说', desc: '做 App 的人都在群里。哪里不顺手，说一声，我们马上改。', guest: '这个包子有点咸。', keeper: '记下了，下一锅改！' },
+        { title: '新功能，熟客先尝', desc: '还没上线的新功能，测试版先发到群里。', guest: '有新口味吗？', keeper: '刚出锅，你先尝！' },
+        { title: '先知道下个版本做什么', desc: 'App 下一版做什么、改了什么，都先在群里说。', guest: '下周出什么包子？', keeper: '下周出流沙包，嘘～' },
+        { title: '粉丝团徽章，进群就送', desc: '一枚只有粉丝团才有的徽章。以后还有别的，现在先不说。', guest: '我又来啦！', keeper: '送你一块熟客牌！' },
+      ],
+      play: '看这一幕：{title}',
+      more: '聊得来的话，说不定会请你进后厨。',
+      moreLink: '看看包子厨房在招谁',
+    }
+  : {
+      title: 'Perks just for [fans]',
+      sub: 'Think of the fan group as a bun shop, and you are one of the regulars.',
+      sign: 'Bun Shop',
+      menu: ['Pork', 'Veg', 'New!'],
+      badge: 'VIP',
+      newTag: 'New',
+      moments: [
+        { title: 'Tell us what is off in the app', desc: 'The people who build BlotzTask are in the group. Tell us what feels clumsy and we fix it.', guest: 'Bit salty, this one.', keeper: 'Noted. Fixed next batch!' },
+        { title: 'New features, regulars first', desc: 'Features that are not out yet go to the group as a test build first.', guest: 'Any new flavours?', keeper: 'Fresh out. Try it first!' },
+        { title: 'Hear about the next version', desc: 'What the next version of the app brings and what just changed, the group hears first.', guest: 'What is next week?', keeper: 'Custard buns. Shh!' },
+        { title: 'A fan group badge', desc: 'A badge only the fan group has. More later, not saying what yet.', guest: 'I am back again!', keeper: 'Here is your regulars’ badge!' },
+      ],
+      play: 'Play this moment: {title}',
+      more: 'If we get along, we might ask you into the kitchen.',
+      moreLink: 'See who the bun kitchen needs',
+    };
+const hl = (text: string) => text.split(/\[|\]/);
+// the four regulars, in the order they come up to the counter
+const guests = [
+  { tone: 'pink' as const, face: 'plain' as const },
+  { tone: 'sky' as const, face: 'grin' as const },
+  { tone: 'lime' as const, face: 'smile' as const },
+  { tone: 'lilac' as const, face: 'happy' as const },
+];
+// where regular i stands while regular n is being served (the page opens on moment 2 without the script)
+const spot = (i: number, n: number) => (i < n ? 'is-served' : i === n ? 'at-counter' : `in-line-${Math.min(3, i - n)}`);
+---
+
+<section class="band">
+  <div class="wrap">
+    <h2 class="k-h2 k-center reveal">{hl(c.title).map((part, i) => (i % 2 ? <span class="k-hl">{part}</span> : part))}</h2>
+    <p class="k-lead k-center sub reveal">{c.sub}</p>
+
+    <div data-shop>
+      <div class="view reveal" aria-hidden="true">
+        <div class="world" data-world data-step="2">
+          <span class="awning"></span>
+          <span class="sign"><span class="sign-text">{c.sign}</span></span>
+          <span class:list={['menu', !zh && 'is-latin']}>{c.menu.map((item, i) => <span class:list={['menu-tag', i === c.menu.length - 1 && 'is-new']}>{item}</span>)}</span>
+
+          <span class="keeper fig">
+            <Bun face="smile" tone="cream" />
+            <svg class="glasses" viewBox="0 0 40 14"><circle cx="10" cy="7" r="5.5" /><circle cx="30" cy="7" r="5.5" /><path d="M15.5 7h9" /></svg>
+            <svg class="keeper-cap" viewBox="11 14 43 38"><path class="cap" d="M22 22.5Q31 10 40 22.5z" /><circle class="knob" cx="31" cy="15" r="1.8" /></svg>
+          </span>
+          <span class="counter"><span class="counter-top"></span><span class="counter-sign">{c.sign}</span></span>
+          <span class="steamer">
+            <span class="steam"><i></i><i></i><i></i></span>
+            <span class="basket lid"></span><span class="basket"></span><span class="basket"></span>
+          </span>
+          <span class="new-bun fig"><Bun face="happy" tone="coral" /><span class="new-tag">{c.newTag}</span></span>
+          <span class="medal"><span>{c.badge}</span></span>
+          <span class="floor"></span>
+
+          {guests.map((guest, i) => (
+            <span class:list={['guest', 'fig', `guest-${i + 1}`, spot(i, 1)]}><span class="guest-body"><Bun face={guest.face} tone={guest.tone} /></span></span>
+          ))}
+          <span class="sparks"><i></i><i></i><i></i><i></i></span>
+
+          {c.moments.map((m, i) => (
+            <>
+              <span class:list={['say', 'say-guest', `say-${i + 1}`]}>{m.guest}</span>
+              <span class:list={['say', 'say-keeper', `say-${i + 1}`]}>{m.keeper}</span>
+            </>
+          ))}
+        </div>
+      </div>
+
+      <!-- the menu boards: what the group gets, in words; pressing one plays that moment -->
+      <ol class="boards">
+        {c.moments.map((m, i) => (
+          <li>
+            <button type="button" class:list={['board', i === 1 && 'is-current']} data-board aria-label={c.play.replace('{title}', m.title)} aria-pressed={i === 1 ? 'true' : 'false'}>
+              <span class="board-num">{i + 1}</span>
+              <span class="board-title">{m.title}</span>
+              <span class="board-desc">{m.desc}</span>
+            </button>
+          </li>
+        ))}
+      </ol>
+
+      <p class="more">
+        <span>{c.more}</span>
+        <a href={`/${locale}/join`}><Icon name="lucide:chef-hat" width={20} height={20} />{c.moreLink}<Icon name="lucide:arrow-right" width={18} height={18} /></a>
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .sub { margin-top: 0.8rem; }
+
+  /* ── the scene ── */
+  .view { position: relative; max-width: 960px; margin: 2.6rem auto 0; overflow: hidden; border-radius: 30px; border: 2px solid var(--ink); box-shadow: 0 6px 0 0 var(--ink); background: #ffe6c7; }
+  /* drawn in % of its own width so it scales as one picture; cqw sizes lines and text with it */
+  .world { position: relative; width: 100%; aspect-ratio: 960 / 500; container-type: inline-size; transition: transform 0.6s ease; }
+  .world > * { position: absolute; }
+  .world :global(svg) { overflow: visible; }
+  .fig :global(.bun) { display: block; width: 100%; }
+
+  .awning { left: 0; right: 0; top: 0; height: 7%; border-bottom: 0.25cqw solid var(--ink);
+    background: repeating-linear-gradient(90deg, var(--coral) 0 4cqw, #fff 4cqw 8cqw);
+    -webkit-mask: radial-gradient(circle at 2cqw 100%, transparent 1.2cqw, #000 1.25cqw) 0 0 / 4cqw 100%; mask: radial-gradient(circle at 2cqw 100%, transparent 1.2cqw, #000 1.25cqw) 0 0 / 4cqw 100%; }
+  .floor { left: 0; right: 0; bottom: 0; height: 14%; border-top: 0.25cqw solid var(--ink); background: #e8c48c; background-image: repeating-linear-gradient(90deg, transparent 0 7cqw, rgba(30, 33, 64, 0.12) 7cqw calc(7cqw + 2px)); }
+  .sign { left: 3.5%; top: 13%; width: 19%; height: 13%; display: grid; place-items: center; border-radius: 1.2cqw; border: 0.25cqw solid var(--ink); background: var(--ink); box-shadow: 0 0.5cqw 0 0 #b98a3e; rotate: -2deg; }
+  .sign-text { color: var(--yellow); font-size: 2.8cqw; font-weight: 900; letter-spacing: 0.1em; white-space: nowrap; }
+
+  /* paper menu tags on the wall, the last one is the new flavour */
+  .menu { left: 4.5%; top: 34%; display: flex; gap: 1cqw; }
+  .menu-tag { display: block; padding: 1cqw 0.7cqw; border: 0.22cqw solid var(--ink); border-radius: 0.4cqw; background: #fff; color: var(--ink); font-size: 1.8cqw; font-weight: 900; line-height: 1.15; writing-mode: vertical-rl; letter-spacing: 0.15em; white-space: nowrap; }
+  .menu.is-latin { flex-direction: column; gap: 0.8cqw; }
+  .menu.is-latin .menu-tag { writing-mode: horizontal-tb; padding: 0.5cqw 1cqw; letter-spacing: 0.02em; }
+  .menu-tag:nth-child(2) { rotate: 3deg; } .menu-tag:nth-child(1) { rotate: -2deg; }
+  .menu-tag.is-new { background: var(--coral); color: #fff; rotate: -4deg; }
+
+
+  /* the shopkeeper behind the counter, in the 瓜皮帽 and glasses from the Join page */
+  .keeper { left: 31%; bottom: 46.5%; width: 11.5%; z-index: 2; transform-origin: 50% 100%; }
+  .glasses { position: absolute; left: 22%; top: 40%; width: 56%; fill: rgba(255, 255, 255, 0.35); stroke: var(--ink); stroke-width: 2; }
+  .keeper-cap { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .keeper-cap .cap { fill: var(--ink); stroke: var(--ink); stroke-width: 1.2; stroke-linejoin: round; }
+  .keeper-cap .knob { fill: var(--coral); stroke: var(--ink); stroke-width: 1.2; }
+
+  .counter { left: 25%; bottom: 14%; width: 34%; height: 30%; border: 0.25cqw solid var(--ink); border-bottom: 0; background: #c8894a; background-image: repeating-linear-gradient(90deg, transparent 0 4.5cqw, rgba(30, 33, 64, 0.15) 4.5cqw calc(4.5cqw + 2px)); z-index: 3; }
+  .counter-top { position: absolute; left: -3%; right: -3%; top: -1.6cqw; height: 1.8cqw; border-radius: 0.8cqw; border: 0.25cqw solid var(--ink); background: #e5a868; }
+  .counter-sign { position: absolute; left: 50%; top: 38%; translate: -50% 0; padding: 0.4cqw 1.4cqw; border-radius: 0.6cqw; border: 0.22cqw solid var(--ink); background: #fff7e6; color: var(--ink); font-size: 1.9cqw; font-weight: 900; letter-spacing: 0.12em; white-space: nowrap; }
+
+  .steamer { left: 46%; bottom: 43.5%; width: 10%; z-index: 4; display: flex; flex-direction: column; align-items: center; }
+  .basket { display: block; width: 100%; height: 2.3cqw; margin-top: -0.25cqw; border-radius: 0.9cqw; border: 0.25cqw solid var(--ink); background: #f1cf8a; background-image: repeating-linear-gradient(90deg, transparent 0 1.2cqw, rgba(30, 33, 64, 0.18) 1.2cqw calc(1.2cqw + 1.5px)); }
+  .basket.lid { width: 90%; height: 1.9cqw; border-radius: 3cqw 3cqw 0.8cqw 0.8cqw; }
+  .steam { position: relative; display: block; width: 100%; height: 6cqw; }
+  .steam i { position: absolute; bottom: 0; width: 1.4cqw; height: 4.5cqw; border-radius: 1cqw; border: 0.25cqw solid rgba(30, 33, 64, 0.25); border-left-color: transparent; border-bottom-color: transparent; opacity: 0; animation: steam 2.6s ease-out infinite; }
+  .steam i:nth-child(1) { left: 18%; } .steam i:nth-child(2) { left: 44%; animation-delay: 0.8s; } .steam i:nth-child(3) { left: 70%; animation-delay: 1.6s; }
+
+  /* the new flavour: a coral bun with a 新 tag, out of the steamer and over to the regular */
+  .new-bun { left: 48%; bottom: 52%; width: 6.5%; z-index: 5; opacity: 0; }
+  .new-tag { position: absolute; right: -28%; top: -22%; padding: 0.2cqw 0.7cqw; border-radius: 999px; border: 0.2cqw solid var(--ink); background: var(--yellow); color: var(--ink); font-size: 1.5cqw; font-weight: 900; white-space: nowrap; rotate: 12deg; }
+
+  /* the regulars' badge, handed over the counter */
+  .medal { left: 40%; bottom: 50%; width: 5.4cqw; height: 5.4cqw; z-index: 8; display: grid; place-items: center; border-radius: 50%; border: 0.25cqw solid var(--ink); background: var(--yellow); box-shadow: 0 0.35cqw 0 0 var(--ink); opacity: 0; }
+  .medal span { color: var(--ink); font-size: 2.1cqw; font-weight: 900; line-height: 1; }
+  .medal::before, .medal::after { content: ''; position: absolute; top: 80%; width: 1.6cqw; height: 2.4cqw; border: 0.22cqw solid var(--ink); background: var(--coral); z-index: -1; }
+  .medal::before { left: 18%; rotate: 18deg; } .medal::after { right: 18%; rotate: -18deg; }
+
+  /* the regulars: one at the counter, the rest queuing to the right, the ones served walk off */
+  .guest { left: 104%; bottom: 14%; width: 12%; z-index: 4; transition: left 0.8s cubic-bezier(.45, 0, .3, 1), width 0.8s ease; }
+  .guest-body { display: block; transform-origin: 50% 100%; }
+  .guest.at-counter { left: 62%; z-index: 7; }
+  .guest.in-line-1 { left: 76.5%; width: 10.5%; z-index: 6; }
+  .guest.in-line-2 { left: 87%; width: 10.5%; z-index: 5; }
+  .guest.in-line-3 { left: 97%; width: 10.5%; z-index: 4; }
+  .guest.is-served { left: -16%; }
+  .guest.is-moving .guest-body { animation: hop 0.37s ease-in-out 2; }
+
+  /* sparks around the regular when the badge lands */
+  .sparks { left: 60%; bottom: 14%; width: 16%; height: 26%; z-index: 8; }
+  .sparks i { position: absolute; width: 2.2cqw; height: 2.2cqw; background: var(--yellow); clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%); opacity: 0; }
+  .sparks i:nth-child(1) { left: 0; top: 10%; } .sparks i:nth-child(2) { right: 0; top: 0; background: var(--lime); }
+  .sparks i:nth-child(3) { left: 8%; top: 60%; background: var(--purple); } .sparks i:nth-child(4) { right: 4%; top: 55%; background: var(--coral); }
+
+  /* speech: what the regular says, then what the shopkeeper says back */
+  .say { z-index: 9; padding: 0.7em 1em; border-radius: 1.2em; border: 0.25cqw solid var(--ink); background: #fff; box-shadow: 0 0.35cqw 0 0 var(--ink); color: var(--ink); font-size: clamp(12px, 2.1cqw, 19px); font-weight: 900; line-height: 1.3; white-space: nowrap; opacity: 0; scale: 0.4; transition: opacity 0.2s ease, scale 0.35s cubic-bezier(.34, 1.56, .64, 1); }
+  .say::after { content: ''; position: absolute; bottom: -0.85em; border: 0.5em solid transparent; border-top: 0.8em solid var(--ink); border-bottom: 0; }
+  .say-guest { left: 57%; bottom: 56%; background: var(--lime-soft); transform-origin: 40% 100%; }
+  .say-guest::after { left: 40%; }
+  .say-keeper { left: 34%; bottom: 72%; background: var(--yellow-soft); transform-origin: 10% 100%; }
+  .say-keeper::after { left: 14%; }
+
+  /* ── each moment ── */
+  .world[data-step='1'] .say-guest.say-1, .world[data-step='2'] .say-guest.say-2,
+  .world[data-step='3'] .say-guest.say-3, .world[data-step='4'] .say-guest.say-4 { opacity: 1; scale: 1; transition-delay: 0.7s; }
+  .world[data-step='1'] .say-keeper.say-1, .world[data-step='2'] .say-keeper.say-2,
+  .world[data-step='3'] .say-keeper.say-3, .world[data-step='4'] .say-keeper.say-4 { opacity: 1; scale: 1; transition-delay: 1.9s; }
+  .world[data-step='1'] .keeper, .world[data-step='3'] .keeper { animation: nod 1.4s ease-in-out 2s 2; }
+  .world[data-step='2'] .new-bun { animation: serve 1.3s cubic-bezier(.45, 0, .3, 1) 2.2s both; }
+  .world[data-step='2'] .steam i { animation-duration: 1.2s; }
+  .world[data-step='4'] .medal { animation: hand 1.1s cubic-bezier(.45, 0, .3, 1) 2.2s both; }
+  .world[data-step='4'] .sparks i { animation: spark 0.9s ease-out 3.2s both; }
+  .world[data-step='4'] .sparks i:nth-child(2) { animation-delay: 3.3s; } .world[data-step='4'] .sparks i:nth-child(3) { animation-delay: 3.4s; } .world[data-step='4'] .sparks i:nth-child(4) { animation-delay: 3.35s; }
+  .world[data-step='4'] .guest.at-counter .guest-body { animation: cheer 0.8s ease-in-out 3.2s 2; }
+
+  @keyframes steam { 0% { opacity: 0; translate: 0 30%; } 30% { opacity: 1; } 100% { opacity: 0; translate: 0 -60%; } }
+  @keyframes hop { 0%, 100% { translate: 0 0; scale: 1 1; } 50% { translate: 0 -20%; scale: 0.96 1.04; } }
+  @keyframes nod { 0%, 100% { rotate: 0deg; } 30% { rotate: 6deg; } 60% { rotate: -2deg; } }
+  @keyframes cheer { 0%, 100% { translate: 0 0; } 45% { translate: 0 -16%; } }
+  /* steamer top to just in front of the regular */
+  @keyframes serve { 0% { opacity: 0; translate: 0 2cqw; scale: 0.5; } 25% { opacity: 1; translate: 0 -3cqw; scale: 1; } 70% { translate: 12cqw -5cqw; } 100% { opacity: 1; translate: 16cqw 7.3cqw; } }
+  @keyframes hand { 0% { opacity: 0; translate: 0 0; scale: 0.4; } 25% { opacity: 1; scale: 1; translate: 0 -3cqw; } 100% { opacity: 1; translate: 26.6cqw 18.6cqw; scale: 0.9; } }
+  @keyframes spark { 0% { opacity: 0; scale: 0; } 40% { opacity: 1; scale: 1.2; } 100% { opacity: 0; scale: 0.8; translate: 0 -2cqw; } }
+
+  /* ── the menu boards ── */
+  .boards { list-style: none; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.1rem; max-width: 960px; margin: 2.4rem auto 0; padding-top: 1.1rem; }
+  .boards > li { position: relative; display: flex; }
+  /* two strings from a rail above, so they hang like the boards in a shop */
+  .boards > li::before, .boards > li::after { content: ''; position: absolute; top: -1.1rem; width: 2px; height: 1.3rem; background: var(--ink); }
+  .boards > li::before { left: 22%; } .boards > li::after { right: 22%; }
+  .board {
+    position: relative; width: 100%; display: flex; flex-direction: column; align-items: flex-start; gap: 0.35rem; padding: 1rem 1.1rem 1.15rem; text-align: left;
+    border-radius: 16px; border: 2px solid var(--ink); background: #fff7e6; box-shadow: 0 4px 0 0 #b0743a; color: var(--ink); font: inherit; cursor: pointer;
+    transition: transform 0.15s ease, background-color 0.2s ease;
+  }
+  .board:hover { transform: translateY(-2px); }
+  .board:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+  .board-num { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; border: 2px solid var(--ink); background: #fff; font-size: 0.95rem; font-weight: 900; }
+  .board-title { font-size: 1.12rem; font-weight: 900; line-height: 1.35; }
+  .board-desc { color: var(--muted); font-size: 0.98rem; line-height: 1.6; }
+  :global(html.js) .board.is-current { background: var(--yellow-soft); transform: rotate(-1.5deg) translateY(-2px); }
+  :global(html.js) .board.is-current .board-num { background: var(--yellow); }
+
+  .more { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.6rem 1rem; margin: 2.2rem 0 0; color: var(--ink); font-size: 1.05rem; font-weight: 800; text-align: center; }
+  .more a { display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.55rem 1.1rem; border-radius: 999px; border: 2px solid var(--ink); background: var(--purple-soft); box-shadow: 0 3px 0 0 var(--ink); color: var(--ink); font-weight: 900; text-decoration: none; transition: transform 0.15s ease; }
+  .more a:hover { transform: translateY(-2px); }
+  .more a:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+
+  @media (max-width: 900px) {
+    .boards { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 2.2rem; }
+  }
+  /* phone: the shop is drawn wider and the view sits on the counter and the regular */
+  @media (max-width: 640px) {
+    .view { border-radius: 24px; }
+    .world { width: 150%; aspect-ratio: 960 / 560; transform: translateX(-21%); }
+    .board { padding: 0.85rem 0.9rem 1rem; }
+    .board-title { font-size: 1.02rem; }
+    .board-desc { font-size: 0.92rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .world *, .world :global(*) { animation: none !important; transition: none !important; }
+    .world[data-step='2'] .new-bun { opacity: 1; translate: 16cqw 7.3cqw; }
+    .world[data-step='4'] .medal { opacity: 1; translate: 26.6cqw 18.6cqw; scale: 0.9; }
+    .board, .board:hover { transition: none; transform: none; }
+  }
+</style>
+
+<script>
+  // Plays the four moments in turn while the shop is on screen; pressing a board plays that one and stops the
+  // turn-taking. Nothing is stored or sent.
+  const shop = document.querySelector<HTMLElement>('[data-shop]');
+  if (shop) {
+    const world = shop.querySelector<HTMLElement>('[data-world]')!;
+    const guests = [...world.querySelectorAll<HTMLElement>('.guest')];
+    const boards = [...shop.querySelectorAll<HTMLButtonElement>('[data-board]')];
+    const calm = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let current = -1;
+    let timer = 0;
+    let auto = !calm.matches;
+
+    // regular n stands at the counter, the next ones queue, the earlier ones have left
+    const spots = ['at-counter', 'in-line-1', 'in-line-2', 'in-line-3', 'is-served'];
+    const place = (n: number, hop: boolean) => {
+      guests.forEach((g, i) => {
+        const to = i < n ? 'is-served' : i === n ? 'at-counter' : `in-line-${Math.min(3, i - n)}`;
+        const moves = !g.classList.contains(to);
+        g.classList.remove(...spots, 'is-moving');
+        g.classList.add(to);
+        if (hop && moves && !calm.matches) { void g.offsetWidth; g.classList.add('is-moving'); }
+      });
+    };
+
+    const show = (n: number, hop = true) => {
+      current = n;
+      // restart the moment's animations even when the same step is shown again
+      world.dataset.step = '0';
+      void world.offsetWidth;
+      place(n, hop);
+      world.dataset.step = String(n + 1);
+      boards.forEach((b, i) => {
+        b.classList.toggle('is-current', i === n);
+        b.setAttribute('aria-pressed', i === n ? 'true' : 'false');
+      });
+      window.clearTimeout(timer);
+      if (auto) timer = window.setTimeout(() => show((current + 1) % boards.length), 5600);
+    };
+
+    boards.forEach((b, i) => b.addEventListener('click', () => { auto = false; show(i); }));
+
+    if (auto && 'IntersectionObserver' in window) {
+      // wait off screen with everyone queuing outside, start when the shop is seen, pause while it is not
+      place(-1, false);
+      world.dataset.step = '0';
+      const seen = new IntersectionObserver((entries) => {
+        const on = entries.some((e) => e.isIntersecting);
+        if (on && auto) { if (current < 0) window.setTimeout(() => show(0), 300); else show(current); }
+        if (!on) window.clearTimeout(timer);
+      }, { threshold: 0.4 });
+      seen.observe(world);
+    } else {
+      show(1, false);
+    }
+  }
+</script>

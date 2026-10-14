@@ -1,0 +1,937 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { Icon } from 'astro-icon/components';
+import { defaultLocale } from '../i18n/landing';
+import Bun from './Bun.astro';
+import RoleBun from './RoleBun.astro';
+const locale = Astro.currentLocale ?? defaultLocale;
+const zh = locale === 'zh';
+
+// How the Blotz team builds with AI: the whole project as a loop and who owns each stage, then the idea
+// (you direct, AI carries out), then one task in six steps. Brought over from the team's write-up and
+// redrawn in this site's style. Text inside [ ] gets the highlighter; "\n" starts a new line.
+const c = zh
+  ? {
+      seoTitle: 'Blotz 团队怎么用 AI 开发 | BlotzTask',
+      seoDesc: 'AI orchestration，不是 vibe coding：Blotz 团队一个任务从拿到手到开 PR 的 6 步，和整个项目七个阶段谁负责。',
+      stages: {
+        eyebrow: 'Blotz 的开发方式',
+        title: '[DevOps] + AI Orchestration',
+        hint: '点一个阶段，包子会走过去。',
+        lobes: ['规划', '开发'],
+        items: [
+          { name: 'Feedback', what: '看监控和用户数据，收集意见', owners: ['Senior', 'PM'] },
+          { name: 'Planning', what: '决定下一步做哪些任务', owners: ['Senior', 'PM'] },
+          { name: 'Create PBI', what: '把任务写清楚，定好风险等级', owners: ['Senior'] },
+          { name: 'Implement', what: '写代码', owners: ['Developer'] },
+          { name: 'Testing', what: '证明改好了', owners: ['Developer'] },
+          { name: 'Review', what: '检查别人的 PR', owners: ['Developer', 'Senior'] },
+          { name: 'Release', what: '自动部署到 Staging、Production，发布到商店', owners: ['Senior'] },
+        ],
+        sep: '：',
+      },
+      hero: {
+        lead: 'Blotz 团队怎么用 AI 开发',
+        title: 'AI orchestration\n[不是 vibe coding]',
+        vibe: { name: 'Vibe coding', text: '想到什么就让 AI 写什么，结果看运气。' },
+        orchestration: { name: 'AI orchestration', text: '你先把计划和流程定好，再让 AI 去做。', slots: ['你规划', 'AI 执行', '你决定'] },
+      },
+      steps: {
+        eyebrow: '一个任务怎么做',
+        title: '做一个任务：[6 步]',
+        lead: 'Senior 分给你一个任务（我们叫 PBI）。拿到任务后，直接复制粘贴给 AI，它就会开始做。',
+        you: '你',
+        ai: 'AI',
+        items: [
+          { title: 'AI 先讲解', text: 'AI 出一页讲解，列出要你先决定的问题。你选好，回一句 go。', lines: [{ who: 'you', text: '（贴上任务）' }, { who: 'ai', text: '讲解页好了，有几个问题要你先决定' }, { who: 'you', text: 'go', code: true }], tools: [] as number[] },
+          { title: '开分支、检查环境', text: 'AI 开新分支，把任务状态改成进行中。测试跑不了就停下，告诉你怎么修。', lines: [{ who: 'ai', text: '开好新分支', done: true }, { who: 'ai', text: '任务改成进行中', done: true }, { who: 'ai', text: '测试环境可以跑', done: true }], tools: [0, 1] },
+          { title: '小块写，每块都测', text: 'AI 按团队定好的规范，一小块一小块地写。你可以边看边问。', lines: [{ who: 'ai', text: '第 1 块写好，测试通过', done: true }, { who: 'you', text: '这里为什么这样写？' }, { who: 'ai', text: '第 2 块写好，测试通过', done: true }], tools: [] },
+          { title: '上真机测', text: '用户看得到的改动，AI 在你的手机上点一遍。', lines: [{ who: 'ai', text: '在你的手机上打开 App' }, { who: 'ai', text: '改动的地方点了一遍', done: true }], tools: [3] },
+          { title: '看懂总结', text: 'AI 先自己检查一遍代码，再告诉你改了什么、为什么、有什么风险。看不懂就追问。', lines: [{ who: 'ai', text: '自查完成，小问题已修好', done: true }, { who: 'ai', text: '改了什么 · 为什么 · 有什么风险' }, { who: 'you', text: '第二点没看懂，再讲一遍' }], tools: [] },
+          { title: 'AI 开 PR', text: 'AI 开 PR，在 Discord 通知负责检查的人，任务状态自动更新。', lines: [{ who: 'ai', text: 'PR 和流程说明写好了' }, { who: 'ai', text: 'PR 已开，已通知负责检查的人', done: true }], tools: [0, 1, 2] },
+        ],
+        toolsLabel: 'AI 帮你处理',
+        tools: ['GitHub', '看板', 'Discord', '手机'],
+        toolsCaption: '你只开一个 terminal，一直跟 AI 聊天。',
+      },
+      clips: {
+        label: '视频示例',
+        short: '视频',
+        stepPrefix: '第 {n} 步',
+        close: '关闭',
+        items: [
+          { step: 1, src: '/how-we-build/explain.mp4', poster: '/how-we-build/explain-poster.jpg', caption: 'AI 先把任务解释清楚，然后把需要你决定的两件事列出来。你选好答案发给它，它再开始写。' },
+          { step: 6, src: '/how-we-build/open-pr.mp4', poster: '/how-we-build/open-pr-poster.jpg', caption: '做完之后，AI 把 PR 和流程说明写好，然后开 PR，任务状态也自动更新。' },
+        ],
+      },
+      end: { title: '想和我们[一起揉面团吗？]', btn: '看看怎么加入' },
+    }
+  : {
+      seoTitle: 'How the Blotz team builds with AI | BlotzTask',
+      seoDesc: 'AI orchestration, not vibe coding: the six steps one Blotz task goes through from pickup to pull request, and who owns each of the project’s seven stages.',
+      stages: {
+        eyebrow: 'How Blotz is built',
+        title: '[DevOps] + AI Orchestration',
+        hint: 'Press a stage and the bun walks over.',
+        lobes: ['Planning', 'Building'],
+        items: [
+          { name: 'Feedback', what: 'Read monitoring and user data, gather feedback', owners: ['Senior', 'PM'] },
+          { name: 'Planning', what: 'Decide which tasks come next', owners: ['Senior', 'PM'] },
+          { name: 'Create PBI', what: 'Write the task up clearly and set its risk level', owners: ['Senior'] },
+          { name: 'Implement', what: 'Write the code', owners: ['Developer'] },
+          { name: 'Testing', what: 'Prove the change works', owners: ['Developer'] },
+          { name: 'Review', what: 'Check other people’s PRs', owners: ['Developer', 'Senior'] },
+          { name: 'Release', what: 'Deploy automatically to Staging and Production, publish to the stores', owners: ['Senior'] },
+        ],
+        sep: ': ',
+      },
+      hero: {
+        lead: 'How the Blotz team builds with AI',
+        title: 'AI orchestration\n[not vibe coding]',
+        vibe: { name: 'Vibe coding', text: 'You ask AI for whatever comes to mind, and the result is down to luck.' },
+        orchestration: { name: 'AI orchestration', text: 'You set the plan and the process first, then let AI do the work.', slots: ['You plan', 'AI does it', 'You decide'] },
+      },
+      steps: {
+        eyebrow: 'How one task gets done',
+        title: 'One task: [6 steps]',
+        lead: 'A senior gives you a task (we call it a PBI). Once you have it, paste it straight to the AI and it gets started.',
+        you: 'You',
+        ai: 'AI',
+        items: [
+          { title: 'AI explains first', text: 'The AI writes a one-page explanation and lists the questions you need to decide first. You pick your answers and reply “go”.', lines: [{ who: 'you', text: '(paste the task)' }, { who: 'ai', text: 'The explanation is ready. A few questions for you first' }, { who: 'you', text: 'go', code: true }], tools: [] as number[] },
+          { title: 'New branch, check the setup', text: 'The AI opens a new branch and moves the task to In progress. If the tests can’t run, it stops and tells you how to fix that.', lines: [{ who: 'ai', text: 'New branch opened', done: true }, { who: 'ai', text: 'Task moved to In progress', done: true }, { who: 'ai', text: 'Tests can run', done: true }], tools: [0, 1] },
+          { title: 'Small pieces, each one tested', text: 'The AI writes one small piece at a time, following the rules the team agreed on. You can watch and ask as it goes.', lines: [{ who: 'ai', text: 'Piece 1 written, tests pass', done: true }, { who: 'you', text: 'Why is this written like that?' }, { who: 'ai', text: 'Piece 2 written, tests pass', done: true }], tools: [] },
+          { title: 'Test on a real phone', text: 'For any change users can see, the AI taps through it on your phone.', lines: [{ who: 'ai', text: 'Opening the app on your phone' }, { who: 'ai', text: 'Tapped through what changed', done: true }], tools: [3] },
+          { title: 'Understand the summary', text: 'The AI checks its own code first, then tells you what changed, why, and what the risks are. If something isn’t clear, ask again.', lines: [{ who: 'ai', text: 'Self-check done, small issues fixed', done: true }, { who: 'ai', text: 'What changed · Why · Risks' }, { who: 'you', text: 'I didn’t follow the second point, explain it again' }], tools: [] },
+          { title: 'AI opens the PR', text: 'The AI opens the PR and tells the reviewer on Discord, and the task status updates on its own.', lines: [{ who: 'ai', text: 'PR and process notes written' }, { who: 'ai', text: 'PR opened, reviewer told', done: true }], tools: [0, 1, 2] },
+        ],
+        toolsLabel: 'AI handles',
+        tools: ['GitHub', 'Board', 'Discord', 'Phone'],
+        toolsCaption: 'You open one terminal and just keep talking to the AI.',
+      },
+      clips: {
+        label: 'Watch it',
+        short: 'Video',
+        stepPrefix: 'Step {n}',
+        close: 'Close',
+        items: [
+          { step: 1, src: '/how-we-build/explain.mp4', poster: '/how-we-build/explain-poster.jpg', caption: 'The AI explains the task first, then lists the two things you need to decide. You send back your answers and it starts writing.' },
+          { step: 6, src: '/how-we-build/open-pr.mp4', poster: '/how-we-build/open-pr-poster.jpg', caption: 'Once the work is done, the AI writes the PR and the process notes, opens the PR, and the task status updates on its own.' },
+        ],
+      },
+      end: { title: 'Want to knead the dough [with us?]', btn: 'See how to join' },
+    };
+
+const hl = (text: string) => text.split(/\[|\]/);
+// Chinese breaks only between clauses, so a short phrase never splits across two lines.
+const clauses = (text: string) => (zh ? text.match(/[^，、；。：]+[，、；。：]*/g) ?? [text] : [text]);
+const stageIcons = ['lucide:message-circle', 'lucide:map', 'lucide:file-pen-line', 'lucide:code-xml', 'lucide:smartphone', 'lucide:scan-search', 'lucide:rocket'];
+const toolIcons = ['simple-icons:github', 'lucide:square-kanban', 'simple-icons:discord', 'lucide:smartphone'];
+const ownerTone: Record<string, string> = { Senior: 'is-senior', Developer: 'is-dev', PM: 'is-pm' };
+const stages = c.stages.items;
+// The first stage of the building end: cards before it go on the left of the loop, the rest on the right.
+const START = 3;
+const clipFor = (step: number) => c.clips.items.find((clip) => clip.step === step);
+
+/* ── the loop: two round ends joined by a crossed belt ─────────────────────────
+   Each end is a full circle; the two straight strands that cross in the middle touch the circles as
+   tangents, so the ribbon never kinks. Units are the drawing's own, the crossing at (0, 0), y down. */
+type Point = [number, number];
+const R = 150;
+const A = 232;
+const STRAND = Math.sqrt(A * A - R * R);
+const TX = A - (R * R) / A;
+const TY = (R * STRAND) / A;
+const OPEN = Math.acos(R / A);
+const ARC = R * (2 * Math.PI - 2 * OPEN);
+const TOTAL = 4 * STRAND + 2 * ARC;
+// The way work flows from the crossing: up into the right end, round it, back through the crossing, round the left end.
+const RIGHT_ARC = STRAND;
+const BACK = RIGHT_ARC + ARC;
+const LEFT_ARC = BACK + 2 * STRAND;
+const HOME = LEFT_ARC + ARC;
+const wrap = (s: number) => ((s % TOTAL) + TOTAL) % TOTAL;
+const at = (distance: number): Point => {
+  const s = wrap(distance);
+  if (s < RIGHT_ARC) return [(TX * s) / STRAND, (-TY * s) / STRAND];
+  if (s < BACK) {
+    const angle = Math.PI + OPEN + (s - RIGHT_ARC) / R;
+    return [A + R * Math.cos(angle), R * Math.sin(angle)];
+  }
+  if (s < LEFT_ARC) {
+    const t = 1 - (s - BACK) / STRAND;
+    return [TX * t, TY * t];
+  }
+  if (s < HOME) {
+    const angle = -OPEN - (s - LEFT_ARC) / R;
+    return [-A + R * Math.cos(angle), R * Math.sin(angle)];
+  }
+  const t = 1 - (s - HOME) / STRAND;
+  return [-TX * t, TY * t];
+};
+const heading = (s: number) => {
+  const [x0, y0] = at(s - 1);
+  const [x1, y1] = at(s + 1);
+  return (Math.atan2(y1 - y0, x1 - x0) * 180) / Math.PI;
+};
+// A point `gap` units inside the loop at `s`, towards the middle of that end; the gap closes on the
+// straight strands so the bun slides through the crossing instead of jumping.
+const inside = (distance: number, gap: number): Point => {
+  const s = wrap(distance);
+  const [x, y] = at(s);
+  const centre = s < BACK + STRAND ? A : -A;
+  const reach = s < RIGHT_ARC ? s / STRAND : s < BACK ? 1 : s < LEFT_ARC ? Math.abs(1 - (s - BACK) / STRAND) : s < HOME ? 1 : 1 - (s - HOME) / STRAND;
+  const dx = centre - x;
+  const length = Math.hypot(dx, y) || 1;
+  const pull = gap * (1 - (1 - reach) * (1 - reach));
+  return [x + (dx / length) * pull, y + (-y / length) * pull];
+};
+// Three stages evenly round the left end, four round the right; an arrowhead between each pair.
+const stops = [LEFT_ARC + ARC / 6, LEFT_ARC + ARC / 2, LEFT_ARC + (5 * ARC) / 6, RIGHT_ARC + ARC / 8, RIGHT_ARC + (3 * ARC) / 8, RIGHT_ARC + (5 * ARC) / 8, RIGHT_ARC + (7 * ARC) / 8];
+const arrows = [LEFT_ARC + ARC / 3, LEFT_ARC + (2 * ARC) / 3, STRAND * 0.56, RIGHT_ARC + ARC / 4, RIGHT_ARC + ARC / 2, RIGHT_ARC + (3 * ARC) / 4, BACK + STRAND * 1.56];
+const n1 = (v: number) => v.toFixed(1);
+const RIGHT_END = `M 0 0 L ${n1(TX)} ${n1(-TY)} A ${R} ${R} 0 1 1 ${n1(TX)} ${n1(TY)} Z`;
+const LEFT_END = `M 0 0 L ${n1(-TX)} ${n1(-TY)} A ${R} ${R} 0 1 0 ${n1(-TX)} ${n1(TY)} Z`;
+const RIGHT_RIBBON = `M 0 0 L ${n1(TX)} ${n1(-TY)} A ${R} ${R} 0 1 1 ${n1(TX)} ${n1(TY)} L 0 0`;
+const LEFT_RIBBON = `M 0 0 L ${n1(-TX)} ${n1(-TY)} A ${R} ${R} 0 1 0 ${n1(-TX)} ${n1(TY)} L 0 0`;
+const LOOP = `M 0 0 L ${n1(TX)} ${n1(-TY)} A ${R} ${R} 0 1 1 ${n1(TX)} ${n1(TY)} L ${n1(-TX)} ${n1(-TY)} A ${R} ${R} 0 1 0 ${n1(-TX)} ${n1(TY)} L 0 0`;
+// The moving dashes repeat every DASH units; the loop is measured as a whole number of repeats so they meet cleanly.
+const DASH = 30;
+const LOOP_DASHES = Math.round(TOTAL / DASH) * DASH;
+const DASH_REAL = (DASH * TOTAL) / LOOP_DASHES;
+// At the crossing the strand climbing from the left end into the right end passes over the other one.
+const UX = TX / STRAND;
+const UY = -TY / STRAND;
+const over = (d: number) => `${n1(UX * d)} ${n1(UY * d)}`;
+const OVER_TILT = n1((Math.atan2(UY, UX) * 180) / Math.PI);
+const OVER = 46;
+const TRACK = { left: '#c6baf9', right: '#c5e56f' };
+
+// Two ways of drawing it: roomy beside the cards, the bun walking round the inside; compact on a phone,
+// the bun standing on top of the point it is at.
+const looks = {
+  roomy: { frame: { x: -(A + R) - 40, y: -R - 40, w: 2 * (A + R) + 80, h: 2 * R + 84 }, label: [A - 82, 0] as Point, spot: (s: number, gap: number) => inside(s, gap) },
+  compact: { frame: { x: -(A + R) - 44, y: -R - 150, w: 2 * (A + R) + 88, h: 2 * R + 198 }, label: [A, -50] as Point, spot: (s: number, _gap: number): Point => { const [x, y] = at(s); return [x, y - 84]; } },
+};
+type Look = keyof typeof looks;
+const place = ([x, y]: Point, look: Look) => {
+  const f = looks[look].frame;
+  return { left: `${(((x - f.x) / f.w) * 100).toFixed(2)}%`, top: `${(((y - f.y) / f.h) * 100).toFixed(2)}%` };
+};
+const css = (p: { left: string; top: string }) => `left: ${p.left}; top: ${p.top};`;
+// How far inside the loop the bun stands at each stage: just clear of the point, allowing for two buns
+// side by side and for a chef's hat when the point is above the bun.
+const POINT = 28;
+const BUN = { half: 40.5, pairHalf: 70, halfHeight: 39 };
+const HAT: Record<string, number> = { Senior: 25, Developer: 9 };
+const gaps = stops.map((s, i) => {
+  const [x, y] = at(s);
+  const [cx, cy] = inside(s, 1);
+  const owners = stages[i].owners;
+  const wide = owners.length > 1 ? BUN.pairHalf : BUN.half;
+  const hat = cy > y ? Math.max(...owners.map((owner) => HAT[owner] ?? 0)) : 0;
+  return POINT + Math.abs(cx - x) * wide + Math.abs(cy - y) * (BUN.halfHeight + hat) + 4;
+});
+// The way the bun travels to reach each stage from the one before, as 25 positions.
+const routes = Object.fromEntries(
+  (Object.keys(looks) as Look[]).map((look) => [
+    look,
+    stops.map((to, step) => {
+      const before = (step + stops.length - 1) % stops.length;
+      const from = stops[before];
+      const distance = to > from ? to - from : to - from + TOTAL;
+      return Array.from({ length: 25 }, (_, i) => {
+        const t = i / 24;
+        return place(looks[look].spot(from + distance * t, gaps[before] + (gaps[step] - gaps[before]) * t), look);
+      });
+    }),
+  ]),
+) as Record<Look, { left: string; top: string }[][]>;
+---
+
+<Layout title={c.seoTitle} description={c.seoDesc}>
+  <!-- THE WHOLE PROJECT AS A LOOP: who owns each stage -->
+  <section class="band band-top band-yellow stages-band" data-stages data-routes={JSON.stringify(routes)}>
+    <div class="wrap">
+      <div class="k-page-head stages-head">
+        <span class="k-sticker is-yellow">{c.stages.eyebrow}</span>
+        <h1 class="k-h1 stages-title">{hl(c.stages.title).map((part, i) => (i % 2 ? <span class="k-hl">{part}</span> : part))}</h1>
+        <p class="stages-hint">{c.stages.hint}</p>
+      </div>
+
+      <!-- tablets and up: cards either side of the loop -->
+      <div class="stages-grid">
+        {[[0, START], [START, stages.length]].map(([from, to], side) => (
+          <div class:list={['stage-cards', side ? 'is-right' : 'is-left']}>
+            {stages.slice(from, to).map((stage, k) => {
+              const i = from + k;
+              return (
+                <button type="button" class:list={['stage-card', i === 0 && 'is-on']} data-stage={i} aria-pressed={i === 0 ? 'true' : 'false'}>
+                  <span class="stage-card-top">
+                    <span class="stage-name"><span class:list={['num', ownerTone[stage.owners[0]]]}>{i + 1}</span>{stage.name}</span>
+                    <span class="owners">{stage.owners.map((owner) => <span class:list={['owner', ownerTone[owner]]}>{owner}</span>)}</span>
+                  </span>
+                  <span class="stage-what">{clauses(stage.what).map((p) => <span class="cl">{p}</span>)}</span>
+                </button>
+              );
+            })}
+          </div>
+        ))}
+        <div class="loop-col">
+          {(['roomy'] as Look[]).map((name) => (
+            <Fragment>
+              <div class:list={['loop', `loop-${name}`]} data-loop={name} style={`aspect-ratio: ${looks[name].frame.w} / ${looks[name].frame.h};`}>
+                <Fragment set:html={`<svg viewBox="${looks[name].frame.x} ${looks[name].frame.y} ${looks[name].frame.w} ${looks[name].frame.h}" class="loop-svg" aria-hidden="true"><defs><linearGradient id="loop-${name}-blend" gradientUnits="userSpaceOnUse" x1="${over(-30).split(' ')[0]}" y1="${over(-30).split(' ')[1]}" x2="${over(30).split(' ')[0]}" y2="${over(30).split(' ')[1]}"><stop offset="0" stop-color="${TRACK.left}"/><stop offset="1" stop-color="${TRACK.right}"/></linearGradient><clipPath id="loop-${name}-top"><rect x="${-OVER}" y="-13" width="${OVER * 2}" height="26" transform="rotate(${OVER_TILT})"/></clipPath></defs><path d="${LEFT_END}" fill="#f1edff" opacity="0.9"/><path d="${RIGHT_END}" fill="#eef8d2" opacity="0.95"/><path d="${LOOP}" fill="none" stroke="#1e2140" stroke-width="34" stroke-linejoin="round"/><path d="${LEFT_RIBBON}" fill="none" stroke="${TRACK.left}" stroke-width="26" stroke-linecap="round" stroke-linejoin="round"/><path d="${RIGHT_RIBBON}" fill="none" stroke="${TRACK.right}" stroke-width="26" stroke-linecap="round" stroke-linejoin="round"/><path class="loop-flow" d="${LOOP}" pathLength="${LOOP_DASHES}" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-dasharray="4 ${DASH - 4}"/><path d="M ${over(-OVER)} L ${over(OVER)}" fill="none" stroke="#1e2140" stroke-width="34"/><path d="M ${over(-OVER - 8)} L ${over(OVER + 8)}" fill="none" stroke="url(#loop-${name}-blend)" stroke-width="26"/><path class="loop-flow" d="M ${over(-2 * DASH_REAL)} L ${over(2 * DASH_REAL)}" pathLength="${4 * DASH}" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-dasharray="4 ${DASH - 4}" clip-path="url(#loop-${name}-top)"/>${arrows.map((s) => { const [x, y] = at(s); return `<polygon points="-6,-7 7,0 -6,7" fill="#1e2140" stroke="#1e2140" stroke-width="3" stroke-linejoin="round" transform="translate(${n1(x)} ${n1(y)}) rotate(${n1(heading(s))})"/>`; }).join('')}</svg>`} />
+                {c.stages.lobes.map((lobe, i) => (
+                  <span class="lobe" style={css(place([i === 0 ? -looks[name].label[0] : looks[name].label[0], looks[name].label[1]], name))}>{lobe}</span>
+                ))}
+                {stages.map((stage, i) => (
+                  <button type="button" class:list={['node', i === 0 && 'is-on']} data-stage={i} style={css(place(at(stops[i]), name))} aria-label={`${i + 1}. ${stage.name}`}>
+                    <span class:list={['num', ownerTone[stage.owners[0]]]}>{i + 1}</span>
+                  </button>
+                ))}
+                <div class="walker" data-walker style={css(place(looks[name].spot(stops[0], gaps[0]), name))} aria-hidden="true">
+                  <div class="walker-in">
+                    {stages.map((stage, i) => (
+                      <span class:list={['walker-set', i === 0 && 'is-on']} data-set={i}>
+                        {stage.owners.map((owner, k) => <RoleBun role={owner} class={k ? 'walker-bun is-pair' : 'walker-bun'} />)}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </Fragment>
+          ))}
+          <!-- below the widest screens the cards have no room to say what a stage is, so it shows here -->
+          <div class="now" aria-live="polite">
+            {stages.map((stage, i) => (
+              <p class:list={['now-line', i === 0 && 'is-on']} data-now={i}>
+                <span class:list={['num', ownerTone[stage.owners[0]]]}>{i + 1}</span>
+                <span>{stage.name}<span class="now-what">{c.stages.sep}{stage.what}</span></span>
+              </p>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <!-- phones: the loop, then the stages as a list -->
+      <div class="stages-phone">
+        <div class="loop loop-compact" data-loop="compact" style={`aspect-ratio: ${looks.compact.frame.w} / ${looks.compact.frame.h};`}>
+          <Fragment set:html={`<svg viewBox="${looks.compact.frame.x} ${looks.compact.frame.y} ${looks.compact.frame.w} ${looks.compact.frame.h}" class="loop-svg" aria-hidden="true"><defs><linearGradient id="loop-compact-blend" gradientUnits="userSpaceOnUse" x1="${over(-30).split(' ')[0]}" y1="${over(-30).split(' ')[1]}" x2="${over(30).split(' ')[0]}" y2="${over(30).split(' ')[1]}"><stop offset="0" stop-color="${TRACK.left}"/><stop offset="1" stop-color="${TRACK.right}"/></linearGradient><clipPath id="loop-compact-top"><rect x="${-OVER}" y="-13" width="${OVER * 2}" height="26" transform="rotate(${OVER_TILT})"/></clipPath></defs><path d="${LEFT_END}" fill="#f1edff" opacity="0.9"/><path d="${RIGHT_END}" fill="#eef8d2" opacity="0.95"/><path d="${LOOP}" fill="none" stroke="#1e2140" stroke-width="34" stroke-linejoin="round"/><path d="${LEFT_RIBBON}" fill="none" stroke="${TRACK.left}" stroke-width="26" stroke-linecap="round" stroke-linejoin="round"/><path d="${RIGHT_RIBBON}" fill="none" stroke="${TRACK.right}" stroke-width="26" stroke-linecap="round" stroke-linejoin="round"/><path class="loop-flow" d="${LOOP}" pathLength="${LOOP_DASHES}" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-dasharray="4 ${DASH - 4}"/><path d="M ${over(-OVER)} L ${over(OVER)}" fill="none" stroke="#1e2140" stroke-width="34"/><path d="M ${over(-OVER - 8)} L ${over(OVER + 8)}" fill="none" stroke="url(#loop-compact-blend)" stroke-width="26"/><path class="loop-flow" d="M ${over(-2 * DASH_REAL)} L ${over(2 * DASH_REAL)}" pathLength="${4 * DASH}" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-dasharray="4 ${DASH - 4}" clip-path="url(#loop-compact-top)"/>${arrows.map((s) => { const [x, y] = at(s); return `<polygon points="-6,-7 7,0 -6,7" fill="#1e2140" stroke="#1e2140" stroke-width="3" stroke-linejoin="round" transform="translate(${n1(x)} ${n1(y)}) rotate(${n1(heading(s))})"/>`; }).join('')}</svg>`} />
+          {c.stages.lobes.map((lobe, i) => (
+            <span class="lobe" style={css(place([i === 0 ? -looks.compact.label[0] : looks.compact.label[0], looks.compact.label[1]], 'compact'))}>{lobe}</span>
+          ))}
+          {stages.map((stage, i) => (
+            <button type="button" class:list={['node', i === 0 && 'is-on']} data-stage={i} style={css(place(at(stops[i]), 'compact'))} aria-label={`${i + 1}. ${stage.name}`}>
+              <span class:list={['num', ownerTone[stage.owners[0]]]}>{i + 1}</span>
+            </button>
+          ))}
+          <div class="walker" data-walker style={css(place(looks.compact.spot(stops[0], gaps[0]), 'compact'))} aria-hidden="true">
+            <div class="walker-in">
+              {stages.map((stage, i) => (
+                <span class:list={['walker-set', i === 0 && 'is-on']} data-set={i}>
+                  {stage.owners.map((owner, k) => <RoleBun role={owner} class={k ? 'walker-bun is-pair' : 'walker-bun'} />)}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+        <ol class="stage-list">
+          {stages.map((stage, i) => (
+            <li>
+              <button type="button" class:list={['stage-row', i === 0 && 'is-on']} data-stage={i} aria-pressed={i === 0 ? 'true' : 'false'}>
+                <span class:list={['num', 'is-big', ownerTone[stage.owners[0]]]}>{i + 1}</span>
+                <span class="stage-row-text">
+                  <span class="stage-row-name"><Icon name={stageIcons[i]} width={18} height={18} />{stage.name}</span>
+                  <span class="stage-row-what">{clauses(stage.what).map((p) => <span class="cl">{p}</span>)}</span>
+                </span>
+                <span class="owners is-stack">{stage.owners.map((owner) => <span class:list={['owner', ownerTone[owner]]}>{owner}</span>)}</span>
+              </button>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE IDEA: you direct, the AI carries out -->
+  <section class="band">
+    <div class="wrap compare-grid">
+      <div class="compare-text reveal">
+        <p class="compare-lead">{c.hero.lead}</p>
+        <h2 class="k-h2 compare-title">
+          {c.hero.title.split('\n').map((line) => <span class="compare-line">{hl(line).map((part, i) => (i % 2 ? <span class="k-hl">{part}</span> : part))}</span>)}
+        </h2>
+      </div>
+      <div class="compare" data-compare aria-hidden="true">
+        <div class="cmp cmp-vibe">
+          <div class="cmp-top">
+            <span class="cmp-name is-vibe"><Icon name="lucide:x" width={16} height={16} />{c.hero.vibe.name}</span>
+            <span class="cmp-dice" data-dice><Icon name="lucide:dices" width={30} height={30} /></span>
+          </div>
+          <p class="cmp-text">{clauses(c.hero.vibe.text).map((p) => <span class="cl">{p}</span>)}</p>
+          <div class="slots">
+            {[false, true, false].map((good) => (
+              <span class:list={['slot', 'is-luck', good ? 'is-good' : 'is-bad']} data-slot>
+                <span class="slot-q">?</span>
+                <Icon class="slot-mark" name={good ? 'lucide:check' : 'lucide:x'} width={22} height={22} />
+              </span>
+            ))}
+          </div>
+        </div>
+        <div class="cmp cmp-orch">
+          <Bun face="happy" tone="lime" class="cmp-bun" />
+          <div class="cmp-top">
+            <span class="cmp-name is-orch"><Icon name="lucide:check" width={16} height={16} />{c.hero.orchestration.name}</span>
+            <Icon name="lucide:map" width={30} height={30} />
+          </div>
+          <p class="cmp-text">{clauses(c.hero.orchestration.text).map((p) => <span class="cl">{p}</span>)}</p>
+          <div class="slots">
+            {c.hero.orchestration.slots.map((label) => (
+              <span class="slot is-plan" data-plan><Icon class="slot-tick" name="lucide:check" width={18} height={18} />{label}</span>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ONE TASK, SIX STEPS -->
+  <section class="band band-blue">
+    <div class="wrap">
+      <div class="k-page-head reveal">
+        <span class="k-sticker is-blue">{c.steps.eyebrow}</span>
+        <h2 class="k-h2">{hl(c.steps.title).map((part, i) => (i % 2 ? <span class="k-hl">{part}</span> : part))}</h2>
+        <p class="k-lead">{clauses(c.steps.lead).map((p) => <span class="cl">{p}</span>)}</p>
+      </div>
+
+      <div class="steps-grid" data-steps data-tools={JSON.stringify(c.steps.items.map((s) => s.tools))}>
+        <ol class="step-list">
+          {c.steps.items.map((step, i) => {
+            const clip = clipFor(i + 1);
+            return (
+              <li class:list={['step', i === 0 && 'is-on']} data-step={i}>
+                <button type="button" class="step-btn" data-step-btn={i} aria-current={i === 0 ? 'step' : undefined}>
+                  <span class:list={['step-head', clip && 'has-clip']}>
+                    <span class="step-num"><span class="step-n">{i + 1}</span><Icon class="step-done" name="lucide:check" width={18} height={18} /></span>
+                    <span class="step-title">{step.title}</span>
+                  </span>
+                  <span class="step-text">{clauses(step.text).map((p) => <span class="cl">{p}</span>)}</span>
+                </button>
+                {clip && (
+                  <button type="button" class="clip-btn" data-clip-open={clip.step}>
+                    <Icon name="lucide:play" width={14} height={14} />
+                    <span class="clip-long">{c.clips.label}</span>
+                    <span class="clip-short">{c.clips.short}</span>
+                  </button>
+                )}
+                <span class="step-bar" aria-hidden="true"></span>
+              </li>
+            );
+          })}
+        </ol>
+
+        <div class="term-wrap">
+          <Bun face="grin" tone="lime" class="term-bun" />
+          <div class="term" aria-hidden="true">
+            <div class="term-top">
+              <span class="term-dots"><i></i><i></i><i></i><span>terminal</span></span>
+              <span class="term-count"><span data-count>1</span> / {c.steps.items.length}</span>
+            </div>
+            <div class="term-body">
+              {c.steps.items.map((step, i) => (
+                <div class:list={['term-lines', i === 0 && 'is-on']} data-lines={i}>
+                  <p class="term-step">{step.title}</p>
+                  {step.lines.map((line, k) => (
+                    <div class:list={['term-line', line.who === 'you' ? 'is-you' : 'is-ai']} style={`--d: ${0.15 + k * 0.75}s;`}>
+                      <span class="who">{line.who === 'you' ? c.steps.you : c.steps.ai}</span>
+                      <span class:list={['said', 'code' in line && line.code && 'is-code']}>{clauses(line.text).map((p) => <span class="cl">{p}</span>)}</span>
+                      {'done' in line && line.done && <span class="tick"><Icon name="lucide:check" width={14} height={14} /></span>}
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
+            <div class="term-tools">
+              <div class="tools-row">
+                <span class="tools-label">{c.steps.toolsLabel}</span>
+                {c.steps.tools.map((tool, i) => (
+                  <span class="tool" data-tool={i}><Icon name={toolIcons[i]} width={15} height={15} />{tool}</span>
+                ))}
+              </div>
+              <p class="tools-caption">{c.steps.toolsCaption}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {c.clips.items.map((clip) => (
+      <dialog class="clip-dialog" data-clip={clip.step} aria-label={`${c.clips.stepPrefix.replace('{n}', String(clip.step))} · ${c.steps.items[clip.step - 1].title}`}>
+        <button type="button" class="clip-close" data-clip-close aria-label={c.clips.close}><Icon name="lucide:x" width={20} height={20} /></button>
+        <video src={clip.src} poster={clip.poster} controls muted loop playsinline preload="none"></video>
+        <p class="clip-caption">
+          <span class="clip-tag">{c.clips.stepPrefix.replace('{n}', String(clip.step))} · {c.steps.items[clip.step - 1].title}</span>
+          {clip.caption}
+        </p>
+      </dialog>
+    ))}
+  </section>
+
+  <!-- WHERE TO GO NEXT -->
+  <section class="band band-lime">
+    <div class="wrap k-cta reveal">
+      <div class="end-buns" aria-hidden="true">
+        <RoleBun role="Senior" class="end-bun" />
+        <RoleBun role="Developer" class="end-bun" />
+        <RoleBun role="PM" class="end-bun" />
+      </div>
+      <h2 class="k-h2">{hl(c.end.title).map((part, i) => (i % 2 ? <span class="k-hl">{part}</span> : part))}</h2>
+      <a class="k-btn is-ink" href={`/${locale}/join`}>
+        {c.end.btn}
+        <Icon name="lucide:arrow-right" width={18} height={18} />
+      </a>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Runs `tick` on a timer while `el` is at least `amount` on screen.
+  const whileSeen = (el: Element, amount: number, onChange: (seen: boolean) => void) => {
+    new IntersectionObserver(([entry]) => onChange(entry.isIntersecting), { threshold: amount }).observe(el);
+  };
+
+  /* ── the loop: the bun goes round, dressed as whoever owns the stage it reaches ── */
+  const band = document.querySelector<HTMLElement>('[data-stages]');
+  if (band) {
+    const routes = JSON.parse(band.dataset.routes || '{}') as Record<string, { left: string; top: string }[][]>;
+    const STEP_MS = [1300, 1300, 1300, 1400, 1400, 1300, 1500];
+    const total = STEP_MS.length;
+    let step = 0;
+    let timer = 0;
+    let seen = false;
+
+    const show = (next: number, walk: boolean) => {
+      const prev = step;
+      step = next;
+      band.querySelectorAll<HTMLElement>('[data-stage]').forEach((el) => {
+        const on = Number(el.dataset.stage) === step;
+        el.classList.toggle('is-on', on);
+        if (el.hasAttribute('aria-pressed')) el.setAttribute('aria-pressed', String(on));
+      });
+      band.querySelectorAll<HTMLElement>('[data-now]').forEach((el) => el.classList.toggle('is-on', Number(el.dataset.now) === step));
+      band.querySelectorAll<HTMLElement>('[data-loop]').forEach((loop) => {
+        const walker = loop.querySelector<HTMLElement>('[data-walker]')!;
+        const route = routes[loop.dataset.loop!][step];
+        const end = route[route.length - 1];
+        // Walk round the path when it is the next stage; jump straight there when someone picked one further on.
+        if (walk && !reduced && (prev + 1) % total === step) {
+          walker.animate(route.map((p) => ({ left: p.left, top: p.top })), { duration: 1000, easing: 'linear' });
+        }
+        walker.style.left = end.left;
+        walker.style.top = end.top;
+        walker.querySelectorAll<HTMLElement>('[data-set]').forEach((set) => {
+          const on = Number(set.dataset.set) === step;
+          const changed = set.classList.contains('is-on') !== on;
+          set.classList.toggle('is-on', on);
+          if (on && changed && !reduced) set.animate([{ transform: 'scale(0.3) rotate(-14deg)' }, { transform: 'scale(1.08) rotate(3deg)', offset: 0.7 }, { transform: 'none' }], { duration: 420, easing: 'ease-out' });
+        });
+      });
+    };
+
+    const schedule = () => {
+      clearTimeout(timer);
+      if (!seen || reduced) return;
+      timer = window.setTimeout(() => {
+        show((step + 1) % total, true);
+        schedule();
+      }, STEP_MS[step]);
+    };
+
+    band.querySelectorAll<HTMLElement>('[data-stage]').forEach((el) => {
+      el.addEventListener('click', () => {
+        show(Number(el.dataset.stage), true);
+        schedule();
+      });
+    });
+    whileSeen(band, 0.2, (s) => {
+      seen = s;
+      schedule();
+    });
+  }
+
+  /* ── vibe coding against orchestration: three tries each, one result at a time ── */
+  const compare = document.querySelector<HTMLElement>('[data-compare]');
+  if (compare) {
+    const STEPS = [900, 1100, 1100, 1100, 2800];
+    const luck = [...compare.querySelectorAll<HTMLElement>('[data-slot]')];
+    const plan = [...compare.querySelectorAll<HTMLElement>('[data-plan]')];
+    const dice = compare.querySelector<HTMLElement>('[data-dice]');
+    let step = 0;
+    let timer = 0;
+    let seen = false;
+    const render = () => {
+      const shown = Math.min(step, luck.length);
+      luck.forEach((el, i) => el.classList.toggle('is-on', i < shown));
+      plan.forEach((el, i) => el.classList.toggle('is-on', i < shown));
+      compare.classList.toggle('is-complete', step >= STEPS.length - 1);
+      if (dice && shown && step <= luck.length && !reduced) dice.animate([{ rotate: '0deg' }, { rotate: '-28deg' }, { rotate: '24deg' }, { rotate: '-10deg' }, { rotate: '0deg' }], { duration: 500 });
+    };
+    const schedule = () => {
+      clearTimeout(timer);
+      if (!seen) return;
+      timer = window.setTimeout(() => {
+        step = (step + 1) % STEPS.length;
+        render();
+        schedule();
+      }, STEPS[step]);
+    };
+    // With motion turned down, show the finished comparison and leave it there.
+    if (reduced) {
+      step = STEPS.length - 1;
+      render();
+    } else {
+      whileSeen(compare, 0.4, (s) => {
+        seen = s;
+        schedule();
+      });
+    }
+  }
+
+  /* ── one task, six steps: the list on the left, the terminal on the right ── */
+  const stepsEl = document.querySelector<HTMLElement>('[data-steps]');
+  if (stepsEl) {
+    const STEP_MS = 4200;
+    const tools = JSON.parse(stepsEl.dataset.tools || '[]') as number[][];
+    const items = [...stepsEl.querySelectorAll<HTMLElement>('[data-step]')];
+    const count = stepsEl.querySelector<HTMLElement>('[data-count]');
+    let active = 0;
+    let timer = 0;
+    let seen = false;
+    let playing = false;
+
+    const show = (next: number) => {
+      active = next;
+      items.forEach((li, i) => {
+        li.classList.toggle('is-on', i === active);
+        li.classList.toggle('is-done', i < active);
+        const btn = li.querySelector('[data-step-btn]');
+        if (i === active) btn?.setAttribute('aria-current', 'step');
+        else btn?.removeAttribute('aria-current');
+      });
+      stepsEl.querySelectorAll<HTMLElement>('[data-lines]').forEach((el) => {
+        const on = Number(el.dataset.lines) === active;
+        el.classList.remove('is-on');
+        if (on) {
+          void el.offsetWidth; // restart the lines' entrance
+          el.classList.add('is-on');
+        }
+      });
+      stepsEl.querySelectorAll<HTMLElement>('[data-tool]').forEach((el) => {
+        const on = tools[active].includes(Number(el.dataset.tool));
+        el.classList.remove('is-on');
+        if (on) {
+          void el.offsetWidth;
+          el.classList.add('is-on');
+        }
+      });
+      if (count) count.textContent = String(active + 1);
+      stepsEl.classList.toggle('is-running', seen && !reduced && !playing);
+    };
+    const schedule = () => {
+      clearTimeout(timer);
+      stepsEl.classList.toggle('is-running', seen && !reduced && !playing);
+      if (!seen || reduced || playing) return;
+      // restart the progress bar on the step that is up
+      const bar = items[active].querySelector<HTMLElement>('.step-bar');
+      if (bar) {
+        bar.style.animation = 'none';
+        void bar.offsetWidth;
+        bar.style.animation = '';
+      }
+      timer = window.setTimeout(() => {
+        show((active + 1) % items.length);
+        schedule();
+      }, STEP_MS);
+    };
+    stepsEl.querySelectorAll<HTMLElement>('[data-step-btn]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        show(Number(btn.dataset.stepBtn));
+        schedule();
+      });
+    });
+    whileSeen(stepsEl, 0.3, (s) => {
+      seen = s;
+      schedule();
+    });
+
+    // A step that was filmed has a button that plays its video large; the steps hold still while it is open.
+    document.querySelectorAll<HTMLElement>('[data-clip-open]').forEach((btn) => {
+      const dialog = document.querySelector<HTMLDialogElement>(`dialog[data-clip="${btn.dataset.clipOpen}"]`);
+      if (!dialog) return;
+      const video = dialog.querySelector('video')!;
+      btn.addEventListener('click', () => {
+        playing = true;
+        schedule();
+        dialog.showModal();
+        video.play().catch(() => {});
+      });
+      dialog.querySelector('[data-clip-close]')?.addEventListener('click', () => dialog.close());
+      dialog.addEventListener('click', (e) => {
+        if (e.target === dialog) dialog.close();
+      });
+      dialog.addEventListener('close', () => {
+        video.pause();
+        playing = false;
+        schedule();
+      });
+    });
+  }
+</script>
+
+<style>
+  /* ── shared bits: stage numbers and owner chips, in each role's colour ── */
+  .cl { display: inline-block; max-width: 100%; }
+  .num {
+    display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
+    width: 24px; height: 24px; border-radius: 50%; border: 2px solid var(--ink);
+    font-size: 0.78rem; font-weight: 900; line-height: 1; color: var(--ink); background: #fff;
+  }
+  .num.is-senior, .owner.is-senior { background: var(--purple); color: #fff; }
+  .num.is-dev, .owner.is-dev { background: var(--lime); }
+  .num.is-pm, .owner.is-pm { background: #fff; }
+  .num.is-big { width: 40px; height: 40px; font-size: 1rem; }
+  .owners { display: flex; flex-wrap: nowrap; gap: 0.35rem; }
+  .owners.is-stack { flex-direction: column; align-items: flex-end; }
+  .owner { padding: 0.08rem 0.6rem; border-radius: 999px; border: 2px solid var(--ink); font-size: 0.8rem; font-weight: 900; line-height: 1.4; white-space: nowrap; }
+
+  /* ── first screen: the loop ── */
+  .stages-band { padding-bottom: 4rem; }
+  .stages-head { gap: 0.9rem; }
+  .stages-title { font-size: clamp(2rem, 4.4vw, 3.6rem); }
+  .stages-hint { color: var(--muted); font-size: 1rem; font-weight: 700; }
+  .stages-grid {
+    display: grid; grid-template-columns: auto minmax(0, 1fr) auto; grid-template-areas: 'left loop right';
+    align-items: center; gap: 2rem 1.5rem; margin-top: 2rem;
+  }
+  .stage-cards { display: flex; flex-direction: column; gap: 0.6rem; }
+  .stage-cards.is-left { grid-area: left; }
+  .stage-cards.is-right { grid-area: right; }
+  .loop-col { grid-area: loop; min-width: 0; }
+  .stage-card {
+    display: block; width: 100%; padding: 0.55rem 0.85rem; text-align: left; cursor: pointer;
+    border-radius: 16px; border: 2px solid var(--ink); background: #fff; box-shadow: 0 3px 0 0 var(--ink);
+    font: inherit; color: var(--ink); transition: background 0.3s ease, transform 0.15s ease;
+  }
+  .stage-card:hover { transform: translateY(-2px); }
+  .stage-card:focus-visible, .node:focus-visible, .stage-row:focus-visible, .step-btn:focus-visible, .clip-btn:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+  .stage-card.is-on { background: var(--yellow); }
+  .stage-card-top { display: block; }
+  .stage-name { display: flex; align-items: center; gap: 0.5rem; font-size: 1.08rem; font-weight: 900; line-height: 1.25; white-space: nowrap; }
+  .stage-card .owners { margin-top: 0.35rem; }
+  .stage-what { display: none; max-width: 13.4em; margin-top: 0.3rem; color: rgba(30, 33, 64, 0.72); font-size: 0.95rem; font-weight: 700; line-height: 1.4; }
+
+  .loop { position: relative; width: 100%; container-type: inline-size; }
+  .loop-svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+  .loop :global(.loop-flow) { animation: loop-flow 1s linear infinite; }
+  @keyframes loop-flow { to { stroke-dashoffset: -30; } }
+  .lobe { position: absolute; transform: translate(-50%, -50%); white-space: nowrap; font-weight: 900; color: rgba(30, 33, 64, 0.3); pointer-events: none; }
+  .node { position: absolute; width: 0; height: 0; padding: 0; border: 0; background: none; cursor: pointer; }
+  .node .num { position: absolute; left: 0; top: 0; translate: -50% -50%; box-shadow: 0 3px 0 0 var(--ink); transition: scale 0.3s cubic-bezier(.34, 1.56, .64, 1); }
+  .node.is-on .num, .node:hover .num { scale: 1.2; }
+  .walker { position: absolute; z-index: 3; pointer-events: none; }
+  .walker-in { position: absolute; left: 0; top: 0; translate: -50% -50%; }
+  .walker-set { display: none; width: max-content; align-items: flex-end; }
+  .walker-set.is-on { display: flex; }
+  .walker-set :global(.walker-bun:first-child) { position: relative; z-index: 1; }
+
+  .loop-roomy .lobe { font-size: clamp(18px, 4.2cqw, 38px); }
+  .loop-roomy .node .num { width: clamp(26px, 5.6cqw, 48px); height: clamp(26px, 5.6cqw, 48px); font-size: clamp(12px, 2.5cqw, 21px); }
+  .loop-roomy .walker-set :global(.walker-bun) { width: clamp(38px, 9.6cqw, 72px); }
+  .loop-roomy .walker-set :global(.walker-bun.is-pair) { margin-left: -2.6cqw; }
+  .loop-compact .lobe { font-size: clamp(14px, 4.8cqw, 20px); }
+  .loop-compact .node .num { width: clamp(26px, 9.4cqw, 38px); height: clamp(26px, 9.4cqw, 38px); font-size: clamp(12px, 4cqw, 16px); }
+  .loop-compact .walker-set :global(.walker-bun) { width: clamp(28px, 10.4cqw, 42px); }
+  .loop-compact .walker-set :global(.walker-bun.is-pair) { margin-left: -2.8cqw; }
+
+  .now { display: grid; justify-items: center; margin-top: 0.8rem; min-height: 3rem; }
+  .now-line {
+    grid-area: 1 / 1; display: none; align-items: center; gap: 0.6rem; padding: 0.45rem 1rem;
+    border-radius: 22px; border: 2px solid var(--ink); background: #fff; box-shadow: 0 3px 0 0 var(--ink);
+    color: var(--ink); font-size: 1.02rem; font-weight: 900; line-height: 1.4;
+  }
+  .now-line.is-on { display: flex; animation: now-in 0.2s ease-out; }
+  .now-what { color: var(--muted); font-weight: 700; }
+  @keyframes now-in { from { opacity: 0; transform: translateY(8px); } }
+
+  .stages-phone { display: none; }
+  .stage-list { list-style: none; display: grid; gap: 0.65rem; margin-top: 1.2rem; }
+  .stage-row {
+    display: flex; align-items: center; gap: 0.8rem; width: 100%; padding: 0.75rem 0.9rem; text-align: left; cursor: pointer;
+    border-radius: 16px; border: 2px solid var(--ink); background: #fff; box-shadow: 0 3px 0 0 var(--ink);
+    font: inherit; color: var(--ink); transition: background 0.3s ease;
+  }
+  .stage-row.is-on { background: var(--yellow); box-shadow: 0 5px 0 0 var(--ink); }
+  .stage-row-text { flex: 1; min-width: 0; }
+  .stage-row-name { display: flex; align-items: center; gap: 0.4rem; font-size: 1.1rem; font-weight: 900; line-height: 1.25; }
+  .stage-row-what { display: block; margin-top: 0.15rem; color: rgba(30, 33, 64, 0.72); font-size: 0.95rem; font-weight: 700; line-height: 1.4; }
+
+  /* ── the idea: two ways to get three tries done ── */
+  .compare-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; gap: 4rem; }
+  .compare-lead { color: var(--muted); font-size: clamp(1.1rem, 1.6vw, 1.5rem); font-weight: 800; }
+  .compare-title { margin-top: 0.5rem; font-size: clamp(2rem, 4.2vw, 3.8rem); }
+  .compare-line { display: block; }
+  .compare { display: flex; flex-direction: column; gap: 1.4rem; }
+  .cmp { position: relative; padding: 1.3rem 1.5rem; border-radius: 24px; }
+  .cmp-vibe { border: 2px dashed rgba(30, 33, 64, 0.4); background: #fff; transform: rotate(-1deg); }
+  .cmp-orch { border: 2px solid var(--ink); background: var(--lime-soft); box-shadow: 0 6px 0 0 var(--ink); }
+  .cmp-top { display: flex; align-items: center; justify-content: space-between; gap: 0.8rem; color: var(--ink); }
+  .cmp-vibe .cmp-top { color: var(--muted); }
+  .cmp-name { display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.2rem 0.75rem; border-radius: 999px; font-size: 0.95rem; font-weight: 900; }
+  .cmp-name.is-vibe { border: 2px solid rgba(30, 33, 64, 0.3); color: var(--muted); }
+  .cmp-name.is-vibe :global(svg) { color: var(--coral); }
+  .cmp-name.is-orch { border: 2px solid var(--ink); background: var(--lime); color: var(--ink); }
+  .cmp-dice { display: inline-flex; }
+  .cmp-text { margin-top: 0.8rem; font-size: clamp(1.1rem, 1.6vw, 1.45rem); font-weight: 900; line-height: 1.4; color: var(--ink); }
+  .cmp-vibe .cmp-text { color: var(--muted); }
+  .slots { display: flex; gap: 0.65rem; margin-top: 1rem; }
+  .slot {
+    flex: 1; display: flex; align-items: center; justify-content: center; gap: 0.35rem; height: 3.2rem;
+    border-radius: 12px; border: 2px dashed rgba(30, 33, 64, 0.3); font-size: 1rem; font-weight: 900; transition: background 0.3s ease, border-color 0.3s ease;
+  }
+  .slot.is-luck { color: rgba(30, 33, 64, 0.3); }
+  .slot.is-luck :global(.slot-mark) { display: none; }
+  .slot.is-luck.is-on { border-style: solid; border-color: rgba(30, 33, 64, 0.4); }
+  .slot.is-luck.is-on .slot-q { display: none; }
+  .slot.is-luck.is-on :global(.slot-mark) { display: block; animation: pop 0.35s cubic-bezier(.34, 1.56, .64, 1); }
+  .slot.is-good.is-on { background: var(--lime-soft); color: var(--lime-deep); }
+  .slot.is-bad.is-on { background: rgba(245, 103, 103, 0.15); color: var(--coral); }
+  .slot.is-plan { background: rgba(255, 255, 255, 0.6); color: var(--muted); }
+  .slot.is-plan :global(.slot-tick) { display: none; }
+  .slot.is-plan.is-on { border-style: solid; border-color: var(--ink); background: var(--lime); color: var(--ink); animation: slot-hop 0.35s ease-out; }
+  .slot.is-plan.is-on :global(.slot-tick) { display: block; animation: pop 0.35s cubic-bezier(.34, 1.56, .64, 1); }
+  .cmp-orch :global(.cmp-bun) { position: absolute; right: 1.6rem; top: -2.6rem; width: 64px; opacity: 0; transform: translateY(14px) rotate(8deg); transition: opacity 0.3s ease, transform 0.4s cubic-bezier(.34, 1.56, .64, 1); }
+  .compare.is-complete .cmp-orch :global(.cmp-bun) { opacity: 1; transform: translateY(0) rotate(8deg); }
+  @keyframes pop { from { transform: scale(0) rotate(-40deg); } }
+  @keyframes slot-hop { 50% { transform: translateY(-6px); } }
+
+  /* ── one task, six steps ── */
+  .steps-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; gap: 3.5rem; margin-top: 4.5rem; }
+  .step-list { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
+  .step {
+    position: relative; overflow: hidden; border-radius: 18px; border: 2px solid rgba(30, 33, 64, 0.15);
+    background: rgba(255, 255, 255, 0.5); transition: background 0.2s ease, border-color 0.2s ease;
+  }
+  .step:hover { border-color: rgba(30, 33, 64, 0.4); background: #fff; }
+  .step.is-on { border-color: var(--ink); background: #fff; box-shadow: 0 5px 0 0 var(--ink); }
+  .step-btn { display: block; width: 100%; padding: 0.85rem 1.1rem; text-align: left; cursor: pointer; border: 0; background: none; font: inherit; color: var(--ink); }
+  .step-head { display: flex; align-items: center; gap: 0.85rem; }
+  .step-head.has-clip { padding-right: 7.5rem; }
+  .step-num {
+    display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; width: 40px; height: 40px;
+    border-radius: 50%; border: 2px solid var(--ink); background: #fff; font-size: 1.05rem; font-weight: 900; transition: background 0.2s ease;
+  }
+  .step-num :global(.step-done) { display: none; }
+  .step.is-on .step-num { background: var(--lime); }
+  .step.is-done .step-num { background: var(--lime-soft); }
+  .step.is-done .step-n { display: none; }
+  .step.is-done .step-num :global(.step-done) { display: block; }
+  .step-title { font-size: clamp(1.15rem, 1.6vw, 1.4rem); font-weight: 900; line-height: 1.35; color: var(--muted); }
+  .step.is-on .step-title { color: var(--ink); }
+  .step-text { display: none; padding: 0.5rem 0 0 calc(40px + 0.85rem); color: var(--muted); font-size: 1.05rem; font-weight: 700; line-height: 1.7; }
+  .step.is-on .step-text { display: block; animation: now-in 0.25s ease-out; }
+  .clip-btn {
+    position: absolute; right: 0.8rem; top: 0.8rem; display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.35rem 0.8rem;
+    border-radius: 999px; border: 2px solid var(--ink); background: var(--yellow); box-shadow: 0 3px 0 0 var(--ink);
+    font: inherit; font-size: 0.92rem; font-weight: 900; color: var(--ink); cursor: pointer; transition: transform 0.15s ease;
+  }
+  .clip-btn:hover { transform: translateY(-2px); }
+  .clip-btn :global(svg) { fill: currentColor; }
+  .clip-short { display: none; }
+  .step-bar { position: absolute; left: 0; right: 0; bottom: 0; height: 4px; background: var(--lime); transform: scaleX(0); transform-origin: left; }
+  .steps-grid.is-running .step.is-on .step-bar { animation: step-bar 4.2s linear forwards; }
+  @keyframes step-bar { to { transform: scaleX(1); } }
+
+  .term-wrap { position: relative; align-self: center; }
+  .term-wrap :global(.term-bun) { position: absolute; right: 2.2rem; top: -3.1rem; width: 84px; transform: rotate(6deg); }
+  .term { padding: 1.6rem 1.8rem; border-radius: 28px; border: 2px solid var(--ink); background: var(--ink); color: #fff; box-shadow: 0 6px 0 0 var(--lime-deep); }
+  .term-top { display: flex; align-items: center; justify-content: space-between; }
+  .term-dots { display: flex; align-items: center; gap: 0.4rem; }
+  .term-dots i { width: 12px; height: 12px; border-radius: 50%; background: var(--coral); }
+  .term-dots i:nth-child(2) { background: var(--yellow); }
+  .term-dots i:nth-child(3) { background: var(--lime); }
+  .term-dots span { margin-left: 0.5rem; font-family: ui-monospace, Menlo, monospace; font-size: 0.92rem; font-weight: 700; color: rgba(255, 255, 255, 0.6); }
+  .term-count { padding: 0.2rem 0.75rem; border-radius: 999px; background: rgba(255, 255, 255, 0.1); font-size: 0.92rem; font-weight: 900; font-variant-numeric: tabular-nums; }
+  .term-body { display: grid; margin-top: 1.3rem; min-height: 13rem; }
+  .term-lines { grid-area: 1 / 1; display: none; flex-direction: column; gap: 0.9rem; }
+  .term-lines.is-on { display: flex; }
+  .term-step { display: none; font-size: 1.2rem; font-weight: 900; color: var(--lime); }
+  .term-line { display: flex; align-items: center; gap: 0.75rem; opacity: 0; animation: line-in 0.25s ease-out var(--d) forwards; }
+  .who { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; width: 2.6rem; height: 2.1rem; border-radius: 9px; background: var(--lime); color: var(--ink); font-size: 0.92rem; font-weight: 900; }
+  .term-line.is-you .who { background: var(--yellow); }
+  .said { flex: 1; min-width: 0; font-size: clamp(1.02rem, 1.35vw, 1.3rem); font-weight: 700; line-height: 1.4; color: rgba(255, 255, 255, 0.85); }
+  .term-line.is-you .said { color: #fff; }
+  .said.is-code { font-family: ui-monospace, Menlo, monospace; }
+  .tick { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%; background: var(--lime); color: var(--ink); animation: pop 0.35s cubic-bezier(.34, 1.56, .64, 1) calc(var(--d) + 0.25s) both; }
+  @keyframes line-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  .term-tools { margin-top: 1rem; padding-top: 1rem; border-top: 2px dashed rgba(255, 255, 255, 0.2); }
+  .tools-row { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; }
+  .tools-label { margin-right: 0.2rem; font-size: 0.92rem; font-weight: 900; color: rgba(255, 255, 255, 0.6); }
+  .tool { display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.3rem 0.75rem; border-radius: 999px; background: rgba(255, 255, 255, 0.1); color: rgba(255, 255, 255, 0.55); font-size: 0.92rem; font-weight: 900; transition: background 0.3s ease, color 0.3s ease; }
+  .tool.is-on { background: var(--lime); color: var(--ink); animation: tool-pulse 0.35s ease-out 0.5s; }
+  @keyframes tool-pulse { 50% { transform: scale(1.14); } }
+  .tools-caption { margin-top: 0.7rem; font-size: 0.98rem; font-weight: 700; color: rgba(255, 255, 255, 0.7); }
+
+  .clip-dialog { max-width: none; max-height: none; width: 100%; height: 100%; margin: 0; padding: 1rem; border: 0; background: rgba(30, 33, 64, 0.9); }
+  .clip-dialog[open] { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; }
+  .clip-dialog::backdrop { background: transparent; }
+  .clip-dialog video { max-height: 78vh; width: auto; max-width: min(1280px, 94vw); border-radius: 16px; border: 2px solid #fff; background: var(--ink); }
+  .clip-close { position: absolute; right: 1rem; top: 1rem; display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; border: 2px solid var(--ink); background: #fff; color: var(--ink); cursor: pointer; }
+  .clip-caption { max-width: 48rem; text-align: center; color: #fff; font-size: 1.05rem; font-weight: 700; line-height: 1.7; }
+  .clip-tag { margin-right: 0.5rem; padding: 0.1rem 0.6rem; border-radius: 999px; background: var(--lime); color: var(--ink); font-size: 0.88rem; font-weight: 900; }
+
+  .end-buns { display: flex; align-items: flex-end; }
+  .end-buns :global(.end-bun) { width: 72px; margin: 0 -6px; }
+  .end-buns :global(.end-bun:nth-child(2)) { width: 84px; position: relative; z-index: 1; }
+
+  @media (min-width: 1280px) {
+    .stage-what { display: block; }
+    .now { display: none; }
+  }
+  @media (max-width: 1100px) {
+    .compare-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .compare-text { text-align: center; }
+    .steps-grid { grid-template-columns: 1fr; gap: 4rem; margin-top: 3rem; }
+    .term-wrap { order: -1; }
+    .term-step { display: block; }
+  }
+  @media (max-width: 899px) {
+    .stages-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-areas: 'loop loop' 'left right'; align-items: start; }
+    .stage-card-top { display: flex; align-items: center; justify-content: space-between; gap: 0.6rem; }
+    .stage-card .owners { margin-top: 0; }
+  }
+  @media (max-width: 767px) {
+    .stages-grid { display: none; }
+    .stages-phone { display: block; margin-top: 1rem; }
+    .stages-hint { font-size: 0.95rem; }
+  }
+  @media (max-width: 600px) {
+    .cmp { padding: 1.1rem 1.1rem; }
+    .slot { height: 2.8rem; font-size: 0.92rem; }
+    .term { padding: 1.2rem 1.1rem; }
+    .term-wrap :global(.term-bun) { width: 64px; top: -2.4rem; right: 1.5rem; }
+    .step-btn { padding: 0.75rem 0.85rem; }
+    .step-head.has-clip { padding-right: 4.8rem; }
+    .step-num { width: 34px; height: 34px; font-size: 0.95rem; }
+    .step-text { padding-left: calc(34px + 0.85rem); font-size: 1rem; }
+    .clip-long { display: none; }
+    .clip-short { display: inline; }
+    .clip-btn { right: 0.6rem; top: 0.7rem; padding: 0.3rem 0.65rem; font-size: 0.85rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .loop :global(.loop-flow), .term-line, .tick, .tool.is-on, .now-line.is-on, .step.is-on .step-text { animation: none; opacity: 1; }
+    .node .num, .stage-card { transition: none; }
+  }
+</style>

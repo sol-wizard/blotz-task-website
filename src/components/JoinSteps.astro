@@ -1,0 +1,431 @@
+---
+// 怎么加入: the four interview steps acted out by the lime bun in a little bun shop (包子房).
+// 1 it walks in and hands its résumé over the counter, 2 it chats with the shopkeeper,
+// 3 it goes through the curtain and sits with the chefs, 4 it gets a chef's hat and apron.
+// Self-contained: copy, scene, controls and script. The #contact section on the Join page holds the WeChat ID.
+import { Icon } from 'astro-icon/components';
+import Bun from './Bun.astro';
+
+const zh = (Astro.currentLocale ?? 'zh') === 'zh';
+const c = zh
+  ? {
+      title: '[怎么加入]',
+      steps: [
+        { title: '递上简历', desc: '把简历和作品集递到柜台，掌柜先看一看。' },
+        { title: '和掌柜聊聊', desc: '简单聊一次，互相认识一下。想问什么，都可以问。' },
+        { title: '进厨房见师傅', desc: '掀开门帘进厨房，和团队里的师傅们好好聊一聊。' },
+        { title: '戴上厨师帽', desc: '双方都觉得合适，你就是包子房的新师傅了。' },
+      ],
+      stepGo: '看第 {n} 步：{title}',
+      stepStatus: '第 {n} 步，共 {total} 步：{title}',
+      next: '下一步',
+      endMsg: '欢迎来到包子房！',
+      toWechat: '去发简历',
+      again: '再走一遍',
+      sign: '包子房',
+      curtain: '厨房',
+    }
+  : {
+      title: 'How to [join]',
+      steps: [
+        { title: 'Hand in your résumé', desc: 'Bring your résumé and portfolio to the counter. The shopkeeper reads them first.' },
+        { title: 'A chat at the counter', desc: 'A short call to get to know each other. Ask us anything.' },
+        { title: 'Into the kitchen', desc: 'Through the curtain for a proper chat with the chefs on the team.' },
+        { title: 'Put on the chef’s hat', desc: 'If it suits both sides, you are the newest chef in the Bun House.' },
+      ],
+      stepGo: 'Go to step {n}: {title}',
+      stepStatus: 'Step {n} of {total}: {title}',
+      next: 'Next step',
+      endMsg: 'Welcome to the Bun House!',
+      toWechat: 'Send your résumé',
+      again: 'Start again',
+      sign: 'Bun House',
+      curtain: 'Kitchen',
+    };
+const hl = (text: string) => text.split(/\[|\]/);
+const fill = (text: string, values: Record<string, string | number>) =>
+  text.replace(/\{(\w+)\}/g, (_, key) => String(values[key] ?? ''));
+const chefs = [
+  { tone: 'sky' as const, face: 'smile' as const },
+  { tone: 'pink' as const, face: 'happy' as const },
+  { tone: 'lilac' as const, face: 'wink' as const },
+];
+const hat = 'M10 27C2 26 2 12 12 13 12 4 26 2 28 10 34 4 46 10 40 20 46 24 42 30 38 28V37H10Z';
+---
+
+<section class="band band-blue" id="steps">
+  <div class="wrap">
+    <h2 class="k-h2 k-center reveal">{hl(c.title).map((part, i) => (i % 2 ? <span class="k-hl">{part}</span> : part))}</h2>
+
+    <div class="js" data-join data-status-text={c.stepStatus} data-end-text={c.endMsg}>
+      <!-- the scene: a view onto a wide little world; on a phone the view pans between the shop front and the kitchen -->
+      <div class="view" aria-hidden="true">
+        <div class="world" data-world data-step="1">
+          <!-- shop front -->
+          <span class="wall-front"></span>
+          <span class="awning"></span>
+          <span class="sign"><span class="sign-text">{c.sign}</span></span>
+          <span class="door"><span class="door-pane"></span><span class="door-knob"></span></span>
+          <span class="keeper fig">
+            <Bun face="smile" tone="cream" />
+            <svg class="glasses" viewBox="0 0 40 14"><circle cx="10" cy="7" r="5.5" /><circle cx="30" cy="7" r="5.5" /><path d="M15.5 7h9" /></svg>
+            <svg class="keeper-cap" viewBox="11 14 43 38"><path class="cap" d="M22 22.5Q31 10 40 22.5z" /><circle class="knob" cx="31" cy="15" r="1.8" /></svg>
+          </span>
+          <span class="counter"><span class="counter-top"></span></span>
+          <span class="steamer steamer-front">
+            <span class="steam"><i></i><i></i><i></i></span>
+            <span class="basket lid"></span><span class="basket"></span><span class="basket"></span>
+          </span>
+          <span class="paper"><i></i><i></i><i></i></span>
+          <span class="bubble bubble-me"><Icon name="lucide:hand" /></span>
+          <span class="bubble bubble-keeper"><Icon name="lucide:message-circle-question" /></span>
+
+          <!-- kitchen -->
+          <span class="wall-kitchen"></span>
+          <span class="shelf"><span class="steamer steamer-shelf"><span class="basket lid"></span><span class="basket"></span></span></span>
+          <span class="curtain"><span class="curtain-l"></span><span class="curtain-r"></span><span class="curtain-text">{c.curtain}</span></span>
+          {chefs.map((chef, i) => (
+            <span class:list={['chef', 'fig', `chef-${i + 1}`]}>
+              <svg class="hat" viewBox="0 0 48 40"><path d={hat} /><path class="hat-band" d="M10 31H38" /></svg>
+              <Bun face={chef.face} tone={chef.tone} />
+            </span>
+          ))}
+          <span class="table"><span class="table-top"></span><span class="table-leg l"></span><span class="table-leg r"></span></span>
+          <span class="bubble bubble-idea"><Icon name="lucide:lightbulb" /></span>
+          <span class="bubble bubble-ok"><Icon name="lucide:thumbs-up" /></span>
+          <span class="floor"></span>
+
+          <!-- the lime bun, walking through all of it -->
+          <span class="me fig" data-me>
+            <span class="me-body">
+              <svg class="hat me-hat" viewBox="0 0 48 40"><path d={hat} /><path class="hat-band" d="M10 31H38" /></svg>
+              <Bun face="happy" class="me-face" />
+              <Bun face="grin" class="me-face-win" />
+              <svg class="apron" viewBox="0 0 40 30"><path d="M8 4h24v8c0 9-5 15-12 15S8 21 8 12z" /><path class="apron-pocket" d="M15 15h10v5c0 2-2 3-5 3s-5-1-5-3z" /><path class="apron-tie" d="M8 6 2 3M32 6l6-3" /></svg>
+            </span>
+          </span>
+        </div>
+      </div>
+
+      <!-- the four steps as cards; pressing one plays that moment -->
+      <ol class="cards">
+        {c.steps.map((step, i) => (
+          <li>
+            <button type="button" class:list={['card', i === 0 && 'is-current']} data-card data-title={step.title} aria-label={fill(c.stepGo, { n: i + 1, title: step.title })} aria-current={i === 0 ? 'step' : undefined}>
+              <span class="card-num"><span class="num">{i + 1}</span><Icon class="tick" name="lucide:check" width={16} height={16} /></span>
+              <span class="card-title">{step.title}</span>
+              <span class="card-desc">{step.desc}</span>
+            </button>
+          </li>
+        ))}
+      </ol>
+
+      <div class="ui">
+        <p class="status" data-status aria-live="polite">{fill(c.stepStatus, { n: 1, total: c.steps.length, title: c.steps[0].title })}</p>
+        <button type="button" class="k-btn is-lime" data-next>
+          {c.next}
+          <Icon name="lucide:arrow-right" width={20} height={20} />
+        </button>
+        <a class="k-btn is-lime" href="#contact" data-to-wechat hidden>
+          {c.toWechat}
+          <Icon name="lucide:arrow-down" width={20} height={20} />
+        </a>
+        <button type="button" class="again" data-again hidden>
+          <Icon name="lucide:rotate-ccw" width={16} height={16} />
+          {c.again}
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  #steps { scroll-margin-top: 5rem; }
+
+  /* ── the scene ── */
+  .view { position: relative; margin: 3rem auto 0; max-width: 1040px; overflow: hidden; border-radius: 30px; border: 2px solid var(--ink); box-shadow: 0 6px 0 0 var(--ink); background: #ffe6c7; }
+  /* the world is drawn in % of its own width, so it scales as one picture; cqw sizes text and lines with it */
+  .world { position: relative; width: 100%; aspect-ratio: 960 / 460; container-type: inline-size; transition: transform 0.9s cubic-bezier(.65, 0, .35, 1); }
+  .world > * { position: absolute; }
+  .world :global(svg) { overflow: visible; }
+
+  .wall-front { inset: 0 45% 0 0; background: #ffe6c7; }
+  .wall-kitchen { inset: 0 0 0 55%; background-color: #f2f7ff; background-image: linear-gradient(rgba(30, 33, 64, 0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(30, 33, 64, 0.08) 1px, transparent 1px); background-size: 3.2cqw 3.2cqw; }
+  .floor { left: 0; right: 0; bottom: 0; height: 16%; background: #e8c48c; border-top: 0.25cqw solid var(--ink); background-image: repeating-linear-gradient(90deg, transparent 0 7cqw, rgba(30, 33, 64, 0.12) 7cqw calc(7cqw + 2px)); }
+  .awning { left: 0; top: 0; width: 55%; height: 7%; border-bottom: 0.25cqw solid var(--ink);
+    background: repeating-linear-gradient(90deg, var(--coral) 0 4cqw, #fff 4cqw 8cqw);
+    -webkit-mask: radial-gradient(circle at 2cqw 100%, transparent 1.2cqw, #000 1.25cqw) 0 0 / 4cqw 100%; mask: radial-gradient(circle at 2cqw 100%, transparent 1.2cqw, #000 1.25cqw) 0 0 / 4cqw 100%; }
+  .sign { left: 19%; top: 11%; width: 27%; height: 15%; display: grid; place-items: center; border-radius: 1.2cqw; border: 0.25cqw solid var(--ink); background: var(--ink); box-shadow: 0 0.5cqw 0 0 #b98a3e; rotate: -2deg; }
+  .sign-text { color: var(--yellow); font-size: 3.4cqw; font-weight: 900; letter-spacing: 0.12em; white-space: nowrap; }
+  .door { left: 2%; bottom: 16%; width: 11%; height: 56%; border: 0.25cqw solid var(--ink); border-bottom: 0; border-radius: 5cqw 5cqw 0 0; background: var(--coral); }
+  .door-pane { position: absolute; inset: 12% 18% 45%; border-radius: 3cqw 3cqw 0.6cqw 0.6cqw; border: 0.22cqw solid var(--ink); background: #ffe3d6; }
+  .door-knob { position: absolute; right: 14%; top: 60%; width: 1.1cqw; height: 1.1cqw; border-radius: 50%; border: 0.2cqw solid var(--ink); background: var(--yellow); }
+
+  .counter { left: 24%; bottom: 16%; width: 27%; height: 28%; border: 0.25cqw solid var(--ink); border-bottom: 0; background: #c8894a; background-image: repeating-linear-gradient(90deg, transparent 0 4.5cqw, rgba(30, 33, 64, 0.15) 4.5cqw calc(4.5cqw + 2px)); z-index: 3; }
+  .counter-top { position: absolute; left: -4%; right: -4%; top: -1.6cqw; height: 1.8cqw; border-radius: 0.8cqw; border: 0.25cqw solid var(--ink); background: #e5a868; }
+
+  .fig :global(.bun) { display: block; width: 100%; }
+  .keeper { left: 30%; bottom: 46.5%; width: 10%; z-index: 2; transform-origin: 50% 100%; }
+  .glasses { position: absolute; left: 22%; top: 40%; width: 56%; fill: rgba(255, 255, 255, 0.35); stroke: var(--ink); stroke-width: 2; }
+  .keeper-cap { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .keeper-cap .cap { fill: var(--ink); stroke: var(--ink); stroke-width: 1.2; stroke-linejoin: round; }
+  .keeper-cap .knob { fill: var(--coral); stroke: var(--ink); stroke-width: 1.2; }
+
+  .steamer { display: flex; flex-direction: column; align-items: center; }
+  .steamer-front { left: 40.5%; bottom: 44.5%; width: 8.5%; z-index: 4; }
+  .basket { display: block; width: 100%; height: 2.2cqw; margin-top: -0.25cqw; border-radius: 0.9cqw; border: 0.25cqw solid var(--ink); background: #f1cf8a; background-image: repeating-linear-gradient(90deg, transparent 0 1.2cqw, rgba(30, 33, 64, 0.18) 1.2cqw calc(1.2cqw + 1.5px)); }
+  .basket.lid { width: 90%; height: 1.8cqw; border-radius: 3cqw 3cqw 0.8cqw 0.8cqw; }
+  .steam { position: relative; display: block; width: 100%; height: 6cqw; }
+  .steam i { position: absolute; bottom: 0; width: 1.4cqw; height: 4.5cqw; border-radius: 1cqw; border: 0.25cqw solid rgba(30, 33, 64, 0.25); border-left-color: transparent; border-bottom-color: transparent; opacity: 0; }
+  .steam i:nth-child(1) { left: 18%; } .steam i:nth-child(2) { left: 44%; } .steam i:nth-child(3) { left: 70%; }
+
+  .shelf { left: 60%; top: 16%; width: 13%; height: 1.4cqw; border-radius: 0.6cqw; border: 0.25cqw solid var(--ink); background: #c8894a; }
+  .steamer-shelf { position: absolute; left: 20%; bottom: 100%; width: 55%; }
+
+  .curtain { left: 51.5%; top: 0; width: 7.5%; height: 52%; z-index: 6; }
+  .curtain-l, .curtain-r { position: absolute; top: 0; bottom: 0; width: 49%; border: 0.25cqw solid var(--ink); border-top: 0; border-radius: 0 0 1cqw 1cqw; background: #34407c; transform-origin: top center; transition: rotate 0.4s ease; }
+  .curtain-l { left: 0; } .curtain-r { right: 0; }
+  .curtain-text { position: absolute; left: 50%; top: 30%; translate: -50% 0; color: #fff; font-size: 2.2cqw; font-weight: 900; writing-mode: vertical-rl; letter-spacing: 0.2em; white-space: nowrap; }
+
+  .table { left: 66%; bottom: 16%; width: 30%; height: 21%; z-index: 4; }
+  .table-top { position: absolute; left: 0; right: 0; top: 0; height: 2.4cqw; border-radius: 1cqw; border: 0.25cqw solid var(--ink); background: #e5a868; box-shadow: 0 0.5cqw 0 0 #b0743a; }
+  .table-leg { position: absolute; top: 2cqw; bottom: 0; width: 1.6cqw; border: 0.25cqw solid var(--ink); border-top: 0; background: #c8894a; }
+  .table-leg.l { left: 12%; } .table-leg.r { right: 12%; }
+  .chef { bottom: 33%; width: 8.5%; z-index: 3; transform-origin: 50% 100%; transition: left 0.7s cubic-bezier(.45, 0, .3, 1) 0.15s; }
+  .chef-1 { left: 67%; } .chef-2 { left: 77.5%; } .chef-3 { left: 88%; }
+  .hat { position: absolute; left: 4%; bottom: 55%; width: 92%; fill: #fff; stroke: var(--ink); stroke-width: 2.5; stroke-linejoin: round; rotate: -6deg; }
+  .hat-band { fill: none; stroke-width: 2; }
+  .chef-2 .hat { rotate: 4deg; }
+
+  /* speech bubbles: a white round with an ink outline and a little tail */
+  .bubble { display: grid; place-items: center; width: 7cqw; height: 7cqw; border-radius: 50%; border: 0.25cqw solid var(--ink); background: #fff; box-shadow: 0 0.4cqw 0 0 var(--ink); z-index: 8; opacity: 0; scale: 0.3; transition: opacity 0.25s ease, scale 0.35s cubic-bezier(.34, 1.56, .64, 1); }
+  .bubble :global(svg) { width: 55%; height: 55%; }
+  .bubble::after { content: ''; position: absolute; bottom: -1.1cqw; left: 30%; border: 0.7cqw solid transparent; border-top-color: var(--ink); border-bottom: 0; }
+  .bubble-me { left: 16%; bottom: 47%; background: var(--lime-soft); }
+  .bubble-keeper { left: 36%; bottom: 68%; background: var(--yellow-soft); }
+  .bubble-keeper::after { left: 20%; }
+  .bubble-idea { left: 62%; bottom: 44%; background: var(--yellow-soft); }
+  .bubble-ok { left: 82%; bottom: 66%; background: var(--blue-soft); }
+
+  /* the résumé: a white sheet with three lines */
+  /* it sits on the counter; in step 1 it starts in the bun's hand and is passed over */
+  .paper { left: 25.5%; bottom: 46%; width: 3.4cqw; height: 4.4cqw; padding: 0.7cqw 0.55cqw; display: flex; flex-direction: column; gap: 0.5cqw; border-radius: 0.4cqw; border: 0.22cqw solid var(--ink); background: #fff; z-index: 9; rotate: 6deg; opacity: 0; }
+  .paper i { display: block; height: 0.3cqw; border-radius: 1px; background: var(--muted); }
+  .paper i:nth-child(2) { width: 70%; }
+
+  /* the lime bun */
+  .me { left: 13%; bottom: 16%; width: 10%; z-index: 7; transition: left 1.1s cubic-bezier(.45, 0, .3, 1), bottom 1.1s cubic-bezier(.45, 0, .3, 1); }
+  .me-body { position: relative; display: block; transform-origin: 50% 100%; }
+  .me :global(.me-face-win) { display: none; }
+  .me-hat { opacity: 0; translate: 0 -260%; transition: translate 0.55s cubic-bezier(.34, 1.4, .64, 1) 0.5s, opacity 0.2s ease 0.5s; }
+  .apron { display: none; position: absolute; left: 25%; top: 46%; width: 50%; fill: #fff; stroke: var(--ink); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; opacity: 0; scale: 0.4; transition: opacity 0.3s ease 0.9s, scale 0.4s cubic-bezier(.34, 1.56, .64, 1) 0.9s; }
+  .apron-pocket { fill: var(--lime-soft); }
+  .apron-tie { fill: none; }
+
+  /* ── what each step looks like ── */
+  .world[data-step='0'] .me { left: 3%; }
+  .world[data-step='1'] .paper { opacity: 1; animation: hand-over 1.5s ease-in-out 1s both; }
+  .world[data-step='1'] .keeper { animation: read 1.6s ease-in-out 1.6s infinite; }
+  .world[data-step='2'] .bubble-me { animation: talk 2.4s ease-in-out infinite; }
+  .world[data-step='2'] .bubble-keeper { animation: talk 2.4s ease-in-out 1.2s infinite; }
+  .world[data-step='2'] .keeper, .world[data-step='2'] .me-body { animation: chat 2.4s ease-in-out infinite; }
+  .world[data-step='2'] .keeper { animation-delay: 1.2s; }
+  .world[data-step='3'] .me { left: 58.5%; }
+  .world[data-step='3'] .curtain-l, .world[data-step='3'] .curtain-r { animation: sway 1.4s ease-out 0.35s; }
+  .world[data-step='3'] .chef { animation: nod 1.8s ease-in-out infinite; }
+  .world[data-step='3'] .chef-2 { animation-delay: 0.3s; } .world[data-step='3'] .chef-3 { animation-delay: 0.6s; }
+  .world[data-step='3'] .bubble-idea { animation: talk 2.6s ease-in-out 1.2s infinite; }
+  .world[data-step='3'] .bubble-ok { animation: talk 2.6s ease-in-out 2.5s infinite; }
+  /* step 4: the chefs shuffle along and the bun takes the fourth place behind the table */
+  .world[data-step='4'] .me { left: 88.5%; bottom: 33%; z-index: 3; }
+  .world[data-step='4'] .chef-1 { left: 61%; } .world[data-step='4'] .chef-2 { left: 70%; } .world[data-step='4'] .chef-3 { left: 79%; }
+  .world[data-step='4'] .me-hat { opacity: 1; translate: 0 0; }
+  .world[data-step='4'] .apron { opacity: 1; scale: 1; }
+  .world[data-step='4'] .me :global(.me-face) { display: none; }
+  .world[data-step='4'] .me :global(.me-face-win) { display: block; }
+  .world[data-step='4'] .chef { animation: cheer 0.9s ease-in-out 1.2s infinite; }
+  .world[data-step='4'] .chef-2 { animation-delay: 1.35s; } .world[data-step='4'] .chef-3 { animation-delay: 1.5s; }
+  .world[data-step='4'] .steam i { animation-duration: 1.4s; }
+  .me.is-moving .me-body { animation: hop 0.37s ease-in-out 3; }
+
+  .steam i { animation: steam 2.6s ease-out infinite; }
+  .steam i:nth-child(2) { animation-delay: 0.8s; } .steam i:nth-child(3) { animation-delay: 1.6s; }
+
+  @keyframes hop { 0%, 100% { translate: 0 0; scale: 1 1; } 50% { translate: 0 -22%; scale: 0.96 1.04; } }
+  @keyframes hand-over { 0% { opacity: 0; translate: -4.5cqw 11cqw; rotate: -10deg; } 30%, 45% { opacity: 1; translate: -4.5cqw 10cqw; rotate: -10deg; } 80% { translate: -1.5cqw -3cqw; } 100% { opacity: 1; translate: 0 0; rotate: 6deg; } }
+  @keyframes read { 0%, 100% { rotate: 0deg; } 50% { rotate: -5deg; translate: 0 3%; } }
+  @keyframes talk { 0%, 5% { opacity: 0; scale: 0.3; } 14%, 62% { opacity: 1; scale: 1; } 72%, 100% { opacity: 0; scale: 0.6; } }
+  @keyframes chat { 0%, 100% { translate: 0 0; } 15% { translate: 0 -6%; } 30% { translate: 0 0; } }
+  @keyframes nod { 0%, 100% { rotate: 0deg; } 25% { rotate: 6deg; } 50% { rotate: 0deg; } 75% { rotate: 3deg; } }
+  @keyframes cheer { 0%, 100% { translate: 0 0; } 45% { translate: 0 -18%; } }
+  @keyframes sway { 0% { rotate: 0deg; } 25% { rotate: 14deg; } 55% { rotate: -6deg; } 100% { rotate: 0deg; } }
+  @keyframes steam { 0% { opacity: 0; translate: 0 30%; } 30% { opacity: 1; } 100% { opacity: 0; translate: 0 -60%; } }
+
+  /* confetti from the bun's new hat */
+  .world :global(.bit) { position: absolute; z-index: 10; width: 1.1cqw; height: 0.7cqw; border-radius: 2px; background: var(--c); pointer-events: none; animation: bit var(--t) cubic-bezier(.2, .6, .3, 1) forwards; }
+  .world :global(.bit.is-round) { width: 0.9cqw; height: 0.9cqw; border-radius: 50%; }
+  @keyframes bit { 0% { transform: translate(0, 0) rotate(0) scale(0.4); opacity: 1; } 60% { transform: translate(var(--dx), var(--dy)) rotate(var(--r)) scale(1); opacity: 1; } 100% { transform: translate(var(--dx), calc(var(--dy) + 8cqw)) rotate(calc(var(--r) * 2)); opacity: 0; } }
+
+  /* ── the four cards ── */
+  .cards { list-style: none; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; max-width: 1040px; margin: 1.6rem auto 0; }
+  .cards > li { display: flex; }
+  .card {
+    width: 100%; display: flex; flex-direction: column; align-items: flex-start; gap: 0.35rem; padding: 1rem 1.1rem 1.15rem; text-align: left;
+    border-radius: 22px; border: 2px solid var(--ink); background: #fff; box-shadow: 0 4px 0 0 var(--ink); color: var(--ink); font: inherit; cursor: pointer;
+    transition: transform 0.15s ease, background-color 0.2s ease;
+  }
+  .card:hover { transform: translateY(-2px); }
+  .card:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+  .card-num { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; border: 2px solid var(--ink); background: var(--yellow-soft); font-size: 0.95rem; font-weight: 900; }
+  .card-num .tick { display: none; }
+  .card-title { font-size: 1.12rem; font-weight: 900; line-height: 1.35; }
+  .card-desc { color: var(--muted); font-size: 0.98rem; line-height: 1.6; }
+  :global(html.js) .card.is-current { background: var(--yellow-soft); transform: translateY(-3px); }
+  :global(html.js) .card.is-current .card-num { background: var(--yellow); }
+  :global(html.js) .card.is-done .card-num { background: var(--lime); }
+  :global(html.js) .card.is-done .num { display: none; }
+  :global(html.js) .card.is-done .tick { display: block; }
+
+  /* ── status and buttons ── */
+  .ui { display: none; }
+  :global(html.js) .ui { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.9rem 1.2rem; margin-top: 2rem; }
+  .ui [hidden] { display: none; }
+  .status {
+    padding: 0.5rem 1.3rem; border-radius: 999px; border: 2px solid var(--ink); background: #fff; box-shadow: 0 4px 0 0 var(--ink);
+    color: var(--ink); font-size: 1.05rem; font-weight: 900; line-height: 1.45; rotate: -1.2deg; font-variant-numeric: tabular-nums;
+  }
+  .ui .k-btn { border-radius: 999px; }
+  .again {
+    display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.45rem 1.1rem; border-radius: 999px; border: 2px dashed var(--ink);
+    background: transparent; color: var(--ink); font: inherit; font-size: 1rem; font-weight: 800; cursor: pointer;
+  }
+  .again:hover { background: var(--lime-soft); }
+  .again:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+
+  /* no script: the last moment, the bun in its chef's hat */
+  :global(html:not(.js)) .world .me { left: 88.5%; bottom: 33%; z-index: 3; }
+  :global(html:not(.js)) .world .chef-1 { left: 61%; } :global(html:not(.js)) .world .chef-2 { left: 70%; } :global(html:not(.js)) .world .chef-3 { left: 79%; }
+  :global(html:not(.js)) .world .me-hat, :global(html:not(.js)) .world .apron { opacity: 1; translate: 0 0; scale: 1; }
+  :global(html:not(.js)) .world .paper { opacity: 0; }
+
+  @media (max-width: 900px) {
+    .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  /* phone: the world is drawn twice as wide and the view pans, shop front for steps 1-2, kitchen for 3-4 */
+  @media (max-width: 640px) {
+    .view { margin-top: 2rem; border-radius: 24px; }
+    .world { width: 185%; }
+    .world[data-step='0'], .world[data-step='1'], .world[data-step='2'] { transform: translateX(0); }
+    .world[data-step='3'], .world[data-step='4'] { transform: translateX(-46%); }
+    :global(html:not(.js)) .world { transform: translateX(-46%); }
+    .card { padding: 0.85rem 0.9rem 1rem; }
+    .card-title { font-size: 1.02rem; }
+    .card-desc { font-size: 0.92rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .world, .me, .chef, .bubble, .me-hat, .apron, .curtain-l, .curtain-r { transition: none !important; }
+    .world *, .world :global(*) { animation: none !important; }
+    .world[data-step='2'] .bubble-me, .world[data-step='2'] .bubble-keeper,
+    .world[data-step='3'] .bubble-idea, .world[data-step='3'] .bubble-ok { opacity: 1; scale: 1; }
+    .card, .card:hover { transition: none; transform: none; }
+  }
+</style>
+
+<script>
+  // Plays the four moments. Nothing is stored or sent.
+  const root = document.querySelector<HTMLElement>('[data-join]');
+  if (root) {
+    const calm = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const world = root.querySelector<HTMLElement>('[data-world]')!;
+    const me = root.querySelector<HTMLElement>('[data-me]')!;
+    const cards = [...root.querySelectorAll<HTMLButtonElement>('[data-card]')];
+    const status = root.querySelector<HTMLElement>('[data-status]')!;
+    const next = root.querySelector<HTMLButtonElement>('[data-next]')!;
+    const toWechat = root.querySelector<HTMLAnchorElement>('[data-to-wechat]')!;
+    const again = root.querySelector<HTMLButtonElement>('[data-again]')!;
+    const last = cards.length - 1;
+    let current = 0;
+    let moving = 0;
+
+    // the bun hops while it walks; the hop stops when it arrives
+    const walk = () => {
+      if (calm.matches) return;
+      me.classList.remove('is-moving');
+      void me.offsetWidth;
+      me.classList.add('is-moving');
+      window.clearTimeout(moving);
+      moving = window.setTimeout(() => me.classList.remove('is-moving'), 1100);
+    };
+
+    const burst = () => {
+      if (calm.matches) return;
+      const colours = ['var(--lime)', 'var(--yellow)', 'var(--blue)', 'var(--purple)', 'var(--coral)', '#fff'];
+      const x = me.offsetLeft + me.offsetWidth / 2;
+      const y = me.offsetTop;
+      const w = world.offsetWidth;
+      for (let i = 0; i < 24; i += 1) {
+        const bit = document.createElement('span');
+        const angle = Math.random() * Math.PI * 2;
+        const far = (0.05 + Math.random() * 0.1) * w;
+        bit.className = i % 3 ? 'bit' : 'bit is-round';
+        bit.style.left = `${x}px`;
+        bit.style.top = `${y}px`;
+        bit.style.setProperty('--c', colours[i % colours.length]);
+        bit.style.setProperty('--dx', `${(Math.cos(angle) * far).toFixed(0)}px`);
+        bit.style.setProperty('--dy', `${(Math.sin(angle) * far * 0.7 - 0.06 * w).toFixed(0)}px`);
+        bit.style.setProperty('--r', `${(Math.random() * 360 - 180).toFixed(0)}deg`);
+        bit.style.setProperty('--t', `${(1.1 + Math.random() * 0.6).toFixed(2)}s`);
+        bit.addEventListener('animationend', () => bit.remove());
+        world.append(bit);
+      }
+    };
+
+    let won = 0;
+    const show = (i: number, force = false) => {
+      if (i === current && !force) return;
+      const before = Number(world.dataset.step);
+      current = i;
+      const atEnd = i === last;
+      world.dataset.step = String(i + 1);
+      // the bun only walks when its spot changes: steps 1 and 2 share the counter
+      const spot = (s: number) => (s <= 0 ? 0 : s <= 2 ? 1 : s);
+      if (spot(before) !== spot(i + 1)) walk();
+      cards.forEach((card, n) => {
+        card.classList.toggle('is-current', n === i);
+        card.classList.toggle('is-done', n < i);
+        if (n === i) card.setAttribute('aria-current', 'step');
+        else card.removeAttribute('aria-current');
+      });
+      status.textContent = atEnd
+        ? root.dataset.endText ?? ''
+        : (root.dataset.statusText ?? '')
+            .replace('{n}', String(i + 1))
+            .replace('{total}', String(last + 1))
+            .replace('{title}', cards[i].dataset.title ?? '');
+      // the buttons swap at the end; whichever had the keyboard hands it to the one that replaces it
+      const active = document.activeElement;
+      next.hidden = atEnd;
+      toWechat.hidden = !atEnd;
+      again.hidden = !atEnd;
+      if (atEnd && active === next) toWechat.focus({ preventScroll: true });
+      if (!atEnd && (active === again || active === toWechat)) next.focus({ preventScroll: true });
+      window.clearTimeout(won);
+      if (atEnd) won = window.setTimeout(burst, 1050);
+    };
+
+    cards.forEach((card, i) => card.addEventListener('click', () => show(i)));
+    next.addEventListener('click', () => show(Math.min(last, current + 1)));
+    again.addEventListener('click', () => show(0));
+
+    // first time the shop comes into view, the bun walks in from the door with its résumé
+    if (!calm.matches && 'IntersectionObserver' in window) {
+      world.dataset.step = '0';
+      const seen = new IntersectionObserver((entries) => {
+        if (!entries.some((entry) => entry.isIntersecting)) return;
+        seen.disconnect();
+        window.setTimeout(() => { if (world.dataset.step === '0') show(0, true); }, 250);
+      }, { threshold: 0.5 });
+      seen.observe(world);
+    }
+  }
+</script>

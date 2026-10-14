@@ -1,0 +1,47 @@
+---
+// The app's mascot, a steamed bun, drawn the way the team draws it on Xiaohongshu and in the app:
+// soft body, no outline. Lime with white eyes is the main bun (same as the logo); the pastel tones are
+// the ones marketing uses in posts, each with eyes in a darker shade of its body. 'plain' is the
+// everyday face with two oval eyes.
+interface Props {
+  face?: 'plain' | 'happy' | 'wink' | 'grin' | 'smile' | 'teary' | 'sleepy';
+  tone?: 'lime' | 'sky' | 'pink' | 'lilac' | 'coral' | 'cream';
+  class?: string;
+}
+const { face = 'plain', tone = 'lime', class: className = '' } = Astro.props;
+
+// [gradient stops], eye colour, shadow under the bun
+const tones = {
+  lime: { stops: ['#8fd10e', '#cdeb86'], eye: '#ffffff', shade: 'rgba(77, 125, 9, 0.28)' },
+  sky: { stops: ['#7fc6f2', '#93dfa4', '#f6e47c'], eye: '#2c7d86', shade: 'rgba(79, 154, 160, 0.3)' },
+  pink: { stops: ['#fcc7e0', '#f690b4'], eye: '#b23a68', shade: 'rgba(201, 102, 139, 0.3)' },
+  lilac: { stops: ['#c9b8f6', '#dcc6ee', '#f8dc8c'], eye: '#6247b3', shade: 'rgba(143, 124, 196, 0.3)' },
+  coral: { stops: ['#fdb39a', '#f8787a'], eye: '#b32f3c', shade: 'rgba(201, 88, 92, 0.3)' },
+  cream: { stops: ['#fffaf0', '#f4dfae'], eye: '#4b63c9', shade: 'rgba(201, 164, 92, 0.35)' },
+};
+const look = tones[tone] ?? tones.lime;
+
+const files = import.meta.glob(['/public/shared-pic/buns/*.svg', '/public/shared-pic/bun-white.svg'], { query: '?raw', import: 'default', eager: true }) as Record<string, string>;
+const plain = face === 'plain';
+const raw = files[plain ? '/public/shared-pic/bun-white.svg' : `/public/shared-pic/buns/bun-${face}.svg`] ?? '';
+const d = raw.match(/\sd="([^"]+)"/)?.[1] ?? '';
+// the first shape in the file is the body; painted white underneath, it shows through the face
+const body = d.slice(0, d.search(/Z/i) + 1);
+const id = `bun-fill-${Math.random().toString(36).slice(2, 8)}`;
+---
+
+<svg viewBox="11 14 43 38" class:list={['bun', className]} style={`filter: drop-shadow(0 3px 0 ${look.shade});`} aria-hidden="true">
+  <defs>
+    <linearGradient id={id} x1="0" y1="0.2" x2="1" y2="0.8">
+      {look.stops.map((color, i) => <stop offset={i / (look.stops.length - 1)} stop-color={color} />)}
+    </linearGradient>
+  </defs>
+  <g transform={plain ? 'translate(13 16) scale(1.7)' : undefined}>
+    <path d={body} style={`fill: ${look.eye}; stroke: none;`} />
+    <path d={d} fill-rule="evenodd" style={`fill: url(#${id}); stroke: none;`} />
+  </g>
+</svg>
+
+<style>
+  .bun { display: block; overflow: visible; }
+</style>

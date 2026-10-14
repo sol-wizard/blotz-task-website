@@ -1,0 +1,51 @@
+---
+// The app's own mood buns (the avatars marketing announced in 「包子头像已出笼」) as a row of
+// round stickers in the kit's style. Decorative only. `pick` chooses which of the twelve to show.
+interface Props {
+  pick?: number[];
+  class?: string;
+}
+const { pick = [1, 6, 5, 10, 7, 4], class: className = '' } = Astro.props;
+const files = import.meta.glob('/public/shared-pic/moods/avatar*.svg', { query: '?raw', import: 'default', eager: true }) as Record<string, string>;
+const moods = pick
+  .map((n) => files[`/public/shared-pic/moods/avatar${n}.svg`])
+  .filter(Boolean)
+  .map((raw) => ({
+    colour: raw.match(/<circle[^>]*fill="([^"]+)"/)?.[1] ?? '#eef8d2',
+    d: raw.match(/<path[^>]*\sd="([^"]+)"/)?.[1] ?? '',
+  }));
+---
+
+<ul class:list={['bun-moods', className]} aria-hidden="true">
+  {moods.map((m, i) => (
+    <li style={`--tilt:${[-6, 4, -3, 6, -5, 3][i % 6]}deg; --d:${-(i * 0.45)}s`}>
+      <svg viewBox="0 0 66 66">
+        <circle cx="33" cy="33" r="33" fill={m.colour} />
+        <path d={m.d} fill="#fff" fill-rule="evenodd" />
+      </svg>
+    </li>
+  ))}
+</ul>
+
+<style>
+  .bun-moods { list-style: none; display: flex; flex-wrap: wrap; justify-content: center; gap: 0.9rem; padding: 0; margin: 0; }
+  .bun-moods li {
+    width: clamp(52px, 7vw, 76px); aspect-ratio: 1; border-radius: 50%; overflow: hidden;
+    border: 2px solid var(--ink); box-shadow: 0 4px 0 0 var(--ink); background: #fff;
+    transform: rotate(var(--tilt));
+  }
+  .bun-moods svg { display: block; width: 100%; height: 100%; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .bun-moods li { animation: bm-sway 3.6s ease-in-out infinite; animation-delay: var(--d); transition: transform 0.2s ease; }
+    .bun-moods li:hover { animation: bm-pop 0.5s ease; }
+  }
+  @keyframes bm-sway {
+    0%, 100% { transform: rotate(var(--tilt)) translateY(0); }
+    50% { transform: rotate(calc(var(--tilt) * -0.4)) translateY(-3px); }
+  }
+  @keyframes bm-pop {
+    0%, 100% { transform: rotate(var(--tilt)) scale(1); }
+    45% { transform: rotate(0deg) scale(1.16) translateY(-6px); }
+  }
+</style>

@@ -3,10 +3,9 @@ const siteUrl = 'https://www.blotztask.com';
 const paths = [
   '/',
   '/about',
-  '/features/ai',
-  '/features/task-management',
-  '/features/gamified',
   '/join',
+  '/fans',
+  '/how-we-build',
   '/privacy',
   '/roadmap',
   '/sponsor',
@@ -18,11 +17,10 @@ const paths = [
 
 const priorities: Record<string, string> = {
   '/': '1.0',
-  '/features/ai': '0.8',
-  '/features/task-management': '0.8',
-  '/features/gamified': '0.8',
   '/about': '0.6',
   '/join': '0.6',
+  '/fans': '0.6',
+  '/how-we-build': '0.5',
   '/privacy': '0.3',
   '/roadmap': '0.5',
   '/sponsor': '0.5',

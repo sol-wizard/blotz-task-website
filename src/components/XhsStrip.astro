@@ -1,0 +1,146 @@
+---
+// A pinboard of the team's own Xiaohongshu notes. Every card opens the profile.
+// A cover shows when public/xhs/<cover>.jpg exists; until then the card is drawn from the title.
+import { Icon } from 'astro-icon/components';
+import Bun from './Bun.astro';
+import { defaultLocale } from '../i18n/landing';
+import { xhsNotes, xhsProfileUrl } from '../data/xhs';
+
+const zh = (Astro.currentLocale ?? defaultLocale) === 'zh';
+
+const saved = import.meta.glob('/public/xhs/*.jpg', { query: '?url', import: 'default' });
+const hasCover = (name: string) => `/public/xhs/${name}.jpg` in saved;
+
+// Words for this section. Text inside [ ] gets the highlighter.
+const c = zh
+  ? {
+      title: '更多指南和故事，[在小红书上]',
+      sub: '我们会在小红书上分享 App 的用法、给 ADHD 的小技巧，还有包子铺里的日常。',
+      alt: (title: string) => `小红书笔记的封面：${title}`,
+      more: '去小红书看更多',
+    }
+  : {
+      title: 'More guides and stories [on Red Note]',
+      sub: 'On Red Note (Xiaohongshu) we post how to use the app, tips for ADHD and everyday life in the bun shop. The posts are in Chinese.',
+      alt: (title: string) => `Cover of our Red Note post: ${title}`,
+      more: 'See more on Red Note',
+    };
+
+const hl = (text: string) => text.split(/\[|\]/);
+const faces = ['grin', 'happy', 'plain', 'wink', 'smile', 'sleepy'] as const;
+---
+
+<section class="band xhs-band">
+  <div class="wrap">
+    <div class="xhs-head reveal">
+      <h2 class="k-h2">{hl(c.title).map((part, i) => (i % 2 ? <span class="k-hl">{part}</span> : part))}</h2>
+      <p class="k-lead">{c.sub}</p>
+    </div>
+  </div>
+
+  <ul class="board">
+    {xhsNotes.map((note, i) => (
+      <li class={`pin p${i + 1}`}>
+        <a class="polaroid" href={xhsProfileUrl} target="_blank" rel="noopener noreferrer">
+          {hasCover(note.cover) ? (
+            <>
+              <img class="cover" src={`/xhs/${note.cover}.jpg`} alt={c.alt(note.title)} width="600" height="800" loading="lazy" />
+              <span class="cap" lang="zh">{note.title}</span>
+            </>
+          ) : (
+            <span class={`drawn t${(i % 4) + 1}`}>
+              <span class="drawn-title" lang="zh">{note.title}</span>
+              <Bun face={faces[i % faces.length]} class="drawn-bun" />
+            </span>
+          )}
+        </a>
+      </li>
+    ))}
+  </ul>
+
+  <div class="wrap xhs-more reveal">
+    <a class="k-btn is-coral" href={xhsProfileUrl} target="_blank" rel="noopener noreferrer">
+      {c.more}
+      <Icon name="lucide:arrow-up-right" width={20} height={20} />
+    </a>
+  </div>
+</section>
+
+<style>
+  .xhs-band { overflow: hidden; }
+  .xhs-head { display: flex; flex-direction: column; align-items: center; gap: 1rem; text-align: center; }
+
+  /* six portrait cards pinned in a loose row: each one tilted, raised or dropped a little, edges overlapping */
+  .board {
+    list-style: none; display: flex; justify-content: center; align-items: flex-start;
+    width: 100%; max-width: var(--wrap); margin: 3.5rem auto 0; padding: 1.5rem 1.5rem 2.5rem;
+  }
+  .pin { position: relative; flex: 1 1 0; min-width: 0; max-width: 250px; margin: 0 -0.35rem; }
+  /* the pin head */
+  .pin::before {
+    content: ''; position: absolute; z-index: 3; left: 50%; top: -9px; width: 18px; height: 18px; margin-left: -9px;
+    border-radius: 50%; border: 2px solid var(--ink); background: var(--coral); box-shadow: 0 2px 0 0 var(--ink);
+  }
+  .p1 { transform: rotate(-5deg) translateY(14px); z-index: 1; }
+  .p2 { transform: rotate(3deg) translateY(-8px); z-index: 2; }
+  .p3 { transform: rotate(-2deg) translateY(24px); z-index: 1; }
+  .p4 { transform: rotate(4deg) translateY(2px); z-index: 2; }
+  .p5 { transform: rotate(-3.5deg) translateY(20px); z-index: 1; }
+  .p6 { transform: rotate(5deg) translateY(-4px); z-index: 2; }
+  .p2::before, .p5::before { background: var(--yellow); }
+  .p3::before, .p6::before { background: var(--lime); }
+  .pin:hover, .pin:focus-within { z-index: 4; }
+
+  .polaroid {
+    display: flex; flex-direction: column; gap: 0.6rem; padding: 0.6rem 0.6rem 0.8rem;
+    border-radius: 16px; border: 2px solid var(--ink); background: #fff; box-shadow: 0 5px 0 0 var(--ink);
+    color: var(--ink); text-decoration: none; transition: transform 0.2s ease;
+  }
+  .polaroid:hover { transform: translateY(-6px); }
+  .polaroid:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+  .cover { display: block; width: 100%; height: auto; aspect-ratio: 3 / 4; object-fit: cover; border-radius: 9px; border: 2px solid var(--ink); background: var(--lime-soft); }
+  .cap {
+    display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; overflow: hidden;
+    min-height: 2.8em; padding: 0 0.7rem; font-size: 0.95rem; font-weight: 900; line-height: 1.4;
+  }
+
+  /* no cover saved yet: the title itself is the picture */
+  .drawn {
+    position: relative; display: block; aspect-ratio: 3 / 4.62; overflow: hidden; padding: 1rem 1.2rem;
+    border-radius: 9px; border: 2px solid var(--ink); background: var(--lime-soft);
+  }
+  .drawn.t2 { background: var(--yellow-soft); }
+  .drawn.t3 { background: var(--purple-soft); }
+  .drawn.t4 { background: var(--blue-soft); }
+  .drawn-title { display: block; font-size: clamp(1.05rem, 2vw, 1.85rem); font-weight: 900; line-height: 1.32; overflow-wrap: anywhere; }
+  .drawn :global(.drawn-bun) { position: absolute; right: 0.6rem; bottom: 0.6rem; width: 30%; transform: rotate(8deg); }
+
+  .xhs-more { display: flex; justify-content: center; margin-top: 1.5rem; }
+
+  /* middle widths: two rows of three */
+  @media (max-width: 1100px) {
+    .board { flex-wrap: wrap; row-gap: 2.6rem; max-width: 760px; }
+    .pin { flex: 0 0 33.333%; max-width: 230px; margin: 0 -0.2rem; }
+    .drawn-title { font-size: clamp(1.1rem, 2.7vw, 1.5rem); }
+  }
+  /* phone: one row you swipe sideways; the row scrolls, the page does not */
+  @media (max-width: 640px) {
+    .board {
+      flex-wrap: nowrap; justify-content: flex-start; gap: 1.1rem; width: auto; max-width: none; margin: 2rem -1.25rem 0;
+      padding: 1.6rem 1.25rem 2.2rem; overflow-x: auto; overscroll-behavior-x: contain;
+      scroll-snap-type: x proximity; scroll-padding-left: 1.25rem; -webkit-overflow-scrolling: touch;
+    }
+    .pin { flex: 0 0 58vw; max-width: 240px; margin: 0; scroll-snap-align: start; }
+    .p1 { transform: rotate(-2.5deg); }
+    .p2 { transform: rotate(2deg) translateY(8px); }
+    .p3 { transform: rotate(-1.5deg); }
+    .p4 { transform: rotate(2.5deg) translateY(8px); }
+    .p5 { transform: rotate(-2deg); }
+    .p6 { transform: rotate(2deg) translateY(8px); }
+    .drawn-title { font-size: 1.3rem; }
+    .xhs-more { margin-top: 0.6rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .polaroid, .polaroid:hover { transition: none; transform: none; }
+  }
+</style>

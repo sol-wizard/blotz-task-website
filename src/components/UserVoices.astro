@@ -1,0 +1,175 @@
+---
+// What people have told the team on Xiaohongshu, word for word.
+// The Chinese text is exactly what was written: do not edit, merge or tidy it.
+// The English is our translation and the page says so.
+// Laid out like a Xiaohongshu comment section, kept small because the comments are short,, with each person shown as a bun avatar, after the
+// marketing post 「包子头像已出笼，请及时认领」 where fans pick a bun as their avatar. The buns are
+// drawings, not the commenters' real avatars, and no names or like counts are shown.
+import Bun from './Bun.astro';
+import { defaultLocale } from '../i18n/landing';
+
+const zh = (Astro.currentLocale ?? defaultLocale) === 'zh';
+
+// Words for this section. Text inside [ ] gets the highlighter.
+const c = zh
+  ? {
+      title: '听听[大家怎么说]',
+      sub: '',
+      tag: '小红书评论区',
+      voices: [
+        { text: '能不能出一个捐赠的按钮，你们的功能简洁又好用，怕你们倒闭了', from: '一位用户的留言' },
+        { text: '简直是番茄todo➕备忘录📕结合', from: '小红书评论' },
+        { text: '刷到了立马下载了，好用！', from: '小红书评论' },
+        { text: '已解锁自在地球！！！好可爱', from: '小红书评论' },
+        { text: '哈哈哈哈哈哈哈我真的很喜欢这个设计', from: '小红书评论' },
+      ],
+    }
+  : {
+      title: 'What [people say]',
+      sub: '',
+      tag: 'From Red Note',
+      voices: [
+        { text: 'Could you add a donate button? Your features are simple and work well, and I am scared you will go under.', from: 'A message from a user, translated' },
+        { text: 'It is basically a Pomodoro to-do app ➕ a notes app 📕 in one', from: 'A comment on Red Note, translated' },
+        { text: 'Saw it and downloaded it straight away. It works well!', from: 'A comment on Red Note, translated' },
+        { text: 'Unlocked the “Carefree Earth” badge!!! So cute', from: 'A comment on Red Note, translated' },
+        { text: 'Hahahahahaha I really like this design', from: 'A comment on Red Note, translated' },
+      ],
+    };
+
+const hl = (text: string) => text.split(/\[|\]/);
+// each comment gets its own bun avatar, in the marketing pastel colours
+const avatars = [
+  { tone: 'lime', face: 'grin' },
+  { tone: 'sky', face: 'plain' },
+  { tone: 'pink', face: 'happy' },
+  { tone: 'lilac', face: 'smile' },
+  { tone: 'coral', face: 'wink' },
+] as const;
+---
+
+<section class="band band-purple voices-band">
+  <div class="wrap">
+    <!-- the heading is a speech bubble, and the five buns under its tail are the ones talking -->
+    <div class="voices-head reveal">
+      <div class="say">
+        <span class="say-tag">{c.tag}</span>
+        <h2 class="k-h2">{hl(c.title).map((part, i) => (i % 2 ? <span class="k-hl">{part}</span> : part))}</h2>
+      </div>
+      {c.sub && <p class="k-lead">{c.sub}</p>}
+      <!-- the same five buns, huddled together like the steamer in the post -->
+      <div class="huddle" aria-hidden="true">
+        {avatars.map((a) => (
+          <span class={`ava ava-${a.tone}`}><Bun face={a.face} tone={a.tone} class="ava-bun" /></span>
+        ))}
+      </div>
+    </div>
+
+    <ul class="voices">
+      {c.voices.map((v, i) => (
+        <li class={`voice v${i + 1} reveal`}>
+          <figure>
+            <span class={`ava ava-${avatars[i].tone}`} aria-hidden="true"><Bun face={avatars[i].face} tone={avatars[i].tone} class="ava-bun" /></span>
+            <span class="voice-words">
+              <figcaption class="from">{v.from}</figcaption>
+              <blockquote>{v.text}</blockquote>
+            </span>
+          </figure>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .voices-head { display: flex; flex-direction: column; align-items: center; gap: 0.2rem; text-align: center; }
+  .say {
+    position: relative; padding: 1rem 2.2rem 1.15rem; border-radius: 30px; border: 2px solid var(--ink);
+    background: #fff; box-shadow: 0 5px 0 0 var(--ink); rotate: -1.5deg;
+  }
+  /* the tail points down at the buns */
+  .say::after {
+    content: ''; position: absolute; left: 50%; bottom: -13px; width: 22px; height: 22px; margin-left: -11px; rotate: 45deg;
+    border: 2px solid var(--ink); border-top: 0; border-left: 0; border-radius: 0 0 5px 0; background: #fff; box-shadow: 4px 4px 0 0 var(--ink);
+  }
+  .say .k-h2 { font-size: clamp(1.8rem, 3.4vw, 2.8rem); }
+  .say-tag {
+    position: absolute; right: -1.4rem; top: -1rem; padding: 0.3rem 0.8rem; border-radius: 999px; border: 2px solid var(--ink);
+    background: #ff2442; color: #fff; font-size: 0.85rem; font-weight: 900; white-space: nowrap; rotate: 8deg; box-shadow: 0 3px 0 0 var(--ink);
+  }
+
+  /* a round avatar with the bun popping up out of it, like a bun out of a steamer: the bottom of
+     the bun is clipped to the circle, the top pokes out above the rim */
+  .ava {
+    --s: 56px; position: relative; display: block; flex: none; width: var(--s); height: var(--s);
+    clip-path: inset(-70% -10% 0 -10% round 0 0 calc(var(--s) / 2) calc(var(--s) / 2));
+  }
+  .ava::before, .ava::after { content: ''; position: absolute; inset: 0; border-radius: 50%; border: 2px solid var(--ink); }
+  .ava::before { background: var(--ava-bg, #fff); }
+  /* the front of the rim, drawn over the bun except at the top, where the bun comes out */
+  .ava::after { z-index: 2; border-top-color: transparent; }
+  .ava-lime { --ava-bg: #f2fbdc; }
+  .ava-sky { --ava-bg: #e3f4fd; }
+  .ava-pink { --ava-bg: #ffe8f2; }
+  .ava-lilac { --ava-bg: #efe9ff; }
+  .ava-coral { --ava-bg: #ffe9e2; }
+  .ava :global(.ava-bun) {
+    position: absolute; z-index: 1; left: 10%; bottom: 3%; width: 80%;
+    transition: transform 0.3s cubic-bezier(0.3, 0.7, 0.4, 1.5);
+  }
+
+  .huddle { display: flex; padding: 1.6rem 0 0.2rem 12px; }
+  .huddle .ava { --s: 54px; margin-left: -12px; }
+  .huddle .ava:nth-child(even) { transform: translateY(6px); }
+  @media (prefers-reduced-motion: no-preference) {
+    .huddle .ava :global(.ava-bun) { animation: ava-bob 3.2s ease-in-out infinite; }
+    .huddle .ava:nth-child(2) :global(.ava-bun) { animation-delay: -0.7s; }
+    .huddle .ava:nth-child(3) :global(.ava-bun) { animation-delay: -1.5s; }
+    .huddle .ava:nth-child(4) :global(.ava-bun) { animation-delay: -2.2s; }
+    .huddle .ava:nth-child(5) :global(.ava-bun) { animation-delay: -2.8s; }
+  }
+  @keyframes ava-bob { 0%, 100% { translate: 0 0; } 50% { translate: 0 -10%; } }
+
+  /* small and light: the comments are short, so each card is only as wide as its words,
+     scattered like comments on a post with a slight tilt each */
+  .voices-band { padding-top: 4rem; padding-bottom: 4.5rem; }
+  .voices {
+    list-style: none; margin: 2.4rem 0 0; padding: 0;
+    display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start; gap: 1.1rem 1.2rem;
+  }
+  .voice { position: relative; display: flex; max-width: min(100%, 440px); }
+  .voice figure {
+    position: relative; z-index: 1; min-width: 0;
+    margin: 0; display: flex; align-items: flex-start; gap: 0.7rem; padding: 0.8rem 1.1rem 0.85rem 0.8rem;
+    border-radius: 20px; border: 2px solid var(--ink); background: #fff; box-shadow: 0 4px 0 0 var(--ink);
+    transition: transform 0.2s ease;
+  }
+  .voice figure:hover { transform: translateY(-3px) rotate(0deg) !important; }
+  .voice figure:hover :global(.ava-bun) { transform: translateY(-30%) rotate(-6deg); }
+  .voice .ava { --s: 40px; }
+  .voice-words { display: flex; flex-direction: column; gap: 0.15rem; min-width: 0; }
+  .from { font-size: 0.78rem; font-weight: 800; color: var(--muted); }
+  .voice blockquote {
+    margin: 0; font-size: 1.02rem; font-weight: 800; line-height: 1.5; color: var(--ink);
+    overflow-wrap: anywhere;
+  }
+
+  .v1 figure { background: var(--lime-soft); transform: rotate(-1.5deg); }
+  .v2 figure { background: var(--blue-soft); transform: rotate(1.2deg); }
+  .v3 figure { background: #fff0f6; transform: rotate(-0.8deg); }
+  .v4 figure { background: #fff; transform: rotate(1.5deg); }
+  .v5 figure { background: #fff3ee; transform: rotate(-1.2deg); }
+
+  @media (max-width: 600px) {
+    .voices-band { padding-top: 3rem; padding-bottom: 3.5rem; }
+    .voices { gap: 0.9rem; }
+    .say { padding: 0.85rem 1.4rem 1rem; }
+    .say-tag { right: -0.6rem; top: -1.1rem; font-size: 0.78rem; }
+    .huddle .ava { --s: 46px; margin-left: -10px; }
+    .voice blockquote { font-size: 0.98rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .voice figure, .ava :global(.ava-bun) { transition: none; animation: none; }
+    .voice figure:hover, .voice figure:hover :global(.ava-bun) { transform: none; }
+  }
+</style>

@@ -1,6 +1,7 @@
 ---
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+import '../styles/kit.css';
 
 interface Props {
   title: string;
@@ -59,51 +60,59 @@ const alternateLocale = locale === 'zh' ? 'en_US' : 'zh_CN';
   <meta name="twitter:title" content={title} />
   <meta name="twitter:description" content={description} />
   <meta name="twitter:image" content={imageUrl} />
-  <link rel="icon" type="image/png" href="/shared-pic/bun-icon.png" />
-  <link rel="apple-touch-icon" href="/shared-pic/bun-icon.png" />
+  <link rel="icon" type="image/png" href="/app/icon.png" />
+  <link rel="apple-touch-icon" href="/app/icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
   {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
 </head>
 <body>
+  <script is:inline>document.documentElement.classList.add('js');</script>
   <Nav />
   <slot />
   <Footer />
+  <script>
+    // Reveal: anything marked .reveal fades in the first time it is seen.
+    const items = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) {
+      const seen = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('in');
+          seen.unobserve(entry.target);
+        });
+      }, { threshold: 0.15 });
+      items.forEach((item) => seen.observe(item));
+    } else {
+      items.forEach((item) => item.classList.add('in'));
+    }
+  </script>
 </body>
 </html>
 
 <style is:global>
   :root {
-    --green: #96D21B;
+    --green: #9ad513;
     --blue: #3486F3;
-    --green-light: #EAF8C7;
+    --green-light: #eef8d2;
     --blue-light: #D5E9FF;
-    --bg: #ffffff;
+    --bg: #fbfdf7;
     --text: #1E2140;
-    --muted: #6B7280;
     --radius: 20px;
-    --shadow: 0 4px 24px rgba(0,0,0,0.08);
-    --shadow-lg: 0 8px 40px rgba(0,0,0,0.14);
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
   body {
-    font-family: 'Nunito', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
+    font-family: ui-rounded, 'SF Pro Rounded', 'Nunito', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', system-ui, sans-serif;
     background: var(--bg);
     color: var(--text);
     line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
   }
-  .hero-area {
-    background: linear-gradient(135deg, #e5f7bf 0%, #edf4ff 55%, #d2e8ff 100%);
-    overflow: hidden;
-  }
-  .blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.32; pointer-events: none; }
-  .blob-g { width: 480px; height: 480px; background: var(--green); top: -180px; left: -120px; animation: blobMove 9s ease-in-out infinite; }
-  .blob-b { width: 380px; height: 380px; background: var(--blue); bottom: 20px; right: -80px; animation: blobMove 12s ease-in-out infinite reverse; }
-  @keyframes blobMove {
-    0%,100% { transform: translate(0,0); }
-    33% { transform: translate(15px,-25px); }
-    66% { transform: translate(-10px,15px); }
-  }
+  button, input { font-family: inherit; }
+  /* Soft band behind the header of the pages that still use it (privacy, guides) */
+  .hero-area { background: #eef8d2; overflow: hidden; }
+  .blob { display: none; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 </style>

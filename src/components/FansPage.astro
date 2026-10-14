@@ -1,0 +1,112 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { Icon } from 'astro-icon/components';
+import { defaultLocale } from '../i18n/landing';
+import { wechatId } from '../data/contact';
+import BunSteamer from './BunSteamer.astro';
+import FansCounter from './FansCounter.astro';
+const locale = Astro.currentLocale ?? defaultLocale;
+const zh = locale === 'zh';
+
+// Words for this page. Text inside [ ] gets the highlighter.
+const c = zh
+  ? {
+      seoTitle: '粉丝团 | BlotzTask',
+      seoDesc: 'BlotzTask 粉丝团是一个微信群。进群可以先知道新消息、先试新功能，还有一枚专属徽章。',
+      sticker: '微信群',
+      title: '加入 [BlotzTask 粉丝团]',
+      sub: '粉丝团是一个微信群，团队的人都在里面。',
+      join: '加这个微信，拉你进群',
+      copy: '复制',
+      copied: '已复制',
+      openWechat: '打开微信',
+    }
+  : {
+      seoTitle: 'Fan group | BlotzTask',
+      seoDesc: 'The BlotzTask fan group is a WeChat group. Members hear the news first, try new features early and get a badge of their own.',
+      sticker: 'WeChat group',
+      title: 'Join the BlotzTask [fan group]',
+      sub: 'The fan group is a WeChat group with the whole team in it.',
+      join: 'Add this WeChat and we will bring you in',
+      copy: 'Copy',
+      copied: 'Copied',
+      openWechat: 'Open WeChat',
+    };
+
+const hl = (text: string) => text.split(/\[|\]/);
+---
+
+<Layout title={c.seoTitle} description={c.seoDesc}>
+  <!-- WHO AND HOW TO JOIN -->
+  <section class="band band-top band-purple">
+    <div class="wrap head">
+      <div class="head-text">
+        <span class="k-sticker is-purple">{c.sticker}</span>
+        <h1 class="k-h1">{hl(c.title).map((part, i) => (i % 2 ? <span class="k-hl">{part}</span> : part))}</h1>
+        <p class="k-lead">{c.sub}</p>
+        <div class="k-card join">
+          <Icon name="simple-icons:wechat" width={28} height={28} />
+          <span>{c.join}</span>
+          <strong data-id>{wechatId}</strong>
+          <button type="button" class="join-copy" data-copy data-done={c.copied}><Icon name="lucide:copy" width={17} height={17} /><span data-copy-label>{c.copy}</span></button>
+          <!-- on a phone the QR cannot be scanned from the same screen, so offer to open WeChat after copying -->
+          <a class="join-open" href="weixin://">{c.openWechat}<Icon name="lucide:arrow-up-right" width={16} height={16} /></a>
+        </div>
+      </div>
+      <div class="head-art" aria-hidden="true">
+        <BunSteamer />
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT YOU GET: told as a bun shop counter -->
+  <FansCounter />
+
+</Layout>
+
+<style>
+  .head { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); gap: 4rem; align-items: center; }
+  .head-text { display: flex; flex-direction: column; align-items: flex-start; gap: 1.4rem; }
+  .join { display: flex; align-items: center; flex-wrap: wrap; gap: 0.5rem 0.9rem; padding: 1.1rem 1.5rem; font-size: 1.15rem; font-weight: 800; color: var(--ink); }
+  .join strong { font-size: 1.6rem; font-weight: 900; letter-spacing: 0.02em; user-select: all; -webkit-user-select: all; }
+  .join-copy {
+    display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.45rem 1rem; border-radius: 999px; border: 2px solid var(--ink);
+    background: var(--lime); box-shadow: 0 3px 0 0 var(--ink); color: var(--ink); font: inherit; font-size: 0.98rem; font-weight: 900; cursor: pointer;
+  }
+  .join-copy.is-done { background: var(--yellow); }
+  .join-copy:focus-visible, .join-open:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+  :global(html:not(.js)) .join-copy { display: none; }
+  .join-open { display: none; align-items: center; gap: 0.25rem; color: var(--ink); font-size: 0.98rem; font-weight: 900; text-decoration: underline; text-decoration-color: var(--lime); text-decoration-thickness: 3px; text-underline-offset: 4px; }
+  @media (hover: none) and (pointer: coarse) { .join-open { display: inline-flex; } }
+
+  /* a steamer full of buns: the group */
+  .head-art { display: flex; justify-content: center; min-width: 0; }
+  .head-art :global(.bun-steamer) { max-width: 500px; }
+
+  @media (max-width: 900px) {
+    .head { grid-template-columns: 1fr; gap: 2rem; }
+    .head-text { align-items: center; text-align: center; }
+    .join { justify-content: center; }
+    .head-art { width: 100%; margin: 0 auto; }
+    .head-art :global(.bun-steamer) { max-width: 340px; }
+  }
+</style>
+
+<script>
+  // Copy the WeChat ID
+  const copyBtn = document.querySelector<HTMLButtonElement>('[data-copy]');
+  const idEl = document.querySelector<HTMLElement>('[data-id]');
+  if (copyBtn && idEl) {
+    const label = copyBtn.querySelector<HTMLElement>('[data-copy-label]')!;
+    const idle = label.textContent ?? '';
+    copyBtn.addEventListener('click', async () => {
+      let ok = false;
+      try { await navigator.clipboard.writeText(idEl.textContent?.trim() ?? ''); ok = true; } catch { ok = false; }
+      if (!ok) { const r = document.createRange(); r.selectNodeContents(idEl); window.getSelection()?.removeAllRanges(); window.getSelection()?.addRange(r); }
+      copyBtn.classList.toggle('is-done', ok);
+      label.textContent = ok ? copyBtn.dataset.done ?? idle : idle;
+      if (ok) window.setTimeout(() => { copyBtn.classList.remove('is-done'); label.textContent = idle; }, 2200);
+    });
+  }
+
+</script>

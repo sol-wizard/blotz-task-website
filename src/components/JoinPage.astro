@@ -2,111 +2,1078 @@
 import Layout from '../layouts/Layout.astro';
 import { Icon } from 'astro-icon/components';
 import { defaultLocale } from '../i18n/landing';
+import Bun from './Bun.astro';
+import JoinSteps from './JoinSteps.astro';
+import RoleProps from './RoleProps.astro';
 
 const locale = Astro.currentLocale ?? defaultLocale;
 const zh = locale === 'zh';
 
-// Everything a prospective teammate needs lives in this Lark guide.
-const joinDocUrl = 'https://jjpwe2n1d0yq.jp.larksuite.com/wiki/XmAswkqReieHMYkIj6Nj75Y8p0g';
+// The content of the team's recruitment guide, cut down to what someone needs before getting in touch.
+// Two ways in (see c.paths): software and technical roles talk to Ben (Azdev0189),
+// product, design and marketing talk to Freya (MENYA_1002).
+const stepIcons = ['lucide:file-text', 'lucide:message-circle', 'lucide:users', 'lucide:party-popper'];
+const getIcons = ['lucide:rocket', 'lucide:users', 'lucide:sparkles', 'lucide:trophy', 'lucide:coffee'];
+const workIcons = ['lucide:briefcase', 'lucide:moon-star', 'lucide:sprout', 'lucide:bot', 'lucide:party-popper'];
+
 const c = zh
   ? {
-      title: '加入我们',
-      subtitle: '和我们一起，打造更智能、更轻松的 AI 任务管理体验。',
-
-      rolesTitle: '正在招聘',
-      roles: [
-        'UI/UX 设计师',
-        '移动端开发工程师',
-        '全栈开发工程师',
-        '产品营销',
+      // ── 我们怎么做事: Ben's points (14 Oct): a 00 后 vibe, energetic and friendly, day jobs apart, evenings together, everyone brings their own skill and grows. ──
+      workTitle: '[00 后]的工作氛围',
+      work: [
+        { title: '白天各自上班', desc: '大家白天在不同的公司，有做产品的、写代码的，也有做设计和市场的。' },
+        { title: '晚上一起做包子', desc: '下班以后大家上线，凑在一起揉面团、做包子。' },
+        { title: '各有所长，一起成长', desc: '每个人都把自己工作里的专业带到项目上，大家互相学习。' },
+        { title: '从开会到上线，全程用 AI', desc: '开会、写代码、一直到上线，每一步都有 AI 帮忙。新出的工具我们会先试，好用的就留下。', more: '看看开发怎么用 AI' },
+        { title: '有冲劲，也好相处', desc: '团队是 00 后的氛围：大家很有活力，也很友好。' },
       ],
+      // ── end of the block Ben will reword ──
 
-      ctaTitle: '期待你的加入',
-      ctaSub:
-        '了解岗位职责、招聘流程，以及 BlotzTask 的工作方式，看看这里是否适合你。',
-
-      ctaBtn: '查看招聘指南',
+      // title is the browser tab title and the sticker above the headline; headline is the h1 (Ben's wording).
+      title: '加入我们',
+      headline: '你觉得我们[很酷？]',
+      // One line per role, shown when the role is picked. Written for this page: Ben to confirm each one.
+      roleLines: ['设计 App 里的每一个页面。', '想清楚 App 接下来该做什么。', '让更多人知道 BlotzTask。', '写手机上的 BlotzTask App。', '做 App 里的 AI 功能。', '前端和后端都写。'],
+      subtitle: 'Blotz 是大家用业余时间一起做的早期产品。',
+      rolesTitle: '我们的厨房[还需要人]',
+      roles: ['设计师', '产品经理', '产品宣传', '移动端开发', 'AI 工程师', '全栈开发'],
+      // the same roles as jobs in a bun kitchen; each comes with its own hat on the bun
+      chefs: ['捏褶师傅', '掌柜', '店小二', '面点师傅', '调馅师傅', '全能师傅'],
+      stepsTitle: '[怎么加入]',
+      steps: [
+        { title: '看材料', desc: '我们先看你的简历和作品集。' },
+        { title: '初步沟通', desc: '简单聊一次，互相认识，回答你的问题。' },
+        { title: '正式面聊', desc: '和团队成员聊一聊。' },
+        { title: '欢迎加入', desc: '双方都合适，就正式加入。' },
+      ],
+      factsTitle: '加入前先[了解这些]',
+      facts: [
+        { big: '15 人左右', small: '分开发组、宣传组和产品组' },
+        { big: '每周约 10 小时', small: '你每周能拿出 10 个小时左右就可以' },
+        { big: '志愿者团队', small: '大家都是为爱发电' },
+        { big: '1 个月磨合期', small: '如果你觉得合适，那就欢迎长期投入' },
+      ],
+      // What someone gets from joining, in Ben's points (14 Oct 2026).
+      getsTitle: '为什么加入[我们的厨房]',
+      gets: [
+        { title: '真实上架的产品', desc: 'BlotzTask 已经在 App Store 和 Google Play 上架，有真实用户在用。写进简历，就是一段有产品背书的经验。' },
+        { title: '神仙队友', desc: '身边都是积极、有实力的人。' },
+        { title: '你的舞台', desc: '这里很自由，我们很鼓励创意，你可以好好展示自己。' },
+        { title: '里程碑分成', desc: '项目每到一个里程碑，大家会按分成机制一起分享成果。' },
+        { title: '自己的节奏', desc: '自己的时间自己安排。气氛轻松好玩，不像在上班。' },
+      ],
+      fitTitle: '看看你[合不合适]',
+      fit: { title: '比较适合', items: ['下了班，还想折腾点自己的东西', '新的 AI 工具一出来，你总想第一个试试', '懂 ADHD，或者对怎么把日子过得有条理很有想法', '说到做到，热情不止三分钟'] },
+      notFit: { title: '不太适合', items: ['正在找全职工作', '只想短期参与一下', '没有稳定的业余时间', '对产品方向没有兴趣'] },
+      faqTitle: '[常见问题]',
+      faqs: [
+        { q: '这是正式工作吗？', a: '不是。现阶段是早期共建项目，不是正式的全职工作。' },
+        { q: '我没有相关经验，可以加入吗？', a: '可以。我们不只看经验，也看兴趣、学习能力、责任感和沟通能力。' },
+        { q: '我不是技术背景，可以加入吗？', a: '可以。除了开发，我们也需要产品、设计和市场推广方向的人。' },
+        { q: '我不太懂 ADHD，可以加入吗？', a: '可以。不要求一开始就很懂，但希望你愿意去了解这类用户的需求。' },
+        { q: '会议在什么时候？', a: '产品会议在周六中午 12 点，开发组周会在周日晚上 8 点，都是悉尼时间。成员大多在澳洲和中国。' },
+      ],
+      ctaTitle: '下一步，[发简历给我们]',
+      ctaSub: '加上微信后，发这段话，再把简历发过来：',
+      wechatLabel: '微信号',
+      template: '你好！我想加入 Blotz。我目前是____，想做____，每周大概能给____小时。简历发你～',
+      copyTemplate: '复制这段话',
+      copyTemplateFail: '没复制上，请手动选中这段话。',
+      paths: [
+        { tag: '技术', title: '写代码的，[加这个微信]', roles: [3, 4, 5], id: 'Azdev0189' },
+        { tag: '产品 · 设计 · 宣传', title: '其他岗位，[加这个微信]', roles: [0, 1, 2], id: 'MENYA_1002' },
+      ],
     }
   : {
+      // ── How we work: same points as the Chinese block above. ──
+      workTitle: 'A [Gen Z] way of working',
+      work: [
+        { title: 'Day jobs by day', desc: 'In the day we work at different companies, in product, engineering, design and marketing.' },
+        { title: 'Blotz by night', desc: 'After work we get online and knead the dough for our buns together.' },
+        { title: 'Everyone brings a skill', desc: 'Each of us brings the expertise from our day job to the project, and we learn from each other.' },
+        { title: 'AI from meeting to release', desc: 'Meetings, code, all the way to release: AI helps at every step. When a new tool comes out we try it, and keep what works.', more: 'How our developers use AI' },
+        { title: 'Full of energy, easy to get along with', desc: 'The team has a Gen Z feel: lots of energy, and friendly with it.' },
+      ],
+      // ── end of the block Ben will reword ──
+
       title: 'Join us',
-      subtitle: 'Help build calmer productivity for millions of ADHD minds.',
-      rolesTitle: "We're looking for",
-      roles: ['UI/UX Designer', 'Mobile Engineer', 'Full-stack Engineer', 'Product Marketing'],
-      ctaTitle: 'Ready to join?',
-      ctaSub: 'Everything you need — roles, process, and how we work — is in our joining guide.',
-      ctaBtn: 'Open the joining guide',
+      headline: 'Think we’re [cool?]',
+      roleLines: ['Designs every screen of the app.', 'Works out what the app should do next.', 'Gets more people to hear about BlotzTask.', 'Builds the BlotzTask app for phones.', 'Builds the AI features in the app.', 'Writes both the front end and the back end.'],
+      subtitle: 'Blotz is an early product that people build together in their spare time.',
+      rolesTitle: 'Our kitchen [needs hands]',
+      roles: ['Designer', 'Product manager', 'Product marketing', 'Mobile developer', 'AI engineer', 'Full-stack developer'],
+      chefs: ['Pleat master', 'Shopkeeper', 'Front-of-house', 'Dough chef', 'Filling chef', 'All-round chef'],
+      stepsTitle: 'How to [join]',
+      steps: [
+        { title: 'We read your material', desc: 'We look at your resume and portfolio first.' },
+        { title: 'A first chat', desc: 'A short call to meet each other and answer your questions.' },
+        { title: 'A proper chat', desc: 'You talk with members of the team.' },
+        { title: 'Welcome', desc: 'If it suits both sides, you join.' },
+      ],
+      factsTitle: 'Know this [before you join]',
+      facts: [
+        { big: 'About 15 people', small: 'In development, marketing and product teams' },
+        { big: 'About 10 hours a week', small: 'If you can find about 10 hours a week, that’s enough' },
+        { big: 'A volunteer team', small: 'Everyone is here for the love of it' },
+        { big: 'A 1-month trial', small: 'If it feels right, you’re welcome to stay for the long run' },
+      ],
+      getsTitle: 'Why join [our kitchen]',
+      gets: [
+        { title: 'A real, live product', desc: 'BlotzTask is live on the App Store and Google Play and real people use it. On your résumé, it is experience backed by a real product.' },
+        { title: 'Dream teammates', desc: 'Everyone around you is keen and good at what they do.' },
+        { title: 'Your own stage', desc: 'You get a lot of freedom, we really encourage new ideas, and you can show what you can do.' },
+        { title: 'Milestone share', desc: 'Each time the project reaches a milestone, the team shares in the results through a split.' },
+        { title: 'Your own pace', desc: 'You plan your own time. It’s relaxed and fun, and it doesn’t feel like work.' },
+      ],
+      fitTitle: 'See if [you fit]',
+      fit: { title: 'A good fit', items: ['After work, you still want to build something of your own', 'When a new AI tool comes out, you want to be the first to try it', 'You understand ADHD, or have strong ideas about keeping life organised', 'You do what you say, and your excitement lasts longer than three minutes'] },
+      notFit: { title: 'Not a good fit', items: ['You are looking for a full-time job', 'You only want to help for a short while', 'You have no regular spare time', 'The product does not interest you'] },
+      faqTitle: '[Questions]',
+      faqs: [
+        { q: 'Is this a real job?', a: 'No. For now it is an early project we build together, not a full-time job.' },
+        { q: 'Can I join without experience?', a: 'Yes. We look at interest, how fast you learn, reliability and communication as well as experience.' },
+        { q: 'Can I join without a technical background?', a: 'Yes. Besides developers we need people for product, design and marketing.' },
+        { q: 'Can I join if I do not know much about ADHD?', a: 'Yes. You do not need to know it well at the start, but we hope you want to understand what these users need.' },
+        { q: 'When are the meetings?', a: 'The product meeting is Saturday at 12 noon and the developer meeting is Sunday at 8 pm, both Sydney time. Most members are in Australia and China.' },
+      ],
+      ctaTitle: 'Next step: [send us your résumé]',
+      ctaSub: 'Once you have added us, send this, then your résumé:',
+      wechatLabel: 'WeChat',
+      template: 'Hi! I would like to join Blotz. Right now I am ____, I want to work on ____, and I can give about ____ hours a week. Résumé coming next.',
+      copyTemplate: 'Copy this message',
+      copyTemplateFail: 'Copy did not work. Select the message by hand.',
+      paths: [
+        { tag: 'Tech', title: 'You write code? [Add this WeChat]', roles: [3, 4, 5], id: 'Azdev0189' },
+        { tag: 'Product · Design · Marketing', title: 'Everything else? [Add this WeChat]', roles: [0, 1, 2], id: 'MENYA_1002' },
+      ],
     };
 
 const description = zh
-  ? '加入 BlotzTask 团队，一起打造更智能、更轻松的 ADHD 友好 AI 任务管理体验。'
-  : 'Join the BlotzTask team and help build calmer AI task management for ADHD minds.';
+  ? '加入 BlotzTask 团队：正在招聘的方向、面试的四个步骤、每周投入时间和适合什么样的人。'
+  : 'Join the BlotzTask team: open roles, the four interview steps, the weekly time needed, and who it suits.';
+const hl = (text: string) => text.split(/\[|\]/);
+
+// Words for the parts you can click. {n}, {total} and {title} are filled in here or by the script.
+const u = zh
+  ? {
+      pickPrompt: '点一个方向，看看它在团队里做什么。',
+      fitHint: '符合哪条就勾哪条。每勾一条，就有一位包子为你转身。',
+      fitScore: '{n} / {total} 位包子为你转身',
+      fitWin: '我们想要你。',
+      // one per chair, in the order they turn round: each tick says a little more
+      chairSigns: ['我们看见你了', '坐下来好好聊聊', '我们要你', '非你不可'],
+      notFitTag: '先说清楚',
+      workGo: '让包子走到这里：{title}',
+      stepGo: '看第 {n} 步：{title}',
+      stepStatus: '第 {n} 步，共 {total} 步：{title}',
+      next: '下一步',
+      endMsg: '四步走完了。',
+      toWechat: '去发简历',
+      again: '再走一遍',
+      copy: '复制微信号',
+      copied: '已复制',
+      copyFail: '没复制上，请手动选中微信号。',
+    }
+  : {
+      pickPrompt: 'Pick a role to see what it does on the team.',
+      fitHint: 'Tick the ones that are true of you. Each tick turns one bun round to face you.',
+      fitScore: '{n} of {total} buns have turned round for you',
+      fitWin: 'We want you.',
+      chairSigns: ['We see you', 'Let’s sit down and talk', 'We want you', 'It has to be you'],
+      notFitTag: 'To be clear',
+      workGo: 'Move the bun here: {title}',
+      stepGo: 'Go to step {n}: {title}',
+      stepStatus: 'Step {n} of {total}: {title}',
+      next: 'Next step',
+      endMsg: 'That is all four steps.',
+      toWechat: 'Send your résumé',
+      again: 'Start again',
+      copy: 'Copy the ID',
+      copied: 'Copied',
+      copyFail: 'Copy did not work. Select the ID by hand.',
+    };
+const fill = (text: string, values: Record<string, string | number>) =>
+  text.replace(/\{(\w+)\}/g, (_, key) => String(values[key] ?? ''));
+const plain = (text: string) => text.replace(/\[|\]/g, '');
+// Where each stop sits, so neither trail lines up like a table: how far across its patch the token is,
+// how far down the patch starts, and the tilt of its bubble.
+const workSpots = [{ x: 30, dy: 0, tilt: -1.3 }, { x: 62, dy: 64, tilt: 1.1 }, { x: 36, dy: 8, tilt: -0.9 }, { x: 64, dy: 76, tilt: 1.4 }, { x: 40, dy: 20, tilt: -1.1 }];
+const stepSpots = [{ x: 34, dy: 84, tilt: -1.2 }, { x: 56, dy: 52, tilt: 0.9 }, { x: 42, dy: 26, tilt: -0.8 }, { x: 60, dy: 0, tilt: 1.3 }];
+const pickTones = ['is-lime', 'is-blue', 'is-coral', 'is-yellow', 'is-purple', 'is-white'];
 ---
 
 <Layout title={`${c.title} | BlotzTask`} description={description}>
-  <div class="hero-area">
-    <div class="sub-hero">
-      <h1>{c.title}</h1>
-      <p>{c.subtitle}</p>
+  <section class="band band-top band-purple">
+    <div class="wrap k-page-head">
+      <span class="k-sticker is-white">{c.title}</span>
+      <h1 class="k-h1">{hl(c.headline).map((part, i) => (i % 2 ? <span class="k-hl">{part}</span> : part))}</h1>
+      <p class="k-lead">{c.subtitle}</p>
     </div>
-  </div>
-  <svg class="sub-wave" viewBox="0 0 1440 70" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-    <path d="M0 35 C360 70 720 0 1080 35 C1260 53 1380 22 1440 35 L1440 70 L0 70 Z" fill="#ffffff"/>
-  </svg>
+  </section>
 
-  <section class="join-body">
-    <div class="roles-panel">
-      <h2 class="join-h2">{c.rolesTitle}</h2>
-      <div class="role-tags">
-        {c.roles.map((r) => <span class="role-tag">{r}</span>)}
+  <!-- ROLES: pick one, the bun picks up that role's tool and says what the role does -->
+  <section class="band">
+    <div class="wrap">
+      <h2 class="k-h2 k-center reveal">{hl(c.rolesTitle).map((part, i) => (i % 2 ? <span class="k-hl">{part}</span> : part))}</h2>
+      <div class="pick" data-pick>
+        <ul class="pick-list" aria-label={plain(c.rolesTitle)}>
+          {c.roles.map((role, i) => (
+            <li class:list={['pick-item', `pick-${i + 1}`]}>
+              <button type="button" class="pick-btn" data-role={i} aria-pressed="false" disabled>
+                <span class:list={['pick-blob', pickTones[i]]}><span class="mini-bun"><Bun face="smile" /><RoleProps /></span></span>
+                <span class="pick-name" data-name>{c.chefs[i]}</span>
+                <span class="pick-real" data-real>{role}</span>
+              </button>
+              <p class="pick-line" data-line>{c.roleLines[i]}</p>
+            </li>
+          ))}
+        </ul>
+        <div class="pick-stage">
+          <div class="pick-bun" data-pick-bun aria-hidden="true">
+            <Bun class="pick-idle" />
+            <Bun face="happy" class="pick-on" />
+            <RoleProps />
+          </div>
+          <p class="pick-say" aria-live="polite">
+            <strong data-say-role hidden></strong>
+            <span data-say>{u.pickPrompt}</span>
+          </p>
+        </div>
       </div>
     </div>
+  </section>
 
-    <div class="join-cta">
-      <h2>{c.ctaTitle}</h2>
-      <p>{c.ctaSub}</p>
-      <a class="join-btn" href={joinDocUrl} target="_blank" rel="noopener noreferrer">
-        <Icon name="lucide:book-open" width={18} height={18} />
-        {c.ctaBtn}
-        <Icon name="lucide:arrow-up-right" width={16} height={16} />
-      </a>
+  <!-- HOW WE WORK: four stops on a winding path; click a stop and the bun hops to it -->
+  <section class="band band-lime">
+    <div class="wrap">
+      <h2 class="k-h2 k-center reveal">{hl(c.workTitle).map((part, i) => (i % 2 ? <span class="k-hl">{part}</span> : part))}</h2>
+      <div class="trail work" data-trail="work">
+        <svg class="road" aria-hidden="true"><path class="road-bed" data-road /><path class="road-dots" data-road /></svg>
+        <!-- the bun changes clothes at every stop: office tie, chef's hat, a sprout, an AI antenna, a party hat -->
+        <span class="trail-bun" data-trail-bun data-suit="1" aria-hidden="true">
+          <Bun face="happy" />
+          <svg class="suit suit-1" viewBox="0 0 20 34"><path d="M6 2h8l-2 6 5 18-7 6-7-6 5-18z" fill="#f56767" stroke="#1e2140" stroke-width="2" stroke-linejoin="round" /><path d="M6 2h8l-2 6h-4z" fill="#d94b4b" stroke="#1e2140" stroke-width="2" stroke-linejoin="round" /></svg>
+          <svg class="suit suit-2" viewBox="0 0 48 40"><path d="M10 27C2 26 2 12 12 13 12 4 26 2 28 10 34 4 46 10 40 20 46 24 42 30 38 28V37H10Z" fill="#fff" stroke="#1e2140" stroke-width="2.5" stroke-linejoin="round" /><path d="M10 31H38" stroke="#1e2140" stroke-width="2" /></svg>
+          <svg class="suit suit-3" viewBox="0 0 30 30"><path d="M15 29V14" stroke="#4d7d09" stroke-width="3" stroke-linecap="round" /><path d="M15 17C6 17 3 10 4 5 11 5 15 9 15 17Z" fill="#9ad513" stroke="#1e2140" stroke-width="2" stroke-linejoin="round" /><path d="M15 14C22 14 27 9 26 3 19 3 15 7 15 14Z" fill="#cdeb86" stroke="#1e2140" stroke-width="2" stroke-linejoin="round" /></svg>
+          <svg class="suit suit-4" viewBox="0 0 40 30"><path d="M12 29L9 10M28 29L31 10" stroke="#1e2140" stroke-width="2.5" stroke-linecap="round" /><circle cx="9" cy="8" r="5" fill="#8b6ef6" stroke="#1e2140" stroke-width="2" /><circle cx="31" cy="8" r="5" fill="#7fc6f2" stroke="#1e2140" stroke-width="2" /></svg>
+          <svg class="suit suit-5" viewBox="0 0 30 38"><path d="M15 3L27 35H3Z" fill="#f6b73c" stroke="#1e2140" stroke-width="2" stroke-linejoin="round" /><path d="M10 17H20M7 26H23" stroke="#f56767" stroke-width="3" stroke-linecap="round" /><circle cx="15" cy="4" r="3.5" fill="#f56767" stroke="#1e2140" stroke-width="1.5" /></svg>
+        </span>
+        <ol class="trail-list">
+          {c.work.map((item, i) => (
+            <li class:list={['stop', `stop-${i + 1}`, i === 0 && 'is-current']} data-stop style={`--x:${workSpots[i].x}%;--dy:${workSpots[i].dy}px;--tilt:${workSpots[i].tilt}deg`}>
+              <span class="node" data-node>
+                <button type="button" class="token" data-token disabled aria-label={fill(u.workGo, { title: item.title })} aria-current={i === 0 ? 'true' : undefined}>
+                  <Icon name={workIcons[i]} width={28} height={28} />
+                </button>
+              </span>
+              <div class="bubble">
+                <h3 class="k-h3">{item.title}</h3>
+                <p>{item.desc}</p>
+                {'more' in item && item.more && (
+                  <a class="work-more" href={`/${locale}/how-we-build`}>
+                    {item.more}
+                    <Icon name="lucide:arrow-right" width={16} height={16} />
+                  </a>
+                )}
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- FACTS -->
+  <section class="band">
+    <div class="wrap">
+      <h2 class="k-h2 k-center reveal">{hl(c.factsTitle).map((part, i) => (i % 2 ? <span class="k-hl">{part}</span> : part))}</h2>
+      <ul class="k-tiles facts" style="--cols: 4; --cols-md: 2;">
+        {c.facts.map((fact, i) => (
+          <li class="reveal">
+            <div class:list={['k-card', 'k-tile', 'fact', `fact-${i + 1}`]}>
+              <p class="fact-big">{fact.big}</p>
+              <p>{fact.small}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- WHAT YOU GET: five badges, like the ones the app drops when you finish a task -->
+  <section class="band band-purple">
+    <div class="wrap">
+      <h2 class="k-h2 k-center reveal">{hl(c.getsTitle).map((part, i) => (i % 2 ? <span class="k-hl">{part}</span> : part))}</h2>
+      <ul class="gets">
+        {c.gets.map((item, i) => (
+          <li class:list={['get', `get-${i + 1}`, 'reveal']}>
+            <span class="get-medal" aria-hidden="true">
+              <span class="get-ribbon"></span>
+              <span class="get-disc"><Icon name={getIcons[i]} width={34} height={34} /></span>
+            </span>
+            <h3 class="k-h3">{item.title}</h3>
+            <p>{item.desc}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- FIT: a talent-show stage. Four judge buns sit with their backs to you; each tick turns one chair round. -->
+  <section class="band fit-band">
+    <div class="wrap">
+      <h2 class="k-h2 k-center reveal">{hl(c.fitTitle).map((part, i) => (i % 2 ? <span class="k-hl">{part}</span> : part))}</h2>
+      <div class="fit" data-fit data-score-text={u.fitScore}>
+        <!-- said up front, before the game: who this is not for, as one slim strip -->
+        <div class="k-card fit-card reveal">
+          <span class="k-sticker is-yellow fit-tag">{u.notFitTag}</span>
+          <h3 class="k-h3">
+            <span class="fit-mark no"><Icon name="lucide:x" width={18} height={18} /></span>
+            {c.notFit.title}
+          </h3>
+          <ul class="fit-list">
+            {c.notFit.items.map((item) => <li><span class="fit-opt">{item}</span></li>)}
+          </ul>
+        </div>
+        <!-- the game: tick what is true of you, and one bun turns its chair round for each tick -->
+        <div class="k-card fit-game reveal">
+          <h3 class="k-h3">
+            <span class="fit-mark"><Icon name="lucide:check" width={20} height={20} /></span>
+            {c.fit.title}
+          </h3>
+          <p class="fit-hint">{u.fitHint}</p>
+          <div class="chairs" aria-hidden="true">
+            {c.fit.items.map((_, i) => (
+              <span class="chair" data-chair>
+                <span class="chair-beam"></span>
+                <span class="chair-turn">
+                  <span class="chair-side chair-back"><span class="chair-dome"></span></span>
+                  <span class="chair-side chair-front">
+                    <Bun face="happy" tone={(['lime', 'sky', 'pink', 'coral', 'cream', 'lilac'] as const)[i % 6]} />
+                    <svg class="chair-spark" viewBox="0 0 24 24"><path d="M12 1q0 11 11 11q-11 0-11 11q0-11-11-11q11 0 11-11z" /></svg>
+                  </span>
+                </span>
+                <span class="chair-sign">{u.chairSigns[i % u.chairSigns.length]}</span>
+              </span>
+            ))}
+          </div>
+          <div class="fit-out" aria-live="polite">
+            <p class="fit-score" data-score>{fill(u.fitScore, { n: 0, total: c.fit.items.length })}</p>
+            <p class="fit-win" data-win hidden>{u.fitWin}</p>
+          </div>
+          <ul class="fit-list">
+            {c.fit.items.map((item) => (
+              <li>
+                <label class="fit-opt">
+                  <input type="checkbox" data-crit />
+                  <span class="fit-box"><Icon name="lucide:check" width={18} height={18} /></span>
+                  <span>{item}</span>
+                </label>
+              </li>
+            ))}
+          </ul>
+          <a class="k-btn is-lime fit-go" href="#contact" data-fit-go hidden>
+            {u.toWechat}
+            <Icon name="lucide:arrow-down" width={20} height={20} />
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW TO JOIN: the bun's way into the 包子房, from the counter to the kitchen -->
+  <JoinSteps />
+
+  <!-- FAQ -->
+  <section class="band band-yellow">
+    <div class="wrap k-faq">
+      <h2 class="k-h2">{hl(c.faqTitle).map((part, i) => (i % 2 ? <span class="k-hl">{part}</span> : part))}</h2>
+      <div class="k-faq-list">
+        {c.faqs.map((item) => (
+          <details class="k-faq-item">
+            <summary>
+              <span>{item.q}</span>
+              <span class="k-faq-chev"><Icon name="lucide:chevron-down" width={18} height={18} /></span>
+            </summary>
+            <p>{item.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="band band-lime" id="contact">
+    <div class="wrap k-cta">
+      <Bun face="grin" tone="sky" class="k-cta-bun" />
+      <h2 class="k-h2">{hl(c.ctaTitle).map((part, i) => (i % 2 ? <span class="k-hl">{part}</span> : part))}</h2>
+      <!-- two ways in, each with the buns of the jobs it covers and that person's WeChat -->
+      <div class="paths">
+        {c.paths.map((path, n) => (
+          <div class:list={['path', `path-${n + 1}`]}>
+            <span class="path-buns" aria-hidden="true">
+              {path.roles.map((r) => <span class="path-bun" data-role={r}><Bun face="smile" tone={(['lime', 'sky', 'pink', 'cream', 'lilac', 'coral'] as const)[r]} /><RoleProps /></span>)}
+            </span>
+            <span class:list={['k-sticker', 'is-flat', n ? 'is-yellow' : 'is-blue']}>{path.tag}</span>
+            <h3 class="path-title">{hl(path.title).map((part, i) => (i % 2 ? <span class="k-hl">{part}</span> : part))}</h3>
+            <p class="path-roles">{path.roles.map((r) => c.roles[r]).join(' · ')}</p>
+            <div class="wechat" data-copy-from>
+              <span class="wechat-id">
+                <Icon name="simple-icons:wechat" width={22} height={22} />
+                <span class="sr-only">{c.wechatLabel}</span>
+                <strong data-copy-text>{path.id}</strong>
+              </span>
+              <button type="button" class="copy" data-copy data-copied={u.copied} data-fail={u.copyFail}>
+                <Icon class="copy-icon" name="lucide:copy" width={18} height={18} />
+                <Icon class="copy-check" name="lucide:check" width={18} height={18} />
+                <span data-copy-label>{u.copy}</span>
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+      <p class="copy-msg" data-copy-msg aria-live="polite"></p>
+      <!-- what to send first: a message to copy, blanks left for them to fill in -->
+      <div class="tpl" data-copy-from>
+        <p class="tpl-say">{c.ctaSub}</p>
+        <p class="tpl-text" data-copy-text>{c.template}</p>
+        <button type="button" class="copy" data-copy data-copied={u.copied} data-fail={c.copyTemplateFail}>
+          <Icon class="copy-icon" name="lucide:copy" width={18} height={18} />
+          <Icon class="copy-check" name="lucide:check" width={18} height={18} />
+          <span data-copy-label>{c.copyTemplate}</span>
+        </button>
+      </div>
     </div>
   </section>
 </Layout>
 
 <style>
-  .sub-hero { position: relative; text-align: center; padding: 7rem 1.5rem 3rem; max-width: 680px; margin: 0 auto; }
-  .sub-hero h1 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 900; color: var(--text); margin-bottom: 1rem; }
-  .sub-hero p { font-size: 1.1rem; color: #374151; line-height: 1.75; }
-  .sub-wave { margin-top: -1px; display: block; width: 100%; }
+  .facts, .fit { margin-top: 3rem; }
+  #steps, #contact { scroll-margin-top: 5rem; }
 
-  .join-body {
-    background: #fff; max-width: 680px; margin: 0 auto;
-    padding: 2.75rem 1.5rem 5rem;
-    display: flex; flex-direction: column; gap: 1.75rem;
+  /* ── pick a role: four round tokens of different sizes, the bun and its speech bubble under them ── */
+  .pick { margin-top: 3rem; display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); align-items: center; gap: 3rem; }
+  .pick-list { list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.6rem 1.2rem; }
+  .pick-item { display: flex; flex-direction: column; align-items: center; gap: 0.6rem; text-align: center; }
+  .pick-1 { margin-top: 22px; --size: 112px; --tilt: -6deg; }
+  .pick-2 { margin-top: 0; --size: 126px; --tilt: 4deg; }
+  .pick-3 { margin-top: 30px; --size: 108px; --tilt: -3deg; }
+  .pick-4 { margin-top: 0; --size: 120px; --tilt: 7deg; }
+  .pick-5 { margin-top: 24px; --size: 110px; --tilt: -5deg; }
+  .pick-6 { margin-top: 6px; --size: 124px; --tilt: 3deg; }
+  .pick-btn {
+    display: flex; flex-direction: column; align-items: center; gap: 0.9rem; padding: 0.3rem; border: 0; border-radius: 28px;
+    background: none; color: var(--ink); font: inherit; cursor: pointer; -webkit-tap-highlight-color: transparent;
+  }
+  .pick-btn:disabled { cursor: default; }
+  .pick-btn:focus-visible { outline: 3px solid var(--blue); outline-offset: 4px; }
+  .pick-blob {
+    display: grid; place-items: center; width: var(--size); height: var(--size); rotate: var(--tilt);
+    border-radius: 52% 48% 55% 45% / 47% 54% 46% 53%; border: 2px solid var(--ink); box-shadow: 0 6px 0 0 var(--ink);
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+  }
+  .pick-2 .pick-blob, .pick-4 .pick-blob, .pick-5 .pick-blob { border-radius: 46% 54% 44% 56% / 55% 45% 55% 45%; }
+  /* each token shows that job's bun in its outfit, standing upright inside the tilted blob */
+  .mini-bun { position: relative; display: block; width: 68%; margin-top: 16%; rotate: calc(var(--tilt) * -1); transition: transform 0.25s cubic-bezier(.34, 1.56, .64, 1); }
+  .mini-bun :global(.bun) { display: block; width: 100%; }
+  .pick-btn:not(:disabled):hover .mini-bun { transform: rotate(-6deg) translateY(-3px); }
+  .pick-blob.is-lime { background: var(--lime); }
+  .pick-blob.is-blue { background: var(--blue); color: #fff; }
+  .pick-blob.is-purple { background: var(--purple); color: #fff; }
+  .pick-blob.is-yellow { background: var(--yellow); }
+  .pick-blob.is-coral { background: var(--coral); color: #fff; }
+  .pick-blob.is-white { background: #fff; }
+  .pick-btn:not(:disabled):hover .pick-blob { transform: translateY(-4px) scale(1.04); }
+  .pick-btn:not(:disabled):active .pick-blob, .pick-btn[aria-pressed='true'] .pick-blob { transform: translateY(4px); box-shadow: 0 2px 0 0 var(--ink); }
+  .pick-name { padding: 0.25rem 0.9rem; border-radius: 999px; border: 2px solid transparent; font-size: 1.2rem; font-weight: 900; line-height: 1.35; }
+  .pick-btn[aria-pressed='true'] .pick-name { border-color: var(--ink); background: var(--ink); color: #fff; }
+  .pick-line { color: var(--muted); font-size: 1.05rem; line-height: 1.6; }
+  .pick-real { margin-top: -0.35rem; color: var(--muted); font-size: 0.92rem; font-weight: 800; }
+  /* with the script on, the line is said by the bun instead */
+  :global(html.js) .pick-line { display: none; }
+
+  .pick-stage { display: flex; flex-direction: column; align-items: center; gap: 1.4rem; min-width: 0; }
+  :global(html:not(.js)) .pick { grid-template-columns: 1fr; }
+  :global(html:not(.js)) .pick-stage { display: none; }
+  .pick-bun { position: relative; width: 170px; margin-top: 1.6rem; }
+  .pick-bun :global(.bun) { width: 100%; }
+  .pick-bun :global(.pick-on), .pick-bun.is-on :global(.pick-idle) { display: none; }
+  .pick-bun.is-on :global(.pick-on) { display: block; }
+  .pick-say {
+    position: relative; width: 100%; min-height: 6.6rem; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.2rem;
+    padding: 1.1rem 1.6rem; border: 2px solid var(--ink); background: var(--yellow-soft); box-shadow: 3px 5px 0 0 var(--ink);
+    border-radius: 34px 44px 30px 40px / 42px 32px 40px 30px; rotate: 1deg;
+    color: var(--ink); font-size: 1.15rem; font-weight: 800; line-height: 1.55; text-align: center;
+  }
+  .pick-say::before {
+    content: ''; position: absolute; left: 50%; top: -10px; width: 16px; height: 16px; margin-left: -8px; rotate: 45deg;
+    border: 2px solid var(--ink); border-right: 0; border-bottom: 0; border-radius: 4px 0 0 0; background: inherit;
+  }
+  .pick-say strong { font-size: 1.3rem; font-weight: 900; }
+  .pick-say [hidden] { display: none; }
+
+  /* ── a trail: round tokens joined by a dotted path that the script draws through them, with a bubble
+        of words at each one. The bun stands on one token and hops to the one that is pressed. ── */
+  .trail { position: relative; margin-top: 2.5rem; padding-top: 84px; }
+  .road { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+  .road path { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+  .road-bed { stroke: #fff; stroke-width: 30; }
+  .road-dots { stroke: var(--ink); stroke-width: 5; stroke-dasharray: 1 15; opacity: 0.75; }
+  .trail-list { list-style: none; position: relative; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 2rem; align-items: start; }
+  .stop { position: relative; display: flex; flex-direction: column; margin-top: var(--dy, 0); min-width: 0; }
+  .node { position: relative; z-index: 1; display: block; width: 72px; height: 72px; margin-left: calc(var(--x, 50%) - 36px); }
+  .token {
+    display: grid; place-items: center; width: 72px; height: 72px; padding: 0; border-radius: 52% 48% 55% 45% / 47% 54% 46% 53%;
+    border: 2px solid var(--ink); box-shadow: 0 5px 0 0 var(--ink); background: #fff; color: var(--ink);
+    font: inherit; cursor: pointer; rotate: calc(var(--tilt, 0deg) * -3); transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.2s ease;
+  }
+  .token :global(svg) { rotate: calc(var(--tilt, 0deg) * 3); }
+  .token:not(:disabled):hover { transform: translateY(-3px) scale(1.05); }
+  .token:not(:disabled):active { transform: translateY(4px); box-shadow: 0 1px 0 0 var(--ink); }
+  .token:focus-visible { outline: 3px solid var(--blue); outline-offset: 4px; }
+  .token:disabled { cursor: default; }
+  .bubble {
+    position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 0.55rem; margin-top: 1.4rem; padding: 1.4rem 1.5rem 1.5rem;
+    border: 2px solid var(--ink); background: #fff; box-shadow: 3px 5px 0 0 var(--ink); rotate: var(--tilt, 0deg);
+    border-radius: 30px 38px 32px 42px / 38px 30px 42px 32px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .stop:nth-child(even) .bubble { border-radius: 40px 30px 44px 32px / 30px 40px 32px 44px; }
+  .bubble::before {
+    content: ''; position: absolute; top: -10px; left: calc(var(--x, 50%) - 9px); width: 16px; height: 16px; rotate: 45deg;
+    border: 2px solid var(--ink); border-right: 0; border-bottom: 0; border-radius: 4px 0 0 0; background: inherit;
+  }
+  .bubble p { color: var(--muted); font-size: 1.05rem; line-height: 1.7; }
+  :global(html.js) .bubble { cursor: pointer; }
+  :global(html.js) .is-current .bubble { transform: translateY(-5px); box-shadow: 3px 10px 0 0 var(--ink); }
+
+  .trail-bun { position: absolute; left: 0; top: 0; z-index: 3; width: 76px; pointer-events: none; visibility: hidden; }
+  .trail.is-ready .trail-bun { visibility: visible; }
+  .trail-bun :global(.bun) { width: 100%; }
+  .trail-bun :global(.bit) {
+    position: absolute; left: 50%; top: 50%; width: 12px; height: 12px; margin: -6px 0 0 -6px;
+    border: 2px solid var(--ink); border-radius: 3px; background: var(--c);
+    animation: bit-fly var(--t) cubic-bezier(0.2, 0.7, 0.3, 1) forwards;
+  }
+  .trail-bun :global(.bit.is-round) { border-radius: 50%; }
+  @keyframes bit-fly {
+    0% { transform: translate(0, 0) rotate(0) scale(0.4); opacity: 1; }
+    55% { transform: translate(var(--dx), var(--dy)) rotate(var(--r)) scale(1); opacity: 1; }
+    100% { transform: translate(var(--dx), calc(var(--dy) + 70px)) rotate(calc(var(--r) * 2)) scale(0.9); opacity: 0; }
   }
 
-  .roles-panel {
-    text-align: center;
-    background: linear-gradient(180deg, #f8fbf1, #ffffff);
-    border: 1px solid #eaf1dd; border-radius: 24px;
-    padding: 2.75rem 2rem;
+  /* how we work: the bun's outfit for each stop, placed in % of the bun so it scales with it */
+  .trail-bun .suit { position: absolute; display: none; overflow: visible; }
+  .trail-bun[data-suit='1'] .suit-1, .trail-bun[data-suit='2'] .suit-2, .trail-bun[data-suit='3'] .suit-3,
+  .trail-bun[data-suit='4'] .suit-4, .trail-bun[data-suit='5'] .suit-5 { display: block; animation: suit-on 0.45s cubic-bezier(.34, 1.56, .64, 1); }
+  .suit-1 { width: 18%; left: 41%; top: 64%; }
+  .suit-2 { width: 62%; left: 14%; top: -36%; transform: rotate(-8deg); }
+  .suit-3 { width: 34%; left: 30%; top: -26%; transform: rotate(-6deg); }
+  .suit-4 { width: 50%; left: 20%; top: -24%; }
+  .suit-5 { width: 34%; left: 26%; top: -38%; transform: rotate(-14deg); }
+  @keyframes suit-on { from { scale: 0.2; opacity: 0; } to { scale: 1; opacity: 1; } }
+
+  .work-more { display: inline-flex; align-items: center; gap: 0.3rem; margin-top: 0.7rem; padding: 0.35rem 0.85rem; border-radius: 999px;
+    border: 2px solid var(--ink); background: var(--lime); box-shadow: 0 3px 0 0 var(--ink); color: var(--ink); font-size: 0.92rem; font-weight: 900; text-decoration: none; white-space: nowrap; }
+  .work-more:hover { transform: translateY(-2px); }
+  .work-more:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+
+  /* how we work: each stop has its own colour */
+  .work .stop-1 .token { background: #fff; }
+  .work .stop-2 .token { background: var(--blue); color: #fff; }
+  .work .stop-3 .token { background: var(--purple); color: #fff; }
+  .work .stop-4 .token { background: var(--lime); }
+  .work .stop-5 .token { background: var(--yellow); }
+  .work .trail-list { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1.4rem; }
+  .work .stop-2 .bubble { background: var(--blue-soft); }
+  .work .stop-3 .bubble { background: var(--purple-soft); }
+  .work .stop-4 .bubble { background: var(--lime-soft); }
+  .work .stop-5 .bubble { background: var(--yellow-soft); }
+
+  /* the four steps: the path climbs to the last one. A step that is behind the bun is ticked. */
+  .walk .token :global(.token-check) { display: none; }
+  :global(html:not(.js)) .walk .token { background: var(--lime); }
+  :global(html.js) .walk .is-current .token { background: var(--yellow); }
+  :global(html.js) .walk .is-done .token { background: var(--lime); }
+  :global(html.js) .walk .is-done .token :global(.token-icon) { display: none; }
+  :global(html.js) .walk .is-done .token :global(.token-check) { display: block; }
+  :global(html.js) .walk .is-current .bubble { background: var(--yellow-soft); }
+  :global(html.js) .walk.is-won .stop-4 .token { background: var(--coral); color: #fff; }
+  .walk .bubble { padding: 1.2rem 1.4rem 1.3rem; }
+  .step-num { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; border: 2px solid var(--ink); background: var(--yellow); font-weight: 900; font-size: 0.95rem; color: var(--ink); }
+  .trail-bun :global(.win-face), .walk.is-won .trail-bun :global(.walk-face) { display: none; }
+  .walk.is-won .trail-bun :global(.win-face) { display: block; }
+
+  .walk-ui { display: none; }
+  :global(html.js) .walk-ui { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.9rem 1.2rem; margin-top: 2.8rem; }
+  .walk-ui [hidden] { display: none; }
+  .walk-status {
+    padding: 0.5rem 1.3rem; border-radius: 999px; border: 2px solid var(--ink); background: #fff; box-shadow: 0 4px 0 0 var(--ink);
+    color: var(--ink); font-size: 1.05rem; font-weight: 900; line-height: 1.45; rotate: -1.2deg; font-variant-numeric: tabular-nums;
   }
-  .join-h2 { font-size: 1.5rem; font-weight: 900; color: var(--text); margin-bottom: 1.5rem; }
-  .role-tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.7rem; }
-  .role-tag {
-    padding: 0.6rem 1.2rem; border-radius: 999px;
-    background: var(--green-light); border: 1px solid rgba(150,210,27,0.28);
-    color: #4d7d09; font-weight: 800; font-size: 0.95rem;
+  .walk-ui .k-btn { border-radius: 999px; }
+  .again {
+    display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.45rem 1.1rem; border-radius: 999px; border: 2px dashed var(--ink);
+    background: transparent; color: var(--ink); font: inherit; font-size: 1rem; font-weight: 800; cursor: pointer;
+  }
+  .again:hover { background: var(--lime-soft); }
+  .again:focus-visible, .copy:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+
+  /* ── the facts: four soft shapes, each a little different, none hidden behind anything ── */
+  .fact { align-items: center; justify-content: center; text-align: center; padding: 2.2rem 1.3rem; }
+  .fact-big { color: var(--ink) !important; font-size: clamp(1.5rem, 2.2vw, 2rem) !important; font-weight: 900; line-height: 1.25 !important; }
+  .fact-1 { background: var(--blue-soft); border-radius: 56px 36px 60px 40px / 44px 56px 40px 60px; rotate: -1.2deg; }
+  .fact-2 { background: var(--lime-soft); border-radius: 40px 60px 38px 58px / 58px 40px 60px 42px; rotate: 0.9deg; }
+  .fact-3 { background: var(--yellow-soft); border-radius: 60px 42px 54px 36px / 40px 58px 44px 60px; rotate: -0.7deg; }
+  .fact-4 { background: var(--purple-soft); border-radius: 42px 58px 36px 60px / 56px 38px 60px 42px; rotate: 1.1deg; }
+
+  /* ── what you get: notes of different sizes, not a grid ── */
+  /* each benefit is a badge: a medal on a ribbon, then its name and one line */
+  .gets { list-style: none; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1.4rem; margin-top: 3.5rem; }
+  .get {
+    --tone: var(--lime); --soft: var(--lime-soft);
+    display: flex; flex-direction: column; align-items: center; gap: 0.6rem; padding: 0 1.2rem 1.6rem; text-align: center;
+    border-radius: 26px; border: 2px solid var(--ink); background: #fff; box-shadow: 0 5px 0 0 var(--ink);
+    transition: transform 0.2s ease;
+  }
+  .get:hover { transform: translateY(-4px); }
+  .get-2 { --tone: #7fc6f2; --soft: var(--blue-soft); }
+  .get-3 { --tone: #f690b4; --soft: #ffe8f1; }
+  .get-4 { --tone: var(--yellow); --soft: var(--yellow-soft); }
+  .get-5 { --tone: var(--purple); --soft: var(--purple-soft); }
+  .get-medal { position: relative; display: block; width: 92px; height: 104px; margin-top: -30px; }
+  .get-ribbon { position: absolute; left: 50%; top: 52px; width: 54px; height: 50px; margin-left: -27px;
+    background: linear-gradient(90deg, var(--tone) 0 46%, transparent 46% 54%, var(--tone) 54%);
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 75% 82%, 50% 100%, 25% 82%, 0 100%, 0 0); }
+  .get-disc { position: absolute; left: 50%; top: 0; width: 78px; height: 78px; margin-left: -39px; display: grid; place-items: center;
+    border-radius: 50%; border: 2px solid var(--ink); background: var(--soft); color: var(--ink); box-shadow: inset 0 0 0 6px #fff, 0 4px 0 0 var(--ink); }
+  .get-disc::after { content: ''; position: absolute; inset: 9px; border-radius: 50%; border: 2px dashed var(--tone); }
+  .get .k-h3 { margin-top: 0.2rem; }
+  .get p { color: var(--muted); font-size: 1rem; line-height: 1.65; }
+  @media (prefers-reduced-motion: no-preference) {
+    .get:hover .get-disc { animation: medal-spin 0.7s ease-out; }
+  }
+  @keyframes medal-spin { from { transform: rotateY(0); } to { transform: rotateY(360deg); } }
+
+  /* a light talent-show stage in the site's own colours; who it is not for is said first, in a slim strip above */
+  .fit-band { background: var(--purple-soft); }
+  .fit { display: flex; flex-direction: column; gap: 1.6rem; margin-top: 2.5rem; }
+  .fit-game, .fit-card { display: flex; flex-direction: column; align-items: flex-start; gap: 1.1rem; padding: 2.2rem 2rem; }
+  .fit-game { align-items: center; text-align: center; padding: 2.4rem 2.4rem 2.2rem; border-radius: 32px; }
+  .fit-game > h3 { justify-content: center; }
+  .fit-card { flex-direction: row; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.7rem 1rem; padding: 1rem 1.4rem; border-radius: 999px; }
+  .fit-card h3 { font-size: 1.05rem; white-space: nowrap; }
+  .fit-card .fit-mark { width: 30px; height: 30px; flex-basis: 30px; }
+  .fit-game h3, .fit-card h3 { display: flex; align-items: center; gap: 0.7rem; }
+  .fit-mark { display: grid; place-items: center; width: 36px; height: 36px; flex: 0 0 36px; border-radius: 50%; border: 2px solid var(--ink); background: var(--lime); color: var(--ink); }
+  .fit-mark.no { background: var(--coral); color: #fff; }
+  .fit-hint { color: var(--muted); font-size: 1.05rem; line-height: 1.65; }
+  .fit-list { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; width: 100%; }
+  .fit-game .fit-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.1rem 1.3rem; max-width: 860px; margin-top: 0.6rem; }
+  .fit-opt {
+    position: relative; display: flex; align-items: center; gap: 0.9rem; padding: 0.75rem 1.1rem;
+    border-radius: 18px; border: 2px solid var(--ink); background: #fff; color: var(--ink); font-size: 1.05rem; font-weight: 800; line-height: 1.45; text-align: left;
+  }
+  label.fit-opt { cursor: pointer; height: 100%; padding: 1rem 1.2rem; box-shadow: 0 4px 0 0 var(--ink); transition: transform 0.15s ease, background-color 0.15s ease; }
+  label.fit-opt:hover { transform: translateY(-2px); }
+  .fit-opt input { position: absolute; left: 1.2rem; top: 50%; width: 30px; height: 30px; margin: -15px 0 0; opacity: 0; cursor: pointer; }
+  .fit-box { display: grid; place-items: center; width: 30px; height: 30px; flex: 0 0 30px; border-radius: 50%; border: 2px solid var(--ink); background: #fff; }
+  .fit-box :global(svg) { display: none; }
+  .fit-opt input:checked + .fit-box { background: var(--lime); }
+  .fit-opt input:checked + .fit-box :global(svg) { display: block; }
+  .fit-opt:has(input:checked) { background: var(--lime-soft); }
+  .fit-opt input:focus-visible + .fit-box { outline: 3px solid var(--blue); outline-offset: 3px; }
+  .fit-opt:has(input:focus-visible) { outline: 3px solid var(--blue); outline-offset: 3px; }
+  .fit-opt:has(input:focus-visible) .fit-box { outline: none; }
+  .fit-out { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.6rem 1rem; }
+  .fit-score {
+    padding: 0.35rem 1rem; border-radius: 999px; border: 2px solid var(--ink); background: var(--yellow-soft); color: var(--ink);
+    font-size: 1rem; font-weight: 900; white-space: nowrap; font-variant-numeric: tabular-nums;
+  }
+  .fit-win { color: var(--ink); font-size: clamp(1.6rem, 2.6vw, 2.2rem); font-weight: 900; line-height: 1.3; }
+  .fit-game [hidden] { display: none; }
+  .fit-go { border-radius: 999px; }
+  .fit-tag { align-self: center; }
+  .fit-card .fit-list { flex-direction: row; flex-wrap: wrap; justify-content: center; width: auto; gap: 0.5rem; }
+  .fit-card .fit-opt { padding: 0.4rem 0.9rem; border-radius: 999px; border-width: 1.5px; background: #f3f4f8; font-size: 0.95rem; }
+  @media (max-width: 700px) {
+    .fit-game { padding: 1.8rem 1.2rem; }
+    .fit-game .fit-list { grid-template-columns: 1fr; gap: 0.8rem; }
+    .fit-game .fit-opt { font-size: 1rem; }
+    .chair-sign { font-size: 0.7rem; padding: 0.2rem 0.35rem; letter-spacing: 0; white-space: normal; text-align: center; line-height: 1.2; }
   }
 
-  .join-cta {
-    text-align: center; color: #fff;
-    background: linear-gradient(135deg, var(--green), var(--blue));
-    border-radius: 26px; padding: 3rem 2rem;
-    box-shadow: 0 22px 50px -26px rgba(52,134,243,0.6);
+  /* the judges: soft coral chairs seen from behind. Each one spins round to show its bun and lights up its sign. */
+  .fit-band { overflow-x: clip; }
+  .chairs { display: flex; justify-content: center; gap: clamp(0.8rem, 3vw, 2.6rem); width: 100%; max-width: 820px; padding: 1.2rem 0 0.4rem; }
+  .chair { position: relative; flex: 1 1 0; min-width: 0; max-width: 170px; perspective: 900px; display: flex; flex-direction: column; align-items: center; }
+  .chair-beam { position: absolute; left: 50%; bottom: 30px; width: 150%; height: 150%; translate: -50% 0; pointer-events: none;
+    background: radial-gradient(ellipse 50% 55% at 50% 100%, rgba(246, 183, 60, 0.35), transparent 70%); opacity: 0; transition: opacity 0.4s ease; }
+  .chair.is-on .chair-beam { opacity: 1; }
+  .chair-turn { position: relative; display: block; width: 100%; aspect-ratio: 1 / 1.15; transform-style: preserve-3d; transition: transform 0.7s cubic-bezier(0.34, 1.3, 0.64, 1); }
+  .chair.is-on .chair-turn { transform: rotateY(180deg); }
+  .chair-side {
+    position: absolute; inset: 0; display: grid; place-items: end center; backface-visibility: hidden;
+    border-radius: 48% 48% 22% 22% / 40% 40% 18% 18%; border: 2px solid var(--ink); box-shadow: 0 5px 0 0 var(--ink);
   }
-  .join-cta h2 { font-size: 1.8rem; font-weight: 900; margin-bottom: 0.6rem; }
-  .join-cta p { font-size: 1.05rem; opacity: 0.95; margin-bottom: 1.75rem; max-width: 460px; margin-left: auto; margin-right: auto; line-height: 1.6; }
-  .join-btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.9rem 1.9rem; border-radius: 14px; background: #fff; color: var(--text); font-weight: 900; font-size: 1rem; text-decoration: none; box-shadow: 0 10px 26px -8px rgba(0,0,0,0.3); transition: transform 0.2s ease; }
-  .join-btn:hover { transform: translateY(-2px); }
+  .chair-back { background: linear-gradient(160deg, #ffb3a6, #f8787a 75%); place-items: center; }
+  .chair-back::after { content: ''; position: absolute; inset: 9% 12% 14%; border-radius: inherit; border: 2px dashed rgba(255, 255, 255, 0.6); }
+  .chair-dome { width: 28%; aspect-ratio: 1; border-radius: 50%; border: 2px solid var(--ink); background: #fff; }
+  .chair-front { transform: rotateY(180deg); background: var(--yellow-soft); }
+  .chair-front :global(.bun) { width: 78%; margin-bottom: 10%; }
+  .chair-spark { position: absolute; right: -10%; top: -8%; width: 30%; overflow: visible; }
+  .chair-spark path { fill: #fff; stroke: var(--ink); stroke-width: 2; stroke-linejoin: round; }
+  .chair-sign { margin-top: 14px; padding: 0.25rem 0.8rem; border-radius: 999px; border: 2px dashed rgba(30, 33, 64, 0.3); background: #fff; color: rgba(30, 33, 64, 0.35);
+    max-width: 100%; font-size: clamp(0.8rem, 1.1vw, 0.98rem); font-weight: 900; line-height: 1.3; text-align: center; transition: all 0.3s ease; }
+  .chair.is-on .chair-sign { border: 2px solid var(--ink); background: var(--lime); color: var(--ink); box-shadow: 0 3px 0 0 var(--ink); }
+
+  /* Without JavaScript nothing can be ticked: both lists are plain lists. */
+  :global(html:not(.js)) .chairs, :global(html:not(.js)) .fit-hint, :global(html:not(.js)) .fit-out,
+  :global(html:not(.js)) .fit-opt input, :global(html:not(.js)) .fit-box { display: none; }
+  :global(html:not(.js)) label.fit-opt { cursor: default; }
+  :global(html:not(.js)) .fit { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+  /* ── two ways in: a card per person, the job buns on top, the WeChat ID and its copy button at the bottom ── */
+  .paths { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.6rem; width: 100%; max-width: 980px; margin-top: 0.6rem; }
+  .path {
+    display: flex; flex-direction: column; align-items: center; gap: 0.75rem; padding: 1.4rem 1.4rem 1.6rem; text-align: center;
+    border-radius: 30px; border: 2px solid var(--ink); background: #fff; box-shadow: 0 6px 0 0 var(--ink);
+  }
+  .path-1 { rotate: -1deg; } .path-2 { rotate: 1deg; }
+  .path-buns { display: flex; justify-content: center; padding-top: 1.6rem; }
+  .path-bun { position: relative; display: block; width: 72px; margin: 0 8px; transition: transform 0.25s cubic-bezier(.34, 1.56, .64, 1); }
+  .path-bun:nth-child(2) { translate: 0 -8px; }
+  .path-bun :global(.bun) { display: block; width: 100%; }
+  .path:hover .path-bun:nth-child(odd) { transform: translateY(-6px) rotate(-8deg); }
+  .path:hover .path-bun:nth-child(2) { transform: translateY(-6px) rotate(6deg); }
+  .path-title { font-size: clamp(1.35rem, 2.1vw, 1.75rem); font-weight: 900; line-height: 1.3; color: var(--ink); }
+  .path-roles { color: var(--muted); font-size: 0.98rem; font-weight: 800; }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .wechat {
+    display: inline-flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.6rem 0.9rem; margin-top: 0.3rem; padding: 0.55rem 0.6rem 0.55rem 1.2rem;
+    border-radius: 999px; border: 2px solid var(--ink); background: var(--lime-soft);
+  }
+  :global(html:not(.js)) .wechat { padding-right: 1.6rem; }
+  .wechat-id { display: inline-flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.3rem 0.7rem; font-size: 1.15rem; font-weight: 800; color: var(--ink); }
+  .wechat strong { font-size: 1.3rem; font-weight: 900; letter-spacing: 0.02em; user-select: all; -webkit-user-select: all; }
+  .copy {
+    display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.55rem 1.2rem; border-radius: 999px; border: 2px solid var(--ink);
+    background: var(--lime); box-shadow: 0 3px 0 0 var(--ink); color: var(--ink); font: inherit; font-size: 1.02rem; font-weight: 900; line-height: 1.3; cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  :global(html:not(.js)) .copy { display: none; }
+  .copy:hover { transform: translateY(-2px); }
+  .copy:active { transform: translateY(3px); box-shadow: 0 0 0 0 var(--ink); }
+  .copy :global(.copy-check), .copy.is-copied :global(.copy-icon) { display: none; }
+  .copy.is-copied :global(.copy-check) { display: block; }
+  .copy.is-copied { background: var(--yellow); }
+  .copy-msg { color: var(--ink); font-size: 1rem; font-weight: 800; }
+  .copy-msg:empty { display: none; }
+  .tpl { display: flex; flex-direction: column; align-items: center; gap: 0.9rem; width: 100%; max-width: 640px; margin-top: 0.8rem; }
+  .tpl-say { color: var(--ink); font-size: 1.1rem; font-weight: 900; }
+  .tpl-text {
+    margin: 0; padding: 1rem 1.3rem; border-radius: 6px 22px 22px 22px; border: 2px solid var(--ink); background: #fff; box-shadow: 0 4px 0 0 var(--ink);
+    color: var(--ink); font-size: 1.08rem; font-weight: 700; line-height: 1.7; text-align: left; user-select: all; -webkit-user-select: all;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .pick-bun :global([data-prop]) { animation: prop-fade 0.35s ease-out; }
+    .pick-say.is-new { animation: say-pop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
+    .trail-bun :global(.bun) { animation: bun-bob 1.8s ease-in-out infinite; }
+    .chair.is-on .chair-spark { animation: prop-pop 0.4s 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) backwards; transform-origin: center; }
+    .fit-game.is-won .chair-front :global(.bun) { animation: bun-bob 0.9s ease-in-out infinite; }
+    .fit-game.is-won .chair:nth-child(even) .chair-front :global(.bun) { animation-delay: 0.3s; }
+    .fit-win { animation: say-pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); }
+  }
+  @keyframes prop-pop { from { scale: 0; } to { scale: 1; } }
+  @keyframes prop-fade { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes say-pop { from { scale: 0.92; } to { scale: 1; } }
+  @keyframes bun-bob { 0%, 100% { translate: 0 0; } 50% { translate: 0 -7px; } }
+
+  @media (max-width: 1100px) {
+    .facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    /* how we work: one stop per row, tokens swapping sides so the path still winds its way down */
+    .work { max-width: 680px; margin-inline: auto; padding-top: 60px; }
+    .work .trail-list { display: flex; flex-direction: column; gap: 2.2rem; }
+    .work .stop { display: grid; grid-template-columns: 64px minmax(0, 1fr); align-items: center; gap: 1rem; margin-top: 0; }
+    .work .stop:nth-child(even) { grid-template-columns: minmax(0, 1fr) 64px; }
+    .work .stop:nth-child(even) .node { order: 2; }
+    .work .node, .work .token { width: 64px; height: 64px; margin-left: 0; }
+    .work .bubble { margin-top: 0; padding: 1.2rem 1.3rem 1.3rem; }
+    .work .bubble::before { display: none; }
+    .work .road-bed { stroke-width: 24; }
+    .work .trail-bun { width: 56px; }
+  }
+  @media (max-width: 900px) {
+    /* the steps stack too, tokens down the left */
+    .walk { max-width: 640px; margin-inline: auto; padding-top: 60px; }
+    .walk .trail-list { display: flex; flex-direction: column; gap: 1.6rem; }
+    .walk .stop { display: grid; grid-template-columns: 64px minmax(0, 1fr); align-items: center; gap: 1rem; margin-top: 0; }
+    .walk .node, .walk .token { width: 64px; height: 64px; margin-left: 0; }
+    .walk .bubble { margin-top: 0; }
+    .walk .bubble::before { display: none; }
+    .walk .road-bed { stroke-width: 24; }
+    .walk .trail-bun { width: 56px; }
+    .fit, :global(html:not(.js)) .fit { grid-template-columns: 1fr; }
+    .gets { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 2.6rem; }
+  }
+  @media (max-width: 560px) {
+    .gets { grid-template-columns: 1fr; max-width: 360px; margin-inline: auto; }
+    .pick { grid-template-columns: 1fr; gap: 2rem; }
+    .pick-bun { width: 130px; }
+    .pick-stage { width: min(100%, 34rem); margin-inline: auto; }
+  }
+  @media (max-width: 560px) {
+    /* still three across, so the bun and what it says stay on screen while you press */
+    .pick { gap: 1.2rem; }
+    .pick-list { gap: 1rem 0.3rem; }
+    .pick-item { --size: 80px; }
+    .pick-2, .pick-4, .pick-6 { --size: 88px; }
+    .pick-1, .pick-5 { margin-top: 14px; }
+    .pick-3 { margin-top: 20px; }
+    .pick-btn { gap: 0.6rem; padding: 0.2rem 0; }
+    .pick-blob :global(svg) { width: 30px; height: 30px; }
+    .pick-name { font-size: 0.98rem; padding: 0.2rem 0.55rem; border-radius: 16px; }
+    .pick-bun { width: 110px; margin-top: 0.8rem; }
+    .pick-say { min-height: 5.6rem; padding: 0.9rem 1.1rem; font-size: 1.05rem; }
+    .pick-say strong { font-size: 1.15rem; }
+  }
+  @media (max-width: 600px) {
+    .facts { grid-template-columns: 1fr; }
+    .fact, .fit-card, .bubble, .pick-say, .wechat { rotate: none; }
+    .fit-game { padding: 1.8rem 1.3rem; }
+    .fit-card { border-radius: 28px; padding: 1.1rem 1rem; }
+    .fit-opt { border-radius: 20px; }
+    .chairs { gap: 1rem 0.6rem; }
+    .wechat { border-radius: 26px; padding: 0.7rem 0.9rem; }
+    .paths { grid-template-columns: 1fr; }
+    .path-1, .path-2 { rotate: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .pick-blob, .token, .bubble, .copy, .chair-turn, label.fit-opt { transition: none; }
+    label.fit-opt:hover { transform: none; }
+    .pick-btn:not(:disabled):hover .pick-blob, .token:not(:disabled):hover, .copy:hover, :global(html.js) .is-current .bubble { transform: none; }
+    .trail-bun :global(.bit) { display: none; animation: none; }
+    .trail-bun .suit { animation: none !important; }
+  }
 </style>
+
+<script>
+  const calm = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  // ── pick a role ──
+  const pick = document.querySelector<HTMLElement>('[data-pick]');
+  if (pick) {
+    const buttons = [...pick.querySelectorAll<HTMLButtonElement>('[data-role]')];
+    const bun = pick.querySelector<HTMLElement>('[data-pick-bun]')!;
+    const sayBox = pick.querySelector<HTMLElement>('.pick-say')!;
+    const sayRole = pick.querySelector<HTMLElement>('[data-say-role]')!;
+    const say = pick.querySelector<HTMLElement>('[data-say]')!;
+    buttons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const item = button.closest('li')!;
+        buttons.forEach((other) => other.setAttribute('aria-pressed', String(other === button)));
+        bun.dataset.role = button.dataset.role;
+        bun.classList.add('is-on');
+        sayRole.textContent = `${item.querySelector('[data-name]')?.textContent ?? ''} · ${item.querySelector('[data-real]')?.textContent ?? ''}`;
+        sayRole.hidden = false;
+        say.textContent = item.querySelector('[data-line]')?.textContent ?? '';
+        if (calm.matches) return;
+        sayBox.classList.remove('is-new');
+        void sayBox.offsetWidth;
+        sayBox.classList.add('is-new');
+        bun.animate?.(
+          [
+            { translate: '0 0', rotate: '0deg' },
+            { translate: '0 -26px', rotate: '-8deg', offset: 0.35 },
+            { translate: '0 0', rotate: '6deg', offset: 0.7 },
+            { translate: '0 0', rotate: '0deg' },
+          ],
+          { duration: 520, easing: 'ease-in-out' },
+        );
+      });
+      button.disabled = false;
+    });
+  }
+
+  // ── a trail: draws the path through the tokens and hops the bun from one to another ──
+  type Point = { x: number; y: number };
+  const makeTrail = (root: HTMLElement) => {
+    const bun = root.querySelector<HTMLElement>('[data-trail-bun]')!;
+    const stops = [...root.querySelectorAll<HTMLElement>('[data-stop]')];
+    const nodes = stops.map((stop) => stop.querySelector<HTMLElement>('[data-node]')!);
+    const tokens = stops.map((stop) => stop.querySelector<HTMLButtonElement>('[data-token]')!);
+    const roads = [...root.querySelectorAll<SVGPathElement>('[data-road]')];
+    let pos = 0;
+    let frame = 0;
+    let at: Point = { x: 0, y: 0 };
+
+    const centre = (i: number): Point => {
+      const box = root.getBoundingClientRect();
+      const r = nodes[i].getBoundingClientRect();
+      return { x: r.left + r.width / 2 - box.left, y: r.top + r.height / 2 - box.top };
+    };
+    // where the bun stands for a stop: on top of its token
+    const spot = (i: number): Point => {
+      const c = centre(i);
+      return { x: c.x - bun.offsetWidth / 2, y: c.y - nodes[i].offsetHeight / 2 - bun.offsetHeight + 10 };
+    };
+    const put = (p: Point) => { at = p; bun.style.translate = `${p.x.toFixed(1)}px ${p.y.toFixed(1)}px`; };
+
+    const draw = () => {
+      const pts = stops.map((_, i) => centre(i));
+      const get = (i: number) => pts[Math.max(0, Math.min(pts.length - 1, i))];
+      const n = (v: number) => v.toFixed(1);
+      let d = `M${n(pts[0].x)} ${n(pts[0].y)}`;
+      for (let i = 0; i < pts.length - 1; i += 1) {
+        const [a, b, c, e] = [get(i - 1), get(i), get(i + 1), get(i + 2)];
+        d += `C${n(b.x + (c.x - a.x) / 6)} ${n(b.y + (c.y - a.y) / 6)} ${n(c.x - (e.x - b.x) / 6)} ${n(c.y - (e.y - b.y) / 6)} ${n(c.x)} ${n(c.y)}`;
+      }
+      roads.forEach((road) => road.setAttribute('d', d));
+    };
+
+    const go = (to: number, landed?: () => void) => {
+      window.cancelAnimationFrame(frame);
+      const from = at;
+      const end = spot(to);
+      pos = to;
+      const far = Math.hypot(end.x - from.x, end.y - from.y);
+      if (calm.matches || far < 2) { put(end); landed?.(); return; }
+      const duration = Math.min(1100, Math.max(420, far * 1.7));
+      const jumps = Math.max(1, Math.round(far / 150));
+      let start = 0;
+      const step = (now: number) => {
+        start ||= now;
+        const t = Math.min(1, (now - start) / duration);
+        const ease = t < 0.5 ? 2 * t * t : 1 - (-2 * t + 2) ** 2 / 2;
+        put({ x: from.x + (end.x - from.x) * ease, y: from.y + (end.y - from.y) * ease - Math.abs(Math.sin(Math.PI * t * jumps)) * 28 });
+        if (t < 1) { frame = window.requestAnimationFrame(step); return; }
+        put(end);
+        landed?.();
+      };
+      frame = window.requestAnimationFrame(step);
+    };
+
+    const burst = (count: number) => {
+      if (calm.matches) return;
+      const colours = ['var(--lime)', 'var(--yellow)', 'var(--blue)', 'var(--purple)', 'var(--coral)', '#fff'];
+      const box = bun.getBoundingClientRect();
+      const cx = box.left + box.width / 2;
+      const roomLeft = cx - 16;
+      const roomRight = document.documentElement.clientWidth - cx - 16;
+      for (let i = 0; i < count; i += 1) {
+        const bit = document.createElement('span');
+        const angle = Math.random() * Math.PI * 2;
+        const far = 60 + Math.random() * 120;
+        bit.className = i % 3 ? 'bit' : 'bit is-round';
+        bit.style.setProperty('--c', colours[i % colours.length]);
+        bit.style.setProperty('--dx', `${Math.max(-roomLeft, Math.min(roomRight, Math.cos(angle) * far)).toFixed(0)}px`);
+        bit.style.setProperty('--dy', `${(Math.sin(angle) * far * 0.8 - 50).toFixed(0)}px`);
+        bit.style.setProperty('--r', `${(Math.random() * 360 - 180).toFixed(0)}deg`);
+        bit.style.setProperty('--t', `${(1 + Math.random() * 0.6).toFixed(2)}s`);
+        bit.addEventListener('animationend', () => bit.remove());
+        bun.append(bit);
+      }
+    };
+
+    // the trail changes shape with the window: redraw the path and stand the bun back on its stop
+    const settle = () => { window.cancelAnimationFrame(frame); draw(); put(spot(pos)); };
+    settle();
+    if ('ResizeObserver' in window) new ResizeObserver(settle).observe(root);
+    root.classList.add('is-ready');
+    tokens.forEach((token) => { token.disabled = false; });
+    return { stops, tokens, go, burst };
+  };
+
+  // ── how we work: press a stop (or, on a narrow screen, scroll to it) and the bun goes there ──
+  const work = document.querySelector<HTMLElement>('[data-trail="work"]');
+  if (work) {
+    const trail = makeTrail(work);
+    let current = 0;
+    const bun = work.querySelector<HTMLElement>('[data-trail-bun]')!;
+    const select = (i: number) => {
+      if (i === current) return;
+      current = i;
+      trail.stops.forEach((stop, n) => {
+        stop.classList.toggle('is-current', n === i);
+        if (n === i) trail.tokens[n].setAttribute('aria-current', 'true');
+        else trail.tokens[n].removeAttribute('aria-current');
+      });
+      // the new outfit goes on when the bun lands
+      trail.go(i, () => { bun.dataset.suit = String(i + 1); trail.burst(8); });
+    };
+    trail.stops.forEach((stop, i) => {
+      trail.tokens[i].addEventListener('click', () => select(i));
+      stop.querySelector('.bubble')?.addEventListener('click', () => {
+        if (!window.getSelection()?.toString()) select(i);
+      });
+    });
+    const narrow = window.matchMedia('(max-width: 1100px)');
+    if ('IntersectionObserver' in window) {
+      const seen = new IntersectionObserver(
+        (entries) => {
+          if (!narrow.matches) return;
+          entries.forEach((entry) => { if (entry.isIntersecting) select(trail.stops.indexOf(entry.target as HTMLElement)); });
+        },
+        { rootMargin: '-45% 0px -45% 0px' },
+      );
+      trail.stops.forEach((stop) => seen.observe(stop));
+    }
+  }
+
+  // ── do we suit each other: every tick turns one more chair round. Nothing is stored or sent. ──
+  const fit = document.querySelector<HTMLElement>('[data-fit]');
+  if (fit) {
+    const game = fit.querySelector<HTMLElement>('.fit-game')!;
+    const boxes = [...fit.querySelectorAll<HTMLInputElement>('[data-crit]')];
+    const chairs = [...fit.querySelectorAll<HTMLElement>('[data-chair]')];
+    const score = fit.querySelector<HTMLElement>('[data-score]')!;
+    const win = fit.querySelector<HTMLElement>('[data-win]')!;
+    const goBtn = fit.querySelector<HTMLElement>('[data-fit-go]')!;
+    const total = boxes.length;
+    // most of them is enough: nobody has to tick every one
+    const enough = Math.max(1, total - 1);
+    const render = () => {
+      const n = boxes.filter((box) => box.checked).length;
+      chairs.forEach((chair, i) => chair.classList.toggle('is-on', i < n));
+      score.textContent = (fit.dataset.scoreText ?? '').replace('{n}', String(n)).replace('{total}', String(total));
+      const won = n >= enough;
+      game.classList.toggle('is-won', won);
+      win.hidden = !won;
+      goBtn.hidden = !won;
+    };
+    boxes.forEach((box) => box.addEventListener('change', render));
+    render();
+  }
+
+  // ── copy a WeChat ID: each card's button copies the ID next to it ──
+  const copyMsg = document.querySelector<HTMLElement>('[data-copy-msg]');
+  document.querySelectorAll<HTMLButtonElement>('[data-copy]').forEach((copy) => {
+    const idEl = copy.closest('[data-copy-from]')?.querySelector<HTMLElement>('[data-copy-text]');
+    if (!idEl) return;
+    const label = copy.querySelector<HTMLElement>('[data-copy-label]')!;
+    const idle = label.textContent ?? '';
+    let timer = 0;
+    copy.addEventListener('click', async () => {
+      const id = idEl.textContent?.trim() ?? '';
+      let ok = false;
+      try {
+        await navigator.clipboard.writeText(id);
+        ok = true;
+      } catch {
+        // no clipboard access (an old browser, or a page not served over https): try the old way
+        const range = document.createRange();
+        range.selectNodeContents(idEl);
+        window.getSelection()?.removeAllRanges();
+        window.getSelection()?.addRange(range);
+        try { ok = document.execCommand('copy'); } catch { ok = false; }
+        if (ok) window.getSelection()?.removeAllRanges();
+      }
+      window.clearTimeout(timer);
+      copy.classList.toggle('is-copied', ok);
+      label.textContent = ok ? copy.dataset.copied ?? idle : idle;
+      if (copyMsg) copyMsg.textContent = ok ? '' : copy.dataset.fail ?? '';
+      if (ok) timer = window.setTimeout(() => { copy.classList.remove('is-copied'); label.textContent = idle; }, 2200);
+    });
+  });
+</script>

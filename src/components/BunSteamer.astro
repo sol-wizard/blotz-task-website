@@ -1,0 +1,207 @@
+---
+// A bamboo steamer full of buns, after the marketing team's Xiaohongshu post
+// 「包子头像已出笼，请及时认领」. Site-native vector art: the steamer wears the kit's ink
+// outline and hard shadow, the buns keep the mascot's outline-free body in the pastel
+// colours marketing uses. Decorative only.
+interface Props {
+  class?: string;
+}
+const { class: className = '' } = Astro.props;
+const uid = Math.random().toString(36).slice(2, 8);
+
+// The mascot's body, in the 23 x 20 box of public/shared-pic/bun-white.svg
+const body =
+  'M16.5732 0C18.1567 0 19.4404 1.28368 19.4404 2.86719C19.4404 3.83183 19.5209 4.92418 20.1514 5.6543C21.8873 7.66415 22.9375 10.2833 22.9375 13.1475C22.9374 19.4814 17.8026 20.001 11.4688 20.001C5.1351 20.001 7.5714e-05 19.4813 0 13.1475C0 6.81347 5.13506 1.67893 11.4688 1.67871C12.8465 1.67871 14.196 0.754077 15.4668 0.22168C15.8071 0.0791291 16.1812 0.000105045 16.5732 0Z';
+
+type Face = 'oval' | 'happy' | 'squint' | 'lidded' | 'flat';
+interface SteamBun {
+  key: string;
+  x: number; // where the bun sits: bottom centre
+  y: number;
+  s: number; // size
+  flip?: boolean;
+  from: string; // body colours, top left to bottom right
+  mid?: string;
+  to: string;
+  shade: string; // soft shadow under the body
+  eye: string;
+  face: Face;
+  delay: number; // seconds, so they bob out of step
+  peek?: boolean;
+  blink?: boolean;
+}
+
+// back to front, so the ones in front are painted last
+const buns: SteamBun[] = [
+  { key: 'cream', x: 200, y: 226, s: 2.9, from: '#fffaf0', to: '#f4dfae', shade: '#c9a45c', eye: '#4b63c9', face: 'oval', delay: 0, peek: true },
+  { key: 'sky', x: 136, y: 214, s: 3.0, from: '#7fc6f2', mid: '#93dfa4', to: '#f6e47c', shade: '#4f9aa0', eye: '#2c7d86', face: 'flat', delay: -1.1 },
+  { key: 'pink', x: 264, y: 214, s: 3.0, flip: true, from: '#fcc7e0', to: '#f690b4', shade: '#c9668b', eye: '#b23a68', face: 'happy', delay: -2.3 },
+  { key: 'lilac', x: 108, y: 266, s: 3.3, from: '#c9b8f6', mid: '#dcc6ee', to: '#f8dc8c', shade: '#8f7cc4', eye: '#6247b3', face: 'lidded', delay: -0.6 },
+  { key: 'coral', x: 292, y: 266, s: 3.3, flip: true, from: '#fdb39a', to: '#f8787a', shade: '#c9585c', eye: '#b32f3c', face: 'squint', delay: -1.8 },
+  { key: 'lime', x: 200, y: 272, s: 3.7, from: '#8fd10e', to: '#cdeb86', shade: '#4d7d09', eye: '#ffffff', face: 'oval', delay: -2.9, blink: true },
+];
+
+const wisps = [
+  { d: 'M150 138c-14-14 12-24 0-40s10-24 2-38', delay: 0 },
+  { d: 'M204 118c-14-14 12-26 0-42s10-26 2-42', delay: -1.6 },
+  { d: 'M258 140c-14-14 12-24 0-40s10-22 2-36', delay: -3.1 },
+];
+const spark = 'M0-11C1.2-3.4 3.4-1.2 11 0C3.4 1.2 1.2 3.4 0 11C-1.2 3.4-3.4 1.2-11 0C-3.4-1.2-1.2-3.4 0-11Z';
+---
+
+<svg viewBox="0 0 400 364" class:list={['bun-steamer', className]} aria-hidden="true" focusable="false">
+  <defs>
+    {buns.map((b) => (
+      <linearGradient id={`bs-${uid}-${b.key}`} x1="0.1" y1="0.1" x2="0.9" y2="0.95">
+        <stop offset="0" stop-color={b.from} />
+        {b.mid && <stop offset="0.5" stop-color={b.mid} />}
+        <stop offset="1" stop-color={b.to} />
+      </linearGradient>
+    ))}
+    <clipPath id={`bs-${uid}-well`}><ellipse cx="200" cy="222" rx="144" ry="62" /></clipPath>
+  </defs>
+
+  <!-- steam -->
+  <g class="steam">
+    {wisps.map((w) => (
+      <g class="wisp" style={`animation-delay:${w.delay}s`}>
+        <path d={w.d} class="wisp-ink" />
+        <path d={w.d} class="wisp-white" />
+      </g>
+    ))}
+  </g>
+
+  <!-- sparkles, as in the posts -->
+  <g class="spark" transform="translate(52 120)"><path d={spark} /></g>
+  <g class="spark is-late" transform="translate(352 96) scale(1.35)"><path d={spark} /></g>
+  <g class="spark is-small" transform="translate(326 150) scale(0.6)"><path d={spark} /></g>
+
+  <!-- the basket: hard shadow, back rim, the well the buns sit in -->
+  <path class="ink" d="M40 229A160 74 0 0 0 360 229L360 285A160 74 0 0 1 40 285Z" />
+  <ellipse class="rim" cx="200" cy="222" rx="160" ry="74" />
+  <ellipse class="well" cx="200" cy="222" rx="144" ry="62" />
+  <ellipse class="cloth" cx="200" cy="240" rx="138" ry="54" clip-path={`url(#bs-${uid}-well)`} />
+
+  <!-- buns -->
+  {buns.map((b) => (
+    <g transform={`translate(${b.x} ${b.y})`}>
+      <g class:list={['sb', { 'is-peek': b.peek }]} style={`--d:${b.delay}s`}>
+        <g class="sb-bob">
+          <g transform={`scale(${b.flip ? -b.s : b.s} ${b.s}) translate(-11.47 -20)`}>
+            <path d={body} fill={b.shade} opacity="0.3" transform="translate(0 0.9)" />
+            <path d={body} fill={`url(#bs-${uid}-${b.key})`} />
+            <ellipse cx="6.2" cy="5.6" rx="3.4" ry="1.5" fill="#fff" opacity="0.35" transform="rotate(-24 6.2 5.6)" />
+            <circle cx="16.6" cy="2.4" r="0.9" fill="#fff" opacity="0.4" />
+            <g class:list={['sb-eyes', { 'is-blink': b.blink }]} fill={b.eye} stroke={b.eye}>
+              {(b.face === 'oval' || b.face === 'flat') && (
+                <>
+                  <ellipse cx="4.75" cy="10.2" rx="1" ry="3" stroke="none" />
+                  <ellipse cx="9.25" cy="10.3" rx="1" ry="3" stroke="none" />
+                </>
+              )}
+              {b.face === 'flat' && <path class="sb-line" d="M3.2 5.9L6.1 6.3M8 6.3L10.9 5.9" />}
+              {b.face === 'happy' && <path class="sb-line" d="M3.2 11.2Q4.75 8.2 6.3 11.2M7.9 11.3Q9.45 8.3 11 11.3" />}
+              {b.face === 'squint' && <path class="sb-line" d="M3.4 8.5L6 10.1L3.4 11.7M10.9 8.6L8.3 10.2L10.9 11.8" />}
+              {b.face === 'lidded' && (
+                <>
+                  <path stroke="none" d="M3.75 9.9H5.75A1 2.7 0 0 1 3.75 9.9ZM8.25 10H10.25A1 2.7 0 0 1 8.25 10Z" />
+                  <path class="sb-line" d="M3.2 9.7H6.3M7.7 9.8H10.8" />
+                </>
+              )}
+            </g>
+          </g>
+        </g>
+      </g>
+    </g>
+  ))}
+
+  <!-- the front of the basket, in front of the buns -->
+  <path class="wall" d="M40 222A160 74 0 0 0 360 222L360 278A160 74 0 0 1 40 278Z" />
+  <path class="band" d="M40 250A160 74 0 0 0 360 250" />
+  <path class="weave" d="M40 236A160 74 0 0 0 360 236M40 264A160 74 0 0 0 360 264" />
+  <path class="rim" d="M40 222A160 74 0 0 0 360 222L344 222A144 62 0 0 1 56 222Z" />
+  <rect class="clasp" x="190" y="303" width="20" height="38" rx="9" />
+</svg>
+
+<script>
+  // a bun hops when the pointer reaches it or a finger taps it
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.querySelectorAll<SVGGElement>('.bun-steamer .sb').forEach((bun) => {
+      const hop = () => bun.classList.add('is-hop');
+      bun.addEventListener('pointerenter', hop);
+      bun.addEventListener('pointerdown', hop);
+      bun.addEventListener('animationend', (e) => {
+        if ((e as AnimationEvent).animationName.includes('hop')) bun.classList.remove('is-hop');
+      });
+    });
+  }
+</script>
+
+<style>
+  .bun-steamer { display: block; width: 100%; height: auto; overflow: visible; --bamboo: #f3c877; --bamboo-light: #fbe2a6; --bamboo-deep: #c98f3f; }
+
+  .ink { fill: var(--ink); }
+  .rim { fill: var(--bamboo-light); stroke: var(--ink); stroke-width: 2; stroke-linejoin: round; }
+  .well { fill: var(--bamboo-deep); stroke: var(--ink); stroke-width: 2; }
+  .cloth { fill: #fff8e6; }
+  .wall { fill: var(--bamboo); stroke: var(--ink); stroke-width: 2; stroke-linejoin: round; }
+  .band { fill: none; stroke: var(--ink); stroke-width: 2; }
+  .weave { fill: none; stroke: var(--bamboo-deep); stroke-width: 2; stroke-linecap: round; stroke-dasharray: 14 10; opacity: 0.7; }
+  .clasp { fill: var(--bamboo-light); stroke: var(--ink); stroke-width: 2; }
+
+  .wisp-ink { fill: none; stroke: var(--ink); stroke-width: 11; stroke-linecap: round; }
+  .wisp-white { fill: none; stroke: #fff; stroke-width: 7; stroke-linecap: round; }
+  .wisp { opacity: 0.85; }
+
+  .spark path { fill: var(--yellow); stroke: var(--ink); stroke-width: 2; stroke-linejoin: round; vector-effect: non-scaling-stroke; transform-box: fill-box; transform-origin: center; }
+
+  .sb { cursor: pointer; }
+  .sb, .sb-bob, .sb-eyes { transform-box: fill-box; transform-origin: 50% 100%; }
+  .sb-eyes { transform-origin: 50% 50%; }
+  .sb-line { fill: none; stroke-width: 0.85; stroke-linecap: round; stroke-linejoin: round; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .sb-bob { animation: bs-bob 3.4s ease-in-out infinite; animation-delay: var(--d); }
+    .sb.is-peek .sb-bob { animation: bs-peek 7s ease-in-out infinite; }
+    .sb-eyes.is-blink { animation: bs-blink 4.6s ease-in-out infinite; }
+    .sb.is-hop { animation: bs-hop 0.55s cubic-bezier(0.3, 0.7, 0.4, 1); }
+    .wisp { animation: bs-steam 4.8s ease-in-out infinite; }
+    .spark path { animation: bs-twinkle 3.2s ease-in-out infinite; }
+    .spark.is-late path { animation-delay: -1.3s; }
+    .spark.is-small path { animation-delay: -2.2s; }
+  }
+
+  @keyframes bs-bob {
+    0%, 100% { transform: translateY(0) scale(1, 1); }
+    50% { transform: translateY(-4px) scale(0.985, 1.02); }
+  }
+  @keyframes bs-peek {
+    0%, 52%, 100% { transform: translateY(0); }
+    62%, 88% { transform: translateY(-26px); }
+  }
+  @keyframes bs-blink {
+    0%, 44%, 50%, 100% { transform: scaleY(1); }
+    47% { transform: scaleY(0.1); }
+  }
+  @keyframes bs-hop {
+    0% { transform: translateY(0) scale(1, 1); }
+    18% { transform: translateY(0) scale(1.08, 0.9); }
+    50% { transform: translateY(-26px) scale(0.96, 1.06); }
+    82% { transform: translateY(0) scale(1.06, 0.94); }
+    100% { transform: translateY(0) scale(1, 1); }
+  }
+  @keyframes bs-steam {
+    0% { transform: translateY(14px); opacity: 0; }
+    35% { opacity: 0.85; }
+    100% { transform: translateY(-22px); opacity: 0; }
+  }
+  @keyframes bs-twinkle {
+    0%, 100% { transform: scale(1) rotate(0deg); }
+    50% { transform: scale(0.72) rotate(18deg); }
+  }
+
+  /* still picture: the peeking bun stays up so its face shows */
+  @media (prefers-reduced-motion: reduce) {
+    .sb.is-peek .sb-bob { transform: translateY(-26px); }
+  }
+</style>
