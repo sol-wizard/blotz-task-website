@@ -219,6 +219,12 @@ const langs = [
   mobileMenu?.querySelectorAll('a').forEach((link) => {
     link.addEventListener('click', () => setMenuOpen(false));
   });
+  // Remember the language picked here, so the home page opens in it next time (see Layout.astro).
+  wrap?.querySelectorAll<HTMLAnchorElement>('a.lang-opt').forEach((link) => {
+    link.addEventListener('click', () => {
+      try { localStorage.setItem('blotz-lang', link.lang); } catch {}
+    });
+  });
   window.addEventListener('resize', () => {
     if (window.innerWidth > 1040) setMenuOpen(false);
   });

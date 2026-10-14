@@ -38,6 +38,21 @@ const alternateLocale = locale === 'zh' ? 'en_US' : 'zh_CN';
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  {currentPath === '/' && (
+    // The bare home page picks a language before anything shows: the one the visitor chose with
+    // the language switch before, otherwise Chinese when the browser's first language is Chinese.
+    // Only `/` does this, and only in the browser, so links to /en/ or /zh/ pages and search
+    // engines always get the page they asked for.
+    <script is:inline>
+      (function () {
+        var saved = null;
+        try { saved = localStorage.getItem('blotz-lang'); } catch (e) {}
+        var first = ((navigator.languages && navigator.languages[0]) || navigator.language || '').toLowerCase();
+        var lang = saved === 'en' || saved === 'zh' ? saved : (first.indexOf('zh') === 0 ? 'zh' : 'en');
+        if (lang === 'zh') location.replace('/zh/' + location.search + location.hash);
+      })();
+    </script>
+  )}
   <meta name="google-site-verification" content="yQ1_GW7zA0g_aJ_XNf3KYzcFvOI3fjsLQixYayV3l6g" />
   <meta name="google-site-verification" content="7OKvQValAIA6qqumN1dPJPHCCG7Gxzelj0JqB1BEEjA" />
   <title>{title}</title>
