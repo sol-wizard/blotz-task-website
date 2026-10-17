@@ -113,7 +113,7 @@ const jsonLd = [
 
 const zh = locale === 'zh';
 // The English page plays recordings made with the app in English (17 Oct).
-const englishTakes = new Set(['voice', 'breakdown', 'gashapon', 'review', 'voice-done', 'breakdown-task', 'breakdown-steps', 'gashapon-machine', 'review-letter']);
+const englishTakes = new Set(['voice', 'breakdown', 'gashapon', 'voice-done', 'breakdown-task', 'breakdown-steps', 'gashapon-machine', 'review-letter']);
 const take = (name: string) => (!zh && englishTakes.has(name) ? `${name}-en` : name);
 
 type Step = [number, string];
@@ -139,7 +139,7 @@ const home = zh
         { kind: 'breakdown', tone: 'blue', day: '周三', clock: '20:00', where: '书桌前', sticker: 'AI 拆解', title: '大任务[拆成小步骤]', said: '', arrow: '', caption: '「准备雅思考试」太大，她不知道从哪开始。在任务上向左滑，AI 把它拆成五步，第一步只要五分钟。', note: '每一步都写了要多久', steps: [[0, '在任务上向左滑'], [2.6, '点 Breakdown'], [4.8, 'AI 拆成五个小步骤'], [8.5, '做完一步，勾一步']] as Step[], alt: '在 BlotzTask 里把「准备雅思考试」拆成五个带时间的小步骤' },
         { kind: 'badge', tone: 'paper', day: '周五', clock: '18:00', where: '下班路上', sticker: '成就徽章', title: '做完一点，[解锁徽章]', said: '', arrow: '', caption: '下班路上她勾掉今天最后一件事，掉出一枚新徽章。做完任务会随机掉徽章，做得越多，掉得越多。先攒着，以后能拿去换东西，换什么现在不说。', note: '', steps: [] as Step[], alt: 'BlotzTask 里解锁了一枚「星际漫游者」徽章' },
         { kind: 'gashapon', tone: 'purple', day: '周六', clock: '15:30', where: '沙发上', sticker: '扭蛋机', title: '选不出来，就[抽一件]', said: '', arrow: '', caption: '随手记里攒了六件小事，她挑不出先做哪件。转了一下扭蛋机，抽到「读十页书」。', note: '', steps: [[0, '打开扭蛋机'], [3.3, '转一下旋钮'], [6, '抽出一条随手记'], [10.1, '点「立即执行」，它就进了今天的任务']] as Step[], alt: '在 BlotzTask 里转动扭蛋机，抽出「读十页书」并开始执行' },
-        { kind: 'review', tone: 'yellow', day: '周日', clock: '21:00', where: '睡前', sticker: 'AI 回顾', title: '每周、每月，[收到包子给你的信]', said: '', arrow: '', caption: '一周过完，睡前她打开回顾。包子照着她这周记的任务，给她写了一封信，可以导出成图片，发给朋友或者自己留着。', note: '', steps: [[0, '打开「回顾」'], [1.6, '读包子写的信']] as Step[], alt: '在 BlotzTask 里打开包子写的每周回顾信' },
+        { kind: 'review', tone: 'yellow', day: '周日', clock: '21:00', where: '睡前', sticker: 'AI 回顾', title: '每周、每月，[收到包子给你的信]', said: '', arrow: '', caption: '一周过完，睡前她打开回顾。包子照着她这周记的任务，给她写了一封信，可以导出成图片，发给朋友或者自己留着。', note: '', steps: [] as Step[], alt: '在 BlotzTask 里打开包子写的每周回顾信' },
         { kind: 'more', tone: 'paper', day: '之后', clock: '每一天', where: '随时', sticker: '更多场景', title: '还有哪些时候，[适合用包子]？', said: '', arrow: '', caption: '', note: '', steps: [] as Step[], alt: '', moments: [
           { q: '想早点睡，却总是熬夜', a: '设一个每天重复的「早点睡」任务，到点提醒你，睡了就打个卡。每个月包子会给你写一封信，告诉你这个月哪几天早睡了。' },
           { q: '要写毕业论文，却一直没动手', a: 'AI 会把一件大事拆成几个可以马上做的小步骤。' },
@@ -182,7 +182,7 @@ const home = zh
         { kind: 'breakdown', tone: 'blue', day: 'Wednesday', clock: '20:00', where: 'At her desk', sticker: 'AI breakdown', title: 'A big task, [in small steps]', said: '', arrow: '', caption: '"Prepare for IELTS" is too big and she does not know where to start. She swipes left on the task and AI splits it into four steps. The first one takes five minutes.', note: 'Every step says how long it takes', steps: [[0, 'Swipe left on a task'], [2.6, 'Tap Breakdown'], [7, 'AI splits it into four steps'], [10.6, 'Tick off a step when it is done']] as Step[], alt: 'BlotzTask splitting "Prepare for IELTS" into four timed steps' },
         { kind: 'badge', tone: 'paper', day: 'Friday', clock: '18:00', where: 'On the way home', sticker: 'Badges', title: 'Finish a little, [unlock a badge]', said: '', arrow: '', caption: 'On the way home she ticks off today\'s last task and gets a new badge. Badges drop at random when tasks get done, and more tasks mean more badges. Keep them. Later they can be traded for something, and we are not saying what yet.', note: '', steps: [] as Step[], alt: 'A badge being unlocked in BlotzTask' },
         { kind: 'gashapon', tone: 'purple', day: 'Saturday', clock: '15:30', where: 'On the sofa', sticker: 'Gashapon', title: 'Cannot pick one? [Draw one]', said: '', arrow: '', caption: 'Five small things are waiting in Quick Notes and she cannot pick one, so she turns the capsule machine. It draws "water the plants on the balcony".', note: '', steps: [[0, 'Open the capsule machine'], [2.2, 'Turn the knob'], [8.6, 'It draws one of her notes']] as Step[], alt: 'Turning the capsule machine in BlotzTask draws "water the plants on the balcony"' },
-        { kind: 'review', tone: 'yellow', day: 'Sunday', clock: '21:00', where: 'Before bed', sticker: 'AI review', title: 'Every week and month, [a letter from Blotz]', said: '', arrow: '', caption: 'The week is over. Before bed she opens Review, and Blotz has written her a letter from this week\'s tasks. She can export it as an image to keep or send to a friend.', note: '', steps: [[0, 'Open Review'], [1.9, 'Read the letter from Blotz']] as Step[], alt: 'Opening the weekly review letter from Blotz in BlotzTask' },
+        { kind: 'review', tone: 'yellow', day: 'Sunday', clock: '21:00', where: 'Before bed', sticker: 'AI review', title: 'Every week and month, [a letter from Blotz]', said: '', arrow: '', caption: 'The week is over. Before bed she opens Review, and Blotz has written her a letter from this week\'s tasks. She can export it as an image to keep or send to a friend.', note: '', steps: [] as Step[], alt: 'Opening the weekly review letter from Blotz in BlotzTask' },
         { kind: 'more', tone: 'paper', day: 'After that', clock: 'Any day', where: 'Anywhere', sticker: 'More moments', title: 'When else [is Blotz handy]?', said: '', arrow: '', caption: '', note: '', steps: [] as Step[], alt: '', moments: [
           { q: 'You want an early night, but you always stay up late', a: 'Set a daily "sleep early" task. It reminds you at bedtime, and you tick it off when you go to sleep. Every month Blotz writes you a letter saying which nights you made it.' },
           { q: 'A thesis to write, and you still have not started', a: 'AI splits one big job into small steps you can start right away.' },
@@ -395,8 +395,8 @@ const bars = [10, 18, 26, 14, 22, 30, 16, 24, 12, 20, 28, 15, 9, 19, 25, 13];
             {stop.kind === 'review' && (
               <div class="stop-body s-two is-art-first reveal">
                 <div class="s-review-art">
-                  {/* the English letter is longer and has no tip banner above it, so its window sits higher and is taller */}
-                  {zh ? clip('review', 'review-letter', 390, 560, 1) : clip('review', 'review-letter', 300, 700, 1)}
+                  {/* a plain screenshot from the Weekly / Monthly tabs to the end of the letter: there is nothing to animate here */}
+                  <div class="frame clipbox"><div class="crop" style="--y:155;--h:850"><img src={`/app/still-${take('review-letter')}.jpg`} alt={stop.alt} width="590" height="1282" loading="lazy" /></div></div>
                   <Bun face="smile" tone="coral" class="s-review-bun" />
                 </div>
                 <div class="stop-text">{heading}<p class="k-lead">{stop.caption}</p></div>
@@ -478,17 +478,19 @@ const bars = [10, 18, 26, 14, 22, 30, 16, 24, 12, 20, 28, 15, 9, 19, 25, 13];
 
   <script>
     // Each recording plays only while it is on screen. With reduced motion it stays on its still image.
+    // Watch the window the recording shows through, not the video: only a strip of the video shows, so the
+    // video itself is never half on screen when the strip is short (the voice and breakdown clips never started).
     const clips = Array.from(document.querySelectorAll('.scene-video')) as HTMLVideoElement[];
     const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (!still && 'IntersectionObserver' in window) {
       const watcher = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
-          const clip = entry.target as HTMLVideoElement;
+          const clip = entry.target.querySelector('.scene-video') as HTMLVideoElement;
           if (entry.isIntersecting) clip.play().catch(() => {});
           else clip.pause();
         });
       }, { threshold: 0.5 });
-      clips.forEach((clip) => watcher.observe(clip));
+      clips.forEach((clip) => watcher.observe(clip.parentElement as HTMLElement));
     }
 
     // The caption under each phone follows the recording: it names the step that is on screen.
@@ -644,7 +646,8 @@ const bars = [10, 18, 26, 14, 22, 30, 16, 24, 12, 20, 28, 15, 9, 19, 25, 13];
 
   .s-review-art { position: relative; display: flex; justify-content: center; }
   .s-review-art .frame { width: 100%; max-width: clamp(300px, 58vh, 470px); transform: rotate(-3deg); }
-  .s-review-art :global(.s-review-bun) { position: absolute; right: 4%; top: -2rem; width: 90px; transform: rotate(10deg); }
+  /* bottom right, so it doesn't sit on the Weekly / Monthly tabs at the top of the screenshot */
+  .s-review-art :global(.s-review-bun) { position: absolute; right: 2%; bottom: -2.2rem; width: 90px; transform: rotate(10deg); }
 
   /* the last stop: more moments, each a tiny chat, your worry then Blotz's answer */
   .s-more { display: flex; flex-direction: column; gap: 2.4rem; }

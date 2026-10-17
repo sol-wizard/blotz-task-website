@@ -76,7 +76,7 @@ const hl = (text: string) => text.split(/\[|\]/);
         const tag = t(`${key}-tag` as AboutKey);
         return (
           <li class:list={['reveal', { 'is-lead': lead }]}>
-            {/* only the name, the title and one line of background show; the bio and LinkedIn fold away */}
+            {/* only the name, the title and one line of background show; the bio folds away */}
             <div class="k-card team-card" style={`--accent: ${accent};`}>
               <span class="team-photo-ring">
                 {photo ? (
@@ -100,12 +100,13 @@ const hl = (text: string) => text.split(/\[|\]/);
                   <Icon name="lucide:chevron-down" width={18} height={18} />
                 </summary>
                 <p class="team-bio">{t(`${key}-bio` as AboutKey)}</p>
-                {linkedin && (
-                  <a class="team-link" href={linkedin} target="_blank" rel="noopener noreferrer" aria-label={`${name} on ${t('connect')}`}>
-                    <Icon name="lucide:linkedin" width={18} height={18} />{t('connect')}
-                  </a>
-                )}
               </details>
+              {/* the LinkedIn logo sits in the card's top right corner, open or closed */}
+              {linkedin && (
+                <a class="team-link" href={linkedin} target="_blank" rel="noopener noreferrer" aria-label={`${name} on ${t('connect')}`} title={t('connect')}>
+                  <Icon name="simple-icons:linkedin" width={22} height={22} />
+                </a>
+              )}
             </div>
           </li>
         );
@@ -213,12 +214,15 @@ const hl = (text: string) => text.split(/\[|\]/);
   .team-more-close, .team-more[open] .team-more-open { display: none; }
   .team-more[open] .team-more-close { display: inline; }
   .team-bio { color: var(--muted); font-size: 1.02rem; line-height: 1.7; }
-  .team-link {
-    display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.5rem 1.15rem;
-    border-radius: 999px; border: 2px solid var(--ink); box-shadow: 0 3px 0 0 var(--ink);
-    background: #0a66c2; color: #fff; font-size: 0.98rem; font-weight: 900; line-height: 1.3; text-decoration: none;
+  .team-card > .team-link {
+    position: absolute; top: 0.9rem; right: 0.9rem; z-index: 1;
+    display: grid; place-items: center; width: 40px; height: 40px;
+    border-radius: 12px; border: 2px solid var(--ink); box-shadow: 0 3px 0 0 var(--ink);
+    background: #fff; color: #0a66c2;
     transition: transform 0.15s ease, box-shadow 0.15s ease;
   }
+  /* the name keeps clear of the logo */
+  .team-card:has(.team-link) > .k-h3 { padding-right: 2.6rem; }
   .team-link:hover { transform: translateY(-2px); box-shadow: 0 5px 0 0 var(--ink); }
   .team-link:active { transform: translateY(2px); box-shadow: 0 1px 0 0 var(--ink); }
   .team-link:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
@@ -231,6 +235,8 @@ const hl = (text: string) => text.split(/\[|\]/);
     .team-grid > li:not(.is-lead) .team-tag { display: block; min-height: 3em; }
     .team-grid > li:not(.is-lead) .team-more { align-items: center; }
     .team-grid > li:not(.is-lead) .team-more summary { margin-left: 0; }
+    /* here the logo sits on the colour band, well above the centred name */
+    .team-grid > li:not(.is-lead) .team-card > .k-h3 { padding-right: 0; }
   }
   @media (max-width: 900px) {
     .story { grid-template-columns: 1fr; gap: 4.5rem; }
@@ -251,6 +257,10 @@ const hl = (text: string) => text.split(/\[|\]/);
     .team-card > .team-photo-ring { width: 80px; height: 80px; padding: 3px; }
     .team-card .k-h3 { font-size: 1.15rem; }
     .team-tag { font-size: 0.92rem; }
+    /* a smaller logo tucked further into the corner, so it stays above the role sticker */
+    .team-card > .team-link { top: 0.6rem; right: 0.6rem; width: 32px; height: 32px; border-radius: 10px; }
+    .team-card > .team-link :global(svg) { width: 18px; height: 18px; }
+    .team-card:has(.team-link) > .k-h3 { padding-right: 2.2rem; }
     .story-quote { padding: 2.4rem 1.4rem 1.6rem; }
   }
 </style>
