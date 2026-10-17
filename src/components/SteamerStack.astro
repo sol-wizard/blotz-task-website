@@ -1,0 +1,43 @@
+---
+// A small stack of bamboo steamers seen from the side, drawn the same way as the big one in
+// BunSteamer: a woven lid, straight walls with dashed weave lines, a clasp on the front.
+// The plain rounded bars it replaces read as something else entirely. Decorative only.
+interface Props {
+  tiers?: number; // baskets under the lid
+  class?: string;
+}
+const { tiers = 2, class: className = '' } = Astro.props;
+
+const rx = 44, ry = 11, left = 50 - rx, right = 50 + rx;
+const lidEdge = 30, lidWall = 7, tierH = 20;
+const tops = Array.from({ length: tiers }, (_, i) => lidEdge + lidWall + i * tierH);
+const bottom = lidEdge + lidWall + tiers * tierH;
+// the front of one band of the stack, from the edge at y1 down to the edge at y2
+const wall = (y1: number, y2: number) =>
+  `M${left} ${y1}A${rx} ${ry} 0 0 0 ${right} ${y1}L${right} ${y2}A${rx} ${ry} 0 0 1 ${left} ${y2}Z`;
+const arc = (y: number) => `M${left} ${y}A${rx} ${ry} 0 0 0 ${right} ${y}`;
+---
+
+<svg viewBox={`0 0 100 ${bottom + ry + 5}`} class:list={['steamer-stack', className]} aria-hidden="true" focusable="false">
+  <path class="ss-ink" d={wall(lidEdge + 4, bottom + 4)} />
+  {tops.map((y) => (
+    <>
+      <path class="ss-wall" d={wall(y, y + tierH)} />
+      <path class="ss-weave" d={`${arc(y + 6)}${arc(y + tierH - 6)}`} />
+      <rect class="ss-clasp" x="46.5" y={y + ry + 3} width="7" height={tierH - 6} rx="3" />
+    </>
+  ))}
+  <path class="ss-lid-wall" d={wall(lidEdge, lidEdge + lidWall)} />
+  <path class="ss-lid" d={`M${left} ${lidEdge}C${left + 4} 7 ${right - 4} 7 ${right} ${lidEdge}A${rx} ${ry} 0 0 1 ${left} ${lidEdge}Z`} />
+  <path class="ss-weave" d="M16 27Q50 13 84 27M26 34Q50 26 74 34" />
+  <path class="ss-weave" d="M50 13V40M33 16L28 37M67 16L72 37" />
+</svg>
+
+<style>
+  .steamer-stack { display: block; width: 100%; height: auto; overflow: visible; --bamboo: #f3c877; --bamboo-light: #fbe2a6; --bamboo-deep: #c98f3f; }
+  .ss-ink { fill: var(--ink); }
+  .ss-wall, .ss-lid-wall { fill: var(--bamboo); stroke: var(--ink); stroke-width: 2.6; stroke-linejoin: round; }
+  .ss-lid { fill: var(--bamboo-light); stroke: var(--ink); stroke-width: 2.6; stroke-linejoin: round; }
+  .ss-weave { fill: none; stroke: var(--bamboo-deep); stroke-width: 2; stroke-linecap: round; stroke-dasharray: 5 4; opacity: 0.8; }
+  .ss-clasp { fill: var(--bamboo-light); stroke: var(--ink); stroke-width: 2.2; }
+</style>

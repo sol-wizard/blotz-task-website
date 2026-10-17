@@ -9,6 +9,7 @@ const zh = locale === 'zh';
 
 // The road ahead, drawn as a hand-drawn game map: nine round stops on a curvy path that snakes down the page.
 // The bun stands on the stop we are at today. Stops come from the team's backlog.
+// A 'test' stop is already on the public TestFlight, so its card sends visitors to the fan group to try it.
 const c = zh
   ? {
       title: '产品[路线图]',
@@ -16,7 +17,7 @@ const c = zh
       here: '我们在这里',
       stops: [
         { state: 'here', icon: 'lucide:map-pin', tag: '现在', title: 'BlotzTask 1.4', desc: '现在可以下载的版本。' },
-        { state: 'now', icon: 'lucide:message-circle-heart', tag: '正在开发', title: 'AI 行动教练', desc: 'AI 会先问清楚你现在的状态，每次只给你一个下一步，确认后可以马上开始专注。' },
+        { state: 'test', icon: 'lucide:message-circle-heart', tag: '已经在测试', title: 'AI 行动教练', desc: 'AI 会先问清楚你现在的状态，每次只给你一个下一步，确认后可以马上开始专注。' },
         { state: 'now', icon: 'lucide:layout-grid', tag: '正在开发', title: '桌面小组件新样式', desc: '在手机桌面上看到今天的日期，和今天还有几件任务。' },
         { state: 'now', icon: 'lucide:award', tag: '正在开发', title: '徽章可以重复获得', desc: '同一枚徽章可以拿到不止一次。' },
         { state: 'next', icon: 'lucide:gift', tag: '接下来', title: '被邀请的朋友也有徽章', desc: '用邀请码加入的朋友，也会马上拿到一枚徽章。' },
@@ -28,6 +29,7 @@ const c = zh
       ],
       note: '越往后的内容越可能调整。',
       askBtn: '提建议',
+      testBtn: '加入粉丝团试用',
       cta: '下载 BlotzTask',
     }
   : {
@@ -36,7 +38,7 @@ const c = zh
       here: 'We are here',
       stops: [
         { state: 'here', icon: 'lucide:map-pin', tag: 'Today', title: 'BlotzTask 1.4', desc: 'The version you can download now.' },
-        { state: 'now', icon: 'lucide:message-circle-heart', tag: 'Building now', title: 'AI action coach', desc: 'AI asks how you are doing first, gives you one next step at a time, and lets you start a focus session as soon as you confirm it.' },
+        { state: 'test', icon: 'lucide:message-circle-heart', tag: 'Testing now', title: 'AI action coach', desc: 'AI asks how you are doing first, gives you one next step at a time, and lets you start a focus session as soon as you confirm it.' },
         { state: 'now', icon: 'lucide:layout-grid', tag: 'Building now', title: 'New home-screen widget', desc: "See today's date and how many tasks you have left, right on your home screen." },
         { state: 'now', icon: 'lucide:award', tag: 'Building now', title: 'Badges you can earn again', desc: 'Earn the same badge more than once.' },
         { state: 'next', icon: 'lucide:gift', tag: 'Up next', title: 'A badge for the friend you invite', desc: 'A friend who joins with your invite code gets a badge straight away.' },
@@ -48,12 +50,13 @@ const c = zh
       ],
       note: 'The further down the trail, the more likely it is to change.',
       askBtn: 'Make a suggestion',
+      testBtn: 'Join the fan group',
       cta: 'Download BlotzTask',
     };
 
 const description = zh
-  ? 'BlotzTask 产品路线图：正在开发的 AI 行动教练、小组件新样式，和接下来计划做的功能。'
-  : 'The BlotzTask roadmap: the AI action coach and new widget being built now, and what is planned after them.';
+  ? 'BlotzTask 产品路线图：已经在测试的 AI 行动教练、正在开发的小组件新样式，和接下来计划做的功能。'
+  : 'The BlotzTask roadmap: the AI action coach in testing, the new widget being built, and what is planned after them.';
 // Where each stop sits inside its patch of the map, so the stops do not line up like a table:
 // the last one, where visitors suggest what comes next, has a row to itself.
 // token position across the patch, how far the patch is pushed down, and the tilt of its bubble.
@@ -63,7 +66,7 @@ const spots = [
   { x: 30, dy: 10, tilt: -1.3 }, { x: 54, dy: 56, tilt: 1.2 }, { x: 66, dy: 4, tilt: -0.8 },
   { x: 50, dy: 30, tilt: 0 },
 ];
-const stickerTone: Record<string, string> = { here: '', now: 'is-blue', next: 'is-yellow', later: 'is-white', ask: 'is-purple' };
+const stickerTone: Record<string, string> = { here: '', test: '', now: 'is-blue', next: 'is-yellow', later: 'is-white', ask: 'is-purple' };
 const plain = (text: string) => text.replace(/\[|\]/g, '');
 
 // The map is also a small game: the bun is the piece and the tokens are buttons. Click a stop and the bun
@@ -195,6 +198,12 @@ const fill = (text: string, values: Record<string, string | number>) =>
                 </div>
                 <h2 class="k-h3">{stop.title.split(/\[|\]/).map((part, j) => (j % 2 ? <span class="k-hl">{part}</span> : part))}</h2>
                 <p>{stop.desc}</p>
+                {stop.state === 'test' && (
+                  <a class="k-btn is-lime test-btn" href={`/${locale}/fans`}>
+                    <Icon name="simple-icons:wechat" width={20} height={20} />
+                    {c.testBtn}
+                  </a>
+                )}
                 {stop.state === 'ask' && (
                   <a class="k-btn is-lime ask-btn" href={`/${locale}/feedback`}>
                     <Icon name="lucide:message-square-plus" width={20} height={20} />
@@ -251,7 +260,7 @@ const fill = (text: string, values: Record<string, string | number>) =>
   .stop-token:focus-visible { outline: 3px solid var(--blue); outline-offset: 4px; }
   .stop-token:disabled { cursor: default; transform: none; }
   .is-here .stop-token { background: var(--lime); }
-  .is-now .stop-token { background: var(--blue); color: #fff; }
+  .is-now .stop-token, .is-test .stop-token { background: var(--blue); color: #fff; }
   .is-next .stop-token { background: var(--yellow); }
   .is-later .stop-token { border-style: dashed; box-shadow: none; }
   .is-later .stop-token:active { box-shadow: none; }
@@ -375,7 +384,8 @@ const fill = (text: string, values: Record<string, string | number>) =>
   .stop-10 .stop-card::before { left: calc(50% - 9px); }
   .stop-10 .k-h3 { font-size: 1.5rem; }
   .is-ask .stop-token { background: var(--purple); color: #fff; border-style: dashed; }
-  .ask-btn { margin-top: 0.4rem; }
+  .ask-btn, .test-btn { margin-top: 0.4rem; }
+  .test-btn { padding: 0.6rem 1.1rem; font-size: 0.98rem; white-space: normal; }
 
   /* Narrow screens: one stop per row, tokens swapping sides so the path still winds its way down. */
   @media (max-width: 1000px) {
