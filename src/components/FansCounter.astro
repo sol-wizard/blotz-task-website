@@ -5,6 +5,7 @@
 // The four menu boards under the scene say the same thing in words, and pressing one plays it.
 import { Icon } from 'astro-icon/components';
 import Bun from './Bun.astro';
+import SteamerStack from './SteamerStack.astro';
 
 const locale = Astro.currentLocale ?? 'zh';
 const zh = locale === 'zh';
@@ -75,7 +76,7 @@ const spot = (i: number, n: number) => (i < n ? 'is-served' : i === n ? 'at-coun
           <span class="counter"><span class="counter-top"></span><span class="counter-sign">{c.sign}</span></span>
           <span class="steamer">
             <span class="steam"><i></i><i></i><i></i></span>
-            <span class="basket lid"></span><span class="basket"></span><span class="basket"></span>
+            <SteamerStack tiers={2} />
           </span>
           <span class="new-bun fig"><Bun face="happy" tone="coral" /><span class="new-tag">{c.newTag}</span></span>
           <span class="medal"><span>{c.badge}</span></span>
@@ -155,8 +156,6 @@ const spot = (i: number, n: number) => (i < n ? 'is-served' : i === n ? 'at-coun
   .counter-sign { position: absolute; left: 50%; top: 38%; translate: -50% 0; padding: 0.4cqw 1.4cqw; border-radius: 0.6cqw; border: 0.22cqw solid var(--ink); background: #fff7e6; color: var(--ink); font-size: 1.9cqw; font-weight: 900; letter-spacing: 0.12em; white-space: nowrap; }
 
   .steamer { left: 46%; bottom: 43.5%; width: 10%; z-index: 4; display: flex; flex-direction: column; align-items: center; }
-  .basket { display: block; width: 100%; height: 2.3cqw; margin-top: -0.25cqw; border-radius: 0.9cqw; border: 0.25cqw solid var(--ink); background: #f1cf8a; background-image: repeating-linear-gradient(90deg, transparent 0 1.2cqw, rgba(30, 33, 64, 0.18) 1.2cqw calc(1.2cqw + 1.5px)); }
-  .basket.lid { width: 90%; height: 1.9cqw; border-radius: 3cqw 3cqw 0.8cqw 0.8cqw; }
   .steam { position: relative; display: block; width: 100%; height: 6cqw; }
   .steam i { position: absolute; bottom: 0; width: 1.4cqw; height: 4.5cqw; border-radius: 1cqw; border: 0.25cqw solid rgba(30, 33, 64, 0.25); border-left-color: transparent; border-bottom-color: transparent; opacity: 0; animation: steam 2.6s ease-out infinite; }
   .steam i:nth-child(1) { left: 18%; } .steam i:nth-child(2) { left: 44%; animation-delay: 0.8s; } .steam i:nth-child(3) { left: 70%; animation-delay: 1.6s; }

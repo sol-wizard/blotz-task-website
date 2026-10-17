@@ -5,6 +5,7 @@
 // Self-contained: copy, scene, controls and script. The #contact section on the Join page holds the WeChat ID.
 import { Icon } from 'astro-icon/components';
 import Bun from './Bun.astro';
+import SteamerStack from './SteamerStack.astro';
 
 const zh = (Astro.currentLocale ?? 'zh') === 'zh';
 const c = zh
@@ -74,7 +75,7 @@ const hat = 'M10 27C2 26 2 12 12 13 12 4 26 2 28 10 34 4 46 10 40 20 46 24 42 30
           <span class="counter"><span class="counter-top"></span></span>
           <span class="steamer steamer-front">
             <span class="steam"><i></i><i></i><i></i></span>
-            <span class="basket lid"></span><span class="basket"></span><span class="basket"></span>
+            <SteamerStack tiers={2} />
           </span>
           <span class="paper"><i></i><i></i><i></i></span>
           <span class="bubble bubble-me"><Icon name="lucide:hand" /></span>
@@ -82,7 +83,7 @@ const hat = 'M10 27C2 26 2 12 12 13 12 4 26 2 28 10 34 4 46 10 40 20 46 24 42 30
 
           <!-- kitchen -->
           <span class="wall-kitchen"></span>
-          <span class="shelf"><span class="steamer steamer-shelf"><span class="basket lid"></span><span class="basket"></span></span></span>
+          <span class="shelf"><span class="steamer steamer-shelf"><SteamerStack tiers={1} /></span></span>
           <span class="curtain"><span class="curtain-l"></span><span class="curtain-r"></span><span class="curtain-text">{c.curtain}</span></span>
           {chefs.map((chef, i) => (
             <span class:list={['chef', 'fig', `chef-${i + 1}`]}>
@@ -173,8 +174,6 @@ const hat = 'M10 27C2 26 2 12 12 13 12 4 26 2 28 10 34 4 46 10 40 20 46 24 42 30
 
   .steamer { display: flex; flex-direction: column; align-items: center; }
   .steamer-front { left: 40.5%; bottom: 44.5%; width: 8.5%; z-index: 4; }
-  .basket { display: block; width: 100%; height: 2.2cqw; margin-top: -0.25cqw; border-radius: 0.9cqw; border: 0.25cqw solid var(--ink); background: #f1cf8a; background-image: repeating-linear-gradient(90deg, transparent 0 1.2cqw, rgba(30, 33, 64, 0.18) 1.2cqw calc(1.2cqw + 1.5px)); }
-  .basket.lid { width: 90%; height: 1.8cqw; border-radius: 3cqw 3cqw 0.8cqw 0.8cqw; }
   .steam { position: relative; display: block; width: 100%; height: 6cqw; }
   .steam i { position: absolute; bottom: 0; width: 1.4cqw; height: 4.5cqw; border-radius: 1cqw; border: 0.25cqw solid rgba(30, 33, 64, 0.25); border-left-color: transparent; border-bottom-color: transparent; opacity: 0; }
   .steam i:nth-child(1) { left: 18%; } .steam i:nth-child(2) { left: 44%; } .steam i:nth-child(3) { left: 70%; }
