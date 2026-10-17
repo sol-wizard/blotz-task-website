@@ -10,7 +10,7 @@ export const ui = {
     "nav-about": "Our team",
     "nav-roadmap": "Roadmap",
     "nav-join": "Join us",
-    "nav-sponsor": "Be our sponsor",
+    "nav-sponsor": "Support us",
     "nav-cta": "Download",
     "hero-eyebrow": "Used by 3,000+ people",
     "hero-title": "Your AI life planner",
@@ -70,7 +70,7 @@ export const ui = {
     "nav-about": "我们的团队",
     "nav-roadmap": "产品路线图",
     "nav-join": "加入我们",
-    "nav-sponsor": "成为合作伙伴",
+    "nav-sponsor": "支持我们",
     "nav-cta": "下载 App",
 
     "hero-eyebrow": "已有 3,000+ 用户加入",
