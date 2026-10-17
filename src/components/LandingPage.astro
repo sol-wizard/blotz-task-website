@@ -112,6 +112,10 @@ const jsonLd = [
 ];
 
 const zh = locale === 'zh';
+// The English page plays recordings made with the app in English (17 Oct). The review letter has no
+// English take yet, so it keeps the Chinese one until it is recorded.
+const englishTakes = new Set(['voice', 'breakdown', 'gashapon', 'voice-done', 'breakdown-task', 'breakdown-steps', 'gashapon-machine']);
+const take = (name: string) => (!zh && englishTakes.has(name) ? `${name}-en` : name);
 
 type Step = [number, string];
 
@@ -174,11 +178,11 @@ const home = zh
       chipRemindWhen: 'Due today at 18:59',
       weekTitle: 'A look at [Blotz’s week]',
       stops: [
-        { kind: 'intro', tone: 'paper', day: 'Sunday', clock: '22:30', where: 'In bed', sticker: 'Blotz', title: 'Blotz sits IELTS [in three weeks]', said: '', arrow: '', caption: 'A pile of other things is going round her head too. This is how she uses BlotzTask over the next week.', note: '', pills: ['IELTS prep not started', 'Mum lands on Tuesday', 'Not one page read'], steps: [] as Step[], alt: '' },
-        { kind: 'voice', tone: 'lime', day: 'Monday', clock: '08:10', where: 'Walking to work', sticker: 'AI voice', title: 'Smooth voice input, [a task in seconds]', said: '"Pick Mum up at the airport at 3 pm tomorrow."', arrow: 'AI turns it into a task right away', caption: 'On the way to work she remembers she never wrote down picking Mum up. No free hand to type, so she holds the button and says it.', note: '', steps: [[0, 'Hold to talk'], [6.4, 'AI sorts it out'], [9.2, 'The time and date are filled in']] as Step[], alt: 'A sentence spoken into BlotzTask becomes a task with a time' },
-        { kind: 'breakdown', tone: 'blue', day: 'Wednesday', clock: '20:00', where: 'At her desk', sticker: 'AI breakdown', title: 'A big task, [in small steps]', said: '', arrow: '', caption: '"Prepare for IELTS" is too big and she does not know where to start. She swipes left on the task and AI splits it into five steps. The first one takes five minutes.', note: 'Every step says how long it takes', steps: [[0, 'Swipe left on a task'], [2.6, 'Tap Breakdown'], [4.8, 'AI splits it into five steps'], [8.5, 'Tick off a step when it is done']] as Step[], alt: 'BlotzTask splitting "Prepare for IELTS" into five timed steps' },
+        { kind: 'intro', tone: 'paper', day: 'Sunday', clock: '22:30', where: 'In bed', sticker: 'Blotz', title: 'Blotz sits IELTS [in three weeks]', said: '', arrow: '', caption: 'A pile of other things is going round her head too. This is how she uses BlotzTask over the next week.', note: '', pills: ['IELTS prep not started', 'Mum lands on Tuesday', 'The balcony plants need water'], steps: [] as Step[], alt: '' },
+        { kind: 'voice', tone: 'lime', day: 'Monday', clock: '08:10', where: 'Walking to work', sticker: 'AI voice', title: 'Smooth voice input, [a task in seconds]', said: '"Pick up Mum from the airport at 3 pm tomorrow."', arrow: 'AI turns it into a task right away', caption: 'On the way to work she remembers she never wrote down picking Mum up. No free hand to type, so she holds the button and says it.', note: '', steps: [[0, 'Hold to talk'], [7, 'AI sorts it out'], [12, 'The time and date are filled in']] as Step[], alt: 'A sentence spoken into BlotzTask becomes a task with a time' },
+        { kind: 'breakdown', tone: 'blue', day: 'Wednesday', clock: '20:00', where: 'At her desk', sticker: 'AI breakdown', title: 'A big task, [in small steps]', said: '', arrow: '', caption: '"Prepare for IELTS" is too big and she does not know where to start. She swipes left on the task and AI splits it into four steps. The first one takes five minutes.', note: 'Every step says how long it takes', steps: [[0, 'Swipe left on a task'], [2.6, 'Tap Breakdown'], [7, 'AI splits it into four steps'], [10.6, 'Tick off a step when it is done']] as Step[], alt: 'BlotzTask splitting "Prepare for IELTS" into four timed steps' },
         { kind: 'badge', tone: 'paper', day: 'Friday', clock: '18:00', where: 'On the way home', sticker: 'Badges', title: 'Finish a little, [unlock a badge]', said: '', arrow: '', caption: 'On the way home she ticks off today\'s last task and gets a new badge. Badges drop at random when tasks get done, and more tasks mean more badges. Keep them. Later they can be traded for something, and we are not saying what yet.', note: '', steps: [] as Step[], alt: 'A badge being unlocked in BlotzTask' },
-        { kind: 'gashapon', tone: 'purple', day: 'Saturday', clock: '15:30', where: 'On the sofa', sticker: 'Gashapon', title: 'Cannot pick one? [Draw one]', said: '', arrow: '', caption: 'Six small things are waiting in Quick Notes and she cannot pick one, so she turns the capsule machine. It draws "read ten pages".', note: '', steps: [[0, 'Open the capsule machine'], [3.3, 'Turn the knob'], [6, 'It draws one of her notes'], [10.1, 'Tap start and it joins today\'s tasks']] as Step[], alt: 'Turning the capsule machine in BlotzTask draws "read ten pages" and starts it' },
+        { kind: 'gashapon', tone: 'purple', day: 'Saturday', clock: '15:30', where: 'On the sofa', sticker: 'Gashapon', title: 'Cannot pick one? [Draw one]', said: '', arrow: '', caption: 'Five small things are waiting in Quick Notes and she cannot pick one, so she turns the capsule machine. It draws "water the plants on the balcony".', note: '', steps: [[0, 'Open the capsule machine'], [2.2, 'Turn the knob'], [8.6, 'It draws one of her notes']] as Step[], alt: 'Turning the capsule machine in BlotzTask draws "water the plants on the balcony"' },
         { kind: 'review', tone: 'yellow', day: 'Sunday', clock: '21:00', where: 'Before bed', sticker: 'AI review', title: 'Every week and month, [a letter from Blotz]', said: '', arrow: '', caption: 'The week is over. Before bed she opens Review, and Blotz has written her a letter from this week\'s tasks. She can export it as an image to keep or send to a friend.', note: '', steps: [[0, 'Open Review'], [1.6, 'Read the letter from Blotz']] as Step[], alt: 'Opening the weekly review letter from Blotz in BlotzTask' },
         { kind: 'more', tone: 'paper', day: 'After that', clock: 'Any day', where: 'Anywhere', sticker: 'More moments', title: 'When else [is Blotz handy]?', said: '', arrow: '', caption: '', note: '', steps: [] as Step[], alt: '', moments: [
           { q: 'You want an early night, but you always stay up late', a: 'Set a daily "sleep early" task. It reminds you at bedtime, and you tick it off when you go to sleep. Every month Blotz writes you a letter saying which nights you made it.' },
@@ -311,8 +315,8 @@ const bars = [10, 18, 26, 14, 22, 30, 16, 24, 12, 20, 28, 15, 9, 19, 25, 13];
           <div class="crop" style={`--y:${y};--h:${h}`}>
             <video
               class="scene-video"
-              src={`/app/clip-${name}.mp4`}
-              poster={`/app/still-${still}.jpg`}
+              src={`/app/clip-${take(name)}.mp4`}
+              poster={`/app/still-${take(still)}.jpg`}
               aria-label={stop.alt}
               data-steps={JSON.stringify(stop.steps)}
               data-shown={shown}
@@ -363,7 +367,7 @@ const bars = [10, 18, 26, 14, 22, 30, 16, 24, 12, 20, 28, 15, 9, 19, 25, 13];
             {stop.kind === 'breakdown' && (
               <div class="stop-body s-two is-art-first reveal">
                 <div class="s-break-art">
-                  <div class="frame clipbox s-before"><div class="crop" style="--y:340;--h:130"><img src="/app/still-breakdown-task.jpg" alt="" width="590" height="1282" loading="lazy" /></div></div>
+                  <div class="frame clipbox s-before"><div class="crop" style="--y:340;--h:130"><img src={`/app/still-${take('breakdown-task')}.jpg`} alt="" width="590" height="1282" loading="lazy" /></div></div>
                   <div class="s-after">{clip('breakdown', 'breakdown-steps', 340, 360, 2)}</div>
                   <p class="note s-break-note"><span>{stop.note}</span></p>
                   <Bun face="grin" tone="sky" class="s-break-bun" />
