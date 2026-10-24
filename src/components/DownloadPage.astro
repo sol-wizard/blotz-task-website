@@ -1,0 +1,141 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { Icon } from 'astro-icon/components';
+import { defaultLocale } from '../i18n/landing';
+import Bun from './Bun.astro';
+import { wechatId } from '../data/contact';
+const locale = Astro.currentLocale ?? defaultLocale;
+const zh = locale === 'zh';
+
+// The app's update button opens this page on APK installs (China, no Google Play).
+// The release workflow overwrites this file every release, so the link never changes.
+const apkUrl = 'https://stgblotztaskprod.blob.core.windows.net/downloads/BlotzTask-latest.apk';
+const appStoreUrl = 'https://apps.apple.com/au/app/blotztask-adhd-time-manager/id6752492404';
+const googlePlayUrl = 'https://play.google.com/store/apps/details?id=com.blotz.blotztask&hl=en';
+
+// Text inside [ ] gets the highlighter.
+const c = zh
+  ? {
+      seoTitle: '下载 BlotzTask | 安卓安装包、App Store、Google Play',
+      seoDesc: '下载 BlotzTask。用不了 Google Play 的安卓手机，可以直接下载安装包，永远是最新版。',
+      sticker: '永远是最新版',
+      title: '把小包子[装进手机]',
+      sub: '用不了 Google Play 的安卓手机，直接下载安装包就行。装过旧版的，直接覆盖安装，数据都在。',
+      apk: '下载安卓安装包',
+      apkNote: '约 160 MB，建议连 Wi-Fi 下载。',
+      wechat: '微信里下载不了安装包：点右上角 ··· ，选「在浏览器打开」。',
+      helpTitle: '装不上？',
+      help: [
+        '打开安装包时提示「禁止安装未知应用」：按提示允许浏览器安装应用。',
+        '华为 / 荣耀开了「纯净模式」：安装时选「继续安装」，或在 设置 → 系统和更新 → 纯净模式 里先关掉。',
+        '提示「解析包时出现问题」：一般是没下载完，重新下载一次。',
+      ],
+      stuck: '还是不行？加我们微信，我们帮你装：',
+      stuckLabel: '微信号',
+    }
+  : {
+      seoTitle: 'Download BlotzTask | Android APK, App Store, Google Play',
+      seoDesc: 'Download BlotzTask. Android phones without Google Play can install the APK, always the latest version.',
+      sticker: 'Always the latest',
+      title: 'Get the bun [on your phone]',
+      sub: 'Android phone without Google Play? Download the APK. Already have an older version? Install over it, your data stays.',
+      apk: 'Download the Android APK',
+      apkNote: 'About 160 MB, best over Wi-Fi.',
+      wechat: "WeChat can't download APK files. Tap ··· in the top right and choose \"Open in browser\".",
+      helpTitle: "Can't install it?",
+      help: [
+        'Android blocks apps from unknown sources: allow your browser to install apps when it asks.',
+        'Huawei / Honor with Pure Mode on: choose "Continue installation", or turn it off in Settings → System & updates → Pure Mode.',
+        '"There was a problem parsing the package": the download was cut short. Download it again.',
+      ],
+      stuck: 'Still stuck? Add us on WeChat and we will help:',
+      stuckLabel: 'WeChat ID',
+    };
+const hl = (text: string) => text.split(/\[|\]/);
+---
+
+<Layout title={c.seoTitle} description={c.seoDesc}>
+  <section class="band band-top band-lime dl" data-zh={zh ? 'true' : 'false'}>
+    <div class="wrap dl-inner">
+      <Bun face="happy" tone="lime" class="dl-bun" />
+      <span class="k-sticker is-white"><Icon name="lucide:sparkles" width={16} height={16} />{c.sticker}</span>
+      <h1 class="k-h1">{hl(c.title).map((part, i) => (i % 2 ? <span class="k-hl">{part}</span> : part))}</h1>
+      <p class="k-lead">{c.sub}</p>
+
+      <p class="dl-wechat k-card" role="alert" hidden>
+        <Icon name="simple-icons:wechat" width={22} height={22} />
+        <span>{c.wechat}</span>
+      </p>
+
+      <!-- The script below fills in the button that suits this phone and moves it first:
+           iPhone → App Store; Android → the APK in Chinese, Google Play in English. -->
+      <div class="k-btn-row dl-btns">
+        <a class="k-btn dl-apk" href={apkUrl} download>
+          <Icon name="lucide:download" width={20} height={20} />
+          {c.apk}
+        </a>
+        <a class="k-btn dl-play" href={googlePlayUrl} target="_blank" rel="noopener noreferrer">
+          <Icon name="simple-icons:googleplay" width={18} height={18} />
+          Google Play
+        </a>
+        <a class="k-btn dl-ios" href={appStoreUrl} target="_blank" rel="noopener noreferrer">
+          <Icon name="simple-icons:apple" width={20} height={20} />
+          App Store
+        </a>
+      </div>
+      <p class="dl-note">{c.apkNote}</p>
+
+      <div class="k-card dl-help">
+        <h2 class="k-h3">{c.helpTitle}</h2>
+        <ul>
+          {c.help.map((line) => <li>{line}</li>)}
+        </ul>
+        <p class="dl-stuck">{c.stuck} <span>{c.stuckLabel}</span> <strong>{wechatId}</strong></p>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  const page = document.querySelector<HTMLElement>('.dl');
+  if (page) {
+    const ua = navigator.userAgent;
+    // WeChat's in-app browser blocks APK downloads, so point people to a real browser.
+    if (/MicroMessenger/i.test(ua)) page.querySelector('.dl-wechat')?.removeAttribute('hidden');
+    const android = /Android/i.test(ua);
+    const ios = /iPhone|iPad|iPod/i.test(ua);
+    page.dataset.first = ios ? 'ios' : android && page.dataset.zh !== 'true' ? 'play' : 'apk';
+  }
+</script>
+
+<style>
+  .dl { min-height: 82vh; }
+  .dl-inner { display: flex; flex-direction: column; align-items: center; gap: 1.3rem; text-align: center; max-width: 40rem; }
+  .dl-inner :global(.dl-bun) { width: 120px; }
+
+  .dl-wechat { display: flex; align-items: center; gap: 0.7rem; padding: 1rem 1.2rem; text-align: left; background: var(--yellow-soft); font-weight: 800; color: var(--ink); }
+  .dl-wechat[hidden] { display: none; }
+
+  .dl-btns { flex-direction: column; width: 100%; max-width: 24rem; margin-top: 0.4rem; }
+  .dl-btns .k-btn { justify-content: center; }
+  /* The button for this phone goes first, in ink. Before the script runs, the APK leads. */
+  .dl:not([data-first]) .dl-apk,
+  .dl[data-first='apk'] .dl-apk,
+  .dl[data-first='play'] .dl-play,
+  .dl[data-first='ios'] .dl-ios {
+    order: -1; background: var(--ink); color: #fff; box-shadow: 0 5px 0 0 var(--lime-deep);
+  }
+
+  .dl-note { color: var(--muted); font-size: 0.95rem; }
+
+  .dl-help { width: 100%; padding: 1.4rem 1.5rem; text-align: left; margin-top: 0.6rem; }
+  .dl-help ul { margin: 0.7rem 0 0; padding-left: 1.2rem; display: flex; flex-direction: column; gap: 0.5rem; color: var(--muted); line-height: 1.6; }
+  .dl-stuck { margin-top: 1rem; color: var(--ink); font-weight: 800; line-height: 1.6; }
+  .dl-stuck span { color: var(--muted); font-weight: 700; }
+  .dl-stuck strong { font-size: 1.15rem; font-weight: 900; letter-spacing: 0.02em; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .dl-inner :global(.dl-bun) { animation: dl-bob 3s ease-in-out infinite; }
+  }
+  @keyframes dl-bob { 0%, 100% { translate: 0 0; } 50% { translate: 0 -6px; } }
+</style>
