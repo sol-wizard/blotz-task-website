@@ -1,0 +1,43 @@
+# Keeps public/kitchen/news.json in step with the Lark 报告中心, so the /zh/kitchen page can show a red
+# number when a new report comes out. Commits only when the list changed; Vercel deploys the commit.
+# Needs four repository secrets: LARK_APP_ID, LARK_APP_SECRET (the report bot), REPORT_APP_TOKEN and
+# REPORT_TABLE_ID (the 报告中心 base and table, from blotz-meeting/lark_config.json → report_center).
+name: Kitchen news
+
+on:
+  schedule:
+    - cron: '*/30 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency: kitchen-news
+
+jobs:
+  news:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Read the newest reports from Lark
+        # until the four secrets are added this does nothing, so the schedule doesn't fail every half hour
+        run: |
+          if [ -z "$LARK_APP_ID" ]; then echo 'No Lark secrets yet; keeping the committed news.json.'; exit 0; fi
+          node scripts/kitchen-news.mjs
+        env:
+          LARK_APP_ID: ${{ secrets.LARK_APP_ID }}
+          LARK_APP_SECRET: ${{ secrets.LARK_APP_SECRET }}
+          REPORT_APP_TOKEN: ${{ secrets.REPORT_APP_TOKEN }}
+          REPORT_TABLE_ID: ${{ secrets.REPORT_TABLE_ID }}
+          LARK_BASE_URL: https://open.larksuite.com
+      - name: Commit the list if it changed
+        run: |
+          git diff --quiet public/kitchen/news.json && exit 0
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add public/kitchen/news.json
+          git commit -m 'Update the kitchen news from 报告中心'
+          git push

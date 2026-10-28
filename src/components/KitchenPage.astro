@@ -1,0 +1,396 @@
+---
+// A page for new team members: Blotz drawn as a bun-shop kitchen you can look around. Click a team's room to
+// see that team's part of the shop and a short page for them; press ▶ to watch one idea go round the loop.
+// Click a person or a thing for one short card. Not linked from anywhere and not in the sitemap; the link is sent to new members.
+---
+<!doctype html>
+<html lang="zh">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>Blotz 包子铺</title>
+  <link rel="icon" type="image/png" href="/app/icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;900&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <main class="kz" id="kz-world">
+    <p class="kz-wait" id="kz-wait">厨房准备中……</p>
+    <header class="kz-bar">
+      <a class="kz-brand" href="/zh/"><img src="/app/icon.png" alt="" width="34" height="34" />BlotzTask 包子铺</a>
+      <div class="kz-modes" role="group" aria-label="叫法">
+        <button type="button" data-m="0" class="on" aria-pressed="true">包子铺</button>
+        <button type="button" data-m="1" aria-pressed="false">Blotz</button>
+      </div>
+      <span class="kz-gap"></span>
+      <button type="button" class="kz-btn kz-bell" id="kz-bell" hidden aria-label="新东西">🔔 <span id="kz-bell-n"></span></button>
+      <button type="button" class="kz-btn" id="kz-names" aria-pressed="false">名字</button>
+      <button type="button" class="kz-btn" id="kz-home">回到全景</button>
+    </header>
+    <div class="kz-tour" id="kz-tour" hidden>
+      <button type="button" class="kz-tour-btn" id="kz-tour-pause" aria-label="暂停">⏸</button>
+      <p id="kz-tour-line"></p>
+      <button type="button" class="kz-tour-btn" id="kz-tour-close" aria-label="关上">×</button>
+      <div class="kz-tour-dots" id="kz-tour-dots"></div>
+    </div>
+    <button type="button" class="kz-cta" id="kz-play"><span class="kz-cta-ico" aria-hidden="true"></span><span><b>看看包子铺怎么运作</b><small>大约 1 分钟</small></span></button>
+    <p class="kz-hint" id="kz-hint">左键拖动移动，右键拖动旋转，滚轮缩放</p>
+    <div class="kz-pad" role="group" aria-label="镜头">
+      <button type="button" data-turn="0.785" aria-label="向左转" title="向左转（Q）">⟲</button>
+      <button type="button" data-turn="-0.785" aria-label="向右转" title="向右转（E）">⟳</button>
+      <button type="button" data-zoom="-0.35" aria-label="放大" title="放大（+）">＋</button>
+      <button type="button" data-zoom="0.45" aria-label="缩小" title="缩小（−）">－</button>
+    </div>
+    <p class="kz-tip" id="kz-tip" hidden></p>
+    <aside class="kz-card" id="kz-card" hidden aria-live="polite">
+      <button type="button" class="kz-close" id="kz-close" aria-label="关上">×</button>
+      <div id="kz-card-body"></div>
+    </aside>
+  </main>
+
+  <script>
+    import { initKitchen } from '../scripts/kitchen-scene.js';
+    import { NAMES, PEOPLE, ROLES, ABOUT, LINKS, FIND, NEWS_ZONE, DEPTS, LOOP, STAGES, TEAM_NEWS, BOTS, stageOf, type Zone, type DeptId } from '../data/kitchen';
+
+    const params = new URLSearchParams(location.search);
+    const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const world = document.getElementById('kz-world')!;
+    const card = document.getElementById('kz-card')!;
+    const body = document.getElementById('kz-card-body')!;
+    const tip = document.getElementById('kz-tip')!;
+    let mode = params.get('m') === '1' ? 1 : 0;
+    let current: string | null = null;
+    const nm = (k: Zone) => NAMES[k][mode];
+    const esc = (s: string) => s.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]!));
+
+    // new reports: news.json is rebuilt from 报告中心 every half hour; this browser remembers what you've opened.
+    // On a first visit, the last two weeks count as new.
+    type News = { id: string; title: string; kind: string; date: string; link: string };
+    let news: News[] = [];
+    const SEEN_KEY = 'kz-seen-v1', RECENT = Date.now() - 14 * 864e5;
+    let seen: Set<string> | null = null;
+    try { const v = localStorage.getItem(SEEN_KEY); if (v) seen = new Set(JSON.parse(v)); } catch {}
+    let firstVisit = !seen;
+    if (!seen) seen = new Set();
+    const isNew = (n: News) => !seen!.has(n.id) && (!firstVisit || Date.parse(n.date) >= RECENT);
+    const unseen = () => news.filter(isNew);
+    function markSeen(ids: string[]) {
+      if (firstVisit) { news.filter(n => Date.parse(n.date) < RECENT).forEach(n => seen!.add(n.id)); firstVisit = false; }
+      ids.forEach(id => seen!.add(id));
+      try { localStorage.setItem(SEEN_KEY, JSON.stringify([...seen!])); } catch {}
+      refreshNews();
+    }
+    const bell = document.getElementById('kz-bell') as HTMLButtonElement;
+    const bellN = document.getElementById('kz-bell-n')!;
+    function refreshNews() {
+      const fresh = unseen();
+      bell.hidden = !news.length;
+      bellN.textContent = fresh.length ? String(fresh.length) : '';
+      bell.classList.toggle('has', fresh.length > 0);
+    }
+    // a report: its title, the date only when the title doesn't already say it, and a red 新 when unread
+    const newsList = (list: News[]) => '<ul class="kz-news">' + list.map(n => `<li><a href="${esc(n.link)}" target="_blank" rel="noopener" data-id="${esc(n.id)}"><b>${esc(n.title)}</b>${n.title.includes(n.date) ? '' : `<small>${esc(n.date.slice(5))}</small>`}${isNew(n) ? '<i>新</i>' : ''}</a></li>`).join('') + '</ul>';
+    bell.addEventListener('click', () => show('news', false));
+    fetch('/kitchen/news.json', { cache: 'no-cache' }).then(r => (r.ok ? r.json() : { items: [] })).then(d => { news = d.items || []; refreshNews(); }).catch(() => {});
+
+    function cardHtml(k: string) {
+      if (k === 'news') {
+        const fresh = unseen();
+        return head(fresh.length ? `新报告（${fresh.length}）` : '最近的报告', '在 Lark 报告中心')
+          + newsList(fresh.length ? fresh : news.slice(0, 6))
+          + (fresh.length ? '<button type="button" class="kz-seen" id="kz-seen-all">都看过了</button>' : '<p class="kz-text kz-muted">没有新的了。</p>');
+      }
+      if (k.startsWith('d:')) return teamHtml(k.slice(2) as DeptId);
+      if (TEAM_ROOMS[k]) return teamHtml(TEAM_ROOMS[k]!, ROOM_LEADS[k]);
+      const person = k.startsWith('p:') ? PEOPLE.find(p => p[0] === k.slice(2)) : undefined;
+      if (person) {
+        const [name, zone, role] = person;
+        const team = DEPTS.find(d => d.id === TEAM_ROOMS[zone]);
+        return head(name, (team ? team.name + '组 · ' : '') + role, team?.color || '#5b6078', ava(name))
+          + (FIND[name] ? section('有事找 TA', '<div class="kz-tags">' + FIND[name].split('、').map(t => `<span>${esc(t)}</span>`).join('') + '</div>') : '');
+      }
+      if (k in BOTS) {
+        const b = BOTS[k as keyof typeof BOTS];
+        return head(nm(k as Zone), b.sub, undefined, '<span class="kz-ava">🤖</span>')
+          + facts(b.jobs)
+          + (b.note ? `<p class="kz-note">${esc(b.note)}</p>` : '')
+          + linksHtml(b.links || []);
+      }
+      const zone = k as Zone;
+      if (!(zone in NAMES)) return '';
+      const zoneNew = zone === 'pass' ? unseen() : unseen().filter(n => NEWS_ZONE[n.kind] === zone);
+      return head(nm(zone), `${mode ? '包子铺里叫' : 'Blotz 里是'}：${NAMES[zone][1 - mode]}`)
+        + (ABOUT[zone].text ? `<p class="kz-text">${esc(ABOUT[zone].text)}</p>` : '')
+        + (zone === 'loop' ? '<button type="button" class="kz-go" data-tour>▶ 看一圈</button>' : '')
+        + (zoneNew.length ? section('新的', newsList(zoneNew)) : '')
+        + facts(ROLES[zone] || [])
+        + linksHtml(ABOUT[zone].links || []);
+    }
+    // pieces every card is made of: a coloured header, small titled sections, short facts, links
+    const ava = (name: string, cls = '') => `<span class="kz-ava${cls}">${esc([...name][0])}</span>`;
+    const head = (title: string, sub: string, color?: string, avatar = '') =>
+      `<header class="kz-head${color ? '' : ' plain'}"${color ? ` style="--c:${color}"` : ''}>${avatar}<div><h2>${esc(title)}</h2><p>${esc(sub)}</p></div></header>`;
+    const section = (title: string, html: string) => `<section class="kz-sec"><h3>${esc(title)}</h3>${html}</section>`;
+    // short facts as one list: the label on the left, one line on the right
+    const facts = (list: [string, string][]) => list.length
+      ? '<div class="kz-facts">' + list.map(([a, b]) => `<div><b>${esc(a)}</b><span>${esc(b)}</span></div>`).join('') + '</div>' : '';
+    const linksHtml = (keys: (keyof typeof LINKS)[]) => keys.length ? '<div class="kz-links">' + keys.map(l => `<a href="${LINKS[l][1]}" target="_blank" rel="noopener">${esc(LINKS[l][0])} ↗</a>`).join('') + '</div>' : '';
+    // the page for one team: who to go to, meetings, tasks, rules, new reports.
+    // leads = the people for the room that was clicked: they come first and are marked
+    function teamHtml(id: DeptId, leads: string[] = []) {
+      const d = DEPTS.find(x => x.id === id);
+      if (!d) return '';
+      const fresh = unseen().filter(n => TEAM_NEWS[id].includes(n.kind));
+      const who = [...leads, ...d.who.filter(n => !leads.includes(n))];
+      return head(d.name + '组', d.place, d.color)
+        + section('找谁', `<div class="kz-people" style="--c:${d.color}">` + who.map(n => {
+          const role = (PEOPLE.find(p => p[0] === n)?.[2] || '').split(' · ')[0];
+          return `<button type="button" data-p="${esc(n)}" class="kz-pp${leads.includes(n) ? ' lead' : ''}">${ava(n, ' sm')}<span>${esc(n)}<small>${esc(role)}</small></span></button>`;
+        }).join('') + '</div>')
+        + facts(d.rows)
+        + (fresh.length ? section('新的', newsList(fresh.slice(0, 2))
+          + (fresh.length > 2 ? `<button type="button" class="kz-more" data-news>还有 ${fresh.length - 2} 个 →</button>` : '')) : '')
+        + linksHtml(d.links || []);
+    }
+    // clicking a team's room opens the team's page; the developers' three rooms each point at their own leads
+    const TEAM_ROOMS: Partial<Record<string, DeptId>> = { dev: 'dev', ai: 'dev', learn: 'dev', pm: 'pm', design: 'design', mkt: 'mkt' };
+    const ROOM_LEADS: Partial<Record<string, string[]>> = { dev: ['Zyx', 'Nicole'], ai: ['Chen'], learn: ['Nicole'] };
+    const teamOfKey = (k: string) => (k.startsWith('d:') ? (k.slice(2) as DeptId) : TEAM_ROOMS[k]);
+    function show(k: string | null, fly = true) {
+      const html = k ? cardHtml(k) : '';
+      current = html ? k : null;
+      const teamId = current ? teamOfKey(current) : undefined;
+      kitchen?.setFocus(teamId || null);
+      card.hidden = !html;
+      if (html) {
+        body.innerHTML = html;
+        body.querySelectorAll<HTMLButtonElement>('[data-p]').forEach(b => b.addEventListener('click', () => show('p:' + b.dataset.p)));
+        body.querySelectorAll<HTMLAnchorElement>('a[data-id]').forEach(a => a.addEventListener('click', () => { markSeen([a.dataset.id!]); setTimeout(() => show(current, false), 50); }));
+        body.querySelector('#kz-seen-all')?.addEventListener('click', () => { markSeen(unseen().map(n => n.id)); show(current, false); });
+        body.querySelector('[data-news]')?.addEventListener('click', () => show('news', false));
+        body.querySelectorAll<HTMLButtonElement>('[data-tour]').forEach(b => b.addEventListener('click', () => startTour(+(b.dataset.tour || 0))));
+      }
+      // names are hidden until asked for: the person you clicked, or the leads of the room you clicked
+      const team = teamId ? DEPTS.find(d => d.id === teamId) : undefined;
+      const leads = (current && ROOM_LEADS[current]) || team?.who || [];
+      document.querySelectorAll<HTMLElement>('.kz-name').forEach(n => {
+        n.classList.toggle('on', n.dataset.k === current);
+        n.classList.toggle('show', leads.includes(n.dataset.k!.slice(2)));
+      });
+      if (fly && current) kitchen?.flyTo(current.startsWith('d:') ? team!.view : current);
+    }
+    function label(k: string) {
+      const person = k.startsWith('p:') ? PEOPLE.find(p => p[0] === k.slice(2)) : undefined;
+      if (person) return `${person[0]} · ${person[2]}`;
+      if (k === 'loop') return '一圈：点一下看整圈';
+      if (TEAM_ROOMS[k]) return DEPTS.find(d => d.id === TEAM_ROOMS[k])!.name + '组';
+      return k in NAMES ? nm(k as Zone) : '';
+    }
+
+    let kitchen: Awaited<ReturnType<typeof initKitchen>> | null = null;
+    const hint = document.getElementById('kz-hint')!;
+    if (matchMedia('(pointer: coarse)').matches) hint.textContent = '单指拖动移动，双指缩放';
+    document.querySelectorAll<HTMLButtonElement>('.kz-pad button').forEach(b => b.addEventListener('click', () => {
+      if (b.dataset.turn) kitchen?.turn(+b.dataset.turn);
+      if (b.dataset.zoom) kitchen?.zoom(+b.dataset.zoom);
+    }));
+    const teamColor = (id?: string) => DEPTS.find(d => d.id === id)?.color || '#5b6078';
+
+    // ▶ 看一圈: the runner carries one idea round the loop and the camera follows, one line per step
+    const tourBox = document.getElementById('kz-tour')!;
+    const tourLine = document.getElementById('kz-tour-line')!;
+    const tourPause = document.getElementById('kz-tour-pause') as HTMLButtonElement;
+    const tourDots = document.getElementById('kz-tour-dots')!;
+    tourDots.innerHTML = STAGES.map((s, i) => `<button type="button" data-i="${i}" style="--c:${teamColor(s.who)}" aria-label="第 ${i + 1} 段：${s.word}">${i + 1}</button>`).join('');
+    let paused = false, finished = false;
+    function startTour(i = 0) {
+      show(null, false);
+      kitchen?.tour(i);
+      paused = false; finished = false; tourPause.textContent = '⏸'; tourPause.setAttribute('aria-label', '暂停');
+      tourBox.hidden = false;
+    }
+    function onTour(step: number | 'done' | null) {
+      if (step === null) { tourBox.hidden = true; return; }
+      if (step === 'done') {
+        finished = true;
+        tourLine.textContent = '回到第 1 步，开始下一轮';
+        tourPause.textContent = '↻'; tourPause.setAttribute('aria-label', '再看一次');
+        tourDots.querySelectorAll('button').forEach(b => b.classList.remove('on'));
+        return;
+      }
+      const part = stageOf(step);
+      tourLine.innerHTML = `<b style="--c:${teamColor(STAGES[part].who)}">${part + 1}</b><span><em>${esc(STAGES[part].word)}</em>${esc(LOOP[step].line)}</span>`;
+      tourDots.querySelectorAll<HTMLButtonElement>('button').forEach(b => b.classList.toggle('on', +b.dataset.i! === part));
+    }
+    document.getElementById('kz-play')!.addEventListener('click', () => startTour());
+    tourPause.addEventListener('click', () => {
+      if (finished) { startTour(); return; }
+      paused = !paused; kitchen?.pauseTour(paused);
+      tourPause.textContent = paused ? '▶' : '⏸'; tourPause.setAttribute('aria-label', paused ? '继续' : '暂停');
+    });
+    document.getElementById('kz-tour-close')!.addEventListener('click', () => { kitchen?.stopTour(); tourBox.hidden = true; });
+    tourDots.querySelectorAll<HTMLButtonElement>('button').forEach(b => b.addEventListener('click', () => startTour(STAGES[+b.dataset.i!].steps[0])));
+
+    initKitchen(world, {
+      mode, still, onTour,
+      onPick: (k: string) => (k.startsWith('tour:') ? startTour(+k.slice(5)) : show(k)),
+      onHover: (k: string | null, e?: PointerEvent) => {
+        const text = k ? label(k) : '';
+        tip.hidden = !text;
+        if (text && e) { tip.textContent = text; tip.style.left = e.clientX + 14 + 'px'; tip.style.top = e.clientY + 14 + 'px'; }
+      },
+    }).then(k => {
+      kitchen = k;
+      document.getElementById('kz-wait')!.remove();
+      k.controls.addEventListener('start', () => hint.classList.add('gone'), { once: true } as any);
+      refreshNews();
+      if (params.get('k')) show(params.get('k'));
+      (window as any).__kitchen = k;
+    }).catch(err => {
+      console.error(err);
+      document.getElementById('kz-wait')!.textContent = '这个浏览器画不出 3D 厨房，换一个浏览器试试。';
+    });
+
+    function setMode(m: number) {
+      mode = m;
+      document.querySelectorAll<HTMLButtonElement>('.kz-modes button').forEach(b => {
+        const on = +b.dataset.m! === m;
+        b.classList.toggle('on', on); b.setAttribute('aria-pressed', String(on));
+      });
+      kitchen?.setMode(m);
+      if (current) show(current, false);
+    }
+    document.querySelectorAll<HTMLButtonElement>('.kz-modes button').forEach(b => b.addEventListener('click', () => setMode(+b.dataset.m!)));
+    if (mode) setMode(1);
+    const namesBtn = document.getElementById('kz-names') as HTMLButtonElement;
+    const showNames = (on: boolean) => { namesBtn.classList.toggle('on', on); namesBtn.setAttribute('aria-pressed', String(on)); world.classList.toggle('hide-names', !on); };
+    namesBtn.addEventListener('click', () => showNames(!namesBtn.classList.contains('on')));
+    showNames(false);
+    document.getElementById('kz-home')!.addEventListener('click', () => { show(null, false); kitchen?.stopTour(); tourBox.hidden = true; kitchen?.home(); });
+    document.getElementById('kz-close')!.addEventListener('click', () => show(null, false));
+    addEventListener('keydown', e => { if (e.key === 'Escape') show(null, false); });
+
+  </script>
+
+  <style is:global>
+    :root { --ink: #1e2140; --lime: #9ad513; --paper: #f4f7ee; --muted: #5b6078; --blue: #3486F3; --yellow: #f6b73c; --soft: #fff4da; }
+    * { box-sizing: border-box; }
+    [hidden] { display: none !important; }
+    html, body { margin: 0; height: 100%; background: var(--paper); color: var(--ink); font-family: ui-rounded, 'SF Pro Rounded', 'Nunito', 'PingFang SC', 'Hiragino Sans GB', system-ui, sans-serif; -webkit-font-smoothing: antialiased; overflow: hidden; }
+    .kz { position: fixed; inset: 0; }
+    .kz-canvas { position: absolute; inset: 0; width: 100% !important; height: 100% !important; display: block; touch-action: none; outline: none; }
+    .kz-labels { position: absolute; inset: 0; pointer-events: none; z-index: 1; }
+    .kz-wait { position: absolute; inset: 0; margin: 0; display: grid; place-items: center; font-weight: 900; font-size: 1.2rem; color: var(--muted); }
+
+    .kz-bar { position: absolute; z-index: 10; left: 16px; right: 16px; top: 14px; display: flex; align-items: center; gap: 12px; pointer-events: none; }
+    .kz-bar > * { pointer-events: auto; }
+    .kz-gap { flex: 1; pointer-events: none; }
+    .kz-brand { display: inline-flex; align-items: center; gap: 10px; padding: 6px 16px 6px 6px; border: 2px solid var(--ink); border-radius: 999px; background: #fff; box-shadow: 0 3px 0 var(--ink); color: var(--ink); font-weight: 900; font-size: 1.1rem; text-decoration: none; }
+    .kz-brand img { border-radius: 50%; }
+    .kz-modes { display: flex; border: 2px solid var(--ink); border-radius: 999px; background: #fff; box-shadow: 0 3px 0 var(--ink); overflow: hidden; }
+    .kz-modes button, .kz-btn { font: inherit; font-weight: 900; font-size: 1rem; padding: 0.45rem 1.05rem; border: 0; background: none; color: var(--ink); cursor: pointer; }
+    .kz-modes button.on { background: var(--ink); color: #fff; }
+    .kz-btn { border: 2px solid var(--ink); border-radius: 999px; background: #fff; box-shadow: 0 3px 0 var(--ink); }
+    .kz-btn.on { background: var(--ink); color: #fff; }
+    .kz-btn:active, .kz-modes button:active { transform: translateY(1px); }
+    button:focus-visible, a:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
+
+    .kz-hint { position: absolute; z-index: 10; left: 16px; bottom: 14px; margin: 0; padding: 0.4rem 0.9rem; border-radius: 999px; background: rgba(255, 255, 255, 0.92); border: 2px solid var(--ink); font-weight: 900; font-size: 0.9rem; transition: opacity 0.6s ease; pointer-events: none; }
+    .kz-hint.gone { opacity: 0; }
+    .kz-bell.has { background: #f56767; color: #fff; }
+    .kz-bell span:empty { display: none; }
+    /* the loop's steps: just the number, in the colour of the team doing that step */
+    .kz-step { pointer-events: auto; width: 30px; height: 30px; padding: 0; border-radius: 50%; border: 2px solid var(--ink); background: var(--c); color: #fff; font: inherit; font-weight: 900; font-size: 15px; line-height: 1; cursor: pointer; box-shadow: 0 3px 0 var(--ink); transition: opacity 0.3s, scale 0.2s; }
+    .kz-step.on { scale: 1.3; }
+    .kz-step.dim { opacity: 0.3; }
+
+    /* ▶ 看一圈 */
+    /* the one thing to press first: big, at the bottom in the middle, gone while the tour plays */
+    .kz-cta { position: absolute; z-index: 10; left: 50%; bottom: 16px; translate: -50% 0; display: flex; align-items: center; gap: 12px; padding: 10px 22px 10px 10px; border: 3px solid var(--ink); border-radius: 999px; background: var(--lime); color: var(--ink); font: inherit; text-align: left; cursor: pointer; box-shadow: 0 5px 0 var(--ink); }
+    .kz-cta:hover { background: #a8e02a; }
+    .kz-cta:active { translate: -50% 3px; box-shadow: 0 2px 0 var(--ink); }
+    .kz-cta-ico { flex: none; position: relative; width: 46px; height: 46px; border-radius: 50%; background: var(--ink); }
+    .kz-cta-ico::after { content: ''; position: absolute; left: 18px; top: 13px; border-style: solid; border-width: 10px 0 10px 16px; border-color: transparent transparent transparent #fff; }
+    .kz-cta b { display: block; font-weight: 900; font-size: 1.25rem; line-height: 1.2; }
+    .kz-cta small { display: block; font-weight: 800; font-size: 0.85rem; opacity: 0.75; }
+    .kz-tour:not([hidden]) ~ .kz-cta { display: none; }
+    .kz-tour { position: absolute; z-index: 10; left: 50%; bottom: 14px; translate: -50% 0; width: min(780px, calc(100% - 300px)); display: grid; grid-template-columns: 48px 1fr 48px; align-items: center; gap: 12px; padding: 12px 14px 10px; border: 3px solid var(--ink); border-radius: 22px; background: #fff; box-shadow: 0 5px 0 var(--ink); }
+    .kz-tour p { margin: 0; font-weight: 900; font-size: 1.3rem; display: flex; align-items: center; gap: 0.7rem; }
+    .kz-tour p b { flex: none; display: grid; place-items: center; width: 38px; height: 38px; border-radius: 50%; background: var(--c); color: #fff; border: 2px solid var(--ink); }
+    .kz-tour-btn { width: 44px; height: 44px; border-radius: 14px; border: 2px solid var(--ink); background: #fff; box-shadow: 0 3px 0 var(--ink); font: inherit; font-size: 1.2rem; font-weight: 900; cursor: pointer; color: var(--ink); }
+    .kz-tour p em { font-style: normal; margin-right: 0.6rem; padding: 0.05rem 0.55rem; border-radius: 8px; background: #f1f2f6; color: var(--muted); font-size: 1rem; }
+    .kz-tour-dots { grid-column: 1 / -1; display: flex; justify-content: center; gap: 6px; }
+    .kz-tour-dots button { width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--ink); background: #fff; color: var(--ink); font: inherit; font-weight: 900; font-size: 0.85rem; cursor: pointer; padding: 0; }
+    .kz-tour-dots button.on { background: var(--c); color: #fff; }
+    .kz-tour:not([hidden]) ~ .kz-hint { display: none; }
+    .kz-news { list-style: none; margin-top: 0; margin-bottom: 4px; padding: 0; }
+    .kz-news a { display: flex; align-items: center; gap: 8px; margin: 0.35rem 0; padding: 0.55rem 0.75rem; border-radius: 12px; background: #fff4da; color: var(--ink); text-decoration: none; }
+    .kz-news a:hover { background: #ffe7b0; }
+    .kz-news b { flex: 1; font-weight: 900; font-size: 0.95rem; line-height: 1.35; }
+    .kz-news small { flex: none; font-size: 0.8rem; font-weight: 800; color: var(--muted); }
+    .kz-news i { flex: none; padding: 0 0.45rem; border-radius: 999px; background: #f56767; color: #fff; font-style: normal; font-size: 0.75rem; font-weight: 900; line-height: 1.5; }
+    .kz-more { font: inherit; font-weight: 900; font-size: 0.9rem; border: 0; background: none; color: var(--blue); cursor: pointer; padding: 0.2rem 0; }
+    .kz-seen { margin-top: 0.6rem; font: inherit; font-weight: 900; padding: 0.4rem 1rem; border-radius: 12px; border: 2px solid var(--ink); background: #fff; box-shadow: 0 3px 0 var(--ink); cursor: pointer; }
+    .kz-pad { position: absolute; z-index: 10; right: 16px; bottom: 14px; display: grid; grid-template-columns: repeat(2, 48px); gap: 8px; }
+    .kz-pad button { width: 48px; height: 48px; border-radius: 14px; border: 2px solid var(--ink); background: #fff; box-shadow: 0 3px 0 var(--ink); font: inherit; font-size: 1.4rem; font-weight: 900; color: var(--ink); cursor: pointer; }
+    .kz-pad button:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--ink); }
+    .kz-tip { position: fixed; z-index: 5; margin: 0; padding: 0.25rem 0.7rem; border-radius: 10px; background: var(--ink); color: #fff; font-weight: 900; font-size: 0.85rem; pointer-events: none; white-space: nowrap; }
+
+    .kz-name { pointer-events: auto; font: inherit; font-weight: 900; font-size: 12px; line-height: 1.2; padding: 0.12rem 0.55rem; border-radius: 999px; border: 2px solid var(--ink); background: #fff; color: var(--ink); cursor: pointer; white-space: nowrap; box-shadow: 0 2px 0 var(--ink); }
+    .kz-name.on { background: var(--lime); }
+    .hide-names .kz-name:not(.on):not(.show) { display: none; }
+
+    .kz-card { position: absolute; z-index: 10; right: 16px; top: 76px; width: min(380px, calc(100% - 32px)); max-height: calc(100% - 170px); overflow: auto; padding: 0 0 18px; border: 2px solid var(--ink); border-radius: 22px; background: #fff; box-shadow: 0 5px 0 var(--ink); animation: kz-in 0.22s ease-out; }
+    @keyframes kz-in { from { opacity: 0; transform: translateY(8px); } }
+    .kz-close { position: absolute; z-index: 1; right: 14px; top: 14px; width: 34px; height: 34px; border-radius: 50%; border: 2px solid var(--ink); background: #fff; color: var(--ink); font: inherit; font-size: 1.3rem; font-weight: 900; line-height: 1; cursor: pointer; }
+    #kz-card-body > :not(.kz-head) { margin-left: 20px; margin-right: 20px; }
+    /* header: the team's colour, or a soft plain one for things that aren't a team */
+    .kz-head { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; padding: 18px 60px 16px 20px; background: var(--c); color: #fff; border-bottom: 2px solid var(--ink); }
+    .kz-head.plain { background: var(--soft); color: var(--ink); }
+    .kz-head h2 { margin: 0; font-size: 1.5rem; font-weight: 900; line-height: 1.2; }
+    .kz-head p { margin: 3px 0 0; font-size: 0.92rem; font-weight: 800; opacity: 0.9; }
+    .kz-ava { flex: none; display: grid; place-items: center; width: 46px; height: 46px; border-radius: 50%; border: 2px solid var(--ink); background: #fff; color: var(--ink); font-weight: 900; font-size: 1.3rem; }
+    .kz-ava.sm { width: 34px; height: 34px; font-size: 1rem; background: var(--c); color: #fff; }
+    .kz-sec { margin-bottom: 16px; }
+    .kz-sec h3 { margin: 0 0 8px; font-size: 0.82rem; font-weight: 900; color: var(--muted); letter-spacing: 0.04em; }
+    .kz-text { margin-top: 0; margin-bottom: 14px; font-size: 1.02rem; line-height: 1.6; }
+    .kz-muted { color: var(--muted); }
+    .kz-note { margin-top: 0; margin-bottom: 14px; padding: 0.45rem 0.75rem; border-radius: 12px; background: #fff4da; font-weight: 800; font-size: 0.9rem; color: #8a6a1c; }
+    .kz-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .kz-tags span { padding: 0.25rem 0.7rem; border-radius: 999px; background: #f1f2f6; font-weight: 800; font-size: 0.92rem; }
+    /* the people to go to: a small card each; the ones for the room you clicked are marked */
+    .kz-people { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .kz-pp { display: flex; align-items: center; gap: 8px; padding: 6px 10px 6px 6px; border-radius: 14px; border: 2px solid #e6e8ef; background: #fff; color: var(--ink); font: inherit; text-align: left; cursor: pointer; }
+    .kz-pp span { display: flex; flex-direction: column; font-weight: 900; line-height: 1.2; }
+    .kz-pp small { font-weight: 700; font-size: 0.78rem; color: var(--muted); }
+    .kz-pp:hover { border-color: var(--ink); }
+    .kz-pp.lead { border-color: var(--ink); background: #f6fbe9; box-shadow: 0 2px 0 var(--ink); }
+    .kz-facts { margin-top: 0; margin-bottom: 16px; padding: 2px 14px; border-radius: 14px; background: #f5f6fa; }
+    .kz-facts > div { display: grid; grid-template-columns: 4.6em 1fr; gap: 10px; align-items: baseline; padding: 10px 0; border-top: 1px solid #e3e5ec; }
+    .kz-facts > div:first-child { border-top: 0; }
+    .kz-facts b { font-size: 0.85rem; font-weight: 900; color: var(--muted); }
+    .kz-facts span { font-size: 0.98rem; line-height: 1.45; }
+    .kz-go { margin-bottom: 14px; font: inherit; font-weight: 900; font-size: 0.98rem; padding: 0.3rem 0.9rem; border-radius: 12px; border: 2px solid var(--ink); background: var(--lime); color: var(--ink); cursor: pointer; box-shadow: 0 3px 0 var(--ink); }
+    .kz-links { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 4px; }
+    .kz-links a { padding: 0.35rem 0.85rem; border-radius: 12px; border: 2px solid var(--ink); box-shadow: 0 3px 0 var(--ink); background: var(--blue); color: #fff; font-weight: 900; font-size: 0.9rem; text-decoration: none; }
+
+    @media (max-width: 640px) {
+      .kz-bar { flex-wrap: wrap; gap: 8px; }
+      .kz-brand { font-size: 0.95rem; }
+      .kz-modes button, .kz-btn { font-size: 0.85rem; padding: 0.35rem 0.75rem; }
+      .kz-hint { display: none; }
+      .kz-cta { left: 16px; right: 132px; translate: none; padding: 8px 14px 8px 8px; }
+      .kz-cta:active { translate: 0 3px; }
+      .kz-cta b { font-size: 1.05rem; }
+      .kz-cta small { font-size: 0.75rem; }
+      .kz-card { top: auto; bottom: 128px; right: 16px; max-height: 55%; }
+      .kz-tour { width: calc(100% - 32px); bottom: 14px; grid-template-columns: 40px 1fr 40px; gap: 8px; }
+      .kz-tour p { font-size: 1rem; }
+      .kz-tour:not([hidden]) ~ .kz-pad { display: none; }
+    }
+    @media (prefers-reduced-motion: reduce) { .kz-card { animation: none; } }
+  </style>
+</body>
+</html>
