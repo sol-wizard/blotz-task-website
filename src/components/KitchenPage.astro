@@ -65,7 +65,7 @@
     const nm = (k: Zone) => NAMES[k][mode];
     const esc = (s: string) => s.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]!));
 
-    // new reports: news.json is rebuilt from 报告中心 every half hour; this browser remembers what you've opened.
+    // new reports: /api/kitchen-news reads 报告中心 when asked (cached for 5 minutes); this browser remembers what you've opened.
     // On a first visit, the last two weeks count as new.
     type News = { id: string; title: string; kind: string; date: string; link: string };
     let news: News[] = [];
@@ -89,11 +89,12 @@
       bell.hidden = !news.length;
       bellN.textContent = fresh.length ? String(fresh.length) : '';
       bell.classList.toggle('has', fresh.length > 0);
+      if (current && !card.hidden) show(current, false); // an open card picks up reports that arrived after it
     }
     // a report: its title, the date only when the title doesn't already say it, and a red 新 when unread
     const newsList = (list: News[]) => '<ul class="kz-news">' + list.map(n => `<li><a href="${esc(n.link)}" target="_blank" rel="noopener" data-id="${esc(n.id)}"><b>${esc(n.title)}</b>${n.title.includes(n.date) ? '' : `<small>${esc(n.date.slice(5))}</small>`}${isNew(n) ? '<i>新</i>' : ''}</a></li>`).join('') + '</ul>';
     bell.addEventListener('click', () => show('news', false));
-    fetch('/kitchen/news.json', { cache: 'no-cache' }).then(r => (r.ok ? r.json() : { items: [] })).then(d => { news = d.items || []; refreshNews(); }).catch(() => {});
+    fetch('/api/kitchen-news').then(r => (r.ok ? r.json() : { items: [] })).then(d => { news = d.items || []; refreshNews(); }).catch(() => {});
 
     function cardHtml(k: string) {
       if (k === 'news') {
