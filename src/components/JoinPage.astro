@@ -15,6 +15,7 @@ const zh = locale === 'zh';
 const stepIcons = ['lucide:file-text', 'lucide:message-circle', 'lucide:users', 'lucide:party-popper'];
 const getIcons = ['lucide:rocket', 'lucide:users', 'lucide:sparkles', 'lucide:trophy', 'lucide:coffee'];
 const workIcons = ['lucide:briefcase', 'lucide:moon-star', 'lucide:sprout', 'lucide:bot', 'lucide:party-popper'];
+const valueIcons = ['lucide:heart', 'lucide:message-circle', 'lucide:target', 'lucide:smile', 'lucide:handshake', 'lucide:book-open', 'lucide:bed'];
 
 const c = zh
   ? {
@@ -28,6 +29,17 @@ const c = zh
         { title: '有冲劲，也好相处', desc: '团队是 00 后的氛围：大家很有活力，也很友好。' },
       ],
       // ── end of the block Ben will reword ──
+      // ── 我们在乎的事: the team's values (Blotz 的组织价值观, Ben 28 Oct), one short line each; the full text is in Lark. ──
+      valuesTitle: '我们[在乎的事]',
+      values: [
+        { title: '以人为本', desc: '每个人都有自己的生活和节奏，不用靠忙碌来证明自己。' },
+        { title: '开放坦诚', desc: '不懂可以问，做错了可以承认，有不同意见可以直接说。' },
+        { title: '实事求是', desc: '从事实出发，对自己答应的事负责。' },
+        { title: '为用户做有价值的事', desc: '让 ADHD 用户更容易把事情做完。' },
+        { title: '信任彼此', desc: '把目标讲清楚，让每个人自己判断、自己决定。' },
+        { title: '边做边学', desc: '没做过的事可以先试，卡住了 Tech Lead 会带你。' },
+        { title: '休息是被允许的', desc: '累了就休息，不用透支自己来表示投入。' },
+      ],
 
       // title is the browser tab title and the sticker above the headline; headline is the h1 (Ben's wording).
       title: '加入我们',
@@ -95,6 +107,16 @@ const c = zh
         { title: 'Full of energy, easy to get along with', desc: 'The team has a Gen Z feel: lots of energy, and friendly with it.' },
       ],
       // ── end of the block Ben will reword ──
+      valuesTitle: 'What we [care about]',
+      values: [
+        { title: 'Put people first', desc: 'Everyone has their own life and pace. Nobody has to look busy to prove themselves.' },
+        { title: 'Be open and honest', desc: 'Ask when you don’t know, admit mistakes, and say so when you disagree.' },
+        { title: 'Stay grounded in facts', desc: 'Start from the facts and follow through on what you commit to.' },
+        { title: 'Do valuable work for our users', desc: 'Make it easier for people with ADHD to get things done.' },
+        { title: 'Trust each other', desc: 'Share clear goals, then let people judge and decide for themselves.' },
+        { title: 'Learn as you go', desc: 'Try things you haven’t done before. A Tech Lead will help when you’re stuck.' },
+        { title: 'Rest is allowed', desc: 'Rest when you’re tired. No need to wear yourself out to show commitment.' },
+      ],
 
       title: 'Join us',
       headline: 'Think we’re [cool?]',
@@ -283,6 +305,22 @@ const pickTones = ['is-lime', 'is-blue', 'is-coral', 'is-yellow', 'is-purple', '
     </div>
   </section>
 
+  <!-- VALUES: what we care about, one card each -->
+  <section class="band band-yellow">
+    <div class="wrap">
+      <h2 class="k-h2 k-center reveal">{hl(c.valuesTitle).map((part, i) => (i % 2 ? <span class="k-hl">{part}</span> : part))}</h2>
+      <ul class="values">
+        {c.values.map((item, i) => (
+          <li class:list={['k-card', 'value', `value-${i + 1}`, 'reveal']}>
+            <span class="value-icon" aria-hidden="true"><Icon name={valueIcons[i]} width={26} height={26} /></span>
+            <h3 class="k-h3">{item.title}</h3>
+            <p>{item.desc}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
   <!-- FACTS -->
   <section class="band">
     <div class="wrap">
@@ -449,6 +487,14 @@ const pickTones = ['is-lime', 'is-blue', 'is-coral', 'is-yellow', 'is-purple', '
 
 <style>
   .facts, .fit { margin-top: 3rem; }
+  /* values: four on the first row, three centred under them */
+  .values { list-style: none; display: flex; flex-wrap: wrap; justify-content: center; gap: 1.4rem; margin-top: 3rem; padding: 0; }
+  .value { flex: 0 1 calc((100% - 3 * 1.4rem) / 4); display: flex; flex-direction: column; gap: 0.55rem; padding: 1.6rem 1.5rem 1.7rem; }
+  .value .k-h3 { margin: 0.2rem 0 0; }
+  .value p { margin: 0; color: var(--muted); font-size: 1.05rem; line-height: 1.6; }
+  .value-icon { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 16px; border: 2px solid var(--ink); background: var(--tint, #fff4da); color: var(--ink); }
+  .value-1 { --tint: #fde7f0; } .value-2 { --tint: #eef6ff; } .value-3 { --tint: #fff4da; } .value-4 { --tint: #eef8d2; }
+  .value-5 { --tint: #f1edff; } .value-6 { --tint: #e3f4f1; } .value-7 { --tint: #f5f6fa; }
   #steps, #contact { scroll-margin-top: 5rem; }
 
   /* ── pick a role: four round tokens of different sizes, the bun and its speech bubble under them ── */
@@ -816,9 +862,14 @@ const pickTones = ['is-lime', 'is-blue', 'is-coral', 'is-yellow', 'is-purple', '
     .walk .trail-bun { width: 56px; }
     .fit, :global(html:not(.js)) .fit { grid-template-columns: 1fr; }
     .gets { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 2.6rem; }
+    .value { flex-basis: calc((100% - 1.4rem) / 2); }
   }
   @media (max-width: 560px) {
     .gets { grid-template-columns: 1fr; max-width: 360px; margin-inline: auto; }
+    .value { flex-basis: 100%; display: grid; grid-template-columns: 44px 1fr; column-gap: 14px; row-gap: 2px; padding: 1rem 1.1rem; }
+    .value-icon { grid-row: span 2; width: 44px; height: 44px; border-radius: 14px; }
+    .value .k-h3 { margin: 0; }
+    .value p { font-size: 0.98rem; }
     .pick { grid-template-columns: 1fr; gap: 2rem; }
     .pick-bun { width: 130px; }
     .pick-stage { width: min(100%, 34rem); margin-inline: auto; }
