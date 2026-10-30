@@ -9,7 +9,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "check:kitchen": "node scripts/check-kitchen.mjs"
   },
   "dependencies": {
     "@astrojs/vercel": "11.0.16",
@@ -19,6 +20,7 @@
   },
   "devDependencies": {
     "@iconify-json/lucide": "^1.2.114",
-    "@iconify-json/simple-icons": "^1.2.87"
+    "@iconify-json/simple-icons": "^1.2.87",
+    "playwright-core": "^1.64.1"
   }
 }

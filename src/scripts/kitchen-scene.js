@@ -8,7 +8,8 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
 import { OutlineEffect } from 'three/addons/effects/OutlineEffect.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-import { PEOPLE, CAST, LOOP, DEPTS, STAGES, stageOf, stageTeams } from '../data/kitchen';
+import { PEOPLE, CAST, LOOP, DEPTS, STAGES, MEETINGS, stageOf, stageTeams } from '../data/kitchen';
+import { weeklyLabel, SYDNEY } from './kitchen-time';
 
 const INK = '#1e2140', W = '#ffffff', PAPER = '#f4f7ee';
 const FONT = '"SF Pro Rounded", ui-rounded, "PingFang SC", "Hiragino Sans GB", sans-serif';
@@ -701,9 +702,10 @@ export async function initKitchen(el, { onPick, onHover, onTour, mode = 0, still
       c.fillStyle = INK; c.textBaseline = 'middle';
       fitText(c, '每周的会（悉尼时间）', 46, w - 60); c.fillText('每周的会（悉尼时间）', 30, 42);
       c.fillStyle = '#2bb3a6'; c.fillRect(30, 74, w - 60, 6);
-      [['周六 12:00', '产品会'], ['周日 20:00', '开发周会'], ['每晚 21:00', 'Discord 5 分钟 check in']].forEach(([d, n], i) => {
-        c.font = `900 40px ${FONT}`; c.fillStyle = '#5b6078'; c.fillText(d, 30, 128 + i * 62);
-        fitText(c, n, 40, w - 290); c.fillStyle = INK; c.fillText(n, 260, 128 + i * 62);
+      MEETINGS.forEach((m, i) => {
+        const d = weeklyLabel(m, SYDNEY);
+        fitText(c, d, 40, 280); c.fillStyle = '#5b6078'; c.fillText(d, 30, 128 + i * 62);
+        fitText(c, m.name, 40, w - 350); c.fillStyle = INK; c.fillText(m.name, 320, 128 + i * 62);
       });
     });
     const b = new THREE.Group(); b.position.set(-10.67, 0, -8.86); b.rotation.y = 0.32;
