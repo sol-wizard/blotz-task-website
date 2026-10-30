@@ -14,7 +14,7 @@ export const NAMES: Record<Zone, [string, string]> = {
   dev: ['包子师傅', '开发'],
   ai: ['调馅师傅', 'AI 工程师'],
   learn: ['学徒', '新来的开发'],
-  meet: ['开会的地方', '每周会议'],
+  meet: ['每周的会', '每周的会'],
   board: ['订单看板', '任务看板'],
   taste: ['试吃把关', '测试'],
   out: ['出餐口', '上线'],
@@ -54,18 +54,28 @@ export const PEOPLE: [string, Zone, string, string][] = [
 // The other jobs in each room, without names, and the lists behind the things you can click: [label, short line]
 export const ROLES: Partial<Record<Zone, [string, string][]>> = {
   taste: [['iPhone', '在 TestFlight 装 staging 测试版'], ['邀请', '加入团队时会收到 TestFlight 邀请']],
-  meet: [['周六 12:00', '产品会'], ['周日 20:00', '开发周会'], ['每晚 21:00', 'Discord 5 分钟 check in']],
   board: [['Backlog', '可以拿'], ['Doing', '在做'], ['Review', '等 review'], ['Done', 'staging 测好了']],
 };
 
-// The loop painted on the floor: how a user's idea becomes a new version. who = the teams doing that step.
+// The weekly meetings, in Sydney time; the page turns them into each viewer's own time. days: 0 = Sunday … 6 = Saturday.
+// who = who comes and why; link = where the Zoom link is, shown in full on the card; short = the same for the bar on the page.
+// The Zoom links themselves stay off this page: the site and this repo are public.
+export type Meeting = { name: string; days: number[]; hour: number; who: string; link?: string; short?: string };
+export const MEETINGS: Meeting[] = [
+  { name: '产品会', days: [6], hour: 12, who: 'Tech Lead、产品经理、设计负责人要来；Tech Lead 候选人和其他人欢迎旁听', link: 'Zoom 链接当天由 Freya 发到微信群', short: '链接当天发在微信群' },
+  { name: '开发周会', days: [0], hour: 20, who: '开发定下周的任务', link: 'Zoom 链接在 Discord 公告频道', short: '链接在 Discord 公告频道' },
+  { name: 'Discord check in', days: [1, 2, 3, 4, 5], hour: 21, who: '开发，5 分钟' },
+];
+
+// The loop painted on the floor: how a user's idea becomes a new version. who = the teams doing that step;
+// meet = the meeting this step is, so the tour can say when it happens.
 export type DeptId = 'dev' | 'pm' | 'design' | 'mkt';
-export const LOOP: { word: string; line: string; who: DeptId[] }[] = [
+export const LOOP: { word: string; line: string; who: DeptId[]; meet?: number }[] = [
   { word: '用户在用', line: '用户在用 App', who: [] },
   { word: '反馈', line: '用户留下反馈，宣传组收集', who: ['mkt'] },
   { word: '产品经理', line: '产品经理看反馈和数据，决定做什么', who: ['pm'] },
-  { word: '产品会', line: '周六产品会，产品和开发一起定要做什么', who: ['pm', 'design'] },
-  { word: '开发周会', line: '周日开发周会，定下周的开发任务', who: ['dev'] },
+  { word: '产品会', line: '产品会，产品、设计和 Tech Lead 一起定要做什么', who: ['pm', 'design'], meet: 0 },
+  { word: '开发周会', line: '开发周会，定下周的开发任务', who: ['dev'], meet: 1 },
   { word: '拆任务', line: 'Tech Lead 拆成 PBI，分给开发', who: ['dev'] },
   { word: '开发', line: '开发用 AI 写代码，开 PR', who: ['dev'] },
   { word: '测试', line: 'PR review 通过后，在 staging 上测试', who: ['dev', 'design'] },
@@ -86,19 +96,20 @@ export const stageTeams = (i: number) => [...new Set(STAGES[i].steps.flatMap(s =
 
 // One short page per team, shown when you click the team's part of the shop (the kitchen, AI lab and
 // classroom are all the developers'). who = the leads to go to; rows = [label, one line]
-export type Dept = { id: DeptId; name: string; place: string; color: string; view: Zone; who: string[]; rows: [string, string][]; links?: (keyof typeof LINKS)[] };
+// meets = which of MEETINGS the team goes to.
+export type Dept = { id: DeptId; name: string; place: string; color: string; view: Zone; who: string[]; meets?: number[]; rows: [string, string][]; links?: (keyof typeof LINKS)[] };
 export const DEPTS: Dept[] = [
   {
     id: 'dev', name: '开发', place: '大后厨、AI 实验室、烹饪教室', color: '#3486F3', view: 'dev', who: ['Zyx', 'Nicole', 'Chen'],
-    rows: [['开会', '周日 20:00 开发周会；每晚 21:00 Discord check in（5 分钟）'], ['任务', '领 PBI，用 AI 写代码、开 PR，review 过了在 staging 上测']], links: ['devBoard', 'testflight'],
+    meets: [1, 2], rows: [['任务', '领 PBI，用 AI 写代码、开 PR，review 过了在 staging 上测'], ['请假', '请 break week 找 August']], links: ['devBoard', 'testflight'],
   },
   {
     id: 'pm', name: '产品', place: '研发室', color: '#8b6ef6', view: 'pm', who: ['Kathie', 'Freya'],
-    rows: [['开会', '周六 12:00 产品会'], ['任务', '看用户反馈和数据，决定做什么，在产品会上跟开发讲'], ['报告', '周五的会前提醒，每月的产品数据']], links: ['pmTasks', 'pm'],
+    meets: [0], rows: [['任务', '看用户反馈和数据，决定做什么，在产品会上跟开发讲'], ['报告', '周五的会前提醒，每月的产品数据']], links: ['pmTasks', 'pm'],
   },
   {
     id: 'design', name: '设计', place: '设计室', color: '#f56767', view: 'design', who: ['Li'],
-    rows: [['开会', '周六 12:00 产品会'], ['任务', '用 Figma 画页面，做好后在 staging 上检查']], links: ['pmTasks', 'design'],
+    meets: [0], rows: [['任务', '用 Figma 画页面，做好后在 staging 上检查']], links: ['pmTasks', 'design'],
   },
   {
     id: 'mkt', name: '宣传', place: '前厅和门外', color: '#f6b73c', view: 'mkt', who: ['Luna'],
@@ -173,7 +184,7 @@ export const ABOUT: Record<Zone, { text: string; links?: (keyof typeof LINKS)[] 
   dev: { text: '' },
   ai: { text: '' },
   learn: { text: '' },
-  meet: { text: '时间都是悉尼时间。' },
+  meet: { text: '' },
   board: { text: '一张卡片就是一个 PBI。', links: ['devBoard'] },
   taste: { text: 'PR review 过了，装测试版在手机上试一遍。', links: ['testflight'] },
   out: { text: '' },

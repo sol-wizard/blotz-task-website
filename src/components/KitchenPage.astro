@@ -25,6 +25,8 @@
         <button type="button" data-m="1" aria-pressed="false">Blotz</button>
       </div>
       <span class="kz-gap"></span>
+      <button type="button" class="kz-next" id="kz-next" aria-label="每周的会：时间和怎么进"></button>
+      <span class="kz-gap"></span>
       <button type="button" class="kz-btn kz-bell" id="kz-bell" hidden aria-label="新东西">🔔 <span id="kz-bell-n"></span></button>
       <button type="button" class="kz-btn" id="kz-names" aria-pressed="false">名字</button>
       <button type="button" class="kz-btn" id="kz-home">回到全景</button>
@@ -36,7 +38,7 @@
       <div class="kz-tour-dots" id="kz-tour-dots"></div>
     </div>
     <button type="button" class="kz-cta" id="kz-play"><span class="kz-cta-ico" aria-hidden="true"></span><span><b>看看包子铺怎么运作</b><small>大约 1 分钟</small></span></button>
-    <p class="kz-hint" id="kz-hint">左键拖动移动，右键拖动旋转，滚轮缩放</p>
+    <p class="kz-hint" id="kz-hint">点房间看介绍 · 左键拖动移动，右键拖动旋转，滚轮缩放</p>
     <div class="kz-pad" role="group" aria-label="镜头">
       <button type="button" data-turn="0.785" aria-label="向左转" title="向左转（Q）">⟲</button>
       <button type="button" data-turn="-0.785" aria-label="向右转" title="向右转（E）">⟳</button>
@@ -52,7 +54,8 @@
 
   <script>
     import { initKitchen } from '../scripts/kitchen-scene.js';
-    import { NAMES, PEOPLE, ROLES, ABOUT, LINKS, FIND, NEWS_ZONE, DEPTS, LOOP, STAGES, TEAM_NEWS, BOTS, stageOf, type Zone, type DeptId } from '../data/kitchen';
+    import { NAMES, PEOPLE, ROLES, ABOUT, LINKS, FIND, NEWS_ZONE, DEPTS, LOOP, STAGES, TEAM_NEWS, BOTS, MEETINGS, stageOf, type Zone, type DeptId, type Dept } from '../data/kitchen';
+    import { nextMeetings, onSydneyTime, viewerZone, weeklyLabel, whenLabel, SYDNEY } from '../scripts/kitchen-time';
 
     const params = new URLSearchParams(location.search);
     const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -96,6 +99,23 @@
     bell.addEventListener('click', () => show('news', false));
     fetch('/api/kitchen-news').then(r => (r.ok ? r.json() : { items: [] })).then(d => { news = d.items || []; refreshNews(); }).catch(() => {});
 
+    // the weekly meetings, in the viewer's own time (the bar stays on screen, so a new person never has to look for it)
+    const tz = viewerZone();
+    function drawNext() {
+      document.getElementById('kz-next')!.innerHTML = nextMeetings(MEETINGS).map(({ m, at }) =>
+        `<span class="kz-nx"><b><i>${esc(whenLabel(at, tz))}</i> ${esc(m.name)}</b><small><span>Zoom </span>${esc(m.short!)}</small></span>`).join('');
+    }
+    drawNext();
+    setInterval(drawNext, 60e3);
+    document.getElementById('kz-next')!.addEventListener('click', () => show('meet'));
+    function meetingsHtml() {
+      return '<div class="kz-meets">' + MEETINGS.map(m => {
+        const here = weeklyLabel(m, tz), there = weeklyLabel(m, SYDNEY);
+        return `<div><p class="h"><b><i>${esc(here)}</i> ${esc(m.name)}</b>${here === there ? '' : `<small>悉尼 ${esc(there.split(' ')[1])}</small>`}</p><p>${esc(m.who)}</p>${m.link ? `<p class="j">${esc(m.link)}</p>` : ''}</div>`;
+      }).join('') + '</div>';
+    }
+    const meetRow = (d: Dept): [string, string][] => d.meets ? [['开会', d.meets.map(i => `${weeklyLabel(MEETINGS[i], tz)} ${MEETINGS[i].name}`).join('；')]] : [];
+
     function cardHtml(k: string) {
       if (k === 'news') {
         const fresh = unseen();
@@ -122,6 +142,9 @@
       const zone = k as Zone;
       if (!(zone in NAMES)) return '';
       const zoneNew = zone === 'pass' ? unseen() : unseen().filter(n => NEWS_ZONE[n.kind] === zone);
+      if (zone === 'meet') return head(nm(zone), onSydneyTime(tz) ? '悉尼时间' : '时间已换成你那边的时间')
+        + meetingsHtml()
+        + (zoneNew.length ? section('新的', newsList(zoneNew)) : '');
       return head(nm(zone), `${mode ? '包子铺里叫' : 'Blotz 里是'}：${NAMES[zone][1 - mode]}`)
         + (ABOUT[zone].text ? `<p class="kz-text">${esc(ABOUT[zone].text)}</p>` : '')
         + (zone === 'loop' ? '<button type="button" class="kz-go" data-tour>▶ 看一圈</button>' : '')
@@ -150,7 +173,7 @@
           const role = (PEOPLE.find(p => p[0] === n)?.[2] || '').split(' · ')[0];
           return `<button type="button" data-p="${esc(n)}" class="kz-pp${leads.includes(n) ? ' lead' : ''}">${ava(n, ' sm')}<span>${esc(n)}<small>${esc(role)}</small></span></button>`;
         }).join('') + '</div>')
-        + facts(d.rows)
+        + facts([...meetRow(d), ...d.rows])
         + (fresh.length ? section('新的', newsList(fresh.slice(0, 2))
           + (fresh.length > 2 ? `<button type="button" class="kz-more" data-news>还有 ${fresh.length - 2} 个 →</button>` : '')) : '')
         + linksHtml(d.links || []);
@@ -166,6 +189,7 @@
       kitchen?.setFocus(teamId || null);
       card.hidden = !html;
       if (html) {
+        hint.classList.add('gone'); // they've found out that things open, so the hint has done its job
         body.innerHTML = html;
         body.querySelectorAll<HTMLButtonElement>('[data-p]').forEach(b => b.addEventListener('click', () => show('p:' + b.dataset.p)));
         body.querySelectorAll<HTMLAnchorElement>('a[data-id]').forEach(a => a.addEventListener('click', () => { markSeen([a.dataset.id!]); setTimeout(() => show(current, false), 50); }));
@@ -192,7 +216,8 @@
 
     let kitchen: Awaited<ReturnType<typeof initKitchen>> | null = null;
     const hint = document.getElementById('kz-hint')!;
-    if (matchMedia('(pointer: coarse)').matches) hint.textContent = '单指拖动移动，双指缩放';
+    if (matchMedia('(max-width: 640px)').matches) hint.textContent = '点房间看介绍';
+    else if (matchMedia('(pointer: coarse)').matches) hint.textContent = '点房间看介绍 · 单指拖动移动，双指缩放';
     document.querySelectorAll<HTMLButtonElement>('.kz-pad button').forEach(b => b.addEventListener('click', () => {
       if (b.dataset.turn) kitchen?.turn(+b.dataset.turn);
       if (b.dataset.zoom) kitchen?.zoom(+b.dataset.zoom);
@@ -216,13 +241,15 @@
       if (step === null) { tourBox.hidden = true; return; }
       if (step === 'done') {
         finished = true;
-        tourLine.textContent = '回到第 1 步，开始下一轮';
+        const { m, at } = nextMeetings(MEETINGS)[0];
+        tourLine.innerHTML = `<span class="kz-done"><em>看完了，你的下一步</em><span>1. ${esc(whenLabel(at, tz))} ${esc(m.name)}，${esc(m.link!)}</span><span>2. 点你那组的房间，看找谁、做什么</span></span>`;
         tourPause.textContent = '↻'; tourPause.setAttribute('aria-label', '再看一次');
         tourDots.querySelectorAll('button').forEach(b => b.classList.remove('on'));
         return;
       }
       const part = stageOf(step);
-      tourLine.innerHTML = `<b style="--c:${teamColor(STAGES[part].who)}">${part + 1}</b><span><em>${esc(STAGES[part].word)}</em>${esc(LOOP[step].line)}</span>`;
+      const when = LOOP[step].meet === undefined ? '' : weeklyLabel(MEETINGS[LOOP[step].meet!], tz) + ' ';
+      tourLine.innerHTML = `<b style="--c:${teamColor(STAGES[part].who)}">${part + 1}</b><span><em>${esc(STAGES[part].word)}</em>${esc(when + LOOP[step].line)}</span>`;
       tourDots.querySelectorAll<HTMLButtonElement>('button').forEach(b => b.classList.toggle('on', +b.dataset.i! === part));
     }
     document.getElementById('kz-play')!.addEventListener('click', () => startTour());
@@ -245,7 +272,6 @@
     }).then(k => {
       kitchen = k;
       document.getElementById('kz-wait')!.remove();
-      k.controls.addEventListener('start', () => hint.classList.add('gone'), { once: true } as any);
       refreshNews();
       if (params.get('k')) show(params.get('k'));
       (window as any).__kitchen = k;
@@ -296,6 +322,16 @@
     .kz-btn { border: 2px solid var(--ink); border-radius: 999px; background: #fff; box-shadow: 0 3px 0 var(--ink); }
     .kz-btn.on { background: var(--ink); color: #fff; }
     .kz-btn:active, .kz-modes button:active { transform: translateY(1px); }
+
+    /* the bar a new person needs first: when the next meetings are and where the link is */
+    .kz-next { display: flex; align-items: stretch; padding: 5px 8px; border: 2px solid var(--ink); border-radius: 18px; background: #fff; box-shadow: 0 3px 0 var(--ink); color: var(--ink); font: inherit; text-align: left; cursor: pointer; }
+    .kz-next:hover { background: #e7f7f4; }
+    .kz-next:active { transform: translateY(1px); }
+    .kz-nx { padding: 0 12px; white-space: nowrap; }
+    .kz-nx + .kz-nx { border-left: 2px solid #e3e5ec; }
+    .kz-nx b { display: block; font-weight: 900; font-size: 0.98rem; line-height: 1.25; }
+    .kz-nx i { font-style: normal; color: #16877a; }
+    .kz-nx small { display: block; font-weight: 800; font-size: 0.82rem; line-height: 1.3; color: var(--muted); }
     button:focus-visible, a:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
 
     .kz-hint { position: absolute; z-index: 10; left: 16px; bottom: 14px; margin: 0; padding: 0.4rem 0.9rem; border-radius: 999px; background: rgba(255, 255, 255, 0.92); border: 2px solid var(--ink); font-weight: 900; font-size: 0.9rem; transition: opacity 0.6s ease; pointer-events: none; }
@@ -322,6 +358,8 @@
     .kz-tour p b { flex: none; display: grid; place-items: center; width: 38px; height: 38px; border-radius: 50%; background: var(--c); color: #fff; border: 2px solid var(--ink); }
     .kz-tour-btn { width: 44px; height: 44px; border-radius: 14px; border: 2px solid var(--ink); background: #fff; box-shadow: 0 3px 0 var(--ink); font: inherit; font-size: 1.2rem; font-weight: 900; cursor: pointer; color: var(--ink); }
     .kz-tour p em { font-style: normal; margin-right: 0.6rem; padding: 0.05rem 0.55rem; border-radius: 8px; background: #f1f2f6; color: var(--muted); font-size: 1rem; }
+    .kz-done { display: flex; flex-direction: column; gap: 3px; font-size: 1.05rem; line-height: 1.35; }
+    .kz-tour p .kz-done em { align-self: flex-start; margin: 0 0 3px; background: var(--lime); color: var(--ink); }
     .kz-tour-dots { grid-column: 1 / -1; display: flex; justify-content: center; gap: 6px; }
     .kz-tour-dots button { width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--ink); background: #fff; color: var(--ink); font: inherit; font-weight: 900; font-size: 0.85rem; cursor: pointer; padding: 0; }
     .kz-tour-dots button.on { background: var(--c); color: #fff; }
@@ -368,6 +406,16 @@
     .kz-pp small { font-weight: 700; font-size: 0.78rem; color: var(--muted); }
     .kz-pp:hover { border-color: var(--ink); }
     .kz-pp.lead { border-color: var(--ink); background: #f6fbe9; box-shadow: 0 2px 0 var(--ink); }
+    /* the meeting card: the same time and name as the bar, then who comes and how to get in */
+    .kz-meets { margin-top: 0; margin-bottom: 16px; }
+    .kz-meets > div { padding: 12px 0; border-top: 1px solid #e3e5ec; }
+    .kz-meets > div:first-child { border-top: 0; padding-top: 0; }
+    .kz-meets p { margin: 3px 0 0; font-size: 0.92rem; line-height: 1.45; color: var(--muted); }
+    .kz-meets p.j { font-weight: 800; color: #16877a; }
+    .kz-meets p.h { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; margin: 0; }
+    .kz-meets .h b { font-weight: 900; font-size: 1.02rem; color: var(--ink); }
+    .kz-meets .h i { font-style: normal; color: #16877a; }
+    .kz-meets .h small { flex: none; font-weight: 800; font-size: 0.8rem; }
     .kz-facts { margin-top: 0; margin-bottom: 16px; padding: 2px 14px; border-radius: 14px; background: #f5f6fa; }
     .kz-facts > div { display: grid; grid-template-columns: 4.6em 1fr; gap: 10px; align-items: baseline; padding: 10px 0; border-top: 1px solid #e3e5ec; }
     .kz-facts > div:first-child { border-top: 0; }
@@ -377,11 +425,23 @@
     .kz-links { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 4px; }
     .kz-links a { padding: 0.35rem 0.85rem; border-radius: 12px; border: 2px solid var(--ink); box-shadow: 0 3px 0 var(--ink); background: var(--blue); color: #fff; font-weight: 900; font-size: 0.9rem; text-decoration: none; }
 
+    /* too narrow for one row: the bar takes its own row under the buttons, and the card starts below it */
+    @media (max-width: 1240px) {
+      .kz-bar { flex-wrap: wrap; row-gap: 8px; }
+      .kz-next { order: 1; }
+      .kz-card { top: 128px; max-height: calc(100% - 222px); }
+    }
     @media (max-width: 640px) {
       .kz-bar { flex-wrap: wrap; gap: 8px; }
+      .kz-next { flex: 1 0 100%; padding: 5px 2px; }
+      .kz-nx { flex: 1; min-width: 0; padding: 0 8px; }
+      .kz-nx b { font-size: 0.86rem; }
+      .kz-nx small { font-size: 0.74rem; }
+      .kz-nx small span { display: none; }
+      .kz-meets .h b { font-size: 0.92rem; }
       .kz-brand { font-size: 0.95rem; }
       .kz-modes button, .kz-btn { font-size: 0.85rem; padding: 0.35rem 0.75rem; }
-      .kz-hint { display: none; }
+      .kz-hint { left: 16px; bottom: 96px; }
       .kz-cta { left: 16px; right: 132px; translate: none; padding: 8px 14px 8px 8px; }
       .kz-cta:active { translate: 0 3px; }
       .kz-cta b { font-size: 1.05rem; }
